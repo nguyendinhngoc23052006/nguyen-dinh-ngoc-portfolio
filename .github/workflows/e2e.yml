@@ -24,4 +24,5 @@ jobs:
         env:
           PUBLIC_SUPABASE_URL: ${{ vars.PUBLIC_SUPABASE_URL }}
           PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${{ vars.PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
+          CLOUDFLARE_INCLUDE_PROCESS_ENV: "true"
         run: npm run e2e
