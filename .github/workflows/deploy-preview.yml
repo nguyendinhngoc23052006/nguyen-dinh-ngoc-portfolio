@@ -1,0 +1,54 @@
+name: Deploy Preview
+on:
+  pull_request:
+    branches: [staging]
+concurrency:
+  group: preview-${{ github.head_ref }}
+  cancel-in-progress: true
+jobs:
+  deploy-preview:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
+      - run: npm install
+      - name: Build
+        env:
+          PUBLIC_SUPABASE_URL: ${{ vars.PUBLIC_SUPABASE_URL }}
+          PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${{ vars.PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
+        run: npm run build
+      - name: Deploy preview version
+        id: deploy
+        uses: cloudflare/wrangler-action@v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: versions upload --env staging --var PUBLIC_SUPABASE_URL:${{ vars.PUBLIC_SUPABASE_URL }} --var PUBLIC_SUPABASE_PUBLISHABLE_KEY:${{ vars.PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
+      - name: Post preview URL comment
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PREVIEW_URL: ${{ steps.deploy.outputs.deployment-url }}
+          REPO: ${{ github.repository }}
+        run: |
+          MARKER="<!-- deploy-preview-comment -->"
+          BODY="${MARKER}
+          **Preview →** ${PREVIEW_URL}
+
+          _(uses shared production Supabase project)_"
+          EXISTING=$(gh api "repos/$REPO/issues/$PR_NUMBER/comments" \
+            --jq '[.[] | select(.body | startswith("'"$MARKER"'")) | .id] | first' \
+            2>/dev/null || echo "")
+          if [ -n "$EXISTING" ]; then
+            gh api "repos/$REPO/issues/comments/$EXISTING" -X PATCH -f body="$BODY"
+          else
+            gh pr comment "$PR_NUMBER" --repo "$REPO" --body "$BODY"
+          fi

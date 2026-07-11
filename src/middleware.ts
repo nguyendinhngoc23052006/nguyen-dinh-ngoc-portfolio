@@ -1,10 +1,12 @@
-import { defineMiddleware } from 'astro:middleware';
-import { createSupabaseClient } from './lib/supabase';
+import { defineMiddleware } from "astro:middleware";
+import { createSupabaseClient } from "./lib/supabase";
 
 export const onRequest = defineMiddleware(async (context, next) => {
   try {
-    const supabase = createSupabaseClient(context.cookies);
-    const { data: { session } } = await supabase.auth.getSession();
+    const supabase = createSupabaseClient(context);
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
     context.locals.supabase = supabase;
     context.locals.session = session;
   } catch (e) {

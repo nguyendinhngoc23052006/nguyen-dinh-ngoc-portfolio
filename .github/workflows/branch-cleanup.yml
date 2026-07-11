@@ -1,0 +1,52 @@
+name: Branch Cleanup
+on:
+  schedule:
+    - cron: '0 4 * * *'
+  workflow_dispatch:
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: read
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const PROTECTED = new Set(['main', 'staging']);
+            const STALE_MS = 7 * 24 * 60 * 60 * 1000;
+            const cutoff = Date.now() - STALE_MS;
+
+            const { data: branches } = await github.rest.repos.listBranches({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              per_page: 100,
+            });
+
+            for (const branch of branches) {
+              if (PROTECTED.has(branch.name)) continue;
+
+              const { data: commit } = await github.rest.repos.getCommit({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: branch.commit.sha,
+              });
+
+              const commitDate = new Date(commit.commit.committer.date).getTime();
+              if (commitDate > cutoff) continue;
+
+              const { data: prs } = await github.rest.pulls.list({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                head: `${context.repo.owner}:${branch.name}`,
+                state: 'open',
+              });
+              if (prs.length > 0) continue;
+
+              await github.rest.git.deleteRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: `heads/${branch.name}`,
+              });
+              core.info(`Deleted stale branch: ${branch.name}`);
+            }
