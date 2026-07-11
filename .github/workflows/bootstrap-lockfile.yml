@@ -1,5 +1,5 @@
 # One-shot workflow: generates package-lock.json, then deletes itself.
-# Triggers when package.json is first pushed to the setup branch.
+# Triggers when package.json is first pushed to the setup branch, or manually.
 name: Bootstrap package-lock.json
 on:
   push:
@@ -7,6 +7,7 @@ on:
       - 'claude/astro-portfolio-setup-r2cqoy'
     paths:
       - 'package.json'
+  workflow_dispatch:
 jobs:
   bootstrap:
     runs-on: ubuntu-latest
