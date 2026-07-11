@@ -1,0 +1,134 @@
+name: Deploy Preview
+
+on:
+  pull_request:
+    branches: [staging]
+
+concurrency:
+  group: preview-${{ github.head_ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy-preview:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
+
+      - run: npm ci
+
+      - name: Resolve Supabase preview branch credentials
+        id: supabase
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+          PUBLIC_SUPABASE_URL: ${{ vars.PUBLIC_SUPABASE_URL }}
+          HEAD_BRANCH: ${{ github.head_ref }}
+        run: |
+          PROD_REF=$(echo "$PUBLIC_SUPABASE_URL" | sed 's|https://||; s|\.supabase\.co.*||')
+
+          MAX_ATTEMPTS=18
+          ATTEMPT=0
+          BRANCH_REF=""
+
+          while [ $ATTEMPT -lt $MAX_ATTEMPTS ]; do
+            RESPONSE=$(curl -sf --max-time 30 \
+              -H "Authorization: Bearer $SUPABASE_ACCESS_TOKEN" \
+              "https://api.supabase.com/v1/projects/$PROD_REF/branches" 2>/dev/null || echo "")
+
+            if [ -n "$RESPONSE" ]; then
+              BRANCH_REF=$(echo "$RESPONSE" | jq -r --arg b "$HEAD_BRANCH" \
+                '.[] | select(.git_branch == $b and .preview_project_status == "ACTIVE_HEALTHY") | .project_ref' \
+                2>/dev/null | head -1)
+            fi
+
+            if [ -n "$BRANCH_REF" ]; then
+              break
+            fi
+
+            ATTEMPT=$((ATTEMPT + 1))
+            if [ $ATTEMPT -lt $MAX_ATTEMPTS ]; then
+              sleep 20
+            fi
+          done
+
+          if [ -z "$BRANCH_REF" ]; then
+            echo "::error::No Supabase preview branch for this PR — check step 6 ('Supabase changes only' must be OFF), then re-run this job once the Supabase Preview check reports."
+            exit 1
+          fi
+
+          KEYS=$(curl -sf --max-time 30 \
+            -H "Authorization: Bearer $SUPABASE_ACCESS_TOKEN" \
+            "https://api.supabase.com/v1/projects/$BRANCH_REF/api-keys?reveal=true" 2>/dev/null)
+
+          PREVIEW_KEY=$(echo "$KEYS" | jq -r '.[] | select(.name == "publishable") | .api_key' | head -1)
+          if [ -z "$PREVIEW_KEY" ]; then
+            PREVIEW_KEY=$(echo "$KEYS" | jq -r '.[] | select(.name == "anon") | .api_key' | head -1)
+          fi
+
+          if [ -z "$PREVIEW_KEY" ]; then
+            echo "::error::Could not retrieve API key for preview branch $BRANCH_REF"
+            exit 1
+          fi
+
+          PREVIEW_SUPABASE_URL="https://${BRANCH_REF}.supabase.co"
+          echo "branch_ref=$BRANCH_REF" >> $GITHUB_OUTPUT
+          echo "supabase_url=$PREVIEW_SUPABASE_URL" >> $GITHUB_OUTPUT
+          echo "supabase_key=$PREVIEW_KEY" >> $GITHUB_OUTPUT
+
+      - name: Build
+        env:
+          PUBLIC_SUPABASE_URL: ${{ steps.supabase.outputs.supabase_url }}
+          PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${{ steps.supabase.outputs.supabase_key }}
+        run: npm run build
+
+      - name: Deploy preview version
+        id: deploy
+        uses: cloudflare/wrangler-action@v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: versions upload --env staging --var PUBLIC_SUPABASE_URL:${{ steps.supabase.outputs.supabase_url }} --var PUBLIC_SUPABASE_PUBLISHABLE_KEY:${{ steps.supabase.outputs.supabase_key }}
+
+      - name: Post preview URL comment
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PREVIEW_URL: ${{ steps.deploy.outputs.deployment-url }}
+          BRANCH_REF: ${{ steps.supabase.outputs.branch_ref }}
+          REPO: ${{ github.repository }}
+        run: |
+          MARKER="<!-- deploy-preview-comment -->"
+          BODY="${MARKER}
+          ## Preview
+
+          | | |
+          |---|---|
+          | **URL** | ${PREVIEW_URL} |
+          | **Branch DB** | \`${BRANCH_REF}.supabase.co\` |
+
+          > Behind Cloudflare Access — log in with your email."
+
+          EXISTING_ID=$(curl -sf -H "Authorization: Bearer $GH_TOKEN" \
+            "https://api.github.com/repos/$REPO/issues/$PR_NUMBER/comments" | \
+            jq -r ".[] | select(.body | contains(\"$MARKER\")) | .id" | head -1)
+
+          if [ -n "$EXISTING_ID" ]; then
+            curl -sf -X PATCH -H "Authorization: Bearer $GH_TOKEN" \
+              -H "Content-Type: application/json" \
+              "https://api.github.com/repos/$REPO/issues/comments/$EXISTING_ID" \
+              -d "$(jq -n --arg body "$BODY" '{body: $body}')"
+          else
+            curl -sf -X POST -H "Authorization: Bearer $GH_TOKEN" \
+              -H "Content-Type: application/json" \
+              "https://api.github.com/repos/$REPO/issues/$PR_NUMBER/comments" \
+              -d "$(jq -n --arg body "$BODY" '{body: $body}')"
+          fi
