@@ -2,13 +2,13 @@
 # Blocks task completion (exit 2) unless the self-check is complete.
 # Runs on Stop and SubagentStop.
 
-# Q&A session: no commits ahead of staging + clean working tree → nothing to police.
+# Q&A session: no commits ahead of main + clean working tree → nothing to police.
 DIRTY=$(git status --porcelain 2>/dev/null | wc -l | tr -d ' ')
 AHEAD=0
-if git rev-parse --verify "origin/staging" >/dev/null 2>&1; then
-  AHEAD=$(git rev-list --count "origin/staging..HEAD" 2>/dev/null || echo "0")
-elif git rev-parse --verify "staging" >/dev/null 2>&1; then
-  AHEAD=$(git rev-list --count "staging..HEAD" 2>/dev/null || echo "0")
+if git rev-parse --verify "origin/main" >/dev/null 2>&1; then
+  AHEAD=$(git rev-list --count "origin/main..HEAD" 2>/dev/null || echo "0")
+elif git rev-parse --verify "main" >/dev/null 2>&1; then
+  AHEAD=$(git rev-list --count "main..HEAD" 2>/dev/null || echo "0")
 fi
 
 if [ "$DIRTY" = "0" ] && [ "$AHEAD" = "0" ]; then

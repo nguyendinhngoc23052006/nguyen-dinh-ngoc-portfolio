@@ -1,0 +1,3 @@
+# code-reviewer — verdict for the staging-removal PR
+
+**Verdict: PASS.** All branch triggers correctly retargeted (`ci.yml`, `deploy-preview.yml`, `e2e.yml`: `staging`/`[staging, main]` → `[main]`); wrangler env `staging` → `preview`; `branch-cleanup.yml` PROTECTED set reduced to `['main']`. No orphaned references to the two deleted workflows (`deploy-staging.yml`, `gate-main.yml`) or their job names (`deploy-staging`, `require-staging-source`) outside the docs that describe the removal. `.claude/hooks/stop.sh`'s `origin/main`/`main` fallback is syntactically correct and behaves sensibly on `main` itself (AHEAD=0). Surgical deletions and renames, no duplicated logic introduced.

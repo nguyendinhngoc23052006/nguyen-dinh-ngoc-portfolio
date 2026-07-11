@@ -7,7 +7,7 @@
     "directory": "./dist"
   },
   "env": {
-    "staging": {
+    "preview": {
       "workers_dev": true,
       "preview_urls": true
     }

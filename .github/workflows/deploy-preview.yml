@@ -1,7 +1,7 @@
 name: Deploy Preview
 on:
   pull_request:
-    branches: [staging]
+    branches: [main]
 concurrency:
   group: preview-${{ github.head_ref }}
   cancel-in-progress: true
@@ -31,7 +31,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: versions upload --env staging --var PUBLIC_SUPABASE_URL:${{ vars.PUBLIC_SUPABASE_URL }} --var PUBLIC_SUPABASE_PUBLISHABLE_KEY:${{ vars.PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
+          command: versions upload --env preview --var PUBLIC_SUPABASE_URL:${{ vars.PUBLIC_SUPABASE_URL }} --var PUBLIC_SUPABASE_PUBLISHABLE_KEY:${{ vars.PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
       - name: Post preview URL comment
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
