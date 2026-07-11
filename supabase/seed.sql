@@ -1,0 +1,2 @@
+-- Seed file: add test data here. This file is idempotent — safe to run multiple times.
+-- Auth users, storage buckets, and tables come in feature PRs.
