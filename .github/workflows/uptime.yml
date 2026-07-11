@@ -1,0 +1,23 @@
+name: Uptime
+on:
+  schedule:
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+jobs:
+  health:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check production health
+        env:
+          PRODUCTION_URL: ${{ vars.PRODUCTION_URL }}
+        run: |
+          if [ -z "$PRODUCTION_URL" ]; then
+            echo "PRODUCTION_URL not set — skipping (add it in Settings → Actions → Variables after step 10.5)"
+            exit 0
+          fi
+          STATUS=$(curl -sf -o /dev/null -w "%{http_code}" "${PRODUCTION_URL}/health" || echo "000")
+          if [ "$STATUS" != "200" ]; then
+            echo "::error::Production health check failed — HTTP $STATUS from ${PRODUCTION_URL}/health"
+            exit 1
+          fi
+          echo "Health check passed — HTTP $STATUS"
