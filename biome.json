@@ -15,7 +15,7 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true
+      "preset": "recommended"
     }
   },
   "formatter": {
@@ -24,6 +24,12 @@
     "indentWidth": 2
   },
   "files": {
-    "includes": ["**", "!dist/**", "!.astro/**", "!playwright-report/**", "!test-results/**"]
+    "includes": [
+      "**",
+      "!dist",
+      "!.astro",
+      "!playwright-report",
+      "!test-results"
+    ]
   }
 }
