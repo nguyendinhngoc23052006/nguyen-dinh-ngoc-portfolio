@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+.output/
+.wrangler/
+
+# Environment — never commit real values
+.env
+.env.*
+!.env.example
+
+# Astro generated types
+.astro/
+
+# Test artifacts
+playwright-report/
+test-results/
+
+# OS
+.DS_Store
