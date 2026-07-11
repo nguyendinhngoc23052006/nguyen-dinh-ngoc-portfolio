@@ -1,0 +1,20 @@
+---
+const error = Astro.locals.startupError;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nguyen Dinh Ngoc</title>
+  </head>
+  <body>
+    {error ? (
+      <p>Configuration error: {error}</p>
+    ) : (
+      <main>
+        <h1>Coming soon</h1>
+      </main>
+    )}
+  </body>
+</html>

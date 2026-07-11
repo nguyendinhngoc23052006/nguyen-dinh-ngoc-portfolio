@@ -1,0 +1,15 @@
+{
+  "name": "nguyen-dinh-ngoc-portfolio",
+  "compatibility_date": "2026-07-11",
+  "compatibility_flags": ["nodejs_compat"],
+  "main": "./dist/_worker.js",
+  "assets": {
+    "directory": "./dist"
+  },
+  "env": {
+    "staging": {
+      "workers_dev": true,
+      "preview_urls": true
+    }
+  }
+}
