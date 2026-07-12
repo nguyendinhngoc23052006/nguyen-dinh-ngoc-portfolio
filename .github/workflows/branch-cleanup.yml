@@ -10,7 +10,7 @@ jobs:
       contents: write
       pull-requests: read
     steps:
-      - uses: actions/github-script@v7
+      - uses: actions/github-script@v9
         with:
           script: |
             const PROTECTED = new Set(['main']);
