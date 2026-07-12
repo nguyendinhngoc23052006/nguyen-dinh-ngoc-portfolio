@@ -1,7 +1,11 @@
-# scale-reviewer — verdict for the portfolio + contact form PR
+# Scale Review — shadcn/Tailwind redesign
 
-**Verdict: PASS** (after fix).
-- Initial finding: `.insert()` without conflict handling — non-idempotent on network retry.
-- Fix applied: `request_key uuid NOT NULL UNIQUE` added to migration; client generates UUID once per page load and holds it across retries; service uses `upsert({ onConflict: "request_key", ignoreDuplicates: true })` — duplicate submits silently no-op.
-- `created_at DESC` index present for admin queries on the table.
-- No reads from client; no N+1 patterns; no pagination needed (write-only from client).
+**Date:** 2026-07-12
+**Verdict:** PASS — no scale issues found.
+
+## Checks
+
+1. **Unbounded query** — no `.select()` calls in the diff.
+2. **Unindexed filter/join** — no `.eq()`/`.filter()`/JOIN in the diff.
+3. **N+1 pattern** — `ContactForm.tsx` fires one fetch per submit; `.map()` calls in `index.astro` render static in-memory arrays, not DB calls.
+4. **Non-idempotent write** — no `.insert()`/`.update()`/`.delete()` in the diff. Existing `contact.ts` uses `.insert()` with `23505` unique_violation catch on `request_key` — idempotent in effect.

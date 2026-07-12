@@ -13,6 +13,13 @@ test("health endpoint returns 200", async ({ request }) => {
 
 test("contact form submits successfully", async ({ page }) => {
   await page.goto(HOME_PATH);
+  // Wait for React island to hydrate (form submit handler needs it)
+  await page.waitForFunction(
+    () =>
+      document.querySelector("#submit-btn")?.getAttribute("data-hydrated") ===
+      "true",
+    { timeout: 15000 },
+  );
   await page.fill("#name", "Test User");
   await page.fill("#email", "test@example.com");
   await page.fill("#company", "Test Co");
@@ -22,7 +29,7 @@ test("contact form submits successfully", async ({ page }) => {
   );
   await page.click("#submit-btn");
   const msg = page.locator("#form-msg");
-  await expect(msg).toHaveClass("success", { timeout: 10000 });
+  await expect(msg).toHaveClass(/success/, { timeout: 10000 });
 });
 
 test("contact api rejects invalid payload", async ({ request }) => {

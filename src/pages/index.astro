@@ -1,462 +1,167 @@
 ---
-// biome-ignore lint/correctness/noUnusedVariables: used below in the template; Biome doesn't see past the frontmatter fence in .astro files
+// biome-ignore lint/correctness/noUnusedImports: used in Astro template below the frontmatter fence
+import ContactForm from "../components/ContactForm";
+import "../styles/globals.css";
+
+// biome-ignore lint/correctness/noUnusedVariables: used in Astro template
 const error = Astro.locals.startupError;
+
+// biome-ignore lint/correctness/noUnusedVariables: used in Astro template
+const skills = [
+  {
+    group: "Languages",
+    items: [
+      "TypeScript",
+      "JavaScript",
+      "Python",
+      "Go",
+      "Rust",
+      "Java",
+      "C++",
+      "PHP",
+      "SQL",
+    ],
+  },
+  {
+    group: "Frontend",
+    items: [
+      "React",
+      "Next.js",
+      "Astro",
+      "Vue",
+      "Svelte",
+      "Tailwind CSS",
+      "Three.js",
+      "Vite",
+    ],
+  },
+  {
+    group: "Backend",
+    items: [
+      "Node.js",
+      "Bun",
+      "Deno",
+      "Express",
+      "Hono",
+      "FastAPI",
+      "Django",
+      "Flask",
+      "Gin",
+      "tRPC",
+    ],
+  },
+  {
+    group: "Cloud & Infra",
+    items: [
+      "Cloudflare Workers",
+      "Supabase",
+      "AWS",
+      "GCP",
+      "Docker",
+      "GitHub Actions",
+      "Vercel",
+      "Terraform",
+    ],
+  },
+  {
+    group: "Databases",
+    items: [
+      "PostgreSQL",
+      "MySQL",
+      "MongoDB",
+      "Redis",
+      "SQLite",
+      "Prisma",
+      "Drizzle",
+    ],
+  },
+];
+
+// biome-ignore lint/correctness/noUnusedVariables: used in Astro template
+const projects = [
+  {
+    title: "Project One",
+    desc: "A placeholder for a real project. Description, impact, and a link will go here once the work is ready to showcase.",
+    tags: ["TypeScript", "React", "PostgreSQL"],
+  },
+  {
+    title: "Project Two",
+    desc: "Another placeholder. Real projects with live links and outcome metrics will replace these cards.",
+    tags: ["Python", "FastAPI", "Docker"],
+  },
+  {
+    title: "Project Three",
+    desc: "More coming. The pipeline is live; the showcase content is being curated and added soon.",
+    tags: ["Go", "Cloudflare", "Supabase"],
+  },
+];
 ---
+
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Nguyen Dinh Ngoc — Custom Solutions Developer. Building end-to-end digital products from Vietnam." />
     <title>Nguyen Dinh Ngoc</title>
-    <style>
-      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-      :root {
-        --bg: #080c14;
-        --bg2: #0d1526;
-        --bg3: #111e35;
-        --accent: #4f7ef8;
-        --accent2: #7c3aed;
-        --text: #dde4f0;
-        --muted: #7a8499;
-        --border: rgba(255,255,255,0.07);
-        --radius: 12px;
-        --max: 1100px;
-      }
-
-      html { scroll-behavior: smooth; }
-
-      body {
-        background: var(--bg);
-        color: var(--text);
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        font-size: 1rem;
-        line-height: 1.6;
-        -webkit-font-smoothing: antialiased;
-      }
-
-      a { color: var(--accent); text-decoration: none; }
-      a:hover { text-decoration: underline; }
-
-      /* ── NAV ── */
-      nav {
-        position: fixed;
-        top: 0; left: 0; right: 0;
-        z-index: 100;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 2rem;
-        height: 60px;
-        background: rgba(8,12,20,0.8);
-        backdrop-filter: blur(12px);
-        border-bottom: 1px solid var(--border);
-      }
-      .nav-logo {
-        font-weight: 700;
-        font-size: 1rem;
-        color: var(--text);
-        letter-spacing: -0.02em;
-      }
-      .nav-links {
-        display: flex;
-        gap: 2rem;
-        list-style: none;
-      }
-      .nav-links a {
-        color: var(--muted);
-        font-size: 0.875rem;
-        transition: color 0.2s;
-      }
-      .nav-links a:hover { color: var(--text); text-decoration: none; }
-
-      /* ── SECTIONS ── */
-      section { padding: 6rem 2rem; }
-      .container { max-width: var(--max); margin: 0 auto; }
-      .section-label {
-        font-size: 0.75rem;
-        font-weight: 600;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        color: var(--accent);
-        margin-bottom: 0.75rem;
-      }
-      h2 {
-        font-size: clamp(1.75rem, 4vw, 2.5rem);
-        font-weight: 700;
-        letter-spacing: -0.03em;
-        margin-bottom: 1.5rem;
-      }
-
-      /* ── HERO ── */
-      #hero {
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        padding-top: 60px;
-        position: relative;
-        overflow: hidden;
-      }
-      #hero::before {
-        content: "";
-        position: absolute;
-        top: -20%;
-        left: -10%;
-        width: 600px;
-        height: 600px;
-        background: radial-gradient(circle, rgba(79,126,248,0.12) 0%, transparent 70%);
-        pointer-events: none;
-      }
-      #hero::after {
-        content: "";
-        position: absolute;
-        bottom: -10%;
-        right: -5%;
-        width: 500px;
-        height: 500px;
-        background: radial-gradient(circle, rgba(124,58,237,0.1) 0%, transparent 70%);
-        pointer-events: none;
-      }
-      .hero-inner { position: relative; z-index: 1; }
-      .hero-tag {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.35rem 0.9rem;
-        border: 1px solid var(--border);
-        border-radius: 999px;
-        font-size: 0.8rem;
-        color: var(--muted);
-        margin-bottom: 1.5rem;
-        background: var(--bg2);
-      }
-      .hero-dot {
-        width: 7px;
-        height: 7px;
-        border-radius: 50%;
-        background: #22c55e;
-        box-shadow: 0 0 6px #22c55e;
-        animation: pulse 2s infinite;
-      }
-      @keyframes pulse {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.5; }
-      }
-      h1 {
-        font-size: clamp(2.8rem, 8vw, 5.5rem);
-        font-weight: 800;
-        letter-spacing: -0.04em;
-        line-height: 1.05;
-        margin-bottom: 1.25rem;
-      }
-      .hero-gradient {
-        background: linear-gradient(135deg, #4f7ef8 0%, #7c3aed 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
-      .hero-sub {
-        font-size: clamp(1rem, 2.5vw, 1.25rem);
-        color: var(--muted);
-        max-width: 520px;
-        margin-bottom: 2.5rem;
-      }
-      .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
-      .btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.75rem 1.75rem;
-        border-radius: 8px;
-        font-size: 0.9rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.2s;
-        border: none;
-        text-decoration: none;
-      }
-      .btn-primary {
-        background: var(--accent);
-        color: #fff;
-      }
-      .btn-primary:hover { background: #3d6ee0; text-decoration: none; }
-      .btn-outline {
-        background: transparent;
-        color: var(--text);
-        border: 1px solid var(--border);
-      }
-      .btn-outline:hover { background: var(--bg3); text-decoration: none; }
-
-      /* ── ABOUT ── */
-      #about { background: var(--bg2); }
-      .about-grid {
-        display: grid;
-        grid-template-columns: 1fr 340px;
-        gap: 4rem;
-        align-items: start;
-      }
-      .about-text p {
-        color: var(--muted);
-        font-size: 1.05rem;
-        margin-bottom: 1rem;
-      }
-      .about-text p:last-child { margin-bottom: 0; }
-      .about-facts {
-        background: var(--bg3);
-        border: 1px solid var(--border);
-        border-radius: var(--radius);
-        padding: 1.75rem;
-        display: flex;
-        flex-direction: column;
-        gap: 1.25rem;
-      }
-      .fact {
-        display: flex;
-        flex-direction: column;
-        gap: 0.2rem;
-      }
-      .fact-label {
-        font-size: 0.72rem;
-        font-weight: 600;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        color: var(--muted);
-      }
-      .fact-value {
-        font-size: 0.9rem;
-        color: var(--text);
-      }
-
-      /* ── SKILLS ── */
-      .skills-groups { display: flex; flex-direction: column; gap: 2rem; }
-      .skill-group-label {
-        font-size: 0.75rem;
-        font-weight: 600;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        color: var(--muted);
-        margin-bottom: 0.75rem;
-      }
-      .skill-tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-      }
-      .tag {
-        padding: 0.35rem 0.85rem;
-        background: var(--bg2);
-        border: 1px solid var(--border);
-        border-radius: 6px;
-        font-size: 0.82rem;
-        color: var(--text);
-        transition: border-color 0.2s, color 0.2s;
-      }
-      .tag:hover { border-color: var(--accent); color: var(--accent); }
-
-      /* ── PROJECTS ── */
-      #projects { background: var(--bg2); }
-      .projects-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 1.5rem;
-      }
-      .project-card {
-        background: var(--bg3);
-        border: 1px solid var(--border);
-        border-radius: var(--radius);
-        padding: 1.75rem;
-        display: flex;
-        flex-direction: column;
-        gap: 0.75rem;
-        transition: border-color 0.2s, transform 0.2s;
-      }
-      .project-card:hover {
-        border-color: rgba(79,126,248,0.3);
-        transform: translateY(-2px);
-      }
-      .project-status {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.4rem;
-        font-size: 0.72rem;
-        font-weight: 600;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        color: var(--muted);
-      }
-      .project-status-dot {
-        width: 6px;
-        height: 6px;
-        border-radius: 50%;
-        background: var(--muted);
-      }
-      .project-card h3 {
-        font-size: 1.1rem;
-        font-weight: 700;
-        letter-spacing: -0.02em;
-      }
-      .project-card p {
-        font-size: 0.875rem;
-        color: var(--muted);
-        flex: 1;
-      }
-      .project-tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.4rem;
-        margin-top: 0.25rem;
-      }
-      .project-tag {
-        padding: 0.2rem 0.6rem;
-        background: rgba(79,126,248,0.08);
-        border: 1px solid rgba(79,126,248,0.15);
-        border-radius: 4px;
-        font-size: 0.72rem;
-        color: var(--accent);
-      }
-
-      /* ── CONTACT ── */
-      #contact { }
-      .contact-inner {
-        max-width: 640px;
-        margin: 0 auto;
-      }
-      .contact-intro {
-        color: var(--muted);
-        margin-bottom: 2.5rem;
-        font-size: 1.05rem;
-      }
-      form {
-        display: flex;
-        flex-direction: column;
-        gap: 1.25rem;
-      }
-      .field-row {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 1.25rem;
-      }
-      .field {
-        display: flex;
-        flex-direction: column;
-        gap: 0.4rem;
-      }
-      label {
-        font-size: 0.8rem;
-        font-weight: 600;
-        color: var(--muted);
-        letter-spacing: 0.04em;
-      }
-      input, textarea {
-        background: var(--bg2);
-        border: 1px solid var(--border);
-        border-radius: 8px;
-        padding: 0.75rem 1rem;
-        color: var(--text);
-        font-size: 0.9rem;
-        font-family: inherit;
-        transition: border-color 0.2s;
-        outline: none;
-        width: 100%;
-      }
-      input:focus, textarea:focus {
-        border-color: var(--accent);
-      }
-      input::placeholder, textarea::placeholder {
-        color: var(--muted);
-        opacity: 0.6;
-      }
-      textarea { resize: vertical; min-height: 130px; }
-      .form-footer {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 1rem;
-        flex-wrap: wrap;
-      }
-      #form-msg {
-        font-size: 0.875rem;
-        flex: 1;
-      }
-      #form-msg.success { color: #22c55e; }
-      #form-msg.error { color: #f87171; }
-      #submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
-
-      /* ── FOOTER ── */
-      footer {
-        border-top: 1px solid var(--border);
-        padding: 2rem;
-        text-align: center;
-        color: var(--muted);
-        font-size: 0.8rem;
-      }
-      .social-links {
-        display: flex;
-        justify-content: center;
-        gap: 1.5rem;
-        margin-bottom: 1rem;
-        list-style: none;
-      }
-      .social-links a { color: var(--muted); font-size: 0.85rem; transition: color 0.2s; }
-      .social-links a:hover { color: var(--text); text-decoration: none; }
-
-      /* ── STARTUP ERROR ── */
-      .startup-error {
-        padding: 2rem;
-        color: #f87171;
-        font-family: monospace;
-      }
-
-      /* ── RESPONSIVE ── */
-      @media (max-width: 768px) {
-        .about-grid { grid-template-columns: 1fr; }
-        .field-row { grid-template-columns: 1fr; }
-        .nav-links { display: none; }
-      }
-    </style>
   </head>
-  <body>
+  <body class="min-h-screen bg-background font-sans antialiased">
     {error ? (
-      <p class="startup-error">Configuration error: {error}</p>
+      <p class="p-8 font-mono text-red-400">Configuration error: {error}</p>
     ) : (
       <>
-        <nav>
-          <span class="nav-logo">NĐN</span>
-          <ul class="nav-links">
-            <li><a href="#about">About</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-        </nav>
+        {/* ── NAV ── */}
+        <header class="fixed inset-x-0 top-0 z-50 border-b border-border/40 bg-background/80 backdrop-blur-lg">
+          <nav class="mx-auto flex h-14 max-w-5xl items-center justify-between px-6">
+            <a href="/" class="text-sm font-bold tracking-tight">NĐN</a>
+            <div class="hidden items-center gap-6 sm:flex">
+              <a href="#about" class="text-sm text-muted-foreground transition-colors hover:text-foreground">About</a>
+              <a href="#skills" class="text-sm text-muted-foreground transition-colors hover:text-foreground">Skills</a>
+              <a href="#projects" class="text-sm text-muted-foreground transition-colors hover:text-foreground">Projects</a>
+              <a href="#contact" class="text-sm text-muted-foreground transition-colors hover:text-foreground">Contact</a>
+            </div>
+          </nav>
+        </header>
 
-        <section id="hero">
-          <div class="container hero-inner">
-            <div class="hero-tag">
-              <span class="hero-dot"></span>
+        {/* ── HERO ── */}
+        <section class="relative flex min-h-screen items-center overflow-hidden pt-14">
+          <div class="pointer-events-none absolute -left-32 -top-32 h-[500px] w-[500px] rounded-full bg-blue-500/5 blur-3xl" />
+          <div class="pointer-events-none absolute -bottom-32 -right-32 h-[400px] w-[400px] rounded-full bg-violet-500/5 blur-3xl" />
+
+          <div class="relative mx-auto max-w-5xl px-6">
+            <div class="inline-flex items-center gap-2 rounded-full border border-border/60 bg-secondary/50 px-3 py-1 text-xs text-muted-foreground">
+              <span class="h-1.5 w-1.5 rounded-full bg-emerald-500 shadow-[0_0_6px] shadow-emerald-500 animate-pulse" />
               Available for projects
             </div>
-            <h1>
+
+            <h1 class="mt-6 text-5xl font-extrabold tracking-tighter sm:text-7xl lg:text-8xl">
               Nguyen<br />
-              Dinh <span class="hero-gradient">Ngoc</span>
+              Dinh <span class="bg-gradient-to-br from-blue-400 to-violet-500 bg-clip-text text-transparent">Ngoc</span>
             </h1>
-            <p class="hero-sub">
+
+            <p class="mt-4 max-w-lg text-lg text-muted-foreground sm:text-xl">
               Custom solutions developer — I turn ideas into production-ready digital products, fast.
             </p>
-            <div class="hero-actions">
-              <a href="#contact" class="btn btn-primary">Request a demo</a>
-              <a href="#projects" class="btn btn-outline">See my work</a>
+
+            <div class="mt-8 flex flex-wrap gap-3">
+              <a href="#contact" class="inline-flex h-10 items-center gap-2 rounded-md bg-primary px-6 text-sm font-medium text-primary-foreground shadow-xs transition-colors hover:bg-primary/90">
+                Request a demo
+              </a>
+              <a href="#projects" class="inline-flex h-10 items-center gap-2 rounded-md border border-input bg-background px-6 text-sm font-medium shadow-xs transition-colors hover:bg-accent hover:text-accent-foreground">
+                See my work
+              </a>
             </div>
           </div>
         </section>
 
-        <section id="about">
-          <div class="container">
-            <div class="section-label">About</div>
-            <h2>Building from Vietnam, shipping globally</h2>
-            <div class="about-grid">
-              <div class="about-text">
+        {/* ── ABOUT ── */}
+        <section id="about" class="border-t border-border/40 bg-card/50 py-20 sm:py-28">
+          <div class="mx-auto max-w-5xl px-6">
+            <p class="text-xs font-semibold uppercase tracking-widest text-blue-400">About</p>
+            <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Building from Vietnam, shipping globally</h2>
+
+            <div class="mt-10 grid gap-10 lg:grid-cols-[1fr_320px]">
+              <div class="space-y-4 text-muted-foreground">
                 <p>
                   I'm a 19-year-old custom solutions developer based in Hanoi, currently studying
                   International Business at Foreign Trade University (FTU). I started writing code to
@@ -473,222 +178,112 @@ const error = Astro.locals.startupError;
                   standard I hold every project to.
                 </p>
               </div>
-              <div class="about-facts">
-                <div class="fact">
-                  <span class="fact-label">Location</span>
-                  <span class="fact-value">Hanoi, Vietnam 🇻🇳</span>
+
+              <div class="rounded-xl border border-border/60 bg-secondary/30 p-6 space-y-5">
+                <div>
+                  <p class="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">Location</p>
+                  <p class="mt-0.5 text-sm">Hanoi, Vietnam</p>
                 </div>
-                <div class="fact">
-                  <span class="fact-label">Education</span>
-                  <span class="fact-value">Foreign Trade University (FTU)</span>
+                <div>
+                  <p class="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">Education</p>
+                  <p class="mt-0.5 text-sm">Foreign Trade University (FTU)</p>
                 </div>
-                <div class="fact">
-                  <span class="fact-label">Born</span>
-                  <span class="fact-value">May 23, 2006</span>
+                <div>
+                  <p class="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">Born</p>
+                  <p class="mt-0.5 text-sm">May 23, 2006</p>
                 </div>
-                <div class="fact">
-                  <span class="fact-label">Focus</span>
-                  <span class="fact-value">Web apps · Automation · Cloud infra</span>
+                <div>
+                  <p class="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">Focus</p>
+                  <p class="mt-0.5 text-sm">Web apps · Automation · Cloud infra</p>
                 </div>
-                <div class="fact">
-                  <span class="fact-label">Status</span>
-                  <span class="fact-value" style="color: #22c55e;">Open to projects</span>
+                <div>
+                  <p class="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">Status</p>
+                  <p class="mt-0.5 text-sm text-emerald-400">Open to projects</p>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        <section id="skills">
-          <div class="container">
-            <div class="section-label">Stack</div>
-            <h2>Languages & frameworks</h2>
-            <div class="skills-groups">
-              <div>
-                <div class="skill-group-label">Languages</div>
-                <div class="skill-tags">
-                  {["TypeScript", "JavaScript", "Python", "Go", "Rust", "Java", "C++", "PHP", "SQL", "HTML", "CSS", "Bash"].map(s => (
-                    <span class="tag">{s}</span>
-                  ))}
-                </div>
-              </div>
-              <div>
-                <div class="skill-group-label">Frontend</div>
-                <div class="skill-tags">
-                  {["React", "Next.js", "Astro", "Vue", "Svelte", "TailwindCSS", "Three.js", "Vite"].map(s => (
-                    <span class="tag">{s}</span>
-                  ))}
-                </div>
-              </div>
-              <div>
-                <div class="skill-group-label">Backend</div>
-                <div class="skill-tags">
-                  {["Node.js", "Bun", "Deno", "Express", "Hono", "FastAPI", "Django", "Flask", "Gin", "tRPC"].map(s => (
-                    <span class="tag">{s}</span>
-                  ))}
-                </div>
-              </div>
-              <div>
-                <div class="skill-group-label">Cloud & Infra</div>
-                <div class="skill-tags">
-                  {["Cloudflare Workers", "Supabase", "AWS", "GCP", "Docker", "GitHub Actions", "Vercel", "Terraform"].map(s => (
-                    <span class="tag">{s}</span>
-                  ))}
-                </div>
-              </div>
-              <div>
-                <div class="skill-group-label">Databases</div>
-                <div class="skill-tags">
-                  {["PostgreSQL", "MySQL", "MongoDB", "Redis", "SQLite", "Prisma", "Drizzle"].map(s => (
-                    <span class="tag">{s}</span>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        {/* ── SKILLS ── */}
+        <section id="skills" class="border-t border-border/40 py-20 sm:py-28">
+          <div class="mx-auto max-w-5xl px-6">
+            <p class="text-xs font-semibold uppercase tracking-widest text-blue-400">Stack</p>
+            <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Languages & frameworks</h2>
 
-        <section id="projects">
-          <div class="container">
-            <div class="section-label">Projects</div>
-            <h2>Selected work</h2>
-            <div class="projects-grid">
-              <div class="project-card">
-                <div class="project-status">
-                  <span class="project-status-dot"></span>
-                  Coming soon
-                </div>
-                <h3>Project One</h3>
-                <p>A placeholder for a real project. Description, impact, and a link will go here once the work is ready to showcase.</p>
-                <div class="project-tags">
-                  <span class="project-tag">TypeScript</span>
-                  <span class="project-tag">React</span>
-                  <span class="project-tag">PostgreSQL</span>
-                </div>
-              </div>
-              <div class="project-card">
-                <div class="project-status">
-                  <span class="project-status-dot"></span>
-                  Coming soon
-                </div>
-                <h3>Project Two</h3>
-                <p>Another placeholder. Real projects with live links and outcome metrics will replace these cards.</p>
-                <div class="project-tags">
-                  <span class="project-tag">Python</span>
-                  <span class="project-tag">FastAPI</span>
-                  <span class="project-tag">Docker</span>
-                </div>
-              </div>
-              <div class="project-card">
-                <div class="project-status">
-                  <span class="project-status-dot"></span>
-                  Coming soon
-                </div>
-                <h3>Project Three</h3>
-                <p>More coming. The pipeline is live; the showcase content is being curated and added soon.</p>
-                <div class="project-tags">
-                  <span class="project-tag">Go</span>
-                  <span class="project-tag">Cloudflare</span>
-                  <span class="project-tag">Supabase</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section id="contact">
-          <div class="container">
-            <div class="contact-inner">
-              <div class="section-label">Contact</div>
-              <h2>Let's build something</h2>
-              <p class="contact-intro">
-                Got a project in mind? Fill in the form and I'll get back to you within 24 hours.
-              </p>
-              <form id="demo-form">
-                <div class="field-row">
-                  <div class="field">
-                    <label for="name">Name</label>
-                    <input id="name" name="name" type="text" placeholder="Your name" required />
-                  </div>
-                  <div class="field">
-                    <label for="email">Email</label>
-                    <input id="email" name="email" type="email" placeholder="you@company.com" required />
+            <div class="mt-10 space-y-8">
+              {skills.map(({ group, items }) => (
+                <div>
+                  <p class="mb-3 text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">{group}</p>
+                  <div class="flex flex-wrap gap-2">
+                    {items.map((s) => (
+                      <span class="rounded-md border border-border/60 bg-secondary/30 px-2.5 py-0.5 text-xs font-medium transition-colors hover:border-blue-400/40 hover:text-blue-400">
+                        {s}
+                      </span>
+                    ))}
                   </div>
                 </div>
-                <div class="field">
-                  <label for="company">Company <span style="font-weight:400;opacity:.6">(optional)</span></label>
-                  <input id="company" name="company" type="text" placeholder="Your company" />
-                </div>
-                <div class="field">
-                  <label for="message">Message</label>
-                  <textarea id="message" name="message" placeholder="Tell me about your project — what you're building, what problem it solves, and what kind of help you need." required></textarea>
-                </div>
-                <div class="form-footer">
-                  <span id="form-msg"></span>
-                  <button id="submit-btn" type="submit" class="btn btn-primary">Send message</button>
-                </div>
-              </form>
+              ))}
             </div>
           </div>
         </section>
 
-        <footer>
-          <ul class="social-links">
-            <li><a href="#" aria-label="GitHub">GitHub</a></li>
-            <li><a href="#" aria-label="LinkedIn">LinkedIn</a></li>
-            <li><a href="mailto:placeholder@example.com" aria-label="Email">Email</a></li>
-          </ul>
-          <p>© {new Date().getFullYear()} Nguyen Dinh Ngoc. All rights reserved.</p>
+        {/* ── PROJECTS ── */}
+        <section id="projects" class="border-t border-border/40 bg-card/50 py-20 sm:py-28">
+          <div class="mx-auto max-w-5xl px-6">
+            <p class="text-xs font-semibold uppercase tracking-widest text-blue-400">Projects</p>
+            <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Selected work</h2>
+
+            <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {projects.map(({ title, desc, tags }) => (
+                <div class="group rounded-xl border border-border/60 bg-card p-6 transition-all hover:border-blue-400/30 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-500/5">
+                  <div class="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
+                    <span class="h-1.5 w-1.5 rounded-full bg-muted-foreground" />
+                    Coming soon
+                  </div>
+                  <h3 class="mt-3 font-semibold tracking-tight">{title}</h3>
+                  <p class="mt-2 text-sm text-muted-foreground leading-relaxed">{desc}</p>
+                  <div class="mt-4 flex flex-wrap gap-1.5">
+                    {tags.map((t) => (
+                      <span class="rounded border border-blue-400/20 bg-blue-400/5 px-2 py-0.5 text-[11px] font-medium text-blue-400">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── CONTACT ── */}
+        <section id="contact" class="border-t border-border/40 py-20 sm:py-28">
+          <div class="mx-auto max-w-xl px-6">
+            <p class="text-xs font-semibold uppercase tracking-widest text-blue-400">Contact</p>
+            <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Let's build something</h2>
+            <p class="mt-3 text-muted-foreground">
+              Got a project in mind? Fill in the form and I'll get back to you within 24 hours.
+            </p>
+            <div class="mt-8">
+              <ContactForm client:load />
+            </div>
+          </div>
+        </section>
+
+        {/* ── FOOTER ── */}
+        <footer class="border-t border-border/40 py-8">
+          <div class="mx-auto max-w-5xl px-6 text-center">
+            <div class="flex justify-center gap-6">
+              <a href="#" class="text-sm text-muted-foreground transition-colors hover:text-foreground">GitHub</a>
+              <a href="#" class="text-sm text-muted-foreground transition-colors hover:text-foreground">LinkedIn</a>
+              <a href="mailto:placeholder@example.com" class="text-sm text-muted-foreground transition-colors hover:text-foreground">Email</a>
+            </div>
+            <p class="mt-4 text-xs text-muted-foreground">
+              © {new Date().getFullYear()} Nguyen Dinh Ngoc. All rights reserved.
+            </p>
+          </div>
         </footer>
       </>
     )}
-
-    <script>
-      const form = document.getElementById("demo-form");
-      const msg = document.getElementById("form-msg");
-      const btn = document.getElementById("submit-btn");
-
-      if (form && msg && btn) {
-        // Generated once per page load — same key on retries so upsert deduplicates
-        const requestKey = crypto.randomUUID();
-
-        form.addEventListener("submit", async (e) => {
-          e.preventDefault();
-          const submitBtn = btn as HTMLButtonElement;
-          submitBtn.disabled = true;
-          submitBtn.textContent = "Sending…";
-          msg.textContent = "";
-          msg.className = "";
-
-          const data = {
-            ...Object.fromEntries(new FormData(form as HTMLFormElement)),
-            request_key: requestKey,
-          };
-
-          try {
-            const res = await fetch("/api/contact", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(data),
-            });
-            const json = await res.json() as { success?: boolean; error?: string };
-            if (json.success) {
-              msg.textContent = "Message sent — I'll be in touch soon.";
-              msg.className = "success";
-              (form as HTMLFormElement).reset();
-            } else {
-              msg.textContent = json.error ?? "Something went wrong.";
-              msg.className = "error";
-            }
-          } catch {
-            msg.textContent = "Network error — please try again.";
-            msg.className = "error";
-          } finally {
-            submitBtn.disabled = false;
-            submitBtn.textContent = "Send message";
-          }
-        });
-      }
-    </script>
   </body>
 </html>

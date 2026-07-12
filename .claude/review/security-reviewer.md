@@ -1,8 +1,11 @@
-# security-reviewer — verdict for the portfolio + contact form PR
+# Security Review — shadcn/Tailwind redesign
 
-**Verdict: PASS.**
-- RLS enabled on `demo_requests`; insert-only policy; no client SELECT/UPDATE/DELETE.
-- No secrets in client code or `index.astro`; Supabase client injected via middleware locals.
-- All user input validated server-side in `src/services/contact.ts` before hitting Supabase; JS client uses parameterised queries (no SQL injection).
-- `index.astro` renders API response via `.textContent` — no XSS vector.
-- **Abuse case (PII — name/email/company):** anonymous inserts only; no server-side email action triggered; RLS blocks all client reads; no PII returned in API responses.
+**Date:** 2026-07-12
+**Verdict:** PASS — no security issues found.
+
+## Checks
+
+1. **Missing RLS** — `20260712000000_demo_requests.sql` enables RLS and creates an anon-insert-only policy; no SELECT/UPDATE/DELETE policies (default-deny). No new tables in this PR.
+2. **Secrets in client code** — `src/lib/supabase.ts` reads only `PUBLIC_SUPABASE_URL` / `PUBLIC_SUPABASE_PUBLISHABLE_KEY` from `process.env`, server-side. `ContactForm.tsx` never touches Supabase — it fetches `/api/contact`.
+3. **Unvalidated input** — `src/pages/api/contact.ts` passes request body through `validateDemoRequest` before any DB call. Validation covers UUID, required fields, email regex, length caps.
+4. **PII abuse case** — anon insert-only RLS, no client reads, no PII in API responses, `request_key` dedup.
