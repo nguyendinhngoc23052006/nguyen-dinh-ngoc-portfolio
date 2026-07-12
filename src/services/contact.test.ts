@@ -133,9 +133,9 @@ describe("submitDemoRequest", () => {
   it("resolves on duplicate (unique_violation)", async () => {
     const supabase = {
       from: () => ({
-        insert: vi
-          .fn()
-          .mockResolvedValue({ error: { code: "23505", message: "duplicate" } }),
+        insert: vi.fn().mockResolvedValue({
+          error: { code: "23505", message: "duplicate" },
+        }),
       }),
     } as unknown as SupabaseClient;
     await expect(submitDemoRequest(supabase, input)).resolves.toBeUndefined();
