@@ -13,7 +13,7 @@ CREATE INDEX demo_requests_created_at_idx ON demo_requests (created_at DESC);
 
 ALTER TABLE demo_requests ENABLE ROW LEVEL SECURITY;
 
--- Anonymous users may insert (the contact form); nobody reads from the client
-CREATE POLICY "public can insert demo requests"
-  ON demo_requests FOR INSERT
+-- Must target anon explicitly; {public} (no TO clause) is not honoured by PostgREST
+CREATE POLICY "anon can insert demo requests"
+  ON demo_requests FOR INSERT TO anon
   WITH CHECK (true);
