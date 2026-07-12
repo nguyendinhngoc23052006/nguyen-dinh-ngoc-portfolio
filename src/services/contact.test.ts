@@ -124,7 +124,18 @@ describe("submitDemoRequest", () => {
   it("resolves on success", async () => {
     const supabase = {
       from: () => ({
-        upsert: vi.fn().mockResolvedValue({ error: null }),
+        insert: vi.fn().mockResolvedValue({ error: null }),
+      }),
+    } as unknown as SupabaseClient;
+    await expect(submitDemoRequest(supabase, input)).resolves.toBeUndefined();
+  });
+
+  it("resolves on duplicate (unique_violation)", async () => {
+    const supabase = {
+      from: () => ({
+        insert: vi
+          .fn()
+          .mockResolvedValue({ error: { code: "23505", message: "duplicate" } }),
       }),
     } as unknown as SupabaseClient;
     await expect(submitDemoRequest(supabase, input)).resolves.toBeUndefined();
@@ -133,7 +144,9 @@ describe("submitDemoRequest", () => {
   it("throws on Supabase error", async () => {
     const supabase = {
       from: () => ({
-        upsert: vi.fn().mockResolvedValue({ error: { message: "DB error" } }),
+        insert: vi
+          .fn()
+          .mockResolvedValue({ error: { code: "42501", message: "DB error" } }),
       }),
     } as unknown as SupabaseClient;
     await expect(submitDemoRequest(supabase, input)).rejects.toThrow(
