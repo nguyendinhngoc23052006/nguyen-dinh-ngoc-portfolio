@@ -51,7 +51,13 @@ export default function ContactForm() {
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div className="space-y-2">
           <Label htmlFor="name">Name</Label>
-          <Input id="name" name="name" placeholder="Your name" required />
+          <Input
+            id="name"
+            name="name"
+            placeholder="Your name"
+            required
+            maxLength={200}
+          />
         </div>
         <div className="space-y-2">
           <Label htmlFor="email">Email</Label>
@@ -61,6 +67,7 @@ export default function ContactForm() {
             type="email"
             placeholder="you@company.com"
             required
+            maxLength={200}
           />
         </div>
       </div>
@@ -69,7 +76,12 @@ export default function ContactForm() {
           Company{" "}
           <span className="text-muted-foreground font-normal">(optional)</span>
         </Label>
-        <Input id="company" name="company" placeholder="Your company" />
+        <Input
+          id="company"
+          name="company"
+          placeholder="Your company"
+          maxLength={200}
+        />
       </div>
       <div className="space-y-2">
         <Label htmlFor="message">Message</Label>
@@ -79,6 +91,7 @@ export default function ContactForm() {
           placeholder="Tell me about your project — what you're building, what problem it solves, and what kind of help you need."
           className="min-h-[120px]"
           required
+          maxLength={2000}
         />
       </div>
       <div className="flex items-center gap-4">
