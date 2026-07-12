@@ -1,4 +1,4 @@
-Add profile photo to hero section using GitHub avatar URL.
+Add `maxLength` to all contact form inputs so the browser enforces the same limits the backend already applies (name/email/company: 200, message: 2000).
 
 ## Self-check
 - [x] base = main; exactly one PR
@@ -9,10 +9,10 @@ Add profile photo to hero section using GitHub avatar URL.
 - [~] irreversible actions — none
 - [x] no avoidable debt; memory updated and pruned
 - [~] migrations — none
-- [~] reviewers ran — single-line UI change, skipped per user request to conserve tokens
-- [~] subagent dispatch — no subagents dispatched
+- [x] reviewers ran — `.claude/review/*` verdicts refreshed this PR
+- [x] every subagent dispatched on a model below the orchestrator's — never inherited
 
 ## For you
-**What changed:** Added profile photo (GitHub avatar) to the hero section of the portfolio page.
-**What you do next:** If the photo shown isn't the one you want, update your GitHub avatar at github.com Settings > Profile, then the site pulls it automatically. Merge when happy.
+**What changed:** Added `maxLength` attributes to every contact form field so the browser stops input at the same limits the server enforces (200 chars for name/email/company, 2000 for message).
+**What you do next:** Merge when happy. For rate limiting on `/api/contact`, add a Cloudflare WAF rate-limiting rule in the dashboard (Security > WAF > Rate limiting rules > Create rule: URI path equals `/api/contact`, method POST, 5 requests per minute per IP, action Block).
 **How to roll it back:** Revert this PR.
