@@ -1,3 +1,8 @@
-# security-reviewer — verdict for the staging-removal PR
+# security-reviewer — verdict for the portfolio + contact form PR
 
-**Verdict: PASS.** No SQL/migration touched, no `src/` files touched, no secrets referenced. The `staging` branch and `require-staging-source` check were a workflow/review-cadence layer, not a security boundary — RLS, key separation, and input validation are all untouched. `deploy-preview.yml` still gives every PR a live preview before `main` merges; only the branch it targets changed.
+**Verdict: PASS.**
+- RLS enabled on `demo_requests`; insert-only policy; no client SELECT/UPDATE/DELETE.
+- No secrets in client code or `index.astro`; Supabase client injected via middleware locals.
+- All user input validated server-side in `src/services/contact.ts` before hitting Supabase; JS client uses parameterised queries (no SQL injection).
+- `index.astro` renders API response via `.textContent` — no XSS vector.
+- **Abuse case (PII — name/email/company):** anonymous inserts only; no server-side email action triggered; RLS blocks all client reads; no PII returned in API responses.

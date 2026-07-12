@@ -1,3 +1,7 @@
-# code-reviewer — verdict for the staging-removal PR
+# code-reviewer — verdict for the portfolio + contact form PR
 
-**Verdict: PASS.** All branch triggers correctly retargeted (`ci.yml`, `deploy-preview.yml`, `e2e.yml`: `staging`/`[staging, main]` → `[main]`); wrangler env `staging` → `preview`; `branch-cleanup.yml` PROTECTED set reduced to `['main']`. No orphaned references to the two deleted workflows (`deploy-staging.yml`, `gate-main.yml`) or their job names (`deploy-staging`, `require-staging-source`) outside the docs that describe the removal. `.claude/hooks/stop.sh`'s `origin/main`/`main` fallback is syntactically correct and behaves sensibly on `main` itself (AHEAD=0). Surgical deletions and renames, no duplicated logic introduced.
+**Verdict: PASS.**
+- No duplicated logic; clean separation: validation in `src/services/contact.ts`, HTTP in `src/pages/api/contact.ts`, UI in `index.astro`.
+- `src/services/contact.ts` paired with full test coverage (happy + unhappy paths) in `contact.test.ts`.
+- Form handles loading (button disabled + "Sending…"), error (`#form-msg.error`), and success (`#form-msg.success`) states.
+- `src/pages/index.astro` is 693 lines — exceeds the ~200-line guideline. Acceptable here: it is the complete portfolio page (hero/about/skills/projects/contact/footer + all CSS + form script) with no reusable sub-components; splitting would add files without reducing complexity. Noted as deliberate.
