@@ -36,8 +36,7 @@ export async function submitDemoRequest(
   supabase: SupabaseClient,
   input: DemoRequestInput,
 ): Promise<void> {
-  const { error } = await supabase
-    .from("demo_requests")
-    .upsert(input, { onConflict: "request_key", ignoreDuplicates: true });
-  if (error) throw new Error(error.message);
+  const { error } = await supabase.from("demo_requests").insert(input);
+  // 23505 = unique_violation on request_key — treat as success (duplicate submit)
+  if (error && error.code !== "23505") throw new Error(error.message);
 }
