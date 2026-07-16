@@ -1,6 +1,8 @@
 ---
 // biome-ignore lint/correctness/noUnusedImports: used in Astro template below the frontmatter fence
 import ContactForm from "../components/ContactForm";
+// biome-ignore lint/correctness/noUnusedImports: used in Astro template below the frontmatter fence
+import MobileNav from "../components/MobileNav";
 import "../styles/globals.css";
 
 // biome-ignore lint/correctness/noUnusedVariables: used in Astro template
@@ -10,91 +12,50 @@ const error = Astro.locals.startupError;
 const skills = [
   {
     group: "Languages",
-    items: [
-      "TypeScript",
-      "JavaScript",
-      "Python",
-      "Go",
-      "Rust",
-      "Java",
-      "C++",
-      "PHP",
-      "SQL",
-    ],
+    items: ["TypeScript", "JavaScript", "Python", "SQL"],
   },
   {
     group: "Frontend",
-    items: [
-      "React",
-      "Next.js",
-      "Astro",
-      "Vue",
-      "Svelte",
-      "Tailwind CSS",
-      "Three.js",
-      "Vite",
-    ],
+    items: ["React", "Next.js", "Astro", "Tailwind CSS"],
   },
   {
     group: "Backend",
-    items: [
-      "Node.js",
-      "Bun",
-      "Deno",
-      "Express",
-      "Hono",
-      "FastAPI",
-      "Django",
-      "Flask",
-      "Gin",
-      "tRPC",
-    ],
+    items: ["Node.js", "Express", "Hono", "FastAPI"],
   },
   {
-    group: "Cloud & Infra",
-    items: [
-      "Cloudflare Workers",
-      "Supabase",
-      "AWS",
-      "GCP",
-      "Docker",
-      "GitHub Actions",
-      "Vercel",
-      "Terraform",
-    ],
+    group: "Cloud & DevOps",
+    items: ["Cloudflare Workers", "Supabase", "GitHub Actions", "Docker"],
   },
   {
     group: "Databases",
-    items: [
-      "PostgreSQL",
-      "MySQL",
-      "MongoDB",
-      "Redis",
-      "SQLite",
-      "Prisma",
-      "Drizzle",
-    ],
+    items: ["PostgreSQL", "Redis"],
   },
 ];
 
 // biome-ignore lint/correctness/noUnusedVariables: used in Astro template
 const projects = [
   {
-    title: "Project One",
-    desc: "A placeholder for a real project. Description, impact, and a link will go here once the work is ready to showcase.",
-    tags: ["TypeScript", "React", "PostgreSQL"],
+    title: "Personal Portfolio",
+    desc: "This site — server-rendered Astro on Cloudflare Workers with a Supabase-backed contact form, automated CI/CD, preview deploys, uptime monitoring, and security hardening.",
+    tags: ["Astro", "React", "Cloudflare Workers", "Supabase"],
+    href: "https://github.com/nguyendinhngoc23052006/nguyen-dinh-ngoc-portfolio",
   },
   {
-    title: "Project Two",
-    desc: "Another placeholder. Real projects with live links and outcome metrics will replace these cards.",
-    tags: ["Python", "FastAPI", "Docker"],
-  },
-  {
-    title: "Project Three",
-    desc: "More coming. The pipeline is live; the showcase content is being curated and added soon.",
-    tags: ["Go", "Cloudflare", "Supabase"],
+    title: "Cloud Pipeline Guide",
+    desc: "An opinionated zero-terminal guide for setting up a cloud development pipeline. AI builds, GitHub gates merges, Cloudflare serves — no local tooling required.",
+    tags: ["GitHub Actions", "Cloudflare", "Supabase"],
+    href: "https://github.com/nguyendinhngoc23052006/cloud-pipeline-guide",
   },
 ];
+
+// biome-ignore lint/correctness/noUnusedVariables: used in Astro template
+const jsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Nguyen Dinh Ngoc",
+  jobTitle: "Full-Stack Developer",
+  sameAs: ["https://github.com/nguyendinhngoc23052006"],
+});
 ---
 
 <!doctype html>
@@ -102,36 +63,49 @@ const projects = [
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Nguyen Dinh Ngoc — Custom Solutions Developer. Building end-to-end digital products from Vietnam." />
-    <title>Nguyen Dinh Ngoc</title>
+    <meta name="description" content="Nguyen Dinh Ngoc — Full-stack developer based in Hanoi. Building production-ready web applications with modern cloud infrastructure." />
+    <title>Nguyen Dinh Ngoc — Full-Stack Developer</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:title" content="Nguyen Dinh Ngoc — Full-Stack Developer" />
+    <meta property="og:description" content="Full-stack developer based in Hanoi. Building production-ready web applications with modern cloud infrastructure." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://avatars.githubusercontent.com/u/256027763?v=4" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Nguyen Dinh Ngoc — Full-Stack Developer" />
+    <meta name="twitter:description" content="Full-stack developer based in Hanoi. Building production-ready web applications." />
+    <script type="application/ld+json" set:html={jsonLd} />
   </head>
   <body class="min-h-screen bg-background font-sans antialiased">
     {error ? (
       <p class="p-8 font-mono text-red-400">Configuration error: {error}</p>
     ) : (
       <>
+        {/* Skip to main content */}
+        <a href="#about" class="skip-link">Skip to content</a>
+
         {/* ── NAV ── */}
         <header class="fixed inset-x-0 top-0 z-50 border-b border-border/40 bg-background/80 backdrop-blur-lg">
-          <nav class="mx-auto flex h-14 max-w-5xl items-center justify-between px-6">
-            <a href="/" class="text-sm font-bold tracking-tight">NĐN</a>
+          <nav class="mx-auto flex h-14 max-w-5xl items-center justify-between px-6" aria-label="Main navigation">
+            <a href="/" class="text-sm font-bold tracking-tight">NDN</a>
             <div class="hidden items-center gap-6 sm:flex">
               <a href="#about" class="text-sm text-muted-foreground transition-colors hover:text-foreground">About</a>
               <a href="#skills" class="text-sm text-muted-foreground transition-colors hover:text-foreground">Skills</a>
               <a href="#projects" class="text-sm text-muted-foreground transition-colors hover:text-foreground">Projects</a>
               <a href="#contact" class="text-sm text-muted-foreground transition-colors hover:text-foreground">Contact</a>
             </div>
+            <MobileNav client:load />
           </nav>
         </header>
 
         {/* ── HERO ── */}
         <section class="relative flex min-h-screen items-center overflow-hidden pt-14">
-          <div class="pointer-events-none absolute -left-32 -top-32 h-[500px] w-[500px] rounded-full bg-blue-500/5 blur-3xl" />
-          <div class="pointer-events-none absolute -bottom-32 -right-32 h-[400px] w-[400px] rounded-full bg-violet-500/5 blur-3xl" />
+          <div class="hero-glow pointer-events-none absolute -left-32 -top-32 h-[500px] w-[500px] rounded-full bg-blue-500/5 blur-3xl" />
+          <div class="hero-glow pointer-events-none absolute -bottom-32 -right-32 h-[400px] w-[400px] rounded-full bg-violet-500/5 blur-3xl" />
 
           <div class="relative mx-auto max-w-5xl px-6 flex flex-col-reverse items-start gap-10 lg:flex-row lg:items-center lg:justify-between">
             <div>
             <div class="inline-flex items-center gap-2 rounded-full border border-border/60 bg-secondary/50 px-3 py-1 text-xs text-muted-foreground">
-              <span class="h-1.5 w-1.5 rounded-full bg-emerald-500 shadow-[0_0_6px] shadow-emerald-500 animate-pulse" />
+              <span class="pulse-dot h-1.5 w-1.5 rounded-full bg-emerald-500 shadow-[0_0_6px] shadow-emerald-500" aria-hidden="true" />
               Available for projects
             </div>
 
@@ -141,14 +115,14 @@ const projects = [
             </h1>
 
             <p class="mt-4 max-w-lg text-lg text-muted-foreground sm:text-xl">
-              Custom solutions developer — I turn ideas into production-ready digital products, fast.
+              Full-stack developer — I turn ideas into production-ready web applications, fast.
             </p>
 
             <div class="mt-8 flex flex-wrap gap-3">
-              <a href="#contact" class="inline-flex h-10 items-center gap-2 rounded-md bg-primary px-6 text-sm font-medium text-primary-foreground shadow-xs transition-colors hover:bg-primary/90">
-                Request a demo
+              <a href="#contact" class="inline-flex h-10 items-center gap-2 rounded-md bg-primary px-6 text-sm font-medium text-primary-foreground shadow-xs transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                Get in touch
               </a>
-              <a href="#projects" class="inline-flex h-10 items-center gap-2 rounded-md border border-input bg-background px-6 text-sm font-medium shadow-xs transition-colors hover:bg-accent hover:text-accent-foreground">
+              <a href="#projects" class="inline-flex h-10 items-center gap-2 rounded-md border border-input bg-background px-6 text-sm font-medium shadow-xs transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
                 See my work
               </a>
             </div>
@@ -158,6 +132,7 @@ const projects = [
               alt="Nguyen Dinh Ngoc"
               width="280"
               height="280"
+              loading="eager"
               class="rounded-2xl border border-border/60 shadow-lg shadow-blue-500/5 object-cover"
             />
           </div>
@@ -172,9 +147,9 @@ const projects = [
             <div class="mt-10 grid gap-10 lg:grid-cols-[1fr_320px]">
               <div class="space-y-4 text-muted-foreground">
                 <p>
-                  I'm a 19-year-old custom solutions developer based in Hanoi, currently studying
-                  International Business at Foreign Trade University (FTU). I started writing code to
-                  solve real problems, and never stopped.
+                  I'm a full-stack developer based in Hanoi, currently studying International Business
+                  at Foreign Trade University (FTU). I started writing code to solve real problems, and
+                  never stopped.
                 </p>
                 <p>
                   My work spans the full stack — from database schema and server logic to polished UIs
@@ -198,10 +173,6 @@ const projects = [
                   <p class="mt-0.5 text-sm">Foreign Trade University (FTU)</p>
                 </div>
                 <div>
-                  <p class="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">Born</p>
-                  <p class="mt-0.5 text-sm">May 23, 2006</p>
-                </div>
-                <div>
                   <p class="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">Focus</p>
                   <p class="mt-0.5 text-sm">Web apps · Automation · Cloud infra</p>
                 </div>
@@ -218,7 +189,7 @@ const projects = [
         <section id="skills" class="border-t border-border/40 py-20 sm:py-28">
           <div class="mx-auto max-w-5xl px-6">
             <p class="text-xs font-semibold uppercase tracking-widest text-blue-400">Stack</p>
-            <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Languages & frameworks</h2>
+            <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Technologies I work with</h2>
 
             <div class="mt-10 space-y-8">
               {skills.map(({ group, items }) => (
@@ -241,16 +212,17 @@ const projects = [
         <section id="projects" class="border-t border-border/40 bg-card/50 py-20 sm:py-28">
           <div class="mx-auto max-w-5xl px-6">
             <p class="text-xs font-semibold uppercase tracking-widest text-blue-400">Projects</p>
-            <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Selected work</h2>
+            <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">What I've built</h2>
 
-            <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {projects.map(({ title, desc, tags }) => (
-                <div class="group rounded-xl border border-border/60 bg-card p-6 transition-all hover:border-blue-400/30 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-500/5">
-                  <div class="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
-                    <span class="h-1.5 w-1.5 rounded-full bg-muted-foreground" />
-                    Coming soon
-                  </div>
-                  <h3 class="mt-3 font-semibold tracking-tight">{title}</h3>
+            <div class="mt-10 grid gap-4 sm:grid-cols-2">
+              {projects.map(({ title, desc, tags, href }) => (
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="group rounded-xl border border-border/60 bg-card p-6 transition-all hover:border-blue-400/30 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-500/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                >
+                  <h3 class="font-semibold tracking-tight group-hover:text-blue-400 transition-colors">{title}</h3>
                   <p class="mt-2 text-sm text-muted-foreground leading-relaxed">{desc}</p>
                   <div class="mt-4 flex flex-wrap gap-1.5">
                     {tags.map((t) => (
@@ -259,9 +231,13 @@ const projects = [
                       </span>
                     ))}
                   </div>
-                </div>
+                </a>
               ))}
             </div>
+
+            <p class="mt-8 text-sm text-muted-foreground">
+              More on <a href="https://github.com/nguyendinhngoc23052006" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:underline">GitHub</a>.
+            </p>
           </div>
         </section>
 
@@ -269,9 +245,9 @@ const projects = [
         <section id="contact" class="border-t border-border/40 py-20 sm:py-28">
           <div class="mx-auto max-w-xl px-6">
             <p class="text-xs font-semibold uppercase tracking-widest text-blue-400">Contact</p>
-            <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Let's build something</h2>
+            <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Start a conversation</h2>
             <p class="mt-3 text-muted-foreground">
-              Got a project in mind? Fill in the form and I'll get back to you within 24 hours.
+              Have a project in mind? Tell me about it and I'll respond within 24 hours.
             </p>
             <div class="mt-8">
               <ContactForm client:load />
@@ -283,12 +259,11 @@ const projects = [
         <footer class="border-t border-border/40 py-8">
           <div class="mx-auto max-w-5xl px-6 text-center">
             <div class="flex justify-center gap-6">
-              <a href="#" class="text-sm text-muted-foreground transition-colors hover:text-foreground">GitHub</a>
-              <a href="#" class="text-sm text-muted-foreground transition-colors hover:text-foreground">LinkedIn</a>
-              <a href="mailto:placeholder@example.com" class="text-sm text-muted-foreground transition-colors hover:text-foreground">Email</a>
+              <a href="https://github.com/nguyendinhngoc23052006" target="_blank" rel="noopener noreferrer" class="text-sm text-muted-foreground transition-colors hover:text-foreground">GitHub</a>
+              <a href="mailto:dinhnhuong1969@gmail.com" class="text-sm text-muted-foreground transition-colors hover:text-foreground">Email</a>
             </div>
             <p class="mt-4 text-xs text-muted-foreground">
-              © {new Date().getFullYear()} Nguyen Dinh Ngoc. All rights reserved.
+              &copy; {new Date().getFullYear()} Nguyen Dinh Ngoc
             </p>
           </div>
         </footer>

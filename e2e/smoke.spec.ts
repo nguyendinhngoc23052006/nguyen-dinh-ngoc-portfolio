@@ -3,7 +3,7 @@ import { CONTACT_API_PATH, HEALTH_PATH, HOME_PATH } from "./_mocks";
 
 test("home page has correct title", async ({ page }) => {
   await page.goto(HOME_PATH);
-  await expect(page).toHaveTitle("Nguyen Dinh Ngoc");
+  await expect(page).toHaveTitle("Nguyen Dinh Ngoc — Full-Stack Developer");
 });
 
 test("health endpoint returns 200", async ({ request }) => {
@@ -11,9 +11,19 @@ test("health endpoint returns 200", async ({ request }) => {
   expect(response.ok()).toBeTruthy();
 });
 
+test("responses include security headers", async ({ request }) => {
+  const res = await request.get(HEALTH_PATH);
+  expect(res.headers()["x-content-type-options"]).toBe("nosniff");
+  expect(res.headers()["x-frame-options"]).toBe("DENY");
+  expect(res.headers()["referrer-policy"]).toBe(
+    "strict-origin-when-cross-origin",
+  );
+  expect(res.headers()["permissions-policy"]).toBeTruthy();
+  expect(res.headers()["content-security-policy"]).toBeTruthy();
+});
+
 test("contact form submits successfully", async ({ page }) => {
   await page.goto(HOME_PATH);
-  // Wait for React island to hydrate (form submit handler needs it)
   await page.waitForFunction(
     () =>
       document.querySelector("#submit-btn")?.getAttribute("data-hydrated") ===
@@ -39,4 +49,29 @@ test("contact api rejects invalid payload", async ({ request }) => {
   expect(res.status()).toBe(400);
   const json = (await res.json()) as { error: string };
   expect(json.error).toBeTruthy();
+});
+
+test("contact api rejects wrong content-type", async ({ request }) => {
+  const res = await request.post(CONTACT_API_PATH, {
+    headers: { "Content-Type": "text/plain" },
+    data: "not json",
+  });
+  expect(res.status()).toBe(415);
+});
+
+test("contact api silently accepts honeypot submissions", async ({
+  request,
+}) => {
+  const res = await request.post(CONTACT_API_PATH, {
+    data: {
+      request_key: crypto.randomUUID(),
+      name: "Bot",
+      email: "bot@spam.com",
+      message: "Spam message",
+      website: "http://spam.example.com",
+    },
+  });
+  expect(res.status()).toBe(200);
+  const json = (await res.json()) as { success: boolean };
+  expect(json.success).toBe(true);
 });
