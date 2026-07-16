@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { CONTACT_API_PATH, HEALTH_PATH, HOME_PATH } from "./_mocks";
+import { CONTACT_API_PATH, HEALTH_PATH, HOME_PATH, ORIGIN } from "./_mocks";
 
 test("home page has correct title", async ({ page }) => {
   await page.goto(HOME_PATH);
@@ -53,7 +53,7 @@ test("contact api rejects invalid payload", async ({ request }) => {
 
 test("contact api rejects wrong content-type", async ({ request }) => {
   const res = await request.post(CONTACT_API_PATH, {
-    headers: { "Content-Type": "text/plain" },
+    headers: { "Content-Type": "text/plain", Origin: ORIGIN },
     data: "not json",
   });
   expect(res.status()).toBe(415);

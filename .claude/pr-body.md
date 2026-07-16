@@ -19,13 +19,19 @@ Comprehensive update to the portfolio site covering content, tone, accessibility
 ### Security Hardening
 - **Security headers** via middleware: CSP, HSTS, X-Frame-Options (DENY), X-Content-Type-Options (nosniff), Referrer-Policy, Permissions-Policy
 - **Honeypot field** on contact form — bots that auto-fill get silently accepted without DB write
-- **Origin verification** — cross-origin POST requests to `/api/contact` are rejected
-- **Content-Type enforcement** — non-JSON requests rejected with 415
+- **Origin verification** — Astro's built-in `security.checkOrigin` (default for SSR) handles CSRF; no redundant custom check
+- **Content-Type enforcement** — non-JSON requests rejected with 415 before any service check
 - **Generic error messages** — DB errors no longer leak to the client (validation errors still surface)
 - **CodeQL** workflow (v4) on push, PR, and weekly schedule
 - **`npm ci`** in all CI workflows for lockfile-integrity builds
 - **SECURITY.md** with responsible disclosure policy
 - **LICENSE** (MIT)
+
+### PII Abuse Case
+The contact form collects **name, email, company (optional), message** — all PII. Abuse vectors and mitigations:
+- **Spam/bot flood** → honeypot field silently short-circuits without DB write; `request_key` UNIQUE constraint prevents duplicate inserts; Astro CSRF blocks cross-origin submissions
+- **Data harvesting** → RLS policy: anon can INSERT only, no SELECT/UPDATE/DELETE; no client-side reads of `demo_requests`
+- **Injection** → server-side validation in `src/services/contact.ts` (length limits, email format); content-type enforcement rejects non-JSON
 
 ### Security Audit Findings (code-level)
 | Finding | Severity | Status |
@@ -49,7 +55,7 @@ Comprehensive update to the portfolio site covering content, tone, accessibility
 - [x] every subagent dispatched on a model below the orchestrator's — never inherited
 
 ## For you
-**What changed:** Complete professionalism overhaul (content, tone, SEO, mobile nav, accessibility) plus security hardening (CSP/HSTS headers, honeypot, origin verification, content-type enforcement, generic errors, CodeQL, npm ci).
+**What changed:** Complete professionalism overhaul (content, tone, SEO, mobile nav, accessibility) plus security hardening (CSP/HSTS headers, honeypot, Astro CSRF, content-type enforcement, generic errors, CodeQL, npm ci).
 
 **What you do next:** Review the preview deploy, then merge. Optionally: enable GitHub secret scanning + push protection in Settings → Code security; add a Cloudflare Turnstile sitekey + rate-limiting rule for the contact endpoint.
 

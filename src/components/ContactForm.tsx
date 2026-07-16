@@ -94,7 +94,7 @@ export default function ContactForm() {
           maxLength={2000}
         />
       </div>
-      <div aria-hidden="true" style={{ position: "absolute", left: "-9999px" }}>
+      <div aria-hidden="true" className="absolute -left-[9999px]">
         <input type="text" name="website" tabIndex={-1} autoComplete="off" />
       </div>
       <div className="flex items-center gap-4">

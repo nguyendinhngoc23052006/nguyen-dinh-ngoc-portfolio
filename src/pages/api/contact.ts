@@ -8,14 +8,6 @@ import type { DemoRequestInput } from "../../types/index.js";
 const JSON_HEADERS = { "Content-Type": "application/json" };
 
 export const POST: APIRoute = async (context) => {
-  const { supabase } = context.locals;
-  if (!supabase) {
-    return new Response(JSON.stringify({ error: "Service unavailable" }), {
-      status: 503,
-      headers: JSON_HEADERS,
-    });
-  }
-
   if (
     !context.request.headers.get("content-type")?.includes("application/json")
   ) {
@@ -25,15 +17,12 @@ export const POST: APIRoute = async (context) => {
     });
   }
 
-  const origin = context.request.headers.get("origin");
-  if (origin) {
-    const allowed = new URL(context.request.url).origin;
-    if (origin !== allowed) {
-      return new Response(JSON.stringify({ error: "Forbidden" }), {
-        status: 403,
-        headers: JSON_HEADERS,
-      });
-    }
+  const { supabase } = context.locals;
+  if (!supabase) {
+    return new Response(JSON.stringify({ error: "Service unavailable" }), {
+      status: 503,
+      headers: JSON_HEADERS,
+    });
   }
 
   let body: unknown;
