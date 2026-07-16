@@ -94,9 +94,14 @@ export default function ContactForm() {
           maxLength={2000}
         />
       </div>
+      <div aria-hidden="true" className="absolute -left-[9999px]">
+        <input type="text" name="website" tabIndex={-1} autoComplete="off" />
+      </div>
       <div className="flex items-center gap-4">
         <span
           id="form-msg"
+          role="status"
+          aria-live="polite"
           className={
             status === "success"
               ? "success text-sm text-emerald-400"

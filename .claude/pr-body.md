@@ -1,18 +1,62 @@
-Add `maxLength` to all contact form inputs so the browser enforces the same limits the backend already applies (name/email/company: 200, message: 2000).
+## Professional overhaul + security hardening
+
+Comprehensive update to the portfolio site covering content, tone, accessibility, SEO, and security.
+
+### Content & Professionalism
+- Replaced placeholder projects with real work (this portfolio + Cloud Pipeline Guide)
+- Trimmed skills from 45 to 18 focused, credible technologies
+- Shifted tone from SaaS "Request a demo" to portfolio-appropriate "Get in touch"
+- Professional README with stack, commands, and license
+- Removed placeholder footer links; added real GitHub and email
+
+### SEO & Accessibility
+- Added favicon, OpenGraph, Twitter Card, and JSON-LD Person schema
+- Added `robots.txt` for search engine guidance
+- Mobile navigation (hamburger menu) — previously no nav below `sm` breakpoint
+- Skip-to-content link, `aria-live` on form status, `aria-label` on nav
+- `prefers-reduced-motion` respects: pulse animation disabled, glow reduced
+
+### Security Hardening
+- **Security headers** via middleware: CSP, HSTS, X-Frame-Options (DENY), X-Content-Type-Options (nosniff), Referrer-Policy, Permissions-Policy
+- **Honeypot field** on contact form — bots that auto-fill get silently accepted without DB write
+- **Origin verification** — Astro's built-in `security.checkOrigin` (default for SSR) handles CSRF; no redundant custom check
+- **Content-Type enforcement** — non-JSON requests rejected with 415 before any service check
+- **Generic error messages** — DB errors no longer leak to the client (validation errors still surface)
+- **CodeQL** workflow (v4) on push, PR, and weekly schedule
+- **`npm ci`** in all CI workflows for lockfile-integrity builds
+- **SECURITY.md** with responsible disclosure policy
+- **LICENSE** (MIT)
+
+### PII Abuse Case
+The contact form collects **name, email, company (optional), message** — all PII. Abuse vectors and mitigations:
+- **Spam/bot flood** → honeypot field silently short-circuits without DB write; `request_key` UNIQUE constraint prevents duplicate inserts; Astro CSRF blocks cross-origin submissions
+- **Data harvesting** → RLS policy: anon can INSERT only, no SELECT/UPDATE/DELETE; no client-side reads of `demo_requests`
+- **Injection** → server-side validation in `src/services/contact.ts` (length limits, email format); content-type enforcement rejects non-JSON
+
+### Security Audit Findings (code-level)
+| Finding | Severity | Status |
+|---------|----------|--------|
+| CSP uses `'unsafe-inline'` for scripts (required by Astro island hydration) | Medium | Documented; tighten with nonce-based CSP when Astro supports it |
+| No rate limiting on contact endpoint | Medium | Recommended: Cloudflare Rate Limiting rule or KV-based limiter |
+| No CAPTCHA/Turnstile | Low-Medium | Recommended: Cloudflare Turnstile (sitekey via dashboard) |
+| Avatar hotlinked from GitHub CDN | Low | Acceptable; self-host as follow-up |
+| No row-count limit on demo_requests | Low | Free-tier storage limit provides a natural ceiling |
 
 ## Self-check
 - [x] base = main; exactly one PR
-- [~] ≤ 1 migration — no migration
-- [x] tests/lint/typecheck green
+- [~] ≤ 1 migration — no migration in this PR
+- [x] tests/lint/typecheck green; happy AND unhappy paths exercised; e2e updated with security header + honeypot tests
 - [x] scripts named exactly `lint`, `typecheck`, `test`; and `e2e` if installed
-- [x] key read from `PUBLIC_SUPABASE_URL` and `PUBLIC_SUPABASE_PUBLISHABLE_KEY` in middleware; nothing hardcoded; no secret in code
-- [~] irreversible actions — none
+- [x] key read from `PUBLIC_SUPABASE_URL` and `PUBLIC_SUPABASE_PUBLISHABLE_KEY` in middleware and passed to islands from server props; nothing hardcoded; no secret in code
+- [~] irreversible actions — none in this PR
 - [x] no avoidable debt; memory updated and pruned
-- [~] migrations — none
+- [~] migrations explained — no migration in this PR
 - [x] reviewers ran — `.claude/review/*` verdicts refreshed this PR
 - [x] every subagent dispatched on a model below the orchestrator's — never inherited
 
 ## For you
-**What changed:** Added `maxLength` attributes to every contact form field so the browser stops input at the same limits the server enforces (200 chars for name/email/company, 2000 for message).
-**What you do next:** Merge when happy. For rate limiting on `/api/contact`, add a Cloudflare WAF rate-limiting rule in the dashboard (Security > WAF > Rate limiting rules > Create rule: URI path equals `/api/contact`, method POST, 5 requests per minute per IP, action Block).
-**How to roll it back:** Revert this PR.
+**What changed:** Complete professionalism overhaul (content, tone, SEO, mobile nav, accessibility) plus security hardening (CSP/HSTS headers, honeypot, Astro CSRF, content-type enforcement, generic errors, CodeQL, npm ci).
+
+**What you do next:** Review the preview deploy, then merge. Optionally: enable GitHub secret scanning + push protection in Settings → Code security; add a Cloudflare Turnstile sitekey + rate-limiting rule for the contact endpoint.
+
+**How to roll it back:** Revert this single commit on main.

@@ -3,29 +3,72 @@ import {
   submitDemoRequest,
   validateDemoRequest,
 } from "../../services/contact.js";
+import type { DemoRequestInput } from "../../types/index.js";
+
+const JSON_HEADERS = { "Content-Type": "application/json" };
 
 export const POST: APIRoute = async (context) => {
+  if (
+    !context.request.headers.get("content-type")?.includes("application/json")
+  ) {
+    return new Response(JSON.stringify({ error: "Bad request" }), {
+      status: 415,
+      headers: JSON_HEADERS,
+    });
+  }
+
   const { supabase } = context.locals;
   if (!supabase) {
     return new Response(JSON.stringify({ error: "Service unavailable" }), {
       status: 503,
-      headers: { "Content-Type": "application/json" },
+      headers: JSON_HEADERS,
     });
   }
+
+  let body: unknown;
   try {
-    const body = await context.request.json();
-    const input = validateDemoRequest(body);
-    await submitDemoRequest(supabase, input);
+    body = await context.request.json();
+  } catch {
+    return new Response(JSON.stringify({ error: "Invalid JSON" }), {
+      status: 400,
+      headers: JSON_HEADERS,
+    });
+  }
+
+  if (
+    body &&
+    typeof body === "object" &&
+    "website" in body &&
+    (body as Record<string, unknown>).website
+  ) {
     return new Response(JSON.stringify({ success: true }), {
       status: 200,
-      headers: { "Content-Type": "application/json" },
+      headers: JSON_HEADERS,
     });
+  }
+
+  let input: DemoRequestInput;
+  try {
+    input = validateDemoRequest(body);
   } catch (e) {
     return new Response(
       JSON.stringify({
-        error: e instanceof Error ? e.message : "Unknown error",
+        error: e instanceof Error ? e.message : "Invalid input",
       }),
-      { status: 400, headers: { "Content-Type": "application/json" } },
+      { status: 400, headers: JSON_HEADERS },
     );
+  }
+
+  try {
+    await submitDemoRequest(supabase, input);
+    return new Response(JSON.stringify({ success: true }), {
+      status: 200,
+      headers: JSON_HEADERS,
+    });
+  } catch {
+    return new Response(JSON.stringify({ error: "Something went wrong" }), {
+      status: 500,
+      headers: JSON_HEADERS,
+    });
   }
 };
