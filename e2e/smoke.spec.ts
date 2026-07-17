@@ -3,7 +3,7 @@ import { CONTACT_API_PATH, HEALTH_PATH, HOME_PATH, ORIGIN } from "./_mocks";
 
 test("home page has correct title", async ({ page }) => {
   await page.goto(HOME_PATH);
-  await expect(page).toHaveTitle("Nguyen Dinh Ngoc — Full-Stack Developer");
+  await expect(page).toHaveTitle("Jade — Full-Stack Developer");
 });
 
 test("health endpoint returns 200", async ({ request }) => {

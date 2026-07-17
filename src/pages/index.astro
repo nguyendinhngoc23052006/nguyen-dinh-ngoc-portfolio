@@ -53,6 +53,7 @@ const jsonLd = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "Person",
   name: "Nguyen Dinh Ngoc",
+  alternateName: "Jade",
   jobTitle: "Full-Stack Developer",
   sameAs: ["https://github.com/nguyendinhngoc23052006"],
 });
@@ -63,15 +64,15 @@ const jsonLd = JSON.stringify({
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Nguyen Dinh Ngoc — Full-stack developer based in Hanoi. Building production-ready web applications with modern cloud infrastructure." />
-    <title>Nguyen Dinh Ngoc — Full-Stack Developer</title>
+    <meta name="description" content="Jade (Nguyen Dinh Ngoc) — Full-stack developer based in Hanoi. Building production-ready web applications with modern cloud infrastructure." />
+    <title>Jade — Full-Stack Developer</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta property="og:title" content="Nguyen Dinh Ngoc — Full-Stack Developer" />
+    <meta property="og:title" content="Jade (Nguyen Dinh Ngoc) — Full-Stack Developer" />
     <meta property="og:description" content="Full-stack developer based in Hanoi. Building production-ready web applications with modern cloud infrastructure." />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="https://avatars.githubusercontent.com/u/256027763?v=4" />
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Nguyen Dinh Ngoc — Full-Stack Developer" />
+    <meta name="twitter:title" content="Jade (Nguyen Dinh Ngoc) — Full-Stack Developer" />
     <meta name="twitter:description" content="Full-stack developer based in Hanoi. Building production-ready web applications." />
     <script type="application/ld+json" set:html={jsonLd} />
   </head>
@@ -86,7 +87,7 @@ const jsonLd = JSON.stringify({
         {/* ── NAV ── */}
         <header class="fixed inset-x-0 top-0 z-50 border-b border-border/40 bg-background/80 backdrop-blur-lg">
           <nav class="mx-auto flex h-14 max-w-5xl items-center justify-between px-6" aria-label="Main navigation">
-            <a href="/" class="text-sm font-bold tracking-tight">NDN</a>
+            <a href="/" class="text-sm font-bold tracking-tight">Jade</a>
             <div class="hidden items-center gap-6 sm:flex">
               <a href="#about" class="text-sm text-muted-foreground transition-colors hover:text-foreground">About</a>
               <a href="#skills" class="text-sm text-muted-foreground transition-colors hover:text-foreground">Skills</a>
@@ -99,8 +100,8 @@ const jsonLd = JSON.stringify({
 
         {/* ── HERO ── */}
         <section class="relative flex min-h-screen items-center overflow-hidden pt-14">
-          <div class="hero-glow pointer-events-none absolute -left-32 -top-32 h-[500px] w-[500px] rounded-full bg-blue-500/5 blur-3xl" />
-          <div class="hero-glow pointer-events-none absolute -bottom-32 -right-32 h-[400px] w-[400px] rounded-full bg-violet-500/5 blur-3xl" />
+          <div class="hero-glow pointer-events-none absolute -left-32 -top-32 h-[500px] w-[500px] rounded-full bg-emerald-500/5 blur-3xl" />
+          <div class="hero-glow pointer-events-none absolute -bottom-32 -right-32 h-[400px] w-[400px] rounded-full bg-blue-500/5 blur-3xl" />
 
           <div class="relative mx-auto max-w-5xl px-6 flex flex-col-reverse items-start gap-10 lg:flex-row lg:items-center lg:justify-between">
             <div>
@@ -109,9 +110,10 @@ const jsonLd = JSON.stringify({
               Available for projects
             </div>
 
-            <h1 class="mt-6 text-5xl font-extrabold tracking-tighter sm:text-7xl lg:text-8xl">
+            <p class="mt-6 text-sm font-semibold uppercase tracking-widest bg-gradient-to-r from-emerald-400 to-blue-400 bg-clip-text text-transparent">Jade</p>
+            <h1 class="mt-2 text-5xl font-extrabold tracking-tighter sm:text-7xl lg:text-8xl">
               Nguyen<br />
-              Dinh <span class="bg-gradient-to-br from-blue-400 to-violet-500 bg-clip-text text-transparent">Ngoc</span>
+              Dinh <span class="bg-gradient-to-br from-emerald-400 to-blue-500 bg-clip-text text-transparent">Ngoc</span>
             </h1>
 
             <p class="mt-4 max-w-lg text-lg text-muted-foreground sm:text-xl">
@@ -129,11 +131,11 @@ const jsonLd = JSON.stringify({
             </div>
             <img
               src="https://avatars.githubusercontent.com/u/256027763?v=4"
-              alt="Nguyen Dinh Ngoc"
+              alt="Jade — Nguyen Dinh Ngoc"
               width="280"
               height="280"
               loading="eager"
-              class="rounded-2xl border border-border/60 shadow-lg shadow-blue-500/5 object-cover"
+              class="rounded-2xl border border-border/60 shadow-lg shadow-emerald-500/5 object-cover"
             />
           </div>
         </section>
@@ -263,7 +265,7 @@ const jsonLd = JSON.stringify({
               <a href="mailto:dinhnhuong1969@gmail.com" class="text-sm text-muted-foreground transition-colors hover:text-foreground">Email</a>
             </div>
             <p class="mt-4 text-xs text-muted-foreground">
-              &copy; {new Date().getFullYear()} Nguyen Dinh Ngoc
+              &copy; {new Date().getFullYear()} Jade &middot; Nguyen Dinh Ngoc
             </p>
           </div>
         </footer>

@@ -1,15 +1,11 @@
-# Security Review — professional overhaul + security hardening
+# Security Review — Jade branding + logo favicon
 
-**Date:** 2026-07-16
-**Verdict:** PASS — findings addressed; no blocking issues.
+**Date:** 2026-07-17
+**Verdict:** PASS — no security issues.
 
 ## Findings
 
-1. **CSP `'unsafe-inline'` for scripts** — required by Astro's island hydration (inline `<script>` tags generated at build time). Documented; tighten with nonce-based CSP when Astro supports it. Severity: Medium; Status: Accepted risk.
-2. **Origin verification redundancy** — custom origin check in API handler was redundant with Astro's built-in `security.checkOrigin` (default `true` for SSR). Removed; Astro handles CSRF at the framework level.
-3. **Honeypot field** — uses Tailwind class for off-screen positioning (no inline style). Silent 200 response for bots avoids tipping off the sender.
-4. **Generic error messages** — DB errors in `submitDemoRequest` return generic "Something went wrong" (500); validation errors still surface to the user.
-5. **No rate limiting** — recommended as follow-up (Cloudflare Rate Limiting rule or KV-based limiter).
-6. **No CAPTCHA/Turnstile** — recommended as follow-up (Cloudflare Turnstile).
-7. **Content-type enforcement** — non-JSON POST requests rejected with 415 before any service check.
-8. **No secrets in client code** — publishable key only; Supabase config read server-side in middleware.
+1. **Favicon SVG** — clean: no `<script>`, no external URLs, no event handlers. Safe to serve.
+2. **Meta tags** — only expose public branding info (name, alias "Jade", job title, GitHub avatar URL); no keys, tokens, or internal paths.
+3. **No secrets in code** — grep for `SERVICE_ROLE`, `sb_secret_`, `service_role`, `_SECRET_`, `api_key` across `src/` returned no matches.
+4. **No new attack surface** — changes are cosmetic (nav text, gradient colors, footer text). No logic or data-flow impact.

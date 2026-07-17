@@ -1,14 +1,11 @@
-# Code Review — professional overhaul + security hardening
+# Code Review — Jade branding + logo favicon
 
-**Date:** 2026-07-16
-**Verdict:** PASS — one bug found and fixed; no blocking issues remaining.
+**Date:** 2026-07-17
+**Verdict:** PASS — branding-only diff, no code quality issues introduced.
 
 ## Findings
 
-1. **MobileNav listener leak (FIXED)** — `useEffect` cleanup used a different function reference than `addEventListener`, so `removeEventListener` was a no-op. Fixed by using the same named handler for both.
-2. **Nav link duplication** — desktop nav links in `index.astro` and `MobileNav.tsx` `links` array are hand-duplicated. Minor; acceptable for a two-location static list.
-3. **index.astro at 274 lines** — over the ~200-line guideline. Acceptable for a single-page landing page; next addition should split content data or extract sections.
-4. **API response helper** — `new Response(JSON.stringify(...), { status, headers })` repeated 8 times in `api/contact.ts`. Minor; `JSON_HEADERS` constant already reduces duplication.
-5. **No component data access violations** — components use `fetch()` only, data access stays in `src/services/`.
-6. **No missing states** — idle/sending/success/error all rendered; startup error shows visible text.
-7. **No stale tests** — `src/services/contact.ts` unchanged, existing tests cover 16 paths.
+1. **index.astro at 276 lines** — over the ~200-line guideline; mixes hardcoded content data with markup. Pre-existing, not introduced by this diff.
+2. **Gradient consistency** — tagline uses `emerald-400→blue-400`, heading uses `emerald-400→blue-500`. Intentional visual hierarchy (subtler tagline, bolder heading).
+3. **E2e test updated** — `smoke.spec.ts:6` correctly matches new page title.
+4. **No service/component changes** — pure cosmetic update; no data-access leakage or missing test gaps.
