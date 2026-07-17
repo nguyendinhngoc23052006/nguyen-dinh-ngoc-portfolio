@@ -1,51 +1,21 @@
-## Professional overhaul + security hardening
+## Jade branding + logo favicon
 
-Comprehensive update to the portfolio site covering content, tone, accessibility, SEO, and security.
+Adds "Jade" as a professional alias alongside "Nguyen Dinh Ngoc" and replaces the placeholder favicon with a custom J logo matching the user's brand identity.
 
-### Content & Professionalism
-- Replaced placeholder projects with real work (this portfolio + Cloud Pipeline Guide)
-- Trimmed skills from 45 to 18 focused, credible technologies
-- Shifted tone from SaaS "Request a demo" to portfolio-appropriate "Get in touch"
-- Professional README with stack, commands, and license
-- Removed placeholder footer links; added real GitHub and email
-
-### SEO & Accessibility
-- Added favicon, OpenGraph, Twitter Card, and JSON-LD Person schema
-- Added `robots.txt` for search engine guidance
-- Mobile navigation (hamburger menu) — previously no nav below `sm` breakpoint
-- Skip-to-content link, `aria-live` on form status, `aria-label` on nav
-- `prefers-reduced-motion` respects: pulse animation disabled, glow reduced
-
-### Security Hardening
-- **Security headers** via middleware: CSP, HSTS, X-Frame-Options (DENY), X-Content-Type-Options (nosniff), Referrer-Policy, Permissions-Policy
-- **Honeypot field** on contact form — bots that auto-fill get silently accepted without DB write
-- **Origin verification** — Astro's built-in `security.checkOrigin` (default for SSR) handles CSRF; no redundant custom check
-- **Content-Type enforcement** — non-JSON requests rejected with 415 before any service check
-- **Generic error messages** — DB errors no longer leak to the client (validation errors still surface)
-- **CodeQL** workflow (v4) on push, PR, and weekly schedule
-- **`npm ci`** in all CI workflows for lockfile-integrity builds
-- **SECURITY.md** with responsible disclosure policy
-- **LICENSE** (MIT)
-
-### PII Abuse Case
-The contact form collects **name, email, company (optional), message** — all PII. Abuse vectors and mitigations:
-- **Spam/bot flood** → honeypot field silently short-circuits without DB write; `request_key` UNIQUE constraint prevents duplicate inserts; Astro CSRF blocks cross-origin submissions
-- **Data harvesting** → RLS policy: anon can INSERT only, no SELECT/UPDATE/DELETE; no client-side reads of `demo_requests`
-- **Injection** → server-side validation in `src/services/contact.ts` (length limits, email format); content-type enforcement rejects non-JSON
-
-### Security Audit Findings (code-level)
-| Finding | Severity | Status |
-|---------|----------|--------|
-| CSP uses `'unsafe-inline'` for scripts (required by Astro island hydration) | Medium | Documented; tighten with nonce-based CSP when Astro supports it |
-| No rate limiting on contact endpoint | Medium | Recommended: Cloudflare Rate Limiting rule or KV-based limiter |
-| No CAPTCHA/Turnstile | Low-Medium | Recommended: Cloudflare Turnstile (sitekey via dashboard) |
-| Avatar hotlinked from GitHub CDN | Low | Acceptable; self-host as follow-up |
-| No row-count limit on demo_requests | Low | Free-tier storage limit provides a natural ceiling |
+### Changes
+- **Favicon**: replaced placeholder blue "N" square with custom J logo SVG (green-to-blue gradient, dark background, diamond accent)
+- **Nav**: "NDN" → "Jade"
+- **Hero**: "Jade" label above the full name; gradient on "Ngoc" changed from blue-violet to emerald-blue to match logo
+- **Hero glow effects**: updated to emerald/blue to match brand colors
+- **Meta tags**: title, OG, Twitter Card all updated to include "Jade"
+- **JSON-LD**: added `alternateName: "Jade"` for SEO
+- **Footer**: copyright updated to "Jade · Nguyen Dinh Ngoc"
+- **E2e test**: title assertion updated to match new page title
 
 ## Self-check
 - [x] base = main; exactly one PR
 - [~] ≤ 1 migration — no migration in this PR
-- [x] tests/lint/typecheck green; happy AND unhappy paths exercised; e2e updated with security header + honeypot tests
+- [x] tests/lint/typecheck green; happy AND unhappy paths exercised; e2e updated with new title
 - [x] scripts named exactly `lint`, `typecheck`, `test`; and `e2e` if installed
 - [x] key read from `PUBLIC_SUPABASE_URL` and `PUBLIC_SUPABASE_PUBLISHABLE_KEY` in middleware and passed to islands from server props; nothing hardcoded; no secret in code
 - [~] irreversible actions — none in this PR
@@ -55,8 +25,6 @@ The contact form collects **name, email, company (optional), message** — all P
 - [x] every subagent dispatched on a model below the orchestrator's — never inherited
 
 ## For you
-**What changed:** Complete professionalism overhaul (content, tone, SEO, mobile nav, accessibility) plus security hardening (CSP/HSTS headers, honeypot, Astro CSRF, content-type enforcement, generic errors, CodeQL, npm ci).
-
-**What you do next:** Review the preview deploy, then merge. Optionally: enable GitHub secret scanning + push protection in Settings → Code security; add a Cloudflare Turnstile sitekey + rate-limiting rule for the contact endpoint.
-
+**What changed:** Added "Jade" as your professional alias across the site (nav, hero, meta tags, JSON-LD, footer) and replaced the favicon with a custom J logo SVG matching your brand colors (green-to-blue gradient).
+**What you do next:** Review the preview deploy, then merge. If the favicon SVG doesn't match your actual logo closely enough, commit your real logo file to `public/favicon.svg` on this branch before merging.
 **How to roll it back:** Revert this single commit on main.
