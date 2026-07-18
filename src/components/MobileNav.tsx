@@ -1,12 +1,6 @@
 import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
-
-const links = [
-  { href: "#about", label: "About" },
-  { href: "#skills", label: "Skills" },
-  { href: "#projects", label: "Projects" },
-  { href: "#contact", label: "Contact" },
-];
+import { navLinks } from "../data/portfolio";
 
 export default function MobileNav() {
   const [open, setOpen] = useState(false);
@@ -34,7 +28,7 @@ export default function MobileNav() {
       {open && (
         <div className="absolute inset-x-0 top-14 z-50 border-b border-border/40 bg-background/95 px-6 py-4 backdrop-blur-lg">
           <nav className="flex flex-col gap-3" aria-label="Mobile navigation">
-            {links.map(({ href, label }) => (
+            {navLinks.map(({ href, label }) => (
               <a
                 key={href}
                 href={href}
