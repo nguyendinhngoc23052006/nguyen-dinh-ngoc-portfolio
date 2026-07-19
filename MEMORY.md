@@ -10,3 +10,5 @@
 - Skills trimmed from 45 to 18 for credibility — only technologies demonstrably used or closely related to the portfolio stack.
 - All CI workflows use `npm ci` (not `npm install`) for lockfile-integrity reproducible builds.
 - CodeQL v4 added on schedule (weekly Monday 06:00 UTC) + push/PR triggers.
+- JSON-LD via `set:html` needs `.replace(/</g, "\\u003c")` on the stringified output — `JSON.stringify` doesn't escape `<`, so a stored `</script>` value would break out of the script tag. Currently all data is hardcoded so not exploitable; escape is defense-in-depth for future dynamic content.
+- Nav breakpoint gotcha: `MobileNav` (`sm:hidden` originally) and desktop nav (`md:flex`) must move together — with 8+ nav items desktop needs `lg:flex`, so `MobileNav` becomes `lg:hidden` in the same edit, or a gap appears between `sm` and `lg` where neither renders.
