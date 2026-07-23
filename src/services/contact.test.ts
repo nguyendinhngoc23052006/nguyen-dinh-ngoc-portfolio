@@ -155,6 +155,14 @@ describe("submitDemoRequest", () => {
   });
 });
 
+vi.mock("cloudflare:workers", () => ({
+  env: {
+    RATE_LIMITER: {
+      limit: vi.fn().mockResolvedValue({ success: false }),
+    },
+  },
+}));
+
 describe("contact handler rate limiting", () => {
   it("returns 429 when RATE_LIMITER.limit returns success: false", async () => {
     const { POST } = await import("../pages/api/contact.js");
@@ -163,15 +171,7 @@ describe("contact handler rate limiting", () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
       }),
-      locals: {
-        runtime: {
-          env: {
-            RATE_LIMITER: {
-              limit: vi.fn().mockResolvedValue({ success: false }),
-            },
-          },
-        },
-      },
+      locals: {},
     };
     const response = await POST(context as never);
     expect(response.status).toBe(429);

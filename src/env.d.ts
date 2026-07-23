@@ -5,12 +5,14 @@ declare namespace App {
     supabase?: import("@supabase/supabase-js").SupabaseClient;
     session?: import("@supabase/supabase-js").Session | null;
     startupError?: string;
-    runtime?: {
-      env?: {
-        RATE_LIMITER?: {
-          limit(options: { key: string }): Promise<{ success: boolean }>;
-        };
-      };
-    };
   }
+}
+
+declare module "cloudflare:workers" {
+  export const env: {
+    RATE_LIMITER?: {
+      limit(options: { key: string }): Promise<{ success: boolean }>;
+    };
+    [key: string]: unknown;
+  };
 }
