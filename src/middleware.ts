@@ -23,6 +23,8 @@ export const onRequest = defineMiddleware(async (context, next) => {
     context.locals.startupError = e instanceof Error ? e.message : String(e);
   }
 
+  context.locals.runtime = (context as any).platform;
+
   const response = await next();
 
   for (const [key, value] of Object.entries(SECURITY_HEADERS)) {

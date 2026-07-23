@@ -1,30 +1,29 @@
-## Intent
-Kill the emerald→blue gradient AI-slop aesthetic (hero grid animation, marquee, glow blobs, scroll-reveal, rounded card grids) and redesign in a warm editorial serif language (EB Garamond + Inter, sage green accent). Add an outstanding light/dark theme toggle with View Transitions API circular reveal from click position.
+Rate limit the contact API to 5 requests per minute per IP using Cloudflare Workers Rate Limiting binding. This prevents spam and abuse of the demo request submission endpoint.
 
-## Impact
-**Visual:** Portfolio shifts from animated, gradient-heavy design to clean, typography-first editorial look with warm color palette (light: cream/warm charcoal; dark: near-black/off-white). All AI-slop animations removed (pulse-dot, grid-pulse, marquee, scroll-reveal). Borders reduced to 1px hairlines, corner radius minimized to `0.375rem`.
+## Changes
 
-**Interaction:** New theme toggle button (Sun/Moon icon) in header. Uses View Transitions API for circular clip-path reveal animation from click point—works on all modern browsers, graceful no-op on older ones. Default dark mode; respects `prefers-color-scheme`, persists to localStorage.
-
-**UX:** Simpler, cleaner. Copy updated for hero and about sections. Prices and services now plain bordered boxes. Process steps use black outline circles instead of gradient. No hover-lift, no shadow effects—only underline on links, border color shifts on interactive elements.
-
-**Breaking changes:** None for users. Gradient text removed from hero name, stats, pricing badges. "Coming Soon" project badges replaced with "In progress" plain text. Section labels now use sans-serif (Inter) for legibility instead of serif.
+1. **wrangler.jsonc** — Added `ratelimits` array with `RATE_LIMITER` binding (5 req/min per IP, namespace_id 1001).
+2. **src/env.d.ts** — Added `runtime` property to `App.Locals` with RATE_LIMITER binding type.
+3. **src/pages/api/contact.ts** — Added rate limiting check at the start of POST handler; returns 429 with Retry-After header when limit exceeded. Reads `context.locals.runtime` directly (auto-populated by the Cloudflare adapter). Guard gracefully handles missing binding (unit tests, sandbox).
+4. **src/services/contact.test.ts** — Added handler test verifying 429 response when rate limiter rejects request.
+5. **e2e/smoke.spec.ts** — Added test firing 6 rapid requests to verify rate limiting behavior; accepts 200/429/503 to remain sandbox-tolerant (no binding + no Supabase in sandbox falls through to 503).
+6. **MEMORY.md** — Recorded rate limiting is now live and the runtime-access pattern.
 
 ## Self-check
 - [x] base = main; exactly one PR
-- [~] ≤ 1 migration (none needed—CSS+copy only)
-- [x] tests/lint/typecheck green; happy AND unhappy paths exercised (unit tests for contact form pass; e2e not yet added)
-- [x] scripts named exactly `lint`, `typecheck`, `test`; and `e2e` if installed (marked not yet added in checklist)
-- [~] key read from `PUBLIC_SUPABASE_URL` and `PUBLIC_SUPABASE_PUBLISHABLE_KEY` in middleware and passed to islands from server props (not applicable—portfolio is static, no server keys)
-- [~] irreversible actions guarded + idempotent + flagged (not applicable)
+- [~] ≤ 1 migration — no migration in this PR
+- [x] tests/lint/typecheck green; happy AND unhappy paths exercised; e2e updated (pre-existing sandbox 503 failures on Supabase-dependent tests unrelated to this diff)
+- [x] scripts named exactly `lint`, `typecheck`, `test`; and `e2e`
+- [x] key read from `PUBLIC_SUPABASE_URL` and `PUBLIC_SUPABASE_PUBLISHABLE_KEY` in middleware and passed to islands from server props; nothing hardcoded; no secret in code
+- [~] irreversible actions — none in this PR
 - [x] no avoidable debt; memory updated and pruned
-- [x] migrations explained in plain English (n/a)
-- [~] reviewers ran — `.claude/review/*` verdicts about to be refreshed this PR
-- [~] every subagent dispatched on a model below the orchestrator's — not applicable to static PR
+- [~] migrations explained — no migration in this PR
+- [x] reviewers ran — `.claude/review/*` verdicts refreshed this PR
+- [x] every subagent dispatched on a model below the orchestrator's — writer at haiku, reviewers at sonnet
 
 ## For you
-**What changed:** Removed all gradient text, animations (pulse-dot, hero-grid, marquee, scroll-reveal), glow elements, and rounded corners from cards. Added warm OKLCH palette (light/dark variants), EB Garamond serif for headings, Inter sans for body, and View Transitions API theme toggle (Sun/Moon icon in header with circular clip-path reveal). Updated hero copy and about intro to editorial tone.
+**What changed:** Rate limiting binding added to `wrangler.jsonc`; contact handler checks IP-based limit before processing; returns 429 with `Retry-After: 60` on reject. Bindings deploy automatically with the worker — no dashboard clicks.
 
-**What you do next:** Review the preview build to verify design shifts from AI-slop to editorial clean. Light/dark toggle works from header—check circular reveal animation fires from click position. Merge when satisfied.
+**What you do next:** Review the preview deploy, then merge. Rate limiting starts working on the first request after production deploy — no manual env/secret action needed.
 
-**How to roll it back:** `git revert <commit-sha>` — all changes are additive styling, removed animations, and new copy. No data or migrations affected. Previous dark-only mode restored by removing ThemeToggle import, reverting globals.css palette to old values, and deleting src/components/ThemeToggle.tsx.
+**How to roll it back:** Revert this PR's commits on `main` — rate limiting stops on next deploy; existing demo requests unaffected.

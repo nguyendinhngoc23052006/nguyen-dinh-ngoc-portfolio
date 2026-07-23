@@ -154,3 +154,28 @@ describe("submitDemoRequest", () => {
     );
   });
 });
+
+describe("contact handler rate limiting", () => {
+  it("returns 429 when RATE_LIMITER.limit returns success: false", async () => {
+    const { POST } = await import("../pages/api/contact.js");
+    const context = {
+      request: new Request("http://example.com/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      }),
+      locals: {
+        runtime: {
+          env: {
+            RATE_LIMITER: {
+              limit: vi.fn().mockResolvedValue({ success: false }),
+            },
+          },
+        },
+      },
+    };
+    const response = await POST(context as never);
+    expect(response.status).toBe(429);
+    const json = (await response.json()) as { error: string };
+    expect(json.error).toBe("Too many requests");
+  });
+});

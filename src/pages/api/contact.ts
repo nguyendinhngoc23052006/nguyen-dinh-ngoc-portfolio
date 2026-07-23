@@ -8,6 +8,21 @@ import type { DemoRequestInput } from "../../types/index.js";
 const JSON_HEADERS = { "Content-Type": "application/json" };
 
 export const POST: APIRoute = async (context) => {
+  const ip = context.request.headers.get("CF-Connecting-IP") ?? "unknown";
+  const runtime = context.locals.runtime;
+  if (runtime?.env?.RATE_LIMITER) {
+    const { success } = await runtime.env.RATE_LIMITER.limit({ key: ip });
+    if (!success) {
+      return new Response(JSON.stringify({ error: "Too many requests" }), {
+        status: 429,
+        headers: {
+          "Content-Type": "application/json",
+          "Retry-After": "60",
+        },
+      });
+    }
+  }
+
   if (
     !context.request.headers.get("content-type")?.includes("application/json")
   ) {
