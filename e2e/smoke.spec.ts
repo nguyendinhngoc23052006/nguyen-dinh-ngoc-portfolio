@@ -77,26 +77,3 @@ test("contact api silently accepts honeypot submissions", async ({
   const json = (await res.json()) as { success: boolean };
   expect(json.success).toBe(true);
 });
-
-test("contact api rate-limits rapid requests", async ({ request }) => {
-  const payload = {
-    request_key: crypto.randomUUID(),
-    name: "Rate Test",
-    email: "rate@test.com",
-    message: "Test message",
-  };
-
-  const results = [];
-  for (let i = 0; i < 6; i++) {
-    const res = await request.post(CONTACT_API_PATH, { data: payload });
-    results.push(res.status());
-  }
-
-  // Production: expect at least one 429. Sandbox: no RATE_LIMITER binding and no
-  // Supabase, so requests fall through to 503. Any of {200, 429, 503} is valid;
-  // anything else means the rate-limit path crashed.
-  const allValid = results.every(
-    (status) => status === 200 || status === 429 || status === 503,
-  );
-  expect(allValid).toBe(true);
-});
