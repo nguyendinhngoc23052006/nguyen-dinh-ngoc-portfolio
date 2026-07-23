@@ -1,4 +1,13 @@
-# Scale Review — Portfolio 2.0 (SEO + pricing + FAQ)
+# Scale Review — restore deploy-preview guard for dependabot PRs
 
-**Date:** 2026-07-19
-**Verdict:** PASS — no scale issues. Static content only (no DB access, no queries, no migrations). Animations are compositor-only (opacity/transform), gated behind `prefers-reduced-motion`; scroll-reveal uses IntersectionObserver with no-JS fallback.
+**Date:** 2026-07-23
+**Verdict:** PASS — no scale issues.
+
+Scanned diff (`.github/workflows/deploy-preview.yml`, `MEMORY.md`).
+
+1. Unbounded query — N/A (no Supabase call in diff).
+2. Unindexed filter or join — N/A (no query in diff).
+3. N+1 pattern — N/A (no loop in diff).
+4. Non-idempotent write — N/A (no `.insert()` in diff).
+
+Bonus: skipping the ~30-second build + wrangler deploy on Dependabot PRs is a small CI-time win.

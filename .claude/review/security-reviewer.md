@@ -1,12 +1,13 @@
-# Security Review — Portfolio 2.0 (SEO + pricing + FAQ)
+# Security Review — restore deploy-preview guard for dependabot PRs
 
-**Date:** 2026-07-19
+**Date:** 2026-07-23
 **Verdict:** PASS.
 
-## Findings
-1. **JSON-LD `</script>` escaping (defense-in-depth)** — `src/pages/index.astro:81` — JSON-LD stringified output now runs `.replace(/</g, "\\u003c")` before `set:html`. Every field is currently hardcoded in `src/data/portfolio.ts` (not exploitable today), but this hardens against future dynamic content.
-2. **No secrets in code** — grep for `SERVICE_ROLE`, `sb_secret_`, `_SECRET_` across `src/` returns only publishable-key references. `SITE_URL` is a public Worker hostname.
-3. **CSP compatible** — existing `script-src 'self' 'unsafe-inline'` in middleware covers the new inline scroll-reveal script; no new external origins introduced.
-4. **External links** — new `target="_blank"` links carry `rel="noopener noreferrer"`.
-5. **robots.txt / sitemap.xml** — correctly disallow `/api/` and `/health`; sitemap exposes only public homepage URL.
-6. **No new attack surface** — no PII collection, auth, payment, or upload changes.
+Scanned diff (`.github/workflows/deploy-preview.yml`, `MEMORY.md`).
+
+1. Missing RLS — N/A (no SQL migration in diff).
+2. Secret in client code — N/A (no `src/` change; the workflow references `secrets.CLOUDFLARE_*`, which are Actions secrets, not client code).
+3. Unvalidated input — N/A (no `src/pages/` change).
+4. Missing abuse case — N/A (no auth/payments/PII/upload change). Guard indirectly improves the posture: a Dependabot PR (potentially from a malicious upstream release) will no longer trigger a preview deploy with the Cloudflare token in scope.
+
+No security issues found.
