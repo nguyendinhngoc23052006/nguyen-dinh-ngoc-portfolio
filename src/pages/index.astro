@@ -4,8 +4,12 @@ import ContactForm from "../components/ContactForm";
 // biome-ignore lint/correctness/noUnusedImports: used in Astro template below the frontmatter fence
 import MobileNav from "../components/MobileNav";
 // biome-ignore lint/correctness/noUnusedImports: used in Astro template below the frontmatter fence
+import ThemeToggle from "../components/ThemeToggle";
+// biome-ignore lint/correctness/noUnusedImports: used in Astro template below the frontmatter fence
 import {
+  aboutIntro,
   faq,
+  heroSubhead,
   navLinks,
   pricing,
   process,
@@ -14,7 +18,6 @@ import {
   services,
   skills,
   stats,
-  techMarquee,
 } from "../data/portfolio";
 import "../styles/globals.css";
 
@@ -24,9 +27,6 @@ const error = Astro.locals.startupError;
 // biome-ignore lint/correctness/noUnusedVariables: used in Astro template
 const DESCRIPTION =
   "Custom web applications & bespoke software built to your spec. Transparent pricing, deep customization, 100% code ownership. Full-stack development from Hanoi, serving businesses globally.";
-
-// biome-ignore lint/correctness/noUnusedVariables: used in Astro template
-const marqueeItems = [...techMarquee, ...techMarquee];
 
 // biome-ignore lint/correctness/noUnusedVariables: used in Astro template
 const jsonLd = JSON.stringify({
@@ -82,7 +82,7 @@ const jsonLd = JSON.stringify({
 ---
 
 <!doctype html>
-<html lang="en" class="dark">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -91,6 +91,24 @@ const jsonLd = JSON.stringify({
     <meta name="author" content="Jade (Nguyen Dinh Ngoc)" />
     <link rel="canonical" href={SITE_URL} />
     <title>Jade — Custom Web Development & Bespoke Software | Nguyen Dinh Ngoc</title>
+    <script is:inline>
+      (function () {
+        function getTheme() {
+          const stored = localStorage.getItem('theme');
+          if (stored === 'light' || stored === 'dark') return stored;
+          return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', getTheme());
+        window.addEventListener('storage', function (e) {
+          if (e.key === 'theme' && (e.newValue === 'light' || e.newValue === 'dark')) {
+            document.documentElement.setAttribute('data-theme', e.newValue);
+          }
+        });
+      })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta property="og:title" content="Jade — Custom Web Development & Bespoke Software" />
     <meta property="og:description" content={DESCRIPTION} />
@@ -120,38 +138,32 @@ const jsonLd = JSON.stringify({
                 <a href={href} class="text-sm text-muted-foreground transition-colors hover:text-foreground">{label}</a>
               ))}
             </div>
-            <MobileNav client:load />
+            <div class="flex items-center gap-3">
+              <ThemeToggle client:load />
+              <MobileNav client:load />
+            </div>
           </nav>
         </header>
 
         {/* ── HERO ── */}
         <section class="relative flex min-h-screen items-center overflow-hidden pt-14">
-          <div class="hero-grid" aria-hidden="true" />
-          <div class="hero-glow pointer-events-none absolute -left-32 -top-32 h-[500px] w-[500px] rounded-full bg-emerald-500/10 blur-3xl" />
-          <div class="hero-glow pointer-events-none absolute -bottom-32 -right-32 h-[400px] w-[400px] rounded-full bg-blue-500/10 blur-3xl" />
-
           <div class="relative mx-auto max-w-5xl px-6 flex flex-col-reverse items-start gap-10 lg:flex-row lg:items-center lg:justify-between">
             <div>
-            <div class="inline-flex items-center gap-2 rounded-full border border-border/60 bg-secondary/50 px-3 py-1 text-xs text-muted-foreground">
-              <span class="pulse-dot h-1.5 w-1.5 rounded-full bg-emerald-500 shadow-[0_0_6px] shadow-emerald-500" aria-hidden="true" />
-              Available for projects
-            </div>
-
-            <p class="mt-6 text-sm font-semibold uppercase tracking-widest bg-gradient-to-r from-emerald-400 to-blue-400 bg-clip-text text-transparent">Jade</p>
+            <p class="text-sm font-semibold uppercase tracking-widest text-muted-foreground">Jade</p>
             <h1 class="mt-2 text-5xl font-extrabold tracking-tighter sm:text-7xl lg:text-8xl">
               Nguyen<br />
-              Dinh <span class="bg-gradient-to-br from-emerald-400 to-blue-500 bg-clip-text text-transparent">Ngoc</span>
+              Dinh Ngoc
             </h1>
 
             <p class="mt-4 max-w-lg text-lg text-muted-foreground sm:text-xl">
-              Bespoke software built to spec — I turn business problems into production-ready web applications.
+              {heroSubhead}
             </p>
 
             <div class="mt-8 flex flex-wrap gap-3">
-              <a href="#contact" class="inline-flex h-10 items-center gap-2 rounded-md bg-primary px-6 text-sm font-medium text-primary-foreground shadow-xs transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+              <a href="#contact" class="inline-flex h-10 items-center gap-2 rounded-sm border border-foreground bg-foreground text-background px-6 text-sm font-medium transition-colors hover:bg-transparent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
                 Get a quote
               </a>
-              <a href="#pricing" class="inline-flex h-10 items-center gap-2 rounded-md border border-input bg-background px-6 text-sm font-medium shadow-xs transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+              <a href="#pricing" class="inline-flex h-10 items-center gap-2 rounded-sm border border-accent px-6 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
                 See pricing
               </a>
             </div>
@@ -162,7 +174,7 @@ const jsonLd = JSON.stringify({
               width="280"
               height="280"
               loading="eager"
-              class="rounded-2xl border border-border/60 shadow-lg shadow-emerald-500/5 object-cover"
+              class="rounded-sm border border-border/60 object-cover"
             />
           </div>
         </section>
@@ -172,8 +184,8 @@ const jsonLd = JSON.stringify({
           <div class="mx-auto max-w-5xl px-6">
             <div class="grid gap-6 sm:grid-cols-3">
               {stats.map(({ number, label }) => (
-                <div class="text-center sm:text-left" data-reveal>
-                  <p class="text-3xl font-extrabold tracking-tight bg-gradient-to-br from-emerald-400 to-blue-500 bg-clip-text text-transparent sm:text-4xl">
+                <div class="text-center sm:text-left">
+                  <p class="text-3xl font-extrabold tracking-tight sm:text-4xl">
                     {number}
                   </p>
                   <p class="mt-1 text-sm text-muted-foreground">{label}</p>
@@ -183,31 +195,16 @@ const jsonLd = JSON.stringify({
           </div>
         </section>
 
-        {/* ── TECH MARQUEE ── */}
-        <section class="border-t border-border/40 py-6" aria-label="Technologies">
-          <div class="marquee-container">
-            <div class="marquee-track">
-              {marqueeItems.map((tech) => (
-                <span class="whitespace-nowrap text-sm font-medium text-muted-foreground">
-                  {tech}
-                </span>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* ── ABOUT ── */}
         <section id="about" class="border-t border-border/40 bg-card/50 py-20 sm:py-28">
           <div class="mx-auto max-w-5xl px-6">
-            <p class="section-label" data-reveal>About</p>
-            <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl" data-reveal>Building from Vietnam, shipping globally</h2>
+            <p class="section-label">About</p>
+            <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Building from Vietnam, shipping globally</h2>
 
             <div class="mt-10 grid gap-10 lg:grid-cols-[1fr_320px]">
-              <div class="space-y-4 text-muted-foreground" data-reveal>
+              <div class="space-y-4 text-muted-foreground">
                 <p>
-                  I'm a full-stack developer based in Hanoi, currently studying International Business
-                  at Foreign Trade University (FTU). I started writing code to solve real problems, and
-                  never stopped.
+                  {aboutIntro}
                 </p>
                 <p>
                   My work spans the full stack — from database schema and server logic to polished UIs
@@ -215,13 +212,9 @@ const jsonLd = JSON.stringify({
                   dashboards, automation systems, client portals, and anything that doesn't fit a
                   template.
                 </p>
-                <p>
-                  Fast turnaround, clean architecture, and no unnecessary complexity — that's the
-                  standard I hold every project to.
-                </p>
               </div>
 
-              <div class="rounded-xl border border-border/60 bg-secondary/30 p-6 space-y-5" data-reveal>
+              <aside class="border-l-4 border-accent bg-secondary/30 p-6 space-y-5">
                 <div>
                   <p class="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">Location</p>
                   <p class="mt-0.5 text-sm">Hanoi, Vietnam</p>
@@ -236,9 +229,9 @@ const jsonLd = JSON.stringify({
                 </div>
                 <div>
                   <p class="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">Status</p>
-                  <p class="mt-0.5 text-sm text-emerald-400">Open to projects</p>
+                  <p class="mt-0.5 text-sm text-accent">Open to projects</p>
                 </div>
-              </div>
+              </aside>
             </div>
           </div>
         </section>
@@ -246,19 +239,19 @@ const jsonLd = JSON.stringify({
         {/* ── SERVICES ── */}
         <section id="services" class="border-t border-border/40 py-20 sm:py-28">
           <div class="mx-auto max-w-5xl px-6">
-            <p class="section-label" data-reveal>Services</p>
-            <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl" data-reveal>Custom software built to your spec</h2>
-            <p class="mt-3 max-w-2xl text-muted-foreground" data-reveal>
+            <p class="section-label">Services</p>
+            <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Custom software built to your spec</h2>
+            <p class="mt-3 max-w-2xl text-muted-foreground">
               Deep customization for every business need — from single-feature tools to full-scale
               applications. Pick a service or combine several.
             </p>
 
             <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {services.map(({ title, desc, cta }) => (
-                <div class="group rounded-xl border border-border/60 bg-card p-6 transition-all hover:border-emerald-400/30 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-emerald-500/5" data-reveal>
-                  <h3 class="font-semibold tracking-tight group-hover:text-emerald-400 transition-colors">{title}</h3>
+                <div class="rounded-sm border border-border/60 bg-card p-6">
+                  <h3 class="font-semibold tracking-tight">{title}</h3>
                   <p class="mt-2 text-sm text-muted-foreground leading-relaxed">{desc}</p>
-                  <a href="#contact" class="mt-4 inline-flex items-center gap-1 text-sm font-medium text-emerald-400 transition-colors hover:text-emerald-300">
+                  <a href="#contact" class="mt-4 inline-flex items-center gap-1 text-sm font-medium text-accent">
                     {cta} <span aria-hidden="true">&rarr;</span>
                   </a>
                 </div>
@@ -270,9 +263,9 @@ const jsonLd = JSON.stringify({
         {/* ── PRICING ── */}
         <section id="pricing" class="border-t border-border/40 bg-card/50 py-20 sm:py-28">
           <div class="mx-auto max-w-5xl px-6">
-            <p class="section-label" data-reveal>Pricing</p>
-            <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl" data-reveal>Transparent, fixed-price development</h2>
-            <p class="mt-3 max-w-2xl text-muted-foreground" data-reveal>
+            <p class="section-label">Pricing</p>
+            <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Transparent, fixed-price development</h2>
+            <p class="mt-3 max-w-2xl text-muted-foreground">
               Quotes are locked in before we start. No hidden fees, no surprise invoices, no
               hourly-billing padding.
             </p>
@@ -281,17 +274,16 @@ const jsonLd = JSON.stringify({
               {pricing.map((tier) => (
                 <div
                   class:list={[
-                    "relative rounded-xl border p-6 transition-all",
+                    "relative rounded-sm border p-6",
                     tier.recommended
-                      ? "border-emerald-400/60 bg-background shadow-lg shadow-emerald-500/10"
-                      : "border-border/60 bg-background hover:border-blue-400/30",
+                      ? "border-accent bg-background"
+                      : "border-border/60 bg-background",
                   ]}
-                  data-reveal
                 >
                   {tier.recommended && (
-                    <div class="absolute -top-3 left-6 rounded-full bg-gradient-to-r from-emerald-400 to-blue-500 px-3 py-1 text-[11px] font-semibold text-background">
+                    <p class="text-xs font-bold uppercase tracking-widest text-accent mb-2">
                       Most popular
-                    </div>
+                    </p>
                   )}
                   <h3 class="text-lg font-bold tracking-tight">{tier.name}</h3>
                   <p class="mt-1 text-sm text-muted-foreground">{tier.tagline}</p>
@@ -299,7 +291,7 @@ const jsonLd = JSON.stringify({
                   <ul class="mt-6 space-y-2.5">
                     {tier.features.map((feature) => (
                       <li class="flex items-start gap-2 text-sm">
-                        <span class="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-emerald-400/15 text-emerald-400" aria-hidden="true">
+                        <span class="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-accent/15 text-accent" aria-hidden="true">
                           <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
                             <polyline points="20 6 9 17 4 12" />
                           </svg>
@@ -311,10 +303,10 @@ const jsonLd = JSON.stringify({
                   <a
                     href="#contact"
                     class:list={[
-                      "mt-6 inline-flex h-10 w-full items-center justify-center rounded-md px-4 text-sm font-medium transition-colors",
+                      "mt-6 inline-flex h-10 w-full items-center justify-center rounded-sm px-4 text-sm font-medium transition-colors",
                       tier.recommended
-                        ? "bg-primary text-primary-foreground hover:bg-primary/90"
-                        : "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+                        ? "bg-accent text-accent-foreground hover:bg-accent/90"
+                        : "border border-input bg-background hover:bg-muted",
                     ]}
                   >
                     {tier.cta}
@@ -322,8 +314,8 @@ const jsonLd = JSON.stringify({
                 </div>
               ))}
             </div>
-            <p class="mt-6 text-sm text-muted-foreground" data-reveal>
-              Need something outside these tiers? <a href="#contact" class="text-emerald-400 hover:underline">Let's talk</a> — every project can be scoped custom.
+            <p class="mt-6 text-sm text-muted-foreground">
+              Need something outside these tiers? <a href="#contact" class="text-accent hover:underline">Let's talk</a> — every project can be scoped custom.
             </p>
           </div>
         </section>
@@ -331,14 +323,14 @@ const jsonLd = JSON.stringify({
         {/* ── PROCESS ── */}
         <section id="process" class="border-t border-border/40 py-20 sm:py-28">
           <div class="mx-auto max-w-5xl px-6">
-            <p class="section-label" data-reveal>Process</p>
-            <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl" data-reveal>How we build your application</h2>
+            <p class="section-label">Process</p>
+            <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">How we build your application</h2>
 
             <div class="mt-12 hidden md:grid md:grid-cols-4 md:gap-8 md:relative">
-              <div class="absolute top-8 left-16 right-16 h-px bg-gradient-to-r from-emerald-400/30 via-blue-400/30 to-emerald-400/30" aria-hidden="true" />
+              <div class="absolute top-8 left-16 right-16 h-px bg-border" aria-hidden="true" />
               {process.map(({ num, title, desc }) => (
-                <div class="relative z-10 text-center" data-reveal>
-                  <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full border-2 border-emerald-400/60 bg-background text-lg font-bold text-emerald-400">
+                <div class="relative z-10 text-center">
+                  <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full border-2 border-foreground bg-background text-lg font-bold">
                     {num}
                   </div>
                   <h3 class="mt-4 font-semibold tracking-tight">{title}</h3>
@@ -349,8 +341,8 @@ const jsonLd = JSON.stringify({
 
             <div class="mt-10 space-y-6 md:hidden">
               {process.map(({ num, title, desc }) => (
-                <div class="flex gap-4" data-reveal>
-                  <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-2 border-emerald-400/60 bg-background text-sm font-bold text-emerald-400">
+                <div class="flex gap-4">
+                  <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-2 border-foreground bg-background text-sm font-bold">
                     {num}
                   </div>
                   <div>
@@ -366,16 +358,16 @@ const jsonLd = JSON.stringify({
         {/* ── SKILLS ── */}
         <section id="skills" class="border-t border-border/40 bg-card/50 py-20 sm:py-28">
           <div class="mx-auto max-w-5xl px-6">
-            <p class="section-label" data-reveal>Stack</p>
-            <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl" data-reveal>Technologies I work with</h2>
+            <p class="section-label">Stack</p>
+            <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Technologies I work with</h2>
 
             <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {skills.map(({ group, items }) => (
-                <div class="rounded-xl border border-border/60 bg-background/50 p-5 transition-all hover:border-blue-400/30 hover:shadow-lg hover:shadow-blue-500/5" data-reveal>
+                <div class="rounded-sm border border-border/60 bg-background/50 p-5">
                   <p class="mb-3 text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">{group}</p>
                   <div class="flex flex-wrap gap-2">
                     {items.map((s) => (
-                      <span class="rounded-md border border-border/60 bg-secondary/30 px-2.5 py-0.5 text-xs font-medium transition-colors hover:border-blue-400/40 hover:text-blue-400">
+                      <span class="rounded-sm border border-border/60 bg-secondary/30 px-2.5 py-0.5 text-xs font-medium">
                         {s}
                       </span>
                     ))}
@@ -389,21 +381,21 @@ const jsonLd = JSON.stringify({
         {/* ── PROJECTS ── */}
         <section id="projects" class="border-t border-border/40 py-20 sm:py-28">
           <div class="mx-auto max-w-5xl px-6">
-            <p class="section-label" data-reveal>Projects</p>
-            <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl" data-reveal>What I'm building</h2>
+            <p class="section-label">Projects</p>
+            <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">What I'm building</h2>
 
             <div class="mt-10 grid gap-4 sm:grid-cols-3">
               {projects.map(({ num, title, desc, tags }) => (
-                <div class="group relative rounded-xl border border-border/60 bg-card p-6 transition-all hover:border-blue-400/30 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-500/5" data-reveal>
+                <div class="relative rounded-sm border border-border/60 bg-card p-6">
                   <span class="text-4xl font-black text-border/40 select-none">{num}</span>
-                  <div class="mt-3 inline-flex items-center rounded-full border border-emerald-400/30 bg-emerald-400/5 px-2.5 py-0.5 text-[11px] font-medium text-emerald-400">
-                    Coming Soon
-                  </div>
-                  <h3 class="mt-3 font-semibold tracking-tight group-hover:text-blue-400 transition-colors">{title}</h3>
+                  <p class="mt-3 text-xs font-medium text-muted-foreground uppercase tracking-widest">
+                    In progress
+                  </p>
+                  <h3 class="mt-3 font-semibold tracking-tight">{title}</h3>
                   <p class="mt-2 text-sm text-muted-foreground leading-relaxed">{desc}</p>
                   <div class="mt-4 flex flex-wrap gap-1.5">
                     {tags.map((t) => (
-                      <span class="rounded border border-blue-400/20 bg-blue-400/5 px-2 py-0.5 text-[11px] font-medium text-blue-400">
+                      <span class="rounded-sm border border-border/60 bg-muted px-2 py-0.5 text-[11px] font-medium text-muted-foreground">
                         {t}
                       </span>
                     ))}
@@ -413,7 +405,7 @@ const jsonLd = JSON.stringify({
             </div>
 
             <div class="mt-8 flex items-center gap-4">
-              <a href="https://github.com/nguyendinhngoc23052006" target="_blank" rel="noopener noreferrer" class="inline-flex h-10 items-center gap-2 rounded-md border border-input bg-background px-6 text-sm font-medium shadow-xs transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+              <a href="https://github.com/nguyendinhngoc23052006" target="_blank" rel="noopener noreferrer" class="inline-flex h-10 items-center gap-2 rounded-sm border border-input bg-background px-6 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
                 Follow on GitHub <span aria-hidden="true">&rarr;</span>
               </a>
               <p class="text-sm text-muted-foreground">Stay updated as these ship.</p>
@@ -424,10 +416,10 @@ const jsonLd = JSON.stringify({
         {/* ── FAQ ── */}
         <section id="faq" class="border-t border-border/40 bg-card/50 py-20 sm:py-28">
           <div class="mx-auto max-w-3xl px-6">
-            <p class="section-label" data-reveal>FAQ</p>
-            <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl" data-reveal>Questions about custom development</h2>
+            <p class="section-label">FAQ</p>
+            <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Questions about custom development</h2>
 
-            <div class="mt-10" data-reveal>
+            <div class="mt-10">
               {faq.map(({ question, answer }) => (
                 <details class="faq-item">
                   <summary>{question}</summary>
@@ -441,9 +433,9 @@ const jsonLd = JSON.stringify({
         {/* ── CONTACT ── */}
         <section id="contact" class="border-t border-border/40 py-20 sm:py-28">
           <div class="mx-auto max-w-xl px-6">
-            <p class="section-label" data-reveal>Contact</p>
-            <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl" data-reveal>Start a conversation</h2>
-            <p class="mt-3 text-muted-foreground" data-reveal>
+            <p class="section-label">Contact</p>
+            <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Start a conversation</h2>
+            <p class="mt-3 text-muted-foreground">
               Have a project in mind? Tell me about it and I'll respond within 24 hours.
             </p>
             <div class="mt-8">
@@ -465,27 +457,6 @@ const jsonLd = JSON.stringify({
           </div>
         </footer>
 
-        <script is:inline>
-          (function () {
-            if (!("IntersectionObserver" in window)) {
-              document.querySelectorAll("[data-reveal]").forEach(function (el) {
-                el.classList.add("revealed");
-              });
-              return;
-            }
-            var observer = new IntersectionObserver(function (entries) {
-              entries.forEach(function (entry) {
-                if (entry.isIntersecting) {
-                  entry.target.classList.add("revealed");
-                  observer.unobserve(entry.target);
-                }
-              });
-            }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
-            document.querySelectorAll("[data-reveal]").forEach(function (el) {
-              observer.observe(el);
-            });
-          })();
-        </script>
       </>
     )}
   </body>

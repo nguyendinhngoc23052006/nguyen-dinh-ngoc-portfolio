@@ -1,6 +1,12 @@
 export const SITE_URL =
   "https://nguyen-dinh-ngoc-portfolio.dinhnhuong1969.workers.dev";
 
+export const heroSubhead =
+  "Custom web apps, dashboards, and automation tools. I solve problems that off-the-shelf software won't. Fast, clean, built to last.";
+
+export const aboutIntro =
+  "I'm a full-stack developer in Hanoi. I build custom software—web apps, dashboards, automation systems—for teams that need something real, not a template. Fast shipping, clean code, no unnecessary bells. That's the standard I hold every project to.";
+
 export const navLinks = [
   { href: "#about", label: "About" },
   { href: "#services", label: "Services" },
