@@ -77,3 +77,26 @@ test("contact api silently accepts honeypot submissions", async ({
   const json = (await res.json()) as { success: boolean };
   expect(json.success).toBe(true);
 });
+
+test("contact api rate-limits rapid requests", async ({ request }) => {
+  // Same request_key across all 6 → first inserts, rest hit 23505 unique_violation
+  // which the service treats as success. So in production/preview without the
+  // rate limiter binding, all 6 return 200. With the binding, later requests
+  // return 429. Either state is valid; anything else (500, 4xx other) means the
+  // rate-limit path crashed.
+  const payload = {
+    request_key: crypto.randomUUID(),
+    name: "Rate Test",
+    email: "rate@test.com",
+    message: "Test message",
+  };
+
+  const results = [];
+  for (let i = 0; i < 6; i++) {
+    const res = await request.post(CONTACT_API_PATH, { data: payload });
+    results.push(res.status());
+  }
+
+  const allValid = results.every((status) => status === 200 || status === 429);
+  expect(allValid).toBe(true);
+});

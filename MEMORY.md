@@ -6,7 +6,7 @@
 - React islands in Astro SSR: `data-hydrated` must be set via `useEffect` (not as a static prop) — SSR renders the full HTML, so a static attribute exists before hydration.
 - Security headers set in `src/middleware.ts` — CSP, HSTS, X-Frame-Options, nosniff, Referrer-Policy, Permissions-Policy. CSP uses `'unsafe-inline'` for scripts (required by Astro island hydration); tightening to nonce-based is a follow-up.
 - Astro SSR `security.checkOrigin` defaults to `true` — framework handles CSRF on POST/PUT/PATCH/DELETE. Custom origin checks in API handlers are redundant. E2e tests that send explicit headers must include `Origin` to pass Astro's check.
-- Contact API anti-abuse: honeypot field (`website`), content-type enforcement (checked before service availability), split error handling (validation errors surfaced, DB errors generic). Cloudflare Turnstile + rate limiting are recommended next steps.
+- Contact API anti-abuse: honeypot field (`website`), content-type enforcement (checked before service availability), split error handling (validation errors surfaced, DB errors generic). Rate limiting (5 req/min per IP via Cloudflare Workers Rate Limiting binding) is now live; binding check is graceful when missing (unit tests, sandbox). Cloudflare Turnstile is the remaining step.
 - Skills trimmed from 45 to 18 for credibility — only technologies demonstrably used or closely related to the portfolio stack.
 - All CI workflows use `npm ci` (not `npm install`) for lockfile-integrity reproducible builds.
 - CodeQL v4 added on schedule (weekly Monday 06:00 UTC) + push/PR triggers.

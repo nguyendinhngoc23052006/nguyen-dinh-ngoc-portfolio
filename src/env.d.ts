@@ -7,3 +7,12 @@ declare namespace App {
     startupError?: string;
   }
 }
+
+declare module "cloudflare:workers" {
+  export const env: {
+    RATE_LIMITER?: {
+      limit(options: { key: string }): Promise<{ success: boolean }>;
+    };
+    [key: string]: unknown;
+  };
+}
