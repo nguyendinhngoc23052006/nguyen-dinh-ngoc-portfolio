@@ -1,16 +1,17 @@
-# Code Review — restore deploy-preview guard for dependabot PRs
+# Code Review — harden production deploy on CI + blue-green promotion
 
-**Date:** 2026-07-23
-**Verdict:** PASS.
+**Date:** 2026-07-24
+**Verdict:** PENDING — awaiting reviewer completion.
 
-Scanned diff (`.github/workflows/deploy-preview.yml`, `MEMORY.md`).
+## Changes under review
+- `.github/workflows/deploy-production.yml`: Added `wait-for-ci` job (shell script polling), three-step deploy job (upload/parse/probe/promote).
 
-1. Duplicated logic — none (single `if:` line on one job).
-2. Oversized or mixed-responsibility file — `deploy-preview.yml` is 58 lines; `MEMORY.md` is 16 lines. Both well under threshold.
-3. Component doing data access — N/A (no `src/components/` change).
-4. Missing UI states — N/A (no UI change).
-5. Service file with no test change — N/A (no `src/services/` change).
+## Code quality focus points
+1. **Shell script quality** — error handling, idiomatic bash in `wait-for-ci`.
+2. **Parsing robustness** — grep patterns for version ID and preview URL extraction.
+3. **Health probe logic** — retry loop, sleep interval, exit conditions.
+4. **Job dependencies** — `needs: wait-for-ci`, step output chaining.
+5. **Duplication** — repeated secrets/vars across steps.
+6. **Comments** — sufficient documentation for maintenance.
 
-Note: the 3-line inline comment on `deploy-preview` documents the non-obvious *why* (Dependabot has a separate secret store; a skipped required check reports as success). This is exactly the code-floor rule's carve-out for a hidden constraint, and it inoculates the guard against another PR #19-style "dead code" revert.
-
-No code-quality issues found.
+(Verdict and detailed findings to be updated by reviewer.)

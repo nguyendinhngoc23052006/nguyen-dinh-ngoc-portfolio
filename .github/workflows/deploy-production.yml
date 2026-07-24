@@ -4,9 +4,70 @@ on:
   push:
     branches: [main]
 
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
 jobs:
-  deploy-production:
+  wait-for-ci:
     runs-on: ubuntu-latest
+    timeout-minutes: 25
+    permissions:
+      checks: read
+    steps:
+      - name: Wait for CI checks on ${{ github.sha }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SHA: ${{ github.sha }}
+          REPO: ${{ github.repository }}
+        run: |
+          required=(lint tests typecheck e2e)
+          timeout=1200
+          elapsed=0
+          while [ $elapsed -lt $timeout ]; do
+            all_ok=true
+            outstanding=()
+            for check in "${required[@]}"; do
+              set +e
+              result=$(gh api "repos/$REPO/commits/$SHA/check-runs" \
+                --jq "[.check_runs[] | select(.name==\"$check\")] | sort_by(.started_at) | last | .conclusion // \"\"")
+              api_status=$?
+              set -e
+              if [ $api_status -ne 0 ]; then
+                echo "! $check → gh api call failed (transient? retrying)"
+                all_ok=false
+                outstanding+=("$check[api-error]")
+                continue
+              fi
+              case "$result" in
+                success|neutral|skipped)
+                  echo "✓ $check → $result"
+                  ;;
+                failure|cancelled|timed_out|action_required|stale)
+                  echo "✗ $check → $result"
+                  exit 1
+                  ;;
+                *)
+                  echo "… $check (${result:-not started})"
+                  all_ok=false
+                  outstanding+=("$check[${result:-not-started}]")
+                  ;;
+              esac
+            done
+            if $all_ok; then
+              echo "All required checks passed"
+              exit 0
+            fi
+            sleep 30
+            elapsed=$((elapsed + 30))
+          done
+          echo "Timeout after $timeout seconds; outstanding: ${outstanding[*]}"
+          exit 1
+
+  deploy:
+    needs: wait-for-ci
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
     permissions:
       contents: read
     steps:
@@ -25,8 +86,53 @@ jobs:
           PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${{ vars.PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
         run: npm run build
 
-      - uses: cloudflare/wrangler-action@v4
+      - name: Upload new version
+        id: upload
+        uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: deploy --var PUBLIC_SUPABASE_URL:${{ vars.PUBLIC_SUPABASE_URL }} --var PUBLIC_SUPABASE_PUBLISHABLE_KEY:${{ vars.PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
+          command: versions upload --env production --var PUBLIC_SUPABASE_URL:${{ vars.PUBLIC_SUPABASE_URL }} --var PUBLIC_SUPABASE_PUBLISHABLE_KEY:${{ vars.PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
+
+      - name: Parse version ID + preview URL
+        id: parse
+        env:
+          # Coupled to wrangler's human-readable CLI banner (`Worker Version ID:` + a
+          # *.workers.dev URL). If wrangler changes its output format, this fails loud
+          # rather than silent — see the empty-check below.
+          OUTPUT: ${{ steps.upload.outputs.command-output }}
+        run: |
+          echo "$OUTPUT"
+          VERSION_ID=$(echo "$OUTPUT" | grep -oE 'Worker Version ID:[[:space:]]*[a-f0-9-]+' | grep -oE '[a-f0-9-]+$' | head -1)
+          PREVIEW_URL=$(echo "$OUTPUT" | grep -oE 'https://[a-z0-9-]+\.[a-z0-9-]+\.workers\.dev' | head -1)
+          if [ -z "$VERSION_ID" ] || [ -z "$PREVIEW_URL" ]; then
+            echo "Failed to parse version ID or preview URL from wrangler output"
+            exit 1
+          fi
+          echo "version_id=$VERSION_ID" >> $GITHUB_OUTPUT
+          echo "preview_url=$PREVIEW_URL" >> $GITHUB_OUTPUT
+
+      - name: Health probe new version
+        env:
+          URL: ${{ steps.parse.outputs.preview_url }}
+        run: |
+          for i in $(seq 1 12); do
+            status=$(curl -s --max-time 5 -o /dev/null -w "%{http_code}" "$URL/health" || echo "000")
+            if [ "$status" = "200" ]; then
+              echo "✓ /health returned 200 on attempt $i"
+              exit 0
+            fi
+            echo "attempt $i: /health returned $status, retrying in 5s"
+            sleep 5
+          done
+          echo "Health probe never succeeded"
+          exit 1
+
+      - name: Promote to 100%
+        env:
+          VERSION_ID: ${{ steps.parse.outputs.version_id }}
+        uses: cloudflare/wrangler-action@v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: versions deploy ${{ env.VERSION_ID }}@100% --env production --yes

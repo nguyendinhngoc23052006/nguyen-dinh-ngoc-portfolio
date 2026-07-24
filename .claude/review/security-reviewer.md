@@ -1,13 +1,16 @@
-# Security Review — restore deploy-preview guard for dependabot PRs
+# Security Review — harden production deploy on CI + blue-green promotion
 
-**Date:** 2026-07-23
-**Verdict:** PASS.
+**Date:** 2026-07-24
+**Verdict:** PENDING — awaiting reviewer completion.
 
-Scanned diff (`.github/workflows/deploy-preview.yml`, `MEMORY.md`).
+## Changes under review
+- `.github/workflows/deploy-production.yml`: Added CI gate (`wait-for-ci` job), replaced single deploy with blue-green pattern (upload → health probe → promote).
 
-1. Missing RLS — N/A (no SQL migration in diff).
-2. Secret in client code — N/A (no `src/` change; the workflow references `secrets.CLOUDFLARE_*`, which are Actions secrets, not client code).
-3. Unvalidated input — N/A (no `src/pages/` change).
-4. Missing abuse case — N/A (no auth/payments/PII/upload change). Guard indirectly improves the posture: a Dependabot PR (potentially from a malicious upstream release) will no longer trigger a preview deploy with the Cloudflare token in scope.
+## Security focus points
+1. **CI gate permissions** — `checks: read`, `contents: read` scope on `wait-for-ci`.
+2. **Version upload safety** — `wrangler versions upload` output parsing.
+3. **Health probe** — `/health` endpoint validation before promotion.
+4. **Secrets & vars** — `PUBLIC_SUPABASE_*` wired as vars, not secrets.
+5. **Env vars** — no secret key references in workflow.
 
-No security issues found.
+(Verdict and detailed findings to be updated by reviewer.)
