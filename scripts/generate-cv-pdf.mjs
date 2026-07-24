@@ -3,7 +3,7 @@ import { setTimeout as sleep } from "node:timers/promises";
 
 import { chromium } from "@playwright/test";
 
-const OUT_PATH = "dist/jade-cv.pdf";
+const OUT_PATH = "dist/client/jade-cv.pdf";
 const PORT = 4322;
 const URL = `http://localhost:${PORT}/cv`;
 
@@ -28,9 +28,7 @@ async function main() {
   try {
     await waitForServer(URL);
 
-    const browser = await chromium.launch({
-      executablePath: "/opt/pw-browsers/chromium",
-    });
+    const browser = await chromium.launch();
     const page = await browser.newPage();
     await page.goto(URL, { waitUntil: "networkidle" });
     // Wait for web fonts to be loaded
