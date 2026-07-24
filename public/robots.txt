@@ -3,4 +3,4 @@ Allow: /
 Disallow: /api/
 Disallow: /health
 
-Sitemap: https://nguyen-dinh-ngoc-portfolio.dinhnhuong1969.workers.dev/sitemap.xml
+Sitemap: https://nguyendinhngoc.dev/sitemap.xml

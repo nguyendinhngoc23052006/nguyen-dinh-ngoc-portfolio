@@ -1,23 +1,26 @@
-# Scale Review — Pricing + CV page + Avatar + PDF build (follow-up)
+# Scale Review — PR: static-route headers + domain cleanup + security.txt
 
-**Date:** 2026-07-24 (updated for follow-up: avatar + PDF generation + prerender)  
-**Verdict:** PASS — no scale issues found.
+**Date:** 2026-07-24  
+**Verdict:** PASS — no scale issues; static site only.
 
-## Findings (Follow-up Changes)
+## Findings
 
-1. **`src/pages/cv.astro:2` — `prerender = true`** — page renders from the static `../data/portfolio` import at build time. No runtime query path, no Supabase calls, no `.select()` or `.filter()` in this file or its imports.
+PR contains no database queries, loops, filters, joins, or writes — all changes are static or build-time:
 
-2. **`scripts/generate-cv-pdf.mjs`** — build-time script only. Spawns `astro preview` and uses Playwright to print `/cv` to `dist/jade-cv.pdf` once per build. No database access, no Supabase calls, no loop over query results. Out of runtime scale scope (CI/CD, not production code path).
-
-3. **`e2e/smoke.spec.ts:104-110`** — new test hits `/cv` endpoint and asserts PDF link presence. One page load, no repeated queries, no new Supabase-backed route. No scale impact.
-
-4. **Avatar asset** (`public/jade-avatar.jpg`) — static file, served once at build time, immutable. No scale impact.
+1. **`public/_headers`** — static text file defining HTTP headers for Cloudflare Static Assets. No queries.
+2. **`public/.well-known/security.txt`** — static contact file per RFC 9110. No queries.
+3. **`src/middleware.ts` (CSP only)** — CSP header is set once per request, no database logic. `supabase.auth.getSession()` is unchanged (single non-looped auth call).
+4. **`src/data/portfolio.ts` (SITE_URL update)** — constant export, no queries.
+5. **`src/pages/index.astro` (og:image + JSON-LD)** — SSR page with static data imports, no queries.
+6. **`src/pages/cv.astro` (footer link + SITE_URL import)** — prerendered page, no queries.
+7. **`public/sitemap.xml`, `public/robots.txt`** — static text files. No queries.
+8. **`MEMORY.md`** — documentation only.
 
 ## Scale checks
-- **Unbounded queries:** None. `/cv` pulls from static `portfolio.ts` object (fixed data).
-- **Unindexed filters/joins:** N/A (no database queries in diff).
+- **Unbounded queries:** None (static site, no .select()/.filter()/.map() over Supabase results).
+- **Unindexed filters/joins:** N/A (no database changes).
 - **N+1 patterns:** N/A (no loops over query results).
-- **Non-idempotent writes:** None (PDF generation is read-only from the page; no `.insert()` added).
+- **Non-idempotent writes:** None (no .insert()/.update()/.delete()).
 
 ## Verdict
-No scale issues found. All follow-up changes are static or build-time only: avatar is immutable, `/cv` is prerendered with static data, PDF is generated once at build time, e2e test is a single page load assertion.
+No scale issues found. All changes are static text, constants, or build-time configurations with zero runtime query impact.

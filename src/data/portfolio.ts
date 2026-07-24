@@ -1,5 +1,4 @@
-export const SITE_URL =
-  "https://nguyen-dinh-ngoc-portfolio.dinhnhuong1969.workers.dev";
+export const SITE_URL = "https://nguyendinhngoc.dev";
 
 export const heroSubhead =
   "Custom web apps, dashboards, and automation tools. I solve problems that off-the-shelf software won't. Fast, clean, built to last.";

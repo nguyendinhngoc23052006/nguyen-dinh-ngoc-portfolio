@@ -1,0 +1,4 @@
+Contact: mailto:nguyendinhngoc23052006@gmail.com
+Expires: 2027-07-24T00:00:00Z
+Preferred-Languages: en, vi
+Canonical: https://nguyendinhngoc.dev/.well-known/security.txt
