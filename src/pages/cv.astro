@@ -1,0 +1,153 @@
+---
+// biome-ignore-all lint/correctness/noUnusedImports: symbols used in the Astro template below the frontmatter fence, which biome cannot see
+import {
+  aboutIntro,
+  contactInfo,
+  education,
+  experience,
+  projects,
+  services,
+  skills,
+} from "../data/portfolio";
+import "../styles/globals.css";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Jade (Nguyen Dinh Ngoc) — CV" />
+    <meta name="robots" content="noindex" />
+    <title>Jade — CV</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script is:inline>
+      (function () {
+        function getTheme() {
+          const stored = localStorage.getItem('theme');
+          if (stored === 'light' || stored === 'dark') return stored;
+          return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', getTheme());
+        window.addEventListener('storage', function (e) {
+          if (e.key === 'theme' && (e.newValue === 'light' || e.newValue === 'dark')) {
+            document.documentElement.setAttribute('data-theme', e.newValue);
+          }
+        });
+      })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  </head>
+  <body class="min-h-screen bg-background font-sans antialiased">
+    <div class="cv-page mx-auto max-w-3xl px-6 py-16">
+      <!-- Sticky screen-only nav: back to portfolio + download -->
+      <div class="cv-actions no-print mb-8 flex items-center justify-between text-sm">
+        <a href="/" class="underline">← Back to portfolio</a>
+        <button id="download-cv" type="button" class="rounded-sm border border-foreground bg-foreground px-4 py-2 text-background hover:bg-transparent hover:text-foreground transition-colors">
+          Download PDF
+        </button>
+      </div>
+
+      <!-- CV header -->
+      <header class="cv-header">
+        <h1 class="text-4xl font-bold tracking-tight">Nguyen Dinh Ngoc <span class="text-muted-foreground font-normal">(Jade)</span></h1>
+        <p class="mt-2 text-lg text-muted-foreground">Full-Stack Developer · {contactInfo.location}</p>
+        <p class="mt-1 text-sm text-muted-foreground">
+          <a href={`mailto:${contactInfo.email}`}>{contactInfo.email}</a> · <a href={contactInfo.github}>GitHub</a>
+        </p>
+      </header>
+
+      <hr class="my-8 border-border" />
+
+      <!-- Summary -->
+      <section>
+        <h2 class="cv-section-title">Summary</h2>
+        <p class="mt-2 leading-relaxed">{aboutIntro}</p>
+      </section>
+
+      <!-- Experience (only if non-empty) -->
+      {experience.length > 0 && (
+        <section class="mt-8">
+          <h2 class="cv-section-title">Experience</h2>
+          <div class="mt-3 space-y-4">
+            {experience.map((e) => (
+              <div>
+                <div class="flex items-baseline justify-between gap-4">
+                  <h3 class="font-semibold">{e.role} · {e.organization}</h3>
+                  <span class="text-sm text-muted-foreground shrink-0">{e.period}</span>
+                </div>
+                <p class="mt-1 text-sm leading-relaxed">{e.summary}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <!-- Education -->
+      <section class="mt-8">
+        <h2 class="cv-section-title">Education</h2>
+        <div class="mt-3 space-y-4">
+          {education.map((e) => (
+            <div>
+              <div class="flex items-baseline justify-between gap-4">
+                <h3 class="font-semibold">{e.degree}</h3>
+                <span class="text-sm text-muted-foreground shrink-0">{e.period}</span>
+              </div>
+              <p class="mt-1 text-sm text-muted-foreground">{e.institution} · {e.location}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Skills -->
+      <section class="mt-8">
+        <h2 class="cv-section-title">Technical Skills</h2>
+        <dl class="mt-3 space-y-2">
+          {skills.map(({ group, items }) => (
+            <div class="flex gap-3 text-sm">
+              <dt class="font-semibold shrink-0 w-32">{group}</dt>
+              <dd class="text-muted-foreground">{items.join(" · ")}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+
+      <!-- Projects -->
+      <section class="mt-8">
+        <h2 class="cv-section-title">Projects</h2>
+        <div class="mt-3 space-y-4">
+          {projects.map((p) => (
+            <div>
+              <h3 class="font-semibold">{p.title}</h3>
+              <p class="mt-1 text-sm leading-relaxed">{p.desc}</p>
+              <p class="mt-1 text-xs text-muted-foreground">{p.tags.join(" · ")}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Services -->
+      <section class="mt-8">
+        <h2 class="cv-section-title">Services Offered</h2>
+        <ul class="mt-3 space-y-2">
+          {services.map((s) => (
+            <li class="text-sm">
+              <span class="font-semibold">{s.title}</span> — <span class="text-muted-foreground">{s.desc}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <!-- Footer for print: contact repeat + portfolio URL -->
+      <footer class="cv-footer mt-12 pt-6 border-t border-border text-xs text-muted-foreground">
+        Full portfolio · <a href="https://nguyen-dinh-ngoc-portfolio.dinhnhuong1969.workers.dev">jade.dev/portfolio</a> · Last updated from live data
+      </footer>
+    </div>
+
+    <script is:inline>
+      document.getElementById("download-cv")?.addEventListener("click", () => window.print());
+    </script>
+  </body>
+</html>

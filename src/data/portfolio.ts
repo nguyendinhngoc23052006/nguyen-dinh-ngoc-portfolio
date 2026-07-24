@@ -14,6 +14,7 @@ export const navLinks = [
   { href: "#process", label: "Process" },
   { href: "#skills", label: "Skills" },
   { href: "#projects", label: "Projects" },
+  { href: "/cv", label: "CV" },
   { href: "#faq", label: "FAQ" },
   { href: "#contact", label: "Contact" },
 ];
@@ -99,7 +100,7 @@ export const pricing = [
   {
     name: "Starter",
     tagline: "Fixed-scope projects · 2–4 weeks",
-    priceHint: "from $2,000",
+    priceHint: "from $300",
     features: [
       "Single-feature web app or tool",
       "Full-stack setup (DB to deploy)",
@@ -112,7 +113,7 @@ export const pricing = [
   {
     name: "Growth",
     tagline: "Custom applications · 4–12 weeks",
-    priceHint: "from $8,000",
+    priceHint: "from $1,500",
     features: [
       "Multi-feature application with auth",
       "Real-time features and complex workflows",
@@ -166,7 +167,7 @@ export const faq = [
   {
     question: "How do you price projects?",
     answer:
-      "Transparent, fixed pricing for defined scope. I quote upfront with zero surprises — you know the cost before we start. Starter projects from $2k; custom work discussed during Discovery.",
+      "Transparent, fixed pricing for defined scope. I quote upfront with zero surprises — you know the cost before we start. Starter projects from $300; custom work discussed during Discovery.",
   },
   {
     question: "How long does a typical project take?",
@@ -215,3 +216,25 @@ export const projects = [
     tags: ["Next.js", "PostgreSQL", "Tailwind CSS"],
   },
 ];
+
+export const contactInfo = {
+  email: "dinhnhuong1969@gmail.com",
+  github: "https://github.com/nguyendinhngoc23052006",
+  location: "Hanoi, Vietnam",
+};
+
+export const education = [
+  {
+    degree: "B.A. International Business",
+    institution: "Foreign Trade University (FTU)",
+    location: "Hanoi, Vietnam",
+    period: "In progress",
+  },
+];
+
+export const experience: {
+  role: string;
+  organization: string;
+  period: string;
+  summary: string;
+}[] = [];
