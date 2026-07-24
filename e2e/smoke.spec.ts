@@ -100,3 +100,11 @@ test("contact api rate-limits rapid requests", async ({ request }) => {
   const allValid = results.every((status) => status === 200 || status === 429);
   expect(allValid).toBe(true);
 });
+
+test("cv page loads and has download link", async ({ page }) => {
+  await page.goto("/cv");
+  await expect(page).toHaveTitle(/Jade — CV/);
+  const link = page.locator('a[href="/jade-cv.pdf"]');
+  await expect(link).toBeVisible();
+  await expect(link).toHaveAttribute("download", /\.pdf$/);
+});

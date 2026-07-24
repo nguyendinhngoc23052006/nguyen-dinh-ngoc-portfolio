@@ -5,7 +5,7 @@
 If you discover a security vulnerability in this project, please report it
 responsibly.
 
-**Email:** dinhnhuong1969@gmail.com
+**Email:** nguyendinhngoc23052006@gmail.com
 **Subject line:** `[SECURITY] nguyen-dinh-ngoc-portfolio`
 
 Please include:
