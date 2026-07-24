@@ -28,7 +28,9 @@ async function main() {
   try {
     await waitForServer(URL);
 
-    const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' });
+    const browser = await chromium.launch({
+      executablePath: "/opt/pw-browsers/chromium",
+    });
     const page = await browser.newPage();
     await page.goto(URL, { waitUntil: "networkidle" });
     // Wait for web fonts to be loaded
