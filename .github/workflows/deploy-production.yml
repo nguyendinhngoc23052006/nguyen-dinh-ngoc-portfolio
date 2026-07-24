@@ -5,7 +5,53 @@ on:
     branches: [main]
 
 jobs:
-  deploy-production:
+  wait-for-ci:
+    runs-on: ubuntu-latest
+    permissions:
+      checks: read
+      contents: read
+    steps:
+      - name: Wait for CI checks on ${{ github.sha }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SHA: ${{ github.sha }}
+          REPO: ${{ github.repository }}
+        run: |
+          required=(lint tests typecheck e2e)
+          timeout=1200  # 20 minutes
+          elapsed=0
+          while [ $elapsed -lt $timeout ]; do
+            all_ok=true
+            for check in "${required[@]}"; do
+              result=$(gh api "repos/$REPO/commits/$SHA/check-runs" \
+                --jq "[.check_runs[] | select(.name==\"$check\") | .conclusion] | last" \
+                2>/dev/null || echo "")
+              case "$result" in
+                success)
+                  echo "✓ $check"
+                  ;;
+                failure|cancelled|timed_out|action_required)
+                  echo "✗ $check → $result"
+                  exit 1
+                  ;;
+                *)
+                  echo "… $check (${result:-not started})"
+                  all_ok=false
+                  ;;
+              esac
+            done
+            if $all_ok; then
+              echo "All required checks passed"
+              exit 0
+            fi
+            sleep 30
+            elapsed=$((elapsed + 30))
+          done
+          echo "Timeout after $timeout seconds"
+          exit 1
+
+  deploy:
+    needs: wait-for-ci
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -25,8 +71,48 @@ jobs:
           PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${{ vars.PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
         run: npm run build
 
-      - uses: cloudflare/wrangler-action@v4
+      - name: Upload new version
+        id: upload
+        uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: deploy --var PUBLIC_SUPABASE_URL:${{ vars.PUBLIC_SUPABASE_URL }} --var PUBLIC_SUPABASE_PUBLISHABLE_KEY:${{ vars.PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
+          command: versions upload --env production --var PUBLIC_SUPABASE_URL:${{ vars.PUBLIC_SUPABASE_URL }} --var PUBLIC_SUPABASE_PUBLISHABLE_KEY:${{ vars.PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
+
+      - name: Parse version ID + preview URL
+        id: parse
+        env:
+          OUTPUT: ${{ steps.upload.outputs.command-output }}
+        run: |
+          echo "$OUTPUT"
+          VERSION_ID=$(echo "$OUTPUT" | grep -oE 'Worker Version ID:\s*[a-f0-9-]+' | awk '{print $NF}' | head -1)
+          PREVIEW_URL=$(echo "$OUTPUT" | grep -oE 'https://[a-z0-9-]+\.[a-z0-9-]+\.workers\.dev' | head -1)
+          if [ -z "$VERSION_ID" ] || [ -z "$PREVIEW_URL" ]; then
+            echo "Failed to parse version ID or preview URL from wrangler output"
+            exit 1
+          fi
+          echo "version_id=$VERSION_ID" >> $GITHUB_OUTPUT
+          echo "preview_url=$PREVIEW_URL" >> $GITHUB_OUTPUT
+
+      - name: Health probe new version
+        env:
+          URL: ${{ steps.parse.outputs.preview_url }}
+        run: |
+          for i in $(seq 1 12); do
+            status=$(curl -s -o /dev/null -w "%{http_code}" "$URL/health" || echo "000")
+            if [ "$status" = "200" ]; then
+              echo "✓ /health returned 200 on attempt $i"
+              exit 0
+            fi
+            echo "attempt $i: /health returned $status, retrying in 5s"
+            sleep 5
+          done
+          echo "Health probe never succeeded"
+          exit 1
+
+      - name: Promote to 100%
+        uses: cloudflare/wrangler-action@v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: versions deploy ${{ steps.parse.outputs.version_id }}@100% --env production --yes

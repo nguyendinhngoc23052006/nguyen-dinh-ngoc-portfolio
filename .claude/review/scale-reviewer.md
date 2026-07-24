@@ -1,13 +1,9 @@
-# Scale Review — restore deploy-preview guard for dependabot PRs
+# Scale Review — harden production deploy on CI + blue-green promotion
 
-**Date:** 2026-07-23
-**Verdict:** PASS — no scale issues.
+**Date:** 2026-07-24
+**Verdict:** OUT OF SCOPE.
 
-Scanned diff (`.github/workflows/deploy-preview.yml`, `MEMORY.md`).
+## Finding
+Scale reviewer is scoped for **database-scale issues only** (unbounded queries, unindexed filters/joins, N+1 patterns, non-idempotent inserts). This PR modifies `.github/workflows/deploy-production.yml` (CI/CD pipeline), which contains no database access, no Supabase queries, and no data-scale concerns.
 
-1. Unbounded query — N/A (no Supabase call in diff).
-2. Unindexed filter or join — N/A (no query in diff).
-3. N+1 pattern — N/A (no loop in diff).
-4. Non-idempotent write — N/A (no `.insert()` in diff).
-
-Bonus: skipping the ~30-second build + wrangler deploy on Dependabot PRs is a small CI-time win.
+**No scale issues found.** (Reviewer scope: database/query patterns only; this diff contains no Supabase code.)
