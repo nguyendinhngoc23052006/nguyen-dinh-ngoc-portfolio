@@ -1,23 +1,34 @@
-# Security Review — Pricing + CV page + Avatar + PDF build
+# Security Review — PR: static-route headers + domain cleanup + security.txt
 
-**Date:** 2026-07-24 (updated for follow-up: avatar + PDF generation)  
-**Verdict:** PASS (no new security vulnerabilities)
+**Date:** 2026-07-24  
+**Verdict:** PASS (all security gates clear)
 
-## Findings (Follow-up Changes)
+## Findings
 
-1. **Avatar download — PASS.** GitHub avatar downloaded once to `public/jade-avatar.jpg` at development time (manual download, not CI). Image served as static asset from `public/` (immutable, cached). No third-party image CDN load in browsers for hero or CV; local asset reduces external requests and eliminates GitHub domain dependency.
+### Issues fixed in PR body
+- **pr-body.md was stale**: Initial review found pr-body.md still contained previous PR's pricing/CV text with no security context. Corrected version now describes this PR's three security fixes with abuse prevention rationale.
 
-2. **PDF generation script (`scripts/generate-cv-pdf.mjs`) — PASS.** (a) Chromium launch uses pre-installed `/opt/pw-browsers/chromium` — no download, no arbitrary binary execution. (b) Playwright opens localhost:4322 only (not internet) — confined to prerendered `/cv` page, no external fetch risk. (c) Page data is static (portfolio.ts constants), no user input. (d) PDF write to `dist/jade-cv.pdf` (build artifact directory, not committed, not served in production code until workflows publish). (e) Script runs at build time only (CI), not runtime — no production security surface.
+### Security checks — all pass
+1. **RLS on new tables**: No migrations; no new tables. Not applicable.
+2. **Secrets in client code**: Grepped src/middleware.ts, src/data/portfolio.ts, src/pages/*.astro for SUPABASE_SERVICE_ROLE_KEY, _SECRET_, service_role, sb_secret_ — none found. Public keys only.
+3. **Unvalidated input**: Neither page reads Astro.request or URL params; both consume static objects from src/data/portfolio.ts only. Not applicable.
+4. **Auth/PII/upload changes**: Auth session logic unchanged (src/middleware.ts still calls supabase.auth.getSession(), no bypass). Avatar image now local (/jade-avatar.jpg, not external GitHub URL) — reduces external domain dependency. Email/name/address fields unchanged.
 
-3. **PDF served at `/jade-cv.pdf` — PASS.** Static file, immutable, no download-execution risk (PDF viewer opens in browser or user downloads). No Content-Disposition confusion: `download="Jade-Nguyen-Dinh-Ngoc-CV.pdf"` attribute on anchor is advisory (helps filename, no security bypass).
+## Security mitigations in this PR
 
-4. **Workflow steps — PASS.** `npx playwright install --with-deps chromium` runs in CI only (before build). No secrets exposed in CI logs; no chromium build from source (uses pre-built binary). Both workflows already have trusted GitHub token scoping (contents: read, pull-requests: write in preview; contents: read in production).
+- **Clickjacking (P1 fix)**: X-Frame-Options: DENY + frame-ancestors 'none' in public/_headers + src/middleware.ts prevent <frame>/<iframe> embedding of prerendered /cv (was vulnerable).
+- **XSS/injection**: CSP restricts script-src to 'self' + 'unsafe-inline' (required by Astro hydration), img-src to 'self' + data: (removed external GitHub avatar domain). No eval/exec risky directives.
+- **Protocol downgrade**: HSTS max-age=31536000; includeSubDomains enforces HTTPS across domain.
+- **MIME confusion**: X-Content-Type-Options: nosniff blocks MIME-type inference attacks.
+- **Referrer leakage**: Referrer-Policy: strict-origin-when-cross-origin limits referrer to same-origin or HTTPS upgrade only.
+- **Feature access**: Permissions-Policy disallows camera, microphone, geolocation (zero-permissions model).
+- **security.txt**: RFC 9110 contact + responsible-disclosure signaling.
 
-5. **`src/pages/cv.astro` avatar usage — PASS.** `<img src="/jade-avatar.jpg" alt="Jade — Nguyen Dinh Ngoc" ...>` is local asset reference, no injection. Similar usage in `index.astro` hero already verified (prior review).
-
-6. **Secrets check — PASS.** No `process.env` or `import.meta.env` in `scripts/generate-cv-pdf.mjs` or new workflow blocks. Chromium executable path is hardcoded (safe).
-
-7. **Overall attack surface — PASS.** Compared to original `window.print()` button: (a) print dialog no longer shown (user cannot accidentally reveal/screenshot sensitive data), (b) PDF is pre-rendered at known state (not user-interaction-dependent), (c) file is served as static asset (no runtime generation = lower risk).
-
-## Verdict
-All follow-up changes are security-safe. No new PII exposure, no secrets leakage, no execution risk from Playwright/Chromium, no injection vectors in PDF generation.
+## Checklist
+- [x] CSP does not expose secrets or service-role endpoints.
+- [x] No client-side Supabase service-role key references.
+- [x] No unvalidated user input in changed components.
+- [x] Auth session logic unchanged; no bypass introduced.
+- [x] Static asset serving via Cloudflare Workers Static Assets (no DB risk).
+- [x] _headers format valid; merge with adapter rules verified in dist/client/_headers.
+- [x] .well-known/security.txt accessible at correct path (Astro copies public/ → dist/client/).

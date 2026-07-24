@@ -8,6 +8,7 @@ import {
   education,
   experience,
   projects,
+  SITE_URL,
   services,
   skills,
 } from "../data/portfolio";
@@ -158,7 +159,7 @@ import "../styles/globals.css";
 
       <!-- Footer for print: contact repeat + portfolio URL -->
       <footer class="cv-footer mt-12 pt-6 border-t border-border text-xs text-muted-foreground">
-        Full portfolio · <a href="https://nguyen-dinh-ngoc-portfolio.dinhnhuong1969.workers.dev">jade.dev/portfolio</a> · Last updated from live data
+        Full portfolio · <a href={SITE_URL}>{SITE_URL.replace("https://", "")}</a> · Last updated from live data
       </footer>
     </div>
   </body>
