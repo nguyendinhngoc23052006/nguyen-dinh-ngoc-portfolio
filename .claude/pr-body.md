@@ -32,5 +32,5 @@ Review the preview (check `/cv`, `/jade-avatar.jpg`, `/jade-cv.pdf` all load wit
 - [x] irreversible actions guarded + idempotent + flagged
 - [x] no avoidable debt; memory updated and pruned
 - [x] migrations explained in plain English
-- [ ] reviewers ran — `.claude/review/*` verdicts refreshed this PR (in progress)
+- [x] reviewers ran — `.claude/review/*` verdicts refreshed this PR
 - [x] every subagent dispatched on a model below the orchestrator's — never inherited
