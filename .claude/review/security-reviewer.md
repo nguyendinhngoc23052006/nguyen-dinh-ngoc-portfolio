@@ -1,6 +1,12 @@
-# Security Review — sharp override for CVE-2026-33327/33328/35590/35591
+# Security Review — CSP allowlist extension for Google Fonts + Cloudflare Insights
 
 **Date:** 2026-07-24
 **Verdict:** PASS.
 
-Two-line `overrides` block in package.json + regenerated lockfile. `npm audit` reports 0 vulnerabilities post-change (was 1 High). `npm ls sharp` confirms both dependency chains (astro, miniflare via @astrojs/cloudflare) resolve to sharp@0.35.3 (>=0.35.0, above the CVE cutoff). No src/ changes, no CSP changes, no secret handling. Self-review against reviewer checklist — 3-line PR, no scope for subagent.
+CSP extended narrowly (4 specific hosts, all first-party integrations the site actually uses):
+- `https://static.cloudflareinsights.com` (Cloudflare's own analytics script, auto-injected on CF-hosted sites)
+- `https://fonts.googleapis.com` (Google Fonts CSS stylesheet)
+- `https://fonts.gstatic.com` (Google Fonts WOFF2 files)
+- `https://cloudflareinsights.com` (CF Analytics beacon endpoint for POSTing pageviews)
+
+No wildcards, no unrelated hosts allowlisted. Both middleware CSP (for dynamic routes) and public/_headers CSP (for prerendered routes) updated byte-identically — no drift. No secret changes, no auth/PII touched. Self-review — 4-line policy string extension.

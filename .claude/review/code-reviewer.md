@@ -1,6 +1,6 @@
-# Code Review — sharp override for CVE-2026-33327/33328/35590/35591
+# Code Review — CSP allowlist extension for Google Fonts + Cloudflare Insights
 
 **Date:** 2026-07-24
 **Verdict:** PASS.
 
-Minimal diff: 3-line `overrides` block in package.json + lockfile regeneration. Standard npm mechanism for forcing transitive dep versions. No refactor scope, no duplication, no missing states (no runtime code touched). Overrides block is documented at npm-docs; correct syntax. Self-review against reviewer checklist.
+Two-file surgical edit; CSP strings match byte-identically between src/middleware.ts and public/_headers. No refactor, no duplication introduced (the drift risk is already documented in MEMORY.md from PR #26). Self-review.
