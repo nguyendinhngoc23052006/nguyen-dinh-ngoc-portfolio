@@ -239,7 +239,8 @@ details.faq-item .faq-answer {
     size: A4;
     margin: 15mm 20mm;
   }
-  :root {
+  :root[data-theme="light"],
+  :root[data-theme="dark"] {
     --background: #ffffff;
     --foreground: #111111;
     --muted-foreground: #555555;
