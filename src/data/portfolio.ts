@@ -218,14 +218,14 @@ export const projects = [
 ];
 
 export const contactInfo = {
-  email: "dinhnhuong1969@gmail.com",
+  email: "nguyendinhngoc23052006@gmail.com",
   github: "https://github.com/nguyendinhngoc23052006",
   location: "Hanoi, Vietnam",
 };
 
 export const education = [
   {
-    degree: "B.A. International Business",
+    degree: "B.A. International Economics",
     institution: "Foreign Trade University (FTU)",
     location: "Hanoi, Vietnam",
     period: "In progress",
