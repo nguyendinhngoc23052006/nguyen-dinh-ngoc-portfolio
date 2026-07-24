@@ -225,7 +225,7 @@ export const contactInfo = {
 
 export const education = [
   {
-    degree: "B.A. International Economics",
+    degree: "Bachelor of International Economics",
     institution: "Foreign Trade University (FTU)",
     location: "Hanoi, Vietnam",
     period: "In progress",
