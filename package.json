@@ -6,7 +6,8 @@
   "private": true,
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && npm run build:pdf",
+    "build:pdf": "node scripts/generate-cv-pdf.mjs",
     "preview": "astro preview",
     "lint": "biome check .",
     "typecheck": "tsc --noEmit",

@@ -80,6 +80,9 @@ jobs:
 
       - run: npm ci
 
+      - name: Install Playwright chromium
+        run: npx playwright install --with-deps chromium
+
       - name: Build
         env:
           PUBLIC_SUPABASE_URL: ${{ vars.PUBLIC_SUPABASE_URL }}
