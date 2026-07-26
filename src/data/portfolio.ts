@@ -4,15 +4,21 @@ export const heroSubhead =
   "Custom web apps, dashboards, and automation tools. I solve problems that off-the-shelf software won't. Fast, clean, built to last.";
 
 export const aboutIntro =
-  "I'm a full-stack developer in Hanoi. I build custom software—web apps, dashboards, automation systems—for teams that need something real, not a template. Fast shipping, clean code, no unnecessary bells. That's the standard I hold every project to.";
+  "I studied international economics at Foreign Trade University — and I lead with that on purpose, because it's the pitch, not the caveat. Most developers ship the feature you asked for; I ship the outcome the feature was hired to produce, because I read the business case before I open the editor. Every project on this site runs in production on real infrastructure. Open them, use them, read the source. You don't have to take my word for anything here.";
+
+export const projectsHeading = "Proof of work — every project is live";
+export const projectsSubhead =
+  "Not case studies. Not mockups. Tools shipped to production, running right now. Click any card to open it — the source is on GitHub if you want to audit the code.";
+export const projectsTail =
+  "Follow along on GitHub — more shipping this quarter.";
 
 export const navLinks = [
+  { href: "#projects", label: "Projects" },
   { href: "#about", label: "About" },
   { href: "#services", label: "Services" },
   { href: "#pricing", label: "Pricing" },
   { href: "#process", label: "Process" },
   { href: "#skills", label: "Skills" },
-  { href: "#projects", label: "Projects" },
   { href: "/cv", label: "CV" },
   { href: "#faq", label: "FAQ" },
   { href: "#contact", label: "Contact" },
@@ -188,6 +194,12 @@ export const faq = [
     question: "How long does a typical project take?",
     answer:
       "Starter work: 2–4 weeks. Growth tier: 4–12 weeks. Enterprise bespoke: timeline set during planning. Speed depends on scope and your feedback cycle, not on artificial compression.",
+  },
+  {
+    question:
+      "You studied economics, not computer science. Should that concern me?",
+    answer:
+      "Read it as a plus, not a gap. Training in international economics at Foreign Trade University means I read the business case before I open the editor — a habit most CS-track developers never build. The proof is public: every project on this site is live in production, with source on GitHub. Click, use, audit the code. Software you can actually run is the credential I'll be judged on.",
   },
   {
     question: "Can I customize the tech stack?",
