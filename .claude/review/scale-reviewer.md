@@ -1,4 +1,4 @@
-# Scale Review — CSP allowlist extension for Google Fonts + Cloudflare Insights
+# Scale Review — projects[0] replaced with shipped regex-tester
 
-**Date:** 2026-07-24
-**Verdict:** OUT OF SCOPE — no DB queries, no data access changes. Header-string extension only.
+**Date:** 2026-07-26
+**Verdict:** OUT OF SCOPE — no DB queries, no data access, no listing that grows. Static data array of exactly three entries rendered by an SSG page.

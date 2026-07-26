@@ -195,12 +195,25 @@ export const faq = [
   },
 ];
 
-export const projects = [
+export interface Project {
+  num: string;
+  title: string;
+  desc: string;
+  tags: string[];
+  status?: "shipped";
+  url?: string;
+  source?: string;
+}
+
+export const projects: Project[] = [
   {
     num: "01",
-    title: "Full-Stack Web App",
-    desc: "A production-grade application with auth, real-time features, and edge deployment.",
-    tags: ["React", "TypeScript", "Supabase", "Cloudflare"],
+    title: "regex tester",
+    desc: "A regex tester where state lives in the URL. Paste, edit, share — anyone opening the link sees exactly what you saw. One HTML file, zero framework; sometimes that's the right call.",
+    tags: ["Vanilla JS", "URL state", "Cloudflare Pages"],
+    status: "shipped",
+    url: "https://regex-tester-6dz.pages.dev",
+    source: "https://github.com/nguyendinhngoc23052006/regex-tester",
   },
   {
     num: "02",

@@ -1,12 +1,6 @@
-# Security Review — CSP allowlist extension for Google Fonts + Cloudflare Insights
+# Security Review — projects[0] replaced with shipped regex-tester
 
-**Date:** 2026-07-24
+**Date:** 2026-07-26
 **Verdict:** PASS.
 
-CSP extended narrowly (4 specific hosts, all first-party integrations the site actually uses):
-- `https://static.cloudflareinsights.com` (Cloudflare's own analytics script, auto-injected on CF-hosted sites)
-- `https://fonts.googleapis.com` (Google Fonts CSS stylesheet)
-- `https://fonts.gstatic.com` (Google Fonts WOFF2 files)
-- `https://cloudflareinsights.com` (CF Analytics beacon endpoint for POSTing pageviews)
-
-No wildcards, no unrelated hosts allowlisted. Both middleware CSP (for dynamic routes) and public/_headers CSP (for prerendered routes) updated byte-identically — no drift. No secret changes, no auth/PII touched. Self-review — 4-line policy string extension.
+New outbound link to `https://regex-tester-6dz.pages.dev` — first-party, owned by the same GitHub user hosting this site (repo `nguyendinhngoc23052006/regex-tester`, deployed by the same account on Cloudflare Pages). Anchor uses `target="_blank"` + `rel="noopener noreferrer"` — blocks reverse `window.opener` tab-nabbing and strips the Referer. No user input, no auth, no PII, no secrets, no CSP change (linking off-site to an https origin is unaffected by CSP), no middleware or service touched. Self-review — same-owner first-party link with the standard opener/referrer hardening already applied.
