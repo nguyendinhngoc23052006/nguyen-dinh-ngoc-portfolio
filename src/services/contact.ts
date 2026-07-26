@@ -1,3 +1,10 @@
+// SECURITY: `name`, `company`, and `message` are stored as raw untrusted
+// text (intentional — we don't want to mangle a client's actual message).
+// Any UI that later renders these fields MUST use text-only insertion —
+// Astro `{expr}`, React JSX children, `textContent`, `innerText` — and
+// NEVER `set:html`, `dangerouslySetInnerHTML`, or `innerHTML`. A stored
+// XSS in an admin panel is one careless render away.
+
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { DemoRequestInput } from "../types/index.js";
 

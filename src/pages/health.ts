@@ -1,9 +1,14 @@
 import type { APIRoute } from "astro";
 
+// Public health probe used by the deploy workflow. Deliberately returns
+// an opaque "unhealthy" instead of the underlying error message — startup
+// errors leak env-var names, URLs, and stack fragments; keep them in logs.
 export const GET: APIRoute = async ({ locals }) => {
   if (!locals.supabase) {
-    return new Response(locals.startupError ?? "supabase not initialised", {
+    console.error("[health] supabase not initialised", locals.startupError);
+    return new Response("unhealthy", {
       status: 503,
+      headers: { "Content-Type": "text/plain" },
     });
   }
   try {
@@ -12,7 +17,11 @@ export const GET: APIRoute = async ({ locals }) => {
       status: 200,
       headers: { "Content-Type": "text/plain" },
     });
-  } catch {
-    return new Response("error", { status: 503 });
+  } catch (e) {
+    console.error("[health] getSession failed", e);
+    return new Response("unhealthy", {
+      status: 503,
+      headers: { "Content-Type": "text/plain" },
+    });
   }
 };

@@ -94,8 +94,17 @@ export default function ContactForm() {
           maxLength={2000}
         />
       </div>
+      {/* Honeypot: named hp_url_field (not "website" — that's autofilled by
+          password managers and would silently drop legitimate submissions).
+          Kept off-screen and out of the tab order; bots that fill every
+          text input will trigger it. */}
       <div aria-hidden="true" className="absolute -left-[9999px]">
-        <input type="text" name="website" tabIndex={-1} autoComplete="off" />
+        <input
+          type="text"
+          name="hp_url_field"
+          tabIndex={-1}
+          autoComplete="off"
+        />
       </div>
       <div className="flex items-center gap-4">
         <span

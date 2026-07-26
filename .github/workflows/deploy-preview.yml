@@ -10,7 +10,12 @@ jobs:
     # Dependabot PRs get no Actions secrets (only a separate Dependabot-secrets
     # store) — skip rather than red-fail; a skipped required check reports as
     # success. See MEMORY.md.
-    if: github.actor != 'dependabot[bot]'
+    #
+    # Fork PRs also skip: this workflow builds with the production Supabase
+    # publishable key + writes previews under our Cloudflare account. A
+    # malicious contributor could otherwise exfiltrate the key via their PR
+    # code or spam the prod demo_requests table via the preview URL.
+    if: github.actor != 'dependabot[bot]' && github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     permissions:
       contents: read
