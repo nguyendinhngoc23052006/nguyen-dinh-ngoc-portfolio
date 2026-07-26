@@ -53,12 +53,12 @@ export const skills = [
     ],
   },
   {
-    group: "AI-Assisted Development",
+    group: "AI-Directed Engineering",
     items: [
       "Claude Code",
-      "Claude Agent SDK",
-      "MCP servers",
-      "Prompt engineering",
+      "Multi-agent orchestration",
+      "Custom MCP servers",
+      "Spec-driven workflows",
     ],
   },
   {
