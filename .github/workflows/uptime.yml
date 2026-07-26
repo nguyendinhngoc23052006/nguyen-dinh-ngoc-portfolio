@@ -15,7 +15,11 @@ jobs:
             echo "PRODUCTION_URL not set — skipping (add it in Settings → Actions → Variables after step 10.5)"
             exit 0
           fi
-          STATUS=$(curl -sf -o /dev/null -w "%{http_code}" "${PRODUCTION_URL}/health" || echo "000")
+          # Custom UA so Cloudflare Bot Fight Mode doesn't 403 the default
+          # curl/* signature. Pair with a WAF Skip rule matching this UA on
+          # /health for a durable fix (see repo README uptime section).
+          UA="GitHub-Actions-Uptime/1.0 (+https://github.com/${GITHUB_REPOSITORY})"
+          STATUS=$(curl -sf -A "$UA" -o /dev/null -w "%{http_code}" "${PRODUCTION_URL}/health" || echo "000")
           if [ "$STATUS" != "200" ]; then
             echo "::error::Production health check failed — HTTP $STATUS from ${PRODUCTION_URL}/health"
             exit 1
