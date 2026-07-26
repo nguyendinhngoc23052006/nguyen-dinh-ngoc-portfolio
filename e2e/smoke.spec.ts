@@ -64,13 +64,16 @@ test("contact api rejects wrong content-type", async ({ request }) => {
 test("contact api silently accepts honeypot submissions", async ({
   request,
 }) => {
+  // Field renamed from `website` → `hp_url_field` to dodge browser autofill
+  // (see src/pages/api/contact.ts). The endpoint returns success without
+  // storing to avoid signalling bots that they were caught.
   const res = await request.post(CONTACT_API_PATH, {
     data: {
       request_key: crypto.randomUUID(),
       name: "Bot",
       email: "bot@spam.com",
       message: "Spam message",
-      website: "http://spam.example.com",
+      hp_url_field: "http://spam.example.com",
     },
   });
   expect(res.status()).toBe(200);
