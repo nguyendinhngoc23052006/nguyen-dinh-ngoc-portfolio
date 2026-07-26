@@ -138,25 +138,50 @@
   mix-blend-mode: normal;
 }
 
+/* Aperture-style reveal: the new theme opens from the click point.
+   Old view fades and blurs gently underneath while the new view
+   comes into focus, giving a subtle "lens pull" instead of a plain
+   wipe. Circular ease-in-out feels editorial, not bouncy. */
+
+::view-transition-old(root) {
+  animation: theme-old 0.8s cubic-bezier(0.83, 0, 0.17, 1);
+  animation-fill-mode: both;
+  z-index: 0;
+}
+
 ::view-transition-new(root) {
-  animation: theme-reveal 0.55s cubic-bezier(0.32, 0.72, 0.3, 1);
+  animation: theme-new 0.8s cubic-bezier(0.83, 0, 0.17, 1);
   animation-fill-mode: both;
   z-index: 1;
 }
 
-::view-transition-old(root) {
-  animation: none;
-  z-index: 0;
+@keyframes theme-old {
+  0% {
+    opacity: 1;
+    filter: blur(0) brightness(1);
+  }
+  100% {
+    opacity: 0.75;
+    filter: blur(2px) brightness(0.92);
+  }
 }
 
-@keyframes theme-reveal {
-  from {
+@keyframes theme-new {
+  0% {
     clip-path: circle(0 at var(--transition-x, 50vw) var(--transition-y, 50vh));
+    filter: blur(14px) saturate(1.5) brightness(1.08);
   }
-  to {
+  30% {
+    filter: blur(7px) saturate(1.25) brightness(1.04);
+  }
+  60% {
+    filter: blur(2px) saturate(1.08) brightness(1.01);
+  }
+  100% {
     clip-path: circle(
       150vmax at var(--transition-x, 50vw) var(--transition-y, 50vh)
     );
+    filter: none;
   }
 }
 
@@ -216,6 +241,7 @@ details.faq-item .faq-answer {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
   ::view-transition-new(root) {
     animation-duration: 1ms;
   }

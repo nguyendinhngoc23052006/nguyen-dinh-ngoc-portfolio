@@ -1,21 +1,31 @@
 import { Moon, Sun } from "lucide-react";
 import { useEffect, useState } from "react";
 
+type Theme = "light" | "dark";
+
+function readInitialTheme(): Theme {
+  if (typeof document === "undefined") return "dark";
+  const attr = document.documentElement.getAttribute("data-theme");
+  return attr === "light" ? "light" : "dark";
+}
+
 export default function ThemeToggle() {
-  const [mounted, setMounted] = useState(false);
-  const [theme, setTheme] = useState<"light" | "dark">("dark");
+  const [theme, setTheme] = useState<Theme>(readInitialTheme);
 
   useEffect(() => {
-    setMounted(true);
-    const current =
-      (document.documentElement.getAttribute("data-theme") as
-        | "light"
-        | "dark") || "dark";
-    setTheme(current);
+    const observer = new MutationObserver(() => {
+      const current = document.documentElement.getAttribute("data-theme");
+      if (current === "light" || current === "dark") setTheme(current);
+    });
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
+    return () => observer.disconnect();
   }, []);
 
   const toggle = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const next = theme === "dark" ? "light" : "dark";
+    const next: Theme = theme === "dark" ? "light" : "dark";
     const apply = () => {
       document.documentElement.setAttribute("data-theme", next);
       localStorage.setItem("theme", next);
@@ -38,26 +48,17 @@ export default function ThemeToggle() {
     doc.startViewTransition(apply);
   };
 
-  if (!mounted) {
-    return (
-      <button
-        type="button"
-        aria-label="Toggle theme"
-        className="inline-flex items-center justify-center rounded-md p-2 text-muted-foreground"
-      >
-        <span style={{ width: 20, height: 20, display: "inline-block" }} />
-      </button>
-    );
-  }
-
   return (
     <button
       type="button"
       onClick={toggle}
       aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} theme`}
       className="inline-flex items-center justify-center rounded-md p-2 text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      suppressHydrationWarning
     >
-      {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
+      <span suppressHydrationWarning>
+        {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
+      </span>
     </button>
   );
 }
