@@ -217,9 +217,12 @@ export const projects: Project[] = [
   },
   {
     num: "02",
-    title: "Developer Tooling",
-    desc: "CLI and automation tools that streamline development workflows end to end.",
-    tags: ["Node.js", "CLI", "GitHub Actions"],
+    title: "format converter",
+    desc: "Convert between JSON, YAML, and TOML in the browser. Two live CodeMirror editors, auto-detected input, and every keystroke saved to the URL — send someone a link, they see exactly what you saw. No server, no data leaves the page.",
+    tags: ["Svelte 5", "Vite", "CodeMirror 6", "Cloudflare Pages"],
+    status: "shipped",
+    url: "https://format-converter-642.pages.dev",
+    source: "https://github.com/nguyendinhngoc23052006/format-converter",
   },
   {
     num: "03",
