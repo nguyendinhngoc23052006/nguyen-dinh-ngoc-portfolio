@@ -242,9 +242,12 @@ export const projects: Project[] = [
   },
   {
     num: "03",
-    title: "Cloud Dashboard",
-    desc: "An analytics dashboard with live data, role-based access, and responsive charts.",
-    tags: ["Next.js", "PostgreSQL", "Tailwind CSS"],
+    title: "pdf merger",
+    desc: "Merge, reorder, and slice PDFs in the browser. Drag-and-drop stack, first-page thumbnails, per-file page ranges, optional editorial cover page. Strict CSP with connect-src 'none' — files never leave the tab, and DevTools proves it.",
+    tags: ["Preact", "Vite", "pdf-lib", "@dnd-kit", "Cloudflare Pages"],
+    status: "shipped",
+    url: "https://pdf-merger-c6h.pages.dev",
+    source: "https://github.com/nguyendinhngoc23052006/pdf-merger",
   },
 ];
 
