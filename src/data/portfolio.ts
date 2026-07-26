@@ -74,12 +74,7 @@ export const skills = [
   },
   {
     group: "Ops & Data",
-    items: [
-      "GitHub Actions",
-      "PostgreSQL",
-      "Cloudflare KV",
-      "Cloudflare R2",
-    ],
+    items: ["GitHub Actions", "PostgreSQL", "Cloudflare KV", "Cloudflare R2"],
   },
 ];
 
