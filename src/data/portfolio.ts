@@ -34,7 +34,6 @@ export const techMarquee = [
   "Svelte",
   "React",
   "Hono",
-  "FastAPI",
   "Python",
   "PostgreSQL",
   "GitHub Actions",
@@ -63,7 +62,7 @@ export const skills = [
   },
   {
     group: "Languages",
-    items: ["TypeScript", "Python", "SQL"],
+    items: ["TypeScript", "JavaScript", "Python", "SQL", "HTML / CSS"],
   },
   {
     group: "Frontend",
@@ -71,11 +70,16 @@ export const skills = [
   },
   {
     group: "Backend & APIs",
-    items: ["Node.js", "Hono", "FastAPI"],
+    items: ["Node.js", "Hono", "REST APIs", "Webhooks"],
   },
   {
     group: "Ops & Data",
-    items: ["GitHub Actions", "PostgreSQL", "Redis", "Docker"],
+    items: [
+      "GitHub Actions",
+      "PostgreSQL",
+      "Cloudflare KV",
+      "Cloudflare R2",
+    ],
   },
 ];
 
