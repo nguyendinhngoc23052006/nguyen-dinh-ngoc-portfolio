@@ -25,40 +25,57 @@ export const stats = [
 ];
 
 export const techMarquee = [
+  "Cloudflare Workers",
+  "Supabase",
+  "Claude Code",
   "TypeScript",
-  "React",
-  "Next.js",
+  "MCP",
   "Astro",
-  "Tailwind",
-  "Node.js",
+  "Svelte",
+  "React",
   "Hono",
   "FastAPI",
-  "Cloudflare",
-  "Supabase",
+  "Python",
   "PostgreSQL",
-  "Docker",
+  "GitHub Actions",
+  "Anthropic API",
+  "Tailwind",
 ];
 
 export const skills = [
   {
+    group: "Cloud-Native",
+    items: [
+      "Cloudflare Workers",
+      "Cloudflare Pages",
+      "Supabase",
+      "Edge deployment",
+    ],
+  },
+  {
+    group: "AI-Assisted Development",
+    items: [
+      "Claude Code",
+      "Claude Agent SDK",
+      "MCP servers",
+      "Prompt engineering",
+    ],
+  },
+  {
     group: "Languages",
-    items: ["TypeScript", "JavaScript", "Python", "SQL"],
+    items: ["TypeScript", "Python", "SQL"],
   },
   {
     group: "Frontend",
-    items: ["React", "Next.js", "Astro", "Tailwind CSS"],
+    items: ["React", "Astro", "Svelte", "Next.js", "Tailwind CSS"],
   },
   {
-    group: "Backend",
-    items: ["Node.js", "Express", "Hono", "FastAPI"],
+    group: "Backend & APIs",
+    items: ["Node.js", "Hono", "FastAPI"],
   },
   {
-    group: "Cloud & DevOps",
-    items: ["Cloudflare Workers", "Supabase", "GitHub Actions", "Docker"],
-  },
-  {
-    group: "Databases",
-    items: ["PostgreSQL", "Redis"],
+    group: "Ops & Data",
+    items: ["GitHub Actions", "PostgreSQL", "Redis", "Docker"],
   },
 ];
 
