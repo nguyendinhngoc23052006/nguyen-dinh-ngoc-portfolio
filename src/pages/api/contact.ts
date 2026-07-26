@@ -11,22 +11,39 @@ type RateLimiter = {
   limit(o: { key: string }): Promise<{ success: boolean }>;
 };
 
-async function getRateLimiter(): Promise<RateLimiter | null> {
+type LimiterState =
+  | { kind: "ok"; limiter: RateLimiter }
+  | { kind: "dev" } // no Workers env — local `astro dev`; skip rate limiting
+  | { kind: "misconfigured" }; // Workers env exists but binding missing — fail closed
+
+async function getRateLimiter(): Promise<LimiterState> {
+  let mod: { env?: { RATE_LIMITER?: RateLimiter } };
   try {
-    const mod = (await import("cloudflare:workers")) as {
+    mod = (await import("cloudflare:workers")) as {
       env?: { RATE_LIMITER?: RateLimiter };
     };
-    return mod.env?.RATE_LIMITER ?? null;
   } catch {
-    return null;
+    return { kind: "dev" };
   }
+  if (!mod.env) return { kind: "dev" };
+  if (!mod.env.RATE_LIMITER) return { kind: "misconfigured" };
+  return { kind: "ok", limiter: mod.env.RATE_LIMITER };
 }
 
 export const POST: APIRoute = async (context) => {
   const ip = context.request.headers.get("CF-Connecting-IP") ?? "unknown";
-  const rateLimiter = await getRateLimiter();
-  if (rateLimiter) {
-    const { success } = await rateLimiter.limit({ key: ip });
+  const rl = await getRateLimiter();
+  if (rl.kind === "misconfigured") {
+    // Deployed to Workers but the RATE_LIMITER binding is missing —
+    // refuse rather than accept unbounded submissions.
+    console.error("[contact] RATE_LIMITER binding missing in Workers env");
+    return new Response(JSON.stringify({ error: "Service unavailable" }), {
+      status: 503,
+      headers: JSON_HEADERS,
+    });
+  }
+  if (rl.kind === "ok") {
+    const { success } = await rl.limiter.limit({ key: ip });
     if (!success) {
       return new Response(JSON.stringify({ error: "Too many requests" }), {
         status: 429,
@@ -38,9 +55,9 @@ export const POST: APIRoute = async (context) => {
     }
   }
 
-  if (
-    !context.request.headers.get("content-type")?.includes("application/json")
-  ) {
+  const contentType = context.request.headers.get("content-type") ?? "";
+  const mimeType = contentType.split(";")[0].trim().toLowerCase();
+  if (mimeType !== "application/json") {
     return new Response(JSON.stringify({ error: "Bad request" }), {
       status: 415,
       headers: JSON_HEADERS,
@@ -65,12 +82,21 @@ export const POST: APIRoute = async (context) => {
     });
   }
 
+  // Honeypot: a hidden field named `hp_url_field` — not `website`, which
+  // password managers and some browsers autofill and would cause silent
+  // drops of legitimate submissions. If the field is present and truthy,
+  // pretend success without storing, and log server-side so we can see
+  // false positives against real traffic.
   if (
     body &&
     typeof body === "object" &&
-    "website" in body &&
-    (body as Record<string, unknown>).website
+    "hp_url_field" in body &&
+    (body as Record<string, unknown>).hp_url_field
   ) {
+    console.warn("[contact] honeypot triggered", {
+      ip,
+      ua: context.request.headers.get("user-agent") ?? "",
+    });
     return new Response(JSON.stringify({ success: true }), {
       status: 200,
       headers: JSON_HEADERS,
