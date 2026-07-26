@@ -4,7 +4,7 @@ export const heroSubhead =
   "Custom web apps, dashboards, and automation tools. I solve problems that off-the-shelf software won't. Fast, clean, built to last.";
 
 export const aboutIntro =
-  "I studied international economics at Foreign Trade University — and I lead with that on purpose, because it's the pitch, not the caveat. Most developers ship the feature you asked for; I ship the outcome the feature was hired to produce, because I read the business case before I open the editor. Every project on this site runs in production on real infrastructure. Open them, use them, read the source. You don't have to take my word for anything here.";
+  "I study international economics at Foreign Trade University and taught myself the rest — production software, cloud infrastructure, AI-directed engineering. The combination isn't padding, it's leverage. Macroeconomic reasoning for the business case. Creative problem-solving for the jobs no template fits. Infrastructure-deep understanding of the systems the code actually runs on. All three in one head at once. Self-taught means I picked up every tool because I needed it, not because a syllabus said to — hand me a framework I've never seen and I ship with it by the end of the week. I direct AI systems the way most developers use search: as an amplifier on the work, not a substitute for the understanding underneath. Every project on this site is live in production. Open the source and see for yourself.";
 
 export const projectsHeading = "Proof of work — every project is live";
 export const projectsSubhead =
@@ -199,7 +199,7 @@ export const faq = [
     question:
       "You studied economics, not computer science. Should that concern me?",
     answer:
-      "Read it as a plus, not a gap. Training in international economics at Foreign Trade University means I read the business case before I open the editor — a habit most CS-track developers never build. The proof is public: every project on this site is live in production, with source on GitHub. Click, use, audit the code. Software you can actually run is the credential I'll be judged on.",
+      "Wrong frame — it's leverage, not a gap. Economics at Foreign Trade University trained me to reason about incentives, second-order effects, and cost structures before I write a single line. I built the engineering side myself: production Postgres, Cloudflare edge deploys, AI-directed pipelines, the whole stack — because self-taught means I picked up every tool because I needed it, and I understand it end-to-end. The proof is public: every project on this site runs in production with source on GitHub. Click, use, read the code. Software you can actually run is the credential I'm asking to be judged on.",
   },
   {
     question: "Can I customize the tech stack?",
