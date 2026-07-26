@@ -1,34 +1,37 @@
-Fix CSP blocking Google Fonts + Cloudflare Insights on production. PR #26 tightened CSP to a strict allowlist; missed extending `style-src`/`font-src` for Google Fonts and `script-src` for Cloudflare's auto-injected Web Analytics beacon. Result: since #26 merged, EB Garamond + Inter never loaded (browser fell back to Georgia/system fonts) and Cloudflare Web Analytics pageview tracking was silently broken.
+Make the light/dark toggle feel like a firework going off — pink light mode, particle burst from the click point, synthesized "bang" via Web Audio, slightly slower + snappier clip-path reveal. All effects respect `prefers-reduced-motion`.
 
 ## Changes
-- `src/middleware.ts` CSP header extended:
-  - `script-src` adds `https://static.cloudflareinsights.com`
-  - `style-src` adds `https://fonts.googleapis.com`
-  - `font-src` added (was falling through to `default-src 'self'`) with `'self' https://fonts.gstatic.com`
-  - `connect-src` adds `https://cloudflareinsights.com` (beacon POSTs analytics events there)
-- `public/_headers` CSP updated byte-identically for prerendered routes (`/cv`, `/jade-cv.pdf`, `/jade-avatar.jpg`).
+- **`src/styles/globals.css`** — light-mode palette repainted in pink OKLCH tokens (background, card, primary, secondary, muted, accent, border, ring). Dark mode unchanged. View-transition curve → `cubic-bezier(0.16, 1, 0.3, 1)` over `0.7s` for a punchier reveal.
+- **`src/components/ThemeToggle.tsx`** —
+  - `playBang()`: synthesizes a short low-passed white-noise burst + sub-bass sine thump via Web Audio API. No audio file, no fetches, no CSP impact. `AudioContext` closes 800ms after start.
+  - `launchFireworks(x, y, next)`: appends a fullscreen fixed-position `<canvas>` (pointer-events: none, z-index 9999), spawns ~210–300 particles from three offset burst points around the click, animates with gravity/drag/fade via RAF, and removes the canvas when particles die or after 2500ms. Hues follow the destination theme (pink burst → light, cool burst → dark).
+  - Both effects short-circuit under `prefers-reduced-motion: reduce` — the view transition still runs (already reduced to 1ms by the existing rule).
+  - `busyRef` gate ignores clicks for 800ms so rapid re-clicks can't stack concurrent canvases / AudioContexts.
+
+## Abuse case
+UI-only. No fetches, no user input reflected as HTML, no secrets, no auth/money/PII/upload paths touched. Coordinates are numeric and self-sourced. Fireworks canvas is created via `document.createElement` (not `innerHTML`) and cannot inject markup.
 
 ## Verification
-- Browser devtools console after deploy: no more "violates the following Content Security Policy directive" errors for the three offenders.
-- Fonts render as EB Garamond + Inter (not fallback).
-- Cloudflare Analytics starts collecting pageviews again.
+- `npm run lint` → clean.
+- `npm run typecheck` → clean.
+- `npm test` → 17 pass.
+- Manual: click toggle → hear bang, see firework burst from cursor, page fades through pink (or back to neutral dark).
 
 ## Self-check
 - [x] base = main; exactly one PR
 - [~] no migrations
-- [x] tests/lint/typecheck green
-- [~] e2e not run locally; CI will run
+- [x] tests/lint/typecheck green; happy AND unhappy paths exercised (reduced-motion, no-AudioContext, no-view-transitions all fall through cleanly); e2e not affected — existing suite still green
 - [x] scripts named `lint`, `typecheck`, `test`, `e2e`
-- [x] no secret changes; middleware still reads publishable keys only
+- [~] no Supabase key changes; middleware untouched
 - [~] no irreversible actions
-- [x] no avoidable debt
+- [x] no avoidable debt; MEMORY.md updated with the re-entrancy lesson
 - [~] no migrations to explain
-- [x] reviewers ran — verdicts refreshed (self-review; 4-line change, no scope for subagent)
-- [x] no subagent dispatch — surgical CSP allowlist extension
+- [x] reviewers ran — `.claude/review/*` verdicts refreshed this PR (scale-reviewer caught the missing re-entrancy guard, fixed)
+- [x] subagents dispatched at sonnet (one tier below opus 4.7)
 
 ## For you
-**What changed:** CSP allowlist extended to unblock (1) Google Fonts stylesheet + font files, (2) Cloudflare Web Analytics beacon script. Both are legitimate first-party integrations blocked by the too-strict CSP shipped in PR #26.
+**What changed:** Light mode is now pink. Clicking the theme toggle plays a short "bang" and shoots a firework burst from the click point on top of the existing clip-path reveal. Reduced-motion users get the plain view transition.
 
-**What you do next:** Merge. After deploy, hard-refresh the site — fonts should render correctly (EB Garamond serif headings, Inter body), no console errors. If you don't want Cloudflare Analytics, disable it in Cloudflare dashboard → Analytics & Logs → Web Analytics and I'll drop the two `cloudflareinsights.com` entries in a follow-up.
+**What you do next:** Merge. No env or secret action needed. On preview, click the sun/moon icon in the header — you should hear the bang and see the burst (browsers require a user gesture before audio plays, so the first click is the gesture; every click is loud).
 
-**How to roll it back:** Revert this PR. Fonts break again.
+**How to roll it back:** Revert this PR. Nothing is persisted server-side.

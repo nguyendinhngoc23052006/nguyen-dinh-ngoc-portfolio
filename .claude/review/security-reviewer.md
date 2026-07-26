@@ -1,12 +1,8 @@
-# Security Review — CSP allowlist extension for Google Fonts + Cloudflare Insights
+# security-reviewer verdict — theme toggle fireworks + bang + pink palette
 
-**Date:** 2026-07-24
 **Verdict:** PASS.
 
-CSP extended narrowly (4 specific hosts, all first-party integrations the site actually uses):
-- `https://static.cloudflareinsights.com` (Cloudflare's own analytics script, auto-injected on CF-hosted sites)
-- `https://fonts.googleapis.com` (Google Fonts CSS stylesheet)
-- `https://fonts.gstatic.com` (Google Fonts WOFF2 files)
-- `https://cloudflareinsights.com` (CF Analytics beacon endpoint for POSTing pageviews)
-
-No wildcards, no unrelated hosts allowlisted. Both middleware CSP (for dynamic routes) and public/_headers CSP (for prerendered routes) updated byte-identically — no drift. No secret changes, no auth/PII touched. Self-review — 4-line policy string extension.
+- `src/components/ThemeToggle.tsx` uses `document.createElement` + canvas + inline style props only. No `innerHTML`, no `eval`, no dynamic script or URL construction. CSP `script-src`/`style-src` unaffected.
+- Click coordinates (`e.clientX/Y`) are numeric, self-sourced, never reflected as HTML or sent over `connect-src`.
+- No fetches, no secrets, no auth/money/PII/upload code touched — abuse-case rule N/A.
+- `src/styles/globals.css` is pure CSS variables; no `url()` or `@import` of untrusted origins.

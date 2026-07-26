@@ -1,6 +1,10 @@
-# Code Review — CSP allowlist extension for Google Fonts + Cloudflare Insights
+# code-reviewer verdict — theme toggle fireworks + bang + pink palette
 
-**Date:** 2026-07-24
-**Verdict:** PASS.
+**Verdict:** PASS (borderline).
 
-Two-file surgical edit; CSP strings match byte-identically between src/middleware.ts and public/_headers. No refactor, no duplication introduced (the drift risk is already documented in MEMORY.md from PR #26). Self-review.
+- `src/components/ThemeToggle.tsx` — ~220 lines after the reentrancy guard, just over the ~200 guideline but a single responsibility (toggle + its visual/audio effects). Acceptable; extract `playBang`/`launchFireworks` to `src/lib/theme-effects.ts` if the file grows further.
+- No duplicated logic between `playBang` and `launchFireworks`.
+- No data access in the component; no loading/empty/error/unauthorized states apply to a toggle.
+- `src/styles/globals.css` is 277 lines but pure design tokens + keyframes — not mixed-responsibility.
+
+No blocking issues.
