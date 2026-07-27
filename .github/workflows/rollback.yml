@@ -1,0 +1,61 @@
+name: Rollback
+
+# Manual production rollback via GitHub Actions. Mirror of the Cloudflare
+# dashboard path (Worker → Deployments → ⋯ → Rollback), useful when you'd
+# rather do it from a keyboard than log into the dashboard. See Part 4
+# step 1 of the cloud-pipeline-guide for the full incident-response flow.
+#
+# Retention: the 100 most recent Worker versions are eligible rollback
+# targets, per Cloudflare's Sept 2025 changelog. Gotcha: rollback is
+# blocked if the target version's KV/D1/R2 bindings differ from what's
+# live (a binding renamed, added, or removed since that version shipped)
+# — fix the binding on the current version first.
+#
+# Reminder: this repoints live traffic, but does NOT touch `main`. Without
+# a git revert (GitHub "Revert" button on the offending PR, or a Claude
+# Code revert PR for fixes needing more than a straight revert), the next
+# push to `main` will rebuild and re-deploy the same broken version.
+
+on:
+  workflow_dispatch:
+    inputs:
+      version_id:
+        description: 'Cloudflare Worker version ID to roll back to (find it in Workers dashboard → Deployments)'
+        required: true
+        type: string
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  rollback:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Rollback production to ${{ inputs.version_id }}
+        uses: cloudflare/wrangler-action@v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: rollback ${{ inputs.version_id }} --env production --message "Manual rollback via GitHub Actions"
+
+      - name: Job summary
+        env:
+          VERSION_ID: ${{ inputs.version_id }}
+          ACTOR: ${{ github.actor }}
+        run: |
+          {
+            echo "## Production rolled back"
+            echo ""
+            echo "- **Target version:** \`$VERSION_ID\`"
+            echo "- **Triggered by:** @$ACTOR"
+            echo ""
+            echo "### Next step"
+            echo ""
+            echo "Live traffic now serves \`$VERSION_ID\`. \`main\` is unchanged — the offending commit is still on it. Before the next push to \`main\`, revert the bad commit via GitHub's PR **Revert** button, or ask Claude Code for a revert PR if the fix needs more than a straight revert. Otherwise the next deploy rebuilds and overwrites this rollback."
+          } >> "$GITHUB_STEP_SUMMARY"
