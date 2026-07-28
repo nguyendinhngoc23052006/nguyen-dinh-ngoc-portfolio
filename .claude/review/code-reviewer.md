@@ -1,8 +1,13 @@
-# Code Review — projects[0] replaced with shipped regex-tester
+# Code Review — restore uptime.yml with browser UA disguise
 
-**Date:** 2026-07-26
-**Verdict:** PASS.
+**Date:** 2026-07-28
+**Branch:** `claude/portfolio-pr39-bot-disguise-9t0046`
+**Scope:** `.github/workflows/uptime.yml` (added — PR #39 removed it from `main`)
 
-Two-file surgical edit. `src/data/portfolio.ts:198` — introduced a `Project` interface with optional `status`/`url`/`source`, replaced `projects[0]` placeholder with the shipped regex-tester entry. `src/pages/index.astro:388` — projects `.map()` now derives a `Tag` variable (`"a"` when `url` is set, `"div"` otherwise) and swaps hardcoded "In progress" for `status === "shipped" ? "Live" : "In progress"`, with the accent color and a `↗` glyph applied only to the linked card.
+**Verdict:** APPROVE (one observation applied).
 
-No duplicated logic (the conditional element pattern replaces one hardcoded tag, not extracted-then-inlined). No file over ~200 lines (index.astro grew from ~464 to ~475). No component doing data access (this is a data/presentation change; no Supabase touched). No new services, so no test-change requirement triggered. Existing loading/empty/error states in unrelated sections untouched. Self-review — 25-line diff, no scope for a reviewer subagent.
+- `probe()` function justified — two call sites (initial + retry on 403).
+- No dead branches; guard clause for missing `PRODUCTION_URL` preserves the original skip-with-note behavior.
+- Style matches sibling workflows in `.github/workflows/`.
+- Comments explain WHY (Cloudflare Bot Fight Mode fingerprints default curl UA) — not restating WHAT.
+- Observation from initial pass: sibling workflows (`ci.yml`, `deploy-production.yml`) set `permissions: contents: read`; uptime.yml originally omitted it. **Applied** — `permissions: contents: read` added at the `health` job level for least-privilege parity.

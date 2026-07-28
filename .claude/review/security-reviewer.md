@@ -1,6 +1,15 @@
-# Security Review — projects[0] replaced with shipped regex-tester
+# Security Review — restore uptime.yml with browser UA disguise
 
-**Date:** 2026-07-26
-**Verdict:** PASS.
+**Date:** 2026-07-28
+**Branch:** `claude/portfolio-pr39-bot-disguise-9t0046`
+**Scope:** `.github/workflows/uptime.yml` (added — PR #39 removed it from `main`)
 
-New outbound link to `https://regex-tester-6dz.pages.dev` — first-party, owned by the same GitHub user hosting this site (repo `nguyendinhngoc23052006/regex-tester`, deployed by the same account on Cloudflare Pages). Anchor uses `target="_blank"` + `rel="noopener noreferrer"` — blocks reverse `window.opener` tab-nabbing and strips the Referer. No user input, no auth, no PII, no secrets, no CSP change (linking off-site to an https origin is unaffected by CSP), no middleware or service touched. Self-review — same-owner first-party link with the standard opener/referrer hardening already applied.
+**Verdict:** APPROVE.
+
+No security findings.
+
+- No secrets, service-role keys, or tokens referenced.
+- Only env used is `PRODUCTION_URL` from `${{ vars.PRODUCTION_URL }}` — a GitHub Actions repository variable (public config), not user input.
+- Shell interpolation `"${PRODUCTION_URL}/health"` is properly quoted; no injection surface from workflow syntax into the shell.
+- Auth / money / PII / upload changes: N/A.
+- RLS / `src/services/` validation: N/A (workflow-only change).
