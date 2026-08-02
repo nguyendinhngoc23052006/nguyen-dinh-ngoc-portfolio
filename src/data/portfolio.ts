@@ -236,6 +236,38 @@ export interface Project {
 export const projects: Project[] = [
   {
     num: "01",
+    title: "saasmath",
+    desc: "Free calculators and explainers for SaaS founders — runway, burn multiple, LTV/CAC, MRR/ARR growth, Rule of 40, cap-table dilution, option value, seed sizing, bridge notes. Every calculator's state lives in the URL so results are shareable; every formula cites the SaaS canon (Skok, Feld, Bessemer, YC). Static Astro + React islands on Cloudflare Pages.",
+    tags: [
+      "Astro",
+      "React islands",
+      "Tailwind",
+      "URL state",
+      "Cloudflare Pages",
+    ],
+    status: "shipped",
+    url: "https://saasmath.pages.dev",
+    source: "https://github.com/nguyendinhngoc23052006/saasmath",
+  },
+  {
+    num: "02",
+    title: "nguyen le khanh portfolio",
+    desc: "Bilingual (Vietnamese / English) scrollytelling portfolio for a content and media candidate applying to an environmental conservation project. Nine narrative beats pinned to the scroll, GSAP ScrollTrigger with Lenis smooth-scroll, i18n via react-i18next — no copy hard-coded in JSX. Vite + React + TypeScript + Tailwind on Cloudflare Pages.",
+    tags: [
+      "React",
+      "TypeScript",
+      "GSAP ScrollTrigger",
+      "Lenis",
+      "i18n",
+      "Cloudflare Pages",
+    ],
+    status: "shipped",
+    url: "https://nguyen-le-khanh-portfolio.pages.dev",
+    source:
+      "https://github.com/nguyendinhngoc23052006/nguyen-le-khanh-portfolio",
+  },
+  {
+    num: "03",
     title: "regex tester",
     desc: "A regex tester where state lives in the URL. Paste, edit, share — anyone opening the link sees exactly what you saw. One HTML file, zero framework; sometimes that's the right call.",
     tags: ["Vanilla JS", "URL state", "Cloudflare Pages"],
@@ -244,7 +276,7 @@ export const projects: Project[] = [
     source: "https://github.com/nguyendinhngoc23052006/regex-tester",
   },
   {
-    num: "02",
+    num: "04",
     title: "format converter",
     desc: "Convert between JSON, YAML, and TOML in the browser. Two live CodeMirror editors, auto-detected input, and every keystroke saved to the URL — send someone a link, they see exactly what you saw. No server, no data leaves the page.",
     tags: ["Svelte 5", "Vite", "CodeMirror 6", "Cloudflare Pages"],
@@ -253,7 +285,7 @@ export const projects: Project[] = [
     source: "https://github.com/nguyendinhngoc23052006/format-converter",
   },
   {
-    num: "03",
+    num: "05",
     title: "pdf merger",
     desc: "Merge, reorder, and slice PDFs in the browser. Drag-and-drop stack, first-page thumbnails, per-file page ranges, optional editorial cover page. Strict CSP with connect-src 'none' — files never leave the tab, and DevTools proves it.",
     tags: ["Preact", "Vite", "pdf-lib", "@dnd-kit", "Cloudflare Pages"],
