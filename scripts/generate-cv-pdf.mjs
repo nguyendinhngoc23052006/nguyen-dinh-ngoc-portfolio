@@ -50,7 +50,15 @@ async function main() {
   // the built dist/client/ already contains a valid cv/index.html.
   const server = spawn(
     "python3",
-    ["-m", "http.server", String(PORT), "--directory", "dist/client", "--bind", "127.0.0.1"],
+    [
+      "-m",
+      "http.server",
+      String(PORT),
+      "--directory",
+      "dist/client",
+      "--bind",
+      "127.0.0.1",
+    ],
     {
       stdio: "inherit",
       env: { ...process.env },
@@ -71,7 +79,9 @@ async function main() {
     // Browser-side pre-check: measure rendered content height at print media.
     // Overflow here is diagnostic; the authoritative check is the PDF page count.
     const contentHeight = await page.evaluate(
-      () => document.querySelector(".cv-page")?.scrollHeight ?? document.body.scrollHeight,
+      () =>
+        document.querySelector(".cv-page")?.scrollHeight ??
+        document.body.scrollHeight,
     );
     console.log(
       `[diag] .cv-page scrollHeight=${contentHeight}px; usable ceiling=${USABLE_HEIGHT_CSS_PX}px`,
@@ -100,7 +110,9 @@ async function main() {
           `traits, projects/skills caps, and @media print CSS in src/styles/globals.css.`,
       );
     }
-    console.log(`✓ Generated ${OUT_PATH} (${pages} page${pages === 1 ? "" : "s"})`);
+    console.log(
+      `✓ Generated ${OUT_PATH} (${pages} page${pages === 1 ? "" : "s"})`,
+    );
   } finally {
     server.kill("SIGTERM");
   }

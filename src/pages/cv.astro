@@ -1,7 +1,8 @@
 ---
+// biome-ignore-all lint/correctness/noUnusedImports: symbols used in the Astro template below the frontmatter fence, which biome cannot see
+// biome-ignore-all lint/correctness/noUnusedVariables: constants used in the Astro template below the frontmatter fence, which biome cannot see
 export const prerender = true;
 
-// biome-ignore lint/correctness/noUnusedImports: symbols used in the Astro template below the frontmatter fence, which biome cannot see
 import {
   contactInfo,
   cvSummary,
@@ -19,7 +20,9 @@ import "../styles/globals.css";
 // generate-cv-pdf.mjs enforces the ceiling at build time (fails if > 1 page).
 // First-sentence-only for CV blurbs; portfolio pages keep the full descriptions.
 const firstSentence = (s: string) => s.split(/(?<=[.!?])\s+/)[0] ?? s;
-const CV_PROJECTS = projects.slice(0, 3).map((p) => ({ ...p, desc: firstSentence(p.desc) }));
+const CV_PROJECTS = projects
+  .slice(0, 3)
+  .map((p) => ({ ...p, desc: firstSentence(p.desc) }));
 const CV_SKILLS = skills.slice(0, 4);
 const CV_TRAITS = traits.slice(0, 4);
 const CV_SERVICES_LINE = services.map((s) => s.title).join(" · ");
