@@ -263,7 +263,7 @@ details.faq-item .faq-answer {
 @media print {
   @page {
     size: A4;
-    margin: 15mm 20mm;
+    margin: 10mm 14mm;
   }
   :root[data-theme="light"],
   :root[data-theme="dark"] {
@@ -275,8 +275,8 @@ details.faq-item .faq-answer {
   body {
     background: var(--background);
     color: var(--foreground);
-    font-size: 10.5pt;
-    line-height: 1.4;
+    font-size: 8.5pt;
+    line-height: 1.22;
   }
   .no-print,
   header[class*="fixed"] {
@@ -289,6 +289,26 @@ details.faq-item .faq-answer {
   }
   .cv-page section {
     break-inside: avoid;
+    margin-top: 2.5mm;
+  }
+  .cv-page h1 {
+    font-size: 16pt;
+    line-height: 1.1;
+  }
+  .cv-page .cv-section-title {
+    font-size: 10.5pt;
+    margin-top: 1.5mm;
+    margin-bottom: 0.5mm;
+  }
+  .cv-page hr {
+    margin: 1.5mm 0;
+  }
+  .cv-page p,
+  .cv-page li,
+  .cv-page dt,
+  .cv-page dd {
+    margin-top: 0.5mm;
+    margin-bottom: 0.5mm;
   }
   h1,
   h2,
