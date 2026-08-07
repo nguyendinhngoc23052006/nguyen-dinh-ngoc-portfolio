@@ -11,24 +11,24 @@ export const aboutIntro =
 export const cvSummary =
   "Self-taught full-stack developer studying international economics at Foreign Trade University (Hanoi). Ships production TypeScript on Cloudflare edge with AI-directed workflows — schema to UI to deploy — held in one head at once. Every project below is live and sourced on GitHub.";
 
-// Traits shown on both the portfolio About sidebar and the CV. Keep notes to
-// ~10 words each so the CV stays on one page. Cap the CV to 4.
+// Traits shown on both the portfolio About sidebar and the CV. Notes read as
+// full sentences (the CV now allows up to 2 pages, so density beats crammed).
 export const traits: { label: string; note: string }[] = [
   {
     label: "Rapid learner",
-    note: "new framework in, shipping code out by end of week.",
+    note: "Hand me a framework I've never seen and I ship with it by the end of the week.",
   },
   {
     label: "Stack-flexible",
-    note: "TypeScript, Python, React, Astro, Svelte, edge or server. No dogma.",
+    note: "TypeScript, Python, React, Astro, Svelte, Hono, Postgres — edge or server, whichever fits the job. No dogma.",
   },
   {
     label: "AI in the real workflow",
-    note: "AI-directed engineering on production code. Spec-driven, multi-agent, reviewed.",
+    note: "AI-directed engineering as an amplifier on production code, not a demo. Spec-driven, multi-agent, MCP-served, reviewed.",
   },
   {
     label: "Willing to learn what the role needs",
-    note: "new tool, framework, or domain, I go learn it end-to-end.",
+    note: "New tool, framework, or domain — I go learn it end-to-end, not just to the tutorial line.",
   },
 ];
 

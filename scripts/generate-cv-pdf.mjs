@@ -17,10 +17,13 @@ const PORT = 4322;
 const URL = `http://127.0.0.1:${PORT}/cv/`;
 
 // A4 = 297mm tall. Print margins are 12mm top + 12mm bottom (globals.css @page).
-// Usable content height = 273mm. At 96 CSS pixels per inch = 1032 CSS px.
+// Usable content height per page = 273mm; we allow up to 2 pages.
+// At 96 CSS pixels per inch: usable-per-page ≈ 1032 CSS px, 2-page ≈ 2064 CSS px.
 // We warn early (browser-side) and hard-fail late (page count in the emitted PDF).
-const USABLE_HEIGHT_CSS_PX = Math.round((297 - 10 - 10) * 3.7795);
-const MAX_PAGES = 1;
+// Two-page ceiling with slightly relaxed margins. A CV that reads well across
+// one or two pages is fine; a CV that keeps growing past two isn't.
+const USABLE_HEIGHT_CSS_PX = Math.round(2 * (297 - 12 - 12) * 3.7795);
+const MAX_PAGES = 2;
 
 async function waitForServer(url, timeoutMs = 30_000) {
   const deadline = Date.now() + timeoutMs;
@@ -96,7 +99,7 @@ async function main() {
     await page.pdf({
       path: OUT_PATH,
       format: "A4",
-      margin: { top: "10mm", right: "14mm", bottom: "10mm", left: "14mm" },
+      margin: { top: "12mm", right: "16mm", bottom: "12mm", left: "16mm" },
       printBackground: true,
     });
     await browser.close();
@@ -105,9 +108,10 @@ async function main() {
     const pages = countPdfPages(OUT_PATH);
     if (pages > MAX_PAGES) {
       throw new Error(
-        `CV PDF is ${pages} pages; the one-page ceiling is ${MAX_PAGES}. ` +
-          `Trim src/pages/cv.astro or src/data/portfolio.ts. See docs on tightening cvSummary, ` +
-          `traits, projects/skills caps, and @media print CSS in src/styles/globals.css.`,
+        `CV PDF is ${pages} pages; the ceiling is ${MAX_PAGES}. ` +
+          `Trim src/pages/cv.astro or src/data/portfolio.ts (compact cvSummary, ` +
+          `shorten trait notes, cap projects/skills, tighten @media print CSS in ` +
+          `src/styles/globals.css).`,
       );
     }
     console.log(
