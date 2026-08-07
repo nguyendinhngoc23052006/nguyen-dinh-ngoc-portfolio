@@ -6,6 +6,32 @@ export const heroSubhead =
 export const aboutIntro =
   "I study international economics at Foreign Trade University and taught myself the rest — production software, cloud infrastructure, AI-directed engineering. The combination isn't padding, it's leverage. Macroeconomic reasoning for the business case. Creative problem-solving for the jobs no template fits. Infrastructure-deep understanding of the systems the code actually runs on. All three in one head at once. Self-taught means I picked up every tool because I needed it, not because a syllabus said to — hand me a framework I've never seen and I ship with it by the end of the week. I direct AI systems the way most developers use search: as an amplifier on the work, not a substitute for the understanding underneath. Every project on this site is live in production. Open the source and see for yourself.";
 
+// Compact one-paragraph summary used at the top of the CV. Kept tight because
+// the CV enforces a single-page ceiling; longer prose lives in aboutIntro.
+export const cvSummary =
+  "Self-taught full-stack developer studying international economics at Foreign Trade University (Hanoi). Ships production TypeScript on Cloudflare edge with AI-directed workflows — schema to UI to deploy — held in one head at once. Every project below is live and sourced on GitHub.";
+
+// Traits shown on both the portfolio About sidebar and the CV. Notes read as
+// full sentences (the CV now allows up to 2 pages, so density beats crammed).
+export const traits: { label: string; note: string }[] = [
+  {
+    label: "Rapid learner",
+    note: "Hand me a framework I've never seen and I ship with it by the end of the week.",
+  },
+  {
+    label: "Stack-flexible",
+    note: "TypeScript, Python, React, Astro, Svelte, Hono, Postgres — edge or server, whichever fits the job. No dogma.",
+  },
+  {
+    label: "AI in the real workflow",
+    note: "AI-directed engineering as an amplifier on production code, not a demo. Spec-driven, multi-agent, MCP-served, reviewed.",
+  },
+  {
+    label: "Willing to learn what the role needs",
+    note: "New tool, framework, or domain — I go learn it end-to-end, not just to the tutorial line.",
+  },
+];
+
 export const projectsHeading = "Proof of work — every project is live";
 export const projectsSubhead =
   "Not case studies. Not mockups. Tools shipped to production, running right now. Click any card to open it — the source is on GitHub if you want to audit the code.";

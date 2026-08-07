@@ -18,6 +18,7 @@ import {
   services,
   skills,
   stats,
+  traits,
 } from "../data/portfolio";
 import "../styles/globals.css";
 
@@ -272,6 +273,17 @@ const jsonLd = JSON.stringify({
                 <div>
                   <p class="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">Status</p>
                   <p class="mt-0.5 text-sm text-accent">Open to projects</p>
+                </div>
+                <div>
+                  <p class="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">What I bring</p>
+                  <ul class="mt-1 space-y-1 text-sm">
+                    {traits.map((t) => (
+                      <li>
+                        <span class="font-semibold">{t.label}</span>
+                        <span class="text-muted-foreground"> — {t.note}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
                 <a href="/cv" class="mt-4 inline-flex items-center gap-1 text-sm font-medium text-accent hover:underline">
                   Full CV & résumé <span aria-hidden="true">→</span>

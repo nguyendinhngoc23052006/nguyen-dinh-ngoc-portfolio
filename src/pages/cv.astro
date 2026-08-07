@@ -1,18 +1,29 @@
 ---
+// biome-ignore-all lint/correctness/noUnusedImports: symbols used in the Astro template below the frontmatter fence, which biome cannot see
+// biome-ignore-all lint/correctness/noUnusedVariables: constants used in the Astro template below the frontmatter fence, which biome cannot see
 export const prerender = true;
 
-// biome-ignore lint/correctness/noUnusedImports: symbols used in the Astro template below the frontmatter fence, which biome cannot see
 import {
-  aboutIntro,
   contactInfo,
+  cvSummary,
   education,
   experience,
   projects,
   SITE_URL,
   services,
   skills,
+  traits,
 } from "../data/portfolio";
 import "../styles/globals.css";
+
+// The CV allows up to 2 pages (enforced at build time by
+// scripts/generate-cv-pdf.mjs). Content is organized so page 1 leads with
+// identity → summary → traits → top 3 projects; page 2 (if used) carries
+// education, full skills, services, and the footer.
+const CV_PROJECTS = projects.slice(0, 3);
+const CV_TRAITS = traits;
+const CV_SKILLS = skills;
+const CV_SERVICES = services;
 ---
 
 <!doctype html>
@@ -43,13 +54,13 @@ import "../styles/globals.css";
         </a>
       </div>
 
-      <!-- CV header -->
+      <!-- Header: identity + contact -->
       <header class="cv-header flex items-start justify-between gap-6">
         <div>
           <h1 class="text-4xl font-bold tracking-tight">Nguyen Dinh Ngoc <span class="text-muted-foreground font-normal">(Jade)</span></h1>
           <p class="mt-2 text-lg text-muted-foreground">Full-Stack Developer · {contactInfo.location}</p>
           <p class="mt-1 text-sm text-muted-foreground">
-            <a href={`mailto:${contactInfo.email}`}>{contactInfo.email}</a> · <a href={contactInfo.github}>GitHub</a>
+            <a href={`mailto:${contactInfo.email}`}>{contactInfo.email}</a> · <a href={contactInfo.github}>GitHub</a> · <a href={SITE_URL}>{SITE_URL.replace("https://", "")}</a>
           </p>
         </div>
         <img
@@ -62,42 +73,46 @@ import "../styles/globals.css";
         />
       </header>
 
-      <hr class="my-8 border-border" />
+      <hr class="my-6 border-border" />
 
       <!-- Summary -->
       <section>
         <h2 class="cv-section-title">Summary</h2>
-        <p class="mt-2 leading-relaxed">{aboutIntro}</p>
+        <p class="mt-2 leading-relaxed">{cvSummary}</p>
       </section>
 
-      <!-- Projects (promoted above Experience/Education so proof leads) -->
-      <section class="mt-8">
-        <h2 class="cv-section-title">Selected Projects — all live in production</h2>
-        <div class="mt-3 space-y-4">
-          {projects.map((p) => (
+      <!-- Traits: what you bring beyond the code -->
+      <section class="mt-6">
+        <h2 class="cv-section-title">What I bring</h2>
+        <ul class="mt-2 space-y-1.5">
+          {CV_TRAITS.map((t) => (
+            <li class="text-sm leading-snug">
+              <span class="font-semibold">{t.label}.</span>
+              <span class="text-muted-foreground"> {t.note}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <!-- Projects (top 3, full descriptions, tag row for stack summary) -->
+      <section class="mt-6">
+        <h2 class="cv-section-title">Selected projects — all live in production</h2>
+        <div class="mt-2 space-y-3">
+          {CV_PROJECTS.map((p) => (
             <div>
               <h3 class="font-semibold">
                 {p.title}
                 {p.status === "shipped" && (
-                  <span class="ml-2 text-xs font-medium uppercase tracking-widest text-accent">Live</span>
+                  <span class="ml-2 text-[10px] font-medium uppercase tracking-widest text-accent">Live</span>
+                )}
+                {p.url && (
+                  <a href={p.url} class="ml-2 text-xs text-accent hover:underline">
+                    {p.url.replace(/^https?:\/\//, "").replace(/\/$/, "")}
+                  </a>
                 )}
               </h3>
-              <p class="mt-1 text-sm leading-relaxed">{p.desc}</p>
+              <p class="mt-1 text-sm leading-snug">{p.desc}</p>
               <p class="mt-1 text-xs text-muted-foreground">{p.tags.join(" · ")}</p>
-              {(p.url || p.source) && (
-                <p class="mt-1 flex flex-wrap gap-x-3 gap-y-0.5 text-xs">
-                  {p.url && (
-                    <a href={p.url} class="text-accent hover:underline">
-                      Live → <span class="underline underline-offset-2">{p.url.replace(/^https?:\/\//, "").replace(/\/$/, "")}</span>
-                    </a>
-                  )}
-                  {p.source && (
-                    <a href={p.source} class="text-muted-foreground hover:text-foreground hover:underline">
-                      Source → <span class="underline underline-offset-2">{p.source.replace(/^https?:\/\//, "").replace(/\/$/, "")}</span>
-                    </a>
-                  )}
-                </p>
-              )}
             </div>
           ))}
         </div>
@@ -105,16 +120,16 @@ import "../styles/globals.css";
 
       <!-- Experience (only if non-empty) -->
       {experience.length > 0 && (
-        <section class="mt-8">
+        <section class="mt-6">
           <h2 class="cv-section-title">Experience</h2>
-          <div class="mt-3 space-y-4">
+          <div class="mt-2 space-y-3">
             {experience.map((e) => (
               <div>
                 <div class="flex items-baseline justify-between gap-4">
                   <h3 class="font-semibold">{e.role} · {e.organization}</h3>
                   <span class="text-sm text-muted-foreground shrink-0">{e.period}</span>
                 </div>
-                <p class="mt-1 text-sm leading-relaxed">{e.summary}</p>
+                <p class="mt-1 text-sm leading-snug">{e.summary}</p>
               </div>
             ))}
           </div>
@@ -122,49 +137,50 @@ import "../styles/globals.css";
       )}
 
       <!-- Education -->
-      <section class="mt-8">
+      <section class="mt-6">
         <h2 class="cv-section-title">Education</h2>
-        <div class="mt-3 space-y-4">
+        <div class="mt-2">
           {education.map((e) => (
-            <div>
-              <div class="flex items-baseline justify-between gap-4">
-                <h3 class="font-semibold">{e.degree}</h3>
-                <span class="text-sm text-muted-foreground shrink-0">{e.period}</span>
+            <div class="flex items-baseline justify-between gap-4">
+              <div>
+                <span class="font-semibold">{e.degree}</span>
+                <span class="text-sm text-muted-foreground"> · {e.institution}, {e.location}</span>
               </div>
-              <p class="mt-1 text-sm text-muted-foreground">{e.institution} · {e.location}</p>
+              <span class="text-sm text-muted-foreground shrink-0">{e.period}</span>
             </div>
           ))}
         </div>
       </section>
 
-      <!-- Skills -->
-      <section class="mt-8">
-        <h2 class="cv-section-title">Technical Skills</h2>
-        <dl class="mt-3 space-y-2">
-          {skills.map(({ group, items }) => (
-            <div class="flex gap-3 text-sm">
-              <dt class="font-semibold shrink-0 w-32">{group}</dt>
+      <!-- Skills: all groups, two-column for density -->
+      <section class="mt-6">
+        <h2 class="cv-section-title">Technical skills</h2>
+        <dl class="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1.5 text-sm">
+          {CV_SKILLS.map(({ group, items }) => (
+            <div>
+              <dt class="font-semibold">{group}</dt>
               <dd class="text-muted-foreground">{items.join(" · ")}</dd>
             </div>
           ))}
         </dl>
       </section>
 
-      <!-- Services -->
-      <section class="mt-8">
-        <h2 class="cv-section-title">Services Offered</h2>
-        <ul class="mt-3 space-y-2">
-          {services.map((s) => (
-            <li class="text-sm">
-              <span class="font-semibold">{s.title}</span> — <span class="text-muted-foreground">{s.desc}</span>
+      <!-- Services offered -->
+      <section class="mt-6">
+        <h2 class="cv-section-title">Services offered</h2>
+        <ul class="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1 text-sm">
+          {CV_SERVICES.map((s) => (
+            <li>
+              <span class="font-semibold">{s.title}.</span>
+              <span class="text-muted-foreground"> {s.desc}</span>
             </li>
           ))}
         </ul>
       </section>
 
-      <!-- Footer for print: contact repeat + portfolio URL -->
-      <footer class="cv-footer mt-12 pt-6 border-t border-border text-xs text-muted-foreground">
-        Full portfolio · <a href={SITE_URL}>{SITE_URL.replace("https://", "")}</a> · Last updated from live data
+      <!-- Footer for print: portfolio URL -->
+      <footer class="cv-footer mt-8 pt-3 border-t border-border text-xs text-muted-foreground">
+        Full portfolio · <a href={SITE_URL}>{SITE_URL.replace("https://", "")}</a>
       </footer>
     </div>
   </body>
