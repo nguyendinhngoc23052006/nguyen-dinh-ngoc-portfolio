@@ -4,7 +4,12 @@
   "compatibility_flags": ["nodejs_compat"],
   "main": "@astrojs/cloudflare/entrypoints/server",
   "assets": {
-    "directory": "./dist"
+    "directory": "./dist",
+    // Astro emits /cv as the canonical URL (trailingSlash: "never") but the
+    // built file is /cv/index.html. Without this setting Cloudflare Assets'
+    // default `auto-trailing-slash` 301s /cv → /cv/, which then loops against
+    // any explicit trailing-slash-strip rule.
+    "html_handling": "drop-trailing-slash"
   },
   "ratelimits": [
     {

@@ -1,5 +1,0 @@
-# Canonicalize away trailing slashes on public pages.
-# Search Console flagged /cv → /cv/ 307s on the previous config; astro's
-# trailingSlash: 'never' plus this explicit 301 make the canonical form
-# (no slash) survive both crawler discovery and old inbound links.
-/cv/  /cv  301
