@@ -1,34 +1,27 @@
 ---
 // biome-ignore-all lint/correctness/noUnusedImports: symbols used in the Astro template below the frontmatter fence, which biome cannot see
-import ContactForm from "../components/ContactForm";
 import MobileNav from "../components/MobileNav";
 import ThemeToggle from "../components/ThemeToggle";
 import {
   aboutIntro,
+  contactInfo,
+  cvSkills,
   cvWork,
-  faq,
   heroSubhead,
   navLinks,
-  pricing,
-  process,
   projects,
   projectsHeading,
   projectsSubhead,
   projectsTail,
   SITE_URL,
-  services,
-  skills,
   stats,
   traits,
 } from "../data/portfolio";
 import "../styles/globals.css";
 
 // biome-ignore lint/correctness/noUnusedVariables: used in Astro template
-const error = Astro.locals.startupError;
-
-// biome-ignore lint/correctness/noUnusedVariables: used in Astro template
 const DESCRIPTION =
-  "Custom web applications & bespoke software built to your spec. Transparent pricing, deep customization, 100% code ownership. Full-stack development from Hanoi, serving businesses globally.";
+  "Nguyen Dinh Ngoc (Jade) builds the internal systems a company runs on: ERP, HR, recruitment, attendance and payroll on Supabase + Cloudflare, with computer vision. Hanoi, open to remote.";
 
 // biome-ignore lint/correctness/noUnusedVariables: used in Astro template
 const jsonLd = JSON.stringify({
@@ -41,7 +34,7 @@ const jsonLd = JSON.stringify({
       alternateName: "Jade",
       jobTitle: "Internal Systems Developer",
       description:
-        "Full-stack developer building custom web applications and bespoke software for businesses worldwide.",
+        "Builds internal business systems: ERP, HR, recruitment, attendance and payroll, with computer vision.",
       url: SITE_URL,
       image: `${SITE_URL}/jade-avatar.jpg`,
       sameAs: ["https://github.com/nguyendinhngoc23052006"],
@@ -50,34 +43,6 @@ const jsonLd = JSON.stringify({
         addressLocality: "Hanoi",
         addressCountry: "VN",
       },
-    },
-    {
-      "@type": "Service",
-      "@id": `${SITE_URL}/#service`,
-      serviceType: "Custom Software Development",
-      provider: { "@id": `${SITE_URL}/#person` },
-      areaServed: "Worldwide",
-      description:
-        "Custom web applications, automation tooling, cloud infrastructure, API integrations, migrations, and development consulting.",
-      offers: pricing.map((tier) => ({
-        "@type": "Offer",
-        name: tier.name,
-        description: tier.tagline,
-        priceSpecification: {
-          "@type": "PriceSpecification",
-          priceCurrency: "USD",
-          price: tier.priceHint,
-        },
-      })),
-    },
-    {
-      "@type": "FAQPage",
-      "@id": `${SITE_URL}/#faq`,
-      mainEntity: faq.map((f) => ({
-        "@type": "Question",
-        name: f.question,
-        acceptedAnswer: { "@type": "Answer", text: f.answer },
-      })),
     },
   ],
 }).replace(/</g, "\\u003c");
@@ -89,32 +54,29 @@ const jsonLd = JSON.stringify({
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={DESCRIPTION} />
-    <meta name="keywords" content="custom web development, bespoke software, full-stack developer, web applications, business software, deep customization, transparent pricing, Hanoi developer, production-ready apps, software consulting, API integrations, cloud infrastructure" />
+    <meta name="keywords" content="internal systems developer, ERP, HR software, payroll, attendance, recruitment workflow, Supabase, Cloudflare, computer vision, face recognition, Hanoi" />
     <meta name="author" content="Jade (Nguyen Dinh Ngoc)" />
     <link rel="canonical" href={SITE_URL} />
-    <title>Jade — Custom Web Development & Bespoke Software | Nguyen Dinh Ngoc</title>
+    <title>Jade — Internal Systems Developer | Nguyen Dinh Ngoc</title>
     <script is:inline src="/theme-init.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta property="og:title" content="Jade — Custom Web Development & Bespoke Software" />
+    <meta property="og:title" content="Jade — Internal Systems Developer" />
     <meta property="og:description" content={DESCRIPTION} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={SITE_URL} />
     <meta property="og:image" content={`${SITE_URL}/jade-avatar.jpg`} />
     <meta property="og:locale" content="en_US" />
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Jade — Custom Web Development & Bespoke Software" />
+    <meta name="twitter:title" content="Jade — Internal Systems Developer" />
     <meta name="twitter:description" content={DESCRIPTION} />
     <meta name="theme-color" content="#0a0a0a" />
     <script type="application/ld+json" set:html={jsonLd} />
   </head>
   <body class="min-h-screen bg-background font-sans antialiased">
-    {error ? (
-      <p class="p-8 font-mono text-red-400">Configuration error: {error}</p>
-    ) : (
-      <>
+    <>
         <a href="#about" class="skip-link">Skip to content</a>
 
         {/* ── NAV ── */}
@@ -321,125 +283,6 @@ const jsonLd = JSON.stringify({
           </div>
         </section>
 
-        {/* ── SERVICES ── */}
-        <section id="services" class="border-t border-border/40 py-20 sm:py-28">
-          <div class="mx-auto max-w-5xl px-6">
-            <p class="section-label">Services</p>
-            <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Custom software built to your spec</h2>
-            <p class="mt-3 max-w-2xl text-muted-foreground">
-              Deep customization for every business need — from single-feature tools to full-scale
-              applications. Pick a service or combine several.
-            </p>
-
-            <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {services.map(({ title, desc, cta }) => (
-                <div class="rounded-sm border border-border/60 bg-card p-6">
-                  <h3 class="font-semibold tracking-tight">{title}</h3>
-                  <p class="mt-2 text-sm text-muted-foreground leading-relaxed">{desc}</p>
-                  <a href="#contact" class="mt-4 inline-flex items-center gap-1 text-sm font-medium text-accent">
-                    {cta} <span aria-hidden="true">&rarr;</span>
-                  </a>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ── PRICING ── */}
-        <section id="pricing" class="border-t border-border/40 bg-card/50 py-20 sm:py-28">
-          <div class="mx-auto max-w-5xl px-6">
-            <p class="section-label">Pricing</p>
-            <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Transparent, fixed-price development</h2>
-            <p class="mt-3 max-w-2xl text-muted-foreground">
-              Quotes are locked in before we start. No hidden fees, no surprise invoices, no
-              hourly-billing padding.
-            </p>
-
-            <div class="mt-10 grid gap-6 lg:grid-cols-3">
-              {pricing.map((tier) => (
-                <div
-                  class:list={[
-                    "relative rounded-sm border p-6",
-                    tier.recommended
-                      ? "border-accent bg-background"
-                      : "border-border/60 bg-background",
-                  ]}
-                >
-                  {tier.recommended && (
-                    <p class="text-xs font-bold uppercase tracking-widest text-accent mb-2">
-                      Most popular
-                    </p>
-                  )}
-                  <h3 class="text-lg font-bold tracking-tight">{tier.name}</h3>
-                  <p class="mt-1 text-sm text-muted-foreground">{tier.tagline}</p>
-                  <p class="mt-4 text-3xl font-extrabold tracking-tight">{tier.priceHint}</p>
-                  <ul class="mt-6 space-y-2.5">
-                    {tier.features.map((feature) => (
-                      <li class="flex items-start gap-2 text-sm">
-                        <span class="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-accent/15 text-accent" aria-hidden="true">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="20 6 9 17 4 12" />
-                          </svg>
-                        </span>
-                        <span class="text-muted-foreground">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <a
-                    href="#contact"
-                    class:list={[
-                      "mt-6 inline-flex h-10 w-full items-center justify-center rounded-sm px-4 text-sm font-medium transition-colors",
-                      tier.recommended
-                        ? "bg-accent text-accent-foreground hover:bg-accent/90"
-                        : "border border-input bg-background hover:bg-muted",
-                    ]}
-                  >
-                    {tier.cta}
-                  </a>
-                </div>
-              ))}
-            </div>
-            <p class="mt-6 text-sm text-muted-foreground">
-              Need something outside these tiers? <a href="#contact" class="text-accent hover:underline">Let's talk</a> — every project can be scoped custom.
-            </p>
-          </div>
-        </section>
-
-        {/* ── PROCESS ── */}
-        <section id="process" class="border-t border-border/40 py-20 sm:py-28">
-          <div class="mx-auto max-w-5xl px-6">
-            <p class="section-label">Process</p>
-            <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">How we build your application</h2>
-
-            <div class="mt-12 hidden md:grid md:grid-cols-4 md:gap-8 md:relative">
-              <div class="absolute top-8 left-16 right-16 h-px bg-border" aria-hidden="true" />
-              {process.map(({ num, title, desc }) => (
-                <div class="relative z-10 text-center">
-                  <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full border-2 border-foreground bg-background text-lg font-bold">
-                    {num}
-                  </div>
-                  <h3 class="mt-4 font-semibold tracking-tight">{title}</h3>
-                  <p class="mt-2 text-sm text-muted-foreground leading-relaxed">{desc}</p>
-                </div>
-              ))}
-            </div>
-
-            <div class="mt-10 space-y-6 md:hidden">
-              {process.map(({ num, title, desc }) => (
-                <div class="flex gap-4">
-                  <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-2 border-foreground bg-background text-sm font-bold">
-                    {num}
-                  </div>
-                  <div>
-                    <h3 class="font-semibold tracking-tight">{title}</h3>
-                    <p class="mt-1 text-sm text-muted-foreground leading-relaxed">{desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* ── SKILLS ── */}
         <section id="skills" class="border-t border-border/40 bg-card/50 py-20 sm:py-28">
           <div class="mx-auto max-w-5xl px-6">
@@ -447,9 +290,9 @@ const jsonLd = JSON.stringify({
             <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Technologies I work with</h2>
 
             <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {skills.map(({ group, items }) => (
+              {cvSkills.map(({ group, items }) => (
                 <div class="rounded-sm border border-border/60 bg-background/50 p-5">
-                  <p class="mb-3 text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">{group}</p>
+                  <p class="mb-3 text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">{group.en}</p>
                   <div class="flex flex-wrap gap-2">
                     {items.map((s) => (
                       <span class="rounded-sm border border-border/60 bg-secondary/30 px-2.5 py-0.5 text-xs font-medium">
@@ -463,34 +306,36 @@ const jsonLd = JSON.stringify({
           </div>
         </section>
 
-        {/* ── FAQ ── */}
-        <section id="faq" class="border-t border-border/40 py-20 sm:py-28">
-          <div class="mx-auto max-w-3xl px-6">
-            <p class="section-label">FAQ</p>
-            <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Questions about custom development</h2>
-
-            <div class="mt-10">
-              {faq.map(({ question, answer }) => (
-                <details class="faq-item">
-                  <summary>{question}</summary>
-                  <div class="faq-answer">{answer}</div>
-                </details>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* ── CONTACT ── */}
         <section id="contact" class="border-t border-border/40 py-20 sm:py-28">
           <div class="mx-auto max-w-xl px-6">
             <p class="section-label">Contact</p>
-            <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Start a conversation</h2>
+            <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Get in touch</h2>
             <p class="mt-3 text-muted-foreground">
-              Have a project in mind? Tell me about it and I'll respond within 24 hours.
+              Open to full-time roles in Hanoi or remote. Call or email me directly.
             </p>
-            <div class="mt-8">
-              <ContactForm client:load />
-            </div>
+            <ul class="mt-8 space-y-3 text-sm">
+              {contactInfo.phone && (
+                <li>
+                  <span class="text-muted-foreground">Phone · </span>
+                  <a href={`tel:${contactInfo.phone.replace(/\s/g, "")}`} class="font-medium hover:underline">{contactInfo.phone}</a>
+                </li>
+              )}
+              <li>
+                <span class="text-muted-foreground">Email · </span>
+                <a href={`mailto:${contactInfo.email}`} class="font-medium hover:underline">{contactInfo.email}</a>
+              </li>
+              <li>
+                <span class="text-muted-foreground">GitHub · </span>
+                <a href={contactInfo.github} target="_blank" rel="noopener noreferrer" class="font-medium hover:underline">{contactInfo.github.replace("https://", "")}</a>
+              </li>
+              <li>
+                <span class="text-muted-foreground">CV · </span>
+                <a href="/cv" class="font-medium hover:underline">English</a>
+                <span class="text-muted-foreground"> / </span>
+                <a href="/cv/vi" class="font-medium hover:underline">Tiếng Việt</a>
+              </li>
+            </ul>
           </div>
         </section>
 
@@ -502,12 +347,11 @@ const jsonLd = JSON.stringify({
               <a href="mailto:nguyendinhngoc23052006@gmail.com" class="text-sm text-muted-foreground transition-colors hover:text-foreground">Email</a>
             </div>
             <p class="mt-4 text-xs text-muted-foreground">
-              &copy; {new Date().getFullYear()} Jade &middot; Nguyen Dinh Ngoc &middot; Custom web development from Hanoi
+              &copy; {new Date().getFullYear()} Jade &middot; Nguyen Dinh Ngoc &middot; Internal systems from Hanoi
             </p>
           </div>
         </footer>
 
-      </>
-    )}
+    </>
   </body>
 </html>

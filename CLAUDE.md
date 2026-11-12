@@ -30,10 +30,10 @@ You are the senior DevOps engineer and **orchestrator** of four tools as one sys
 
 ## Architecture & structure
 - One responsibility per file, ~200 lines; edit before creating.
-- A startup failure (e.g. missing Supabase config) renders as visible text in the page, never a blank screen — a deployment never shows a blank page.
+- A startup failure renders as visible text in the page, never a blank screen — a deployment never shows a blank page.
 - Components render UI; data access and validation live in `src/services/`.
 - Read Supabase config on the SERVER (in `src/middleware.ts`, from `process.env`): read `PUBLIC_SUPABASE_URL` and `PUBLIC_SUPABASE_PUBLISHABLE_KEY` (the deploy workflows provide these two exact names at build time and as Worker runtime vars, for previews and production alike). A client island that needs Supabase gets the public URL + key passed from the server, never reading env itself. Never hardcode. The contract spans the Supabase client + `src/middleware.ts`, `.env.example`, the GitHub Actions variable names, and the env names the deploy workflows export — all using `PUBLIC_`; if the stack changes, move all of it in ONE PR.
-- Folders: `src/pages` (routes + endpoints) · `src/components` (UI) · `src/hooks` (logic) · `src/services` (data + validation) · `src/lib` (incl. the Supabase client) · `src/middleware.ts` (server client + session on `locals`) · `src/types` · `supabase/migrations` (one SQL file per change) · `supabase/config.toml` · `supabase/seed.sql`.
+- Folders: `src/pages` (routes + endpoints) · `src/components` (UI) · `src/hooks` (logic) · `src/services` (data + validation) · `src/lib` · `src/middleware.ts` (security headers) · `src/types`. No database at present; if one returns, it gets a `supabase/` folder with one migration file per change.
 - **Designing structure on request** (`/prototype`, or "set up the project structure"): build it from my description — create only the feature/domain folders the project needs (a CRM → `contacts`, `deals`, `reminders`; a game → `game/{loop,scenes,entities}`), and omit the rest. Every folder gets a real, used starter file — never empty or `.gitkeep` shells. Wire it to the baseline: types in `src/types`, one core migration with RLS per table, reads through the Supabase client in `src/lib`, routes + placeholder components with loading/empty/error states. Record the layout in `docs/ARCHITECTURE.md`. Keep it a skeleton, not finished features. One PR into `main` with the "For you" block.
 
 ## Scale
@@ -81,7 +81,7 @@ You are the senior DevOps engineer and **orchestrator** of four tools as one sys
 - [ ] ≤ 1 migration, UTC-timestamped latest; new tables have RLS; src/types matches
 - [ ] tests/lint/typecheck green; happy AND unhappy paths exercised; e2e green (mark `- [~] e2e not yet added` if Playwright hasn't been installed yet)
 - [ ] scripts named exactly `lint`, `typecheck`, `test`; and `e2e` if installed (mark `- [~] not yet added` if not)
-- [ ] key read from `PUBLIC_SUPABASE_URL` and `PUBLIC_SUPABASE_PUBLISHABLE_KEY` in middleware and passed to islands from server props; nothing hardcoded; no secret in code
+- [ ] nothing hardcoded that belongs in config; no secret in code
 - [ ] irreversible actions guarded + idempotent + flagged
 - [ ] no avoidable debt; memory updated and pruned
 - [ ] migrations explained in plain English

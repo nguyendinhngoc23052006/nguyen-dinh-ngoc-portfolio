@@ -32,7 +32,7 @@ export default defineConfig({
         "default-src 'self'",
         "font-src 'self' https://fonts.gstatic.com",
         "img-src 'self' data:",
-        "connect-src 'self' https://*.supabase.co https://cloudflareinsights.com",
+        "connect-src 'self' https://cloudflareinsights.com",
         "frame-ancestors 'none'",
         "base-uri 'self'",
         "form-action 'self'",

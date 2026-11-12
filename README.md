@@ -1,15 +1,14 @@
 # Nguyen Dinh Ngoc — Portfolio
 
-Personal portfolio and contact site. Built with Astro, React, and Tailwind CSS, deployed to Cloudflare Workers with a Supabase backend.
+Personal portfolio and CV site: who I am, the systems I built and how to reach me. Built with Astro, React, and Tailwind CSS, served by Cloudflare Workers. No database: the content lives in `src/data/portfolio.ts`.
 
 ## Stack
 
 - **Framework:** Astro 7 (SSR) + React islands
 - **Styling:** Tailwind CSS v4
-- **Backend:** Supabase (PostgreSQL + Row-Level Security)
 - **Hosting:** Cloudflare Workers
 - **CI/CD:** GitHub Actions — lint, typecheck, test, e2e, preview deploy, production deploy
-- **Security:** CSP, HSTS, CodeQL, Dependabot, honeypot + origin verification
+- **Security:** CSP, HSTS, CodeQL, Dependabot
 
 ## Development
 

@@ -11,10 +11,8 @@ jobs:
     # store) — skip rather than red-fail; a skipped required check reports as
     # success. See MEMORY.md.
     #
-    # Fork PRs also skip: this workflow builds with the production Supabase
-    # publishable key + writes previews under our Cloudflare account. A
-    # malicious contributor could otherwise exfiltrate the key via their PR
-    # code or spam the prod demo_requests table via the preview URL.
+    # Fork PRs also skip: this workflow writes previews under our Cloudflare
+    # account, which a fork's code must not be able to do.
     if: github.actor != 'dependabot[bot]' && github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     permissions:
@@ -32,9 +30,6 @@ jobs:
       - name: Install Playwright chromium
         run: npx playwright install --with-deps chromium
       - name: Build
-        env:
-          PUBLIC_SUPABASE_URL: ${{ vars.PUBLIC_SUPABASE_URL }}
-          PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${{ vars.PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
         run: npm run build
       - name: Deploy preview version
         id: deploy
@@ -42,7 +37,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: versions upload --env preview --var PUBLIC_SUPABASE_URL:${{ vars.PUBLIC_SUPABASE_URL }} --var PUBLIC_SUPABASE_PUBLISHABLE_KEY:${{ vars.PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
+          command: versions upload --env preview
       - name: Post preview URL comment
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -52,9 +47,7 @@ jobs:
         run: |
           MARKER="<!-- deploy-preview-comment -->"
           BODY="${MARKER}
-          **Preview →** ${PREVIEW_URL}
-
-          _(uses shared production Supabase project)_"
+          **Preview →** ${PREVIEW_URL}"
           EXISTING=$(gh api "repos/$REPO/issues/$PR_NUMBER/comments" \
             --jq '[.[] | select(.body | startswith("'"$MARKER"'")) | .id] | first' \
             2>/dev/null || echo "")
