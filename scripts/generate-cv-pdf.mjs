@@ -12,9 +12,12 @@ const LAUNCH_OPTS = existsSync(PREINSTALLED_CHROMIUM)
   ? { executablePath: PREINSTALLED_CHROMIUM }
   : {};
 
-const OUT_PATH = "dist/client/jade-cv.pdf";
 const PORT = 4322;
-const URL = `http://127.0.0.1:${PORT}/cv/`;
+// One PDF per language, both rendered from the same CV entries.
+const TARGETS = [
+  { url: `http://127.0.0.1:${PORT}/cv/`, out: "dist/client/jade-cv.pdf" },
+  { url: `http://127.0.0.1:${PORT}/cv/vi/`, out: "dist/client/jade-cv-vi.pdf" },
+];
 
 // A4 = 297mm tall. Print margins are 12mm top + 12mm bottom (globals.css @page).
 // Usable content height per page = 273mm; we allow up to 2 pages.
@@ -68,55 +71,56 @@ async function main() {
     },
   );
   try {
-    await waitForServer(URL);
+    await waitForServer(TARGETS[0].url);
 
     const browser = await chromium.launch(LAUNCH_OPTS);
-    const page = await browser.newPage();
-    // Set viewport to A4 CSS-pixel width (approx) so scrollHeight measures
-    // what the print layout will actually flow into.
-    await page.setViewportSize({ width: 794, height: 1122 });
-    await page.goto(URL, { waitUntil: "networkidle" });
-    await page.evaluate(() => document.fonts.ready);
-    await page.emulateMedia({ media: "print" });
+    for (const { url: URL, out: OUT_PATH } of TARGETS) {
+      const page = await browser.newPage();
+      // Set viewport to A4 CSS-pixel width (approx) so scrollHeight measures
+      // what the print layout will actually flow into.
+      await page.setViewportSize({ width: 794, height: 1122 });
+      await page.goto(URL, { waitUntil: "networkidle" });
+      await page.evaluate(() => document.fonts.ready);
+      await page.emulateMedia({ media: "print" });
 
-    // Browser-side pre-check: measure rendered content height at print media.
-    // Overflow here is diagnostic; the authoritative check is the PDF page count.
-    const contentHeight = await page.evaluate(
-      () =>
-        document.querySelector(".cv-page")?.scrollHeight ??
-        document.body.scrollHeight,
-    );
-    console.log(
-      `[diag] .cv-page scrollHeight=${contentHeight}px; usable ceiling=${USABLE_HEIGHT_CSS_PX}px`,
-    );
-    if (contentHeight > USABLE_HEIGHT_CSS_PX) {
-      console.warn(
-        `⚠ CV content height ${contentHeight}px exceeds one-page ceiling ${USABLE_HEIGHT_CSS_PX}px. ` +
-          `Print may span multiple pages. Tighten data or CSS.`,
+      // Browser-side pre-check: measure rendered content height at print media.
+      // Overflow here is diagnostic; the authoritative check is the PDF page count.
+      const contentHeight = await page.evaluate(
+        () =>
+          document.querySelector(".cv-page")?.scrollHeight ??
+          document.body.scrollHeight,
+      );
+      console.log(
+        `[diag] .cv-page scrollHeight=${contentHeight}px; usable ceiling=${USABLE_HEIGHT_CSS_PX}px`,
+      );
+      if (contentHeight > USABLE_HEIGHT_CSS_PX) {
+        console.warn(
+          `⚠ CV content height ${contentHeight}px exceeds one-page ceiling ${USABLE_HEIGHT_CSS_PX}px. ` +
+            `Print may span multiple pages. Tighten data or CSS.`,
+        );
+      }
+
+      await page.pdf({
+        path: OUT_PATH,
+        format: "A4",
+        margin: { top: "12mm", right: "16mm", bottom: "12mm", left: "16mm" },
+        printBackground: true,
+      });
+      // Authoritative check: fail the build if the emitted PDF is more than one page.
+      const pages = countPdfPages(OUT_PATH);
+      if (pages > MAX_PAGES) {
+        throw new Error(
+          `CV PDF is ${pages} pages; the ceiling is ${MAX_PAGES}. ` +
+            `Trim src/pages/cv.astro or src/data/portfolio.ts (compact cvSummary, ` +
+            `shorten trait notes, cap projects/skills, tighten @media print CSS in ` +
+            `src/styles/globals.css).`,
+        );
+      }
+      console.log(
+        `✓ Generated ${OUT_PATH} (${pages} page${pages === 1 ? "" : "s"})`,
       );
     }
-
-    await page.pdf({
-      path: OUT_PATH,
-      format: "A4",
-      margin: { top: "12mm", right: "16mm", bottom: "12mm", left: "16mm" },
-      printBackground: true,
-    });
     await browser.close();
-
-    // Authoritative check: fail the build if the emitted PDF is more than one page.
-    const pages = countPdfPages(OUT_PATH);
-    if (pages > MAX_PAGES) {
-      throw new Error(
-        `CV PDF is ${pages} pages; the ceiling is ${MAX_PAGES}. ` +
-          `Trim src/pages/cv.astro or src/data/portfolio.ts (compact cvSummary, ` +
-          `shorten trait notes, cap projects/skills, tighten @media print CSS in ` +
-          `src/styles/globals.css).`,
-      );
-    }
-    console.log(
-      `✓ Generated ${OUT_PATH} (${pages} page${pages === 1 ? "" : "s"})`,
-    );
   } finally {
     server.kill("SIGTERM");
   }

@@ -1,0 +1,210 @@
+---
+// biome-ignore-all lint/correctness/noUnusedImports: symbols used in the Astro template below the frontmatter fence, which biome cannot see
+// biome-ignore-all lint/correctness/noUnusedVariables: constants used in the Astro template below the frontmatter fence, which biome cannot see
+// The CV in one language. /cv renders it in English, /cv/vi in Vietnamese;
+// both read the same entries in src/data/portfolio.ts, so they cannot drift.
+// The 2-page ceiling is enforced at build time by scripts/generate-cv-pdf.mjs.
+import {
+  contactInfo,
+  cvMore,
+  cvSkills,
+  cvSummary,
+  cvTitle,
+  cvWork,
+  education,
+  experience,
+  type Lang,
+  SITE_URL,
+} from "../data/portfolio";
+import "../styles/globals.css";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const L = {
+  en: {
+    back: "← Back to portfolio",
+    download: "Download PDF",
+    other: "Tiếng Việt",
+    otherHref: "/cv/vi",
+    pdf: "/jade-cv.pdf",
+    pdfName: "Nguyen-Dinh-Ngoc-CV-EN.pdf",
+    summary: "Summary",
+    work: "Selected work",
+    more: "More projects",
+    experience: "Experience",
+    education: "Education",
+    skills: "Skills",
+    footer: "Full portfolio",
+  },
+  vi: {
+    back: "← Về trang portfolio",
+    download: "Tải PDF",
+    other: "English",
+    otherHref: "/cv",
+    pdf: "/jade-cv-vi.pdf",
+    pdfName: "Nguyen-Dinh-Ngoc-CV-VI.pdf",
+    summary: "Tóm tắt",
+    work: "Dự án tiêu biểu",
+    more: "Dự án khác",
+    experience: "Kinh nghiệm",
+    education: "Học vấn",
+    skills: "Kỹ năng",
+    footer: "Portfolio đầy đủ",
+  },
+}[lang];
+// Split a text so "[ĐIỀN: …]" placeholders render highlighted.
+const parts = (s: string) => s.split(/(\[ĐIỀN:[^\]]*\])/g).filter(Boolean);
+const isTodo = (s: string) => s.startsWith("[ĐIỀN");
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={`Nguyễn Đình Ngọc (Jade) — CV — ${cvTitle[lang]}`} />
+    <meta name="robots" content="noindex" />
+    <link rel="canonical" href={`${SITE_URL}${lang === "en" ? "/cv" : "/cv/vi"}`} />
+    <title>Jade — CV</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script is:inline src="/theme-init.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  </head>
+  <body class="min-h-screen bg-background font-sans antialiased">
+    <div class="cv-page mx-auto max-w-3xl px-6 py-16">
+      <div class="cv-actions no-print mb-8 flex items-center justify-between gap-4 text-sm">
+        <a href="/" class="underline">{L.back}</a>
+        <div class="flex items-center gap-4">
+          <a href={L.otherHref} class="underline">{L.other}</a>
+          <a
+            href={L.pdf}
+            download={L.pdfName}
+            class="rounded-sm border border-foreground bg-foreground px-4 py-2 text-background hover:bg-transparent hover:text-foreground transition-colors"
+          >
+            {L.download}
+          </a>
+        </div>
+      </div>
+
+      <header class="cv-header flex items-start justify-between gap-6">
+        <div>
+          <h1 class="text-4xl font-bold tracking-tight">Nguyễn Đình Ngọc <span class="text-muted-foreground font-normal">(Jade)</span></h1>
+          <p class="mt-2 text-lg text-muted-foreground">{cvTitle[lang]}</p>
+          <p class="mt-1 text-sm text-muted-foreground">
+            {contactInfo.location}{contactInfo.phone && <> · <a href={`tel:${contactInfo.phone.replace(/\s/g, "")}`}>{contactInfo.phone}</a></>} · <a href={`mailto:${contactInfo.email}`}>{contactInfo.email}</a> · <a href={contactInfo.github}>github.com/nguyendinhngoc23052006</a> · <a href={SITE_URL}>{SITE_URL.replace("https://", "")}</a>
+          </p>
+        </div>
+        <img
+          src="/jade-avatar.jpg"
+          alt="Nguyễn Đình Ngọc (Jade)"
+          width="96"
+          height="96"
+          class="rounded-sm border border-border object-cover shrink-0"
+          style="width:96px;height:96px"
+        />
+      </header>
+
+      <hr class="my-6 border-border" />
+
+      <section>
+        <h2 class="cv-section-title">{L.summary}</h2>
+        <p class="mt-2 leading-relaxed">{cvSummary[lang]}</p>
+      </section>
+
+      <section class="mt-6">
+        <h2 class="cv-section-title">{L.experience}</h2>
+        <div class="mt-2 space-y-3">
+          {experience.map((e) => (
+            <div class="cv-block">
+              <div class="flex items-baseline justify-between gap-4">
+                <h3 class="font-semibold">
+                  {parts(e.role[lang]).map((x) => (isTodo(x) ? <mark class="cv-todo">{x}</mark> : x))} · {e.organization[lang]}
+                </h3>
+                <span class="text-sm text-muted-foreground shrink-0">
+                  {parts(e.period[lang]).map((x) => (isTodo(x) ? <mark class="cv-todo">{x}</mark> : x))}
+                </span>
+              </div>
+              <ul class="cv-points mt-1">
+                {e.points.map((p) => <li class="text-sm leading-snug">{p[lang]}</li>)}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section class="mt-6">
+        <h2 class="cv-section-title">{L.work}</h2>
+        <div class="mt-2 space-y-3">
+          {cvWork.map((w) => (
+            <div class="cv-block">
+              <div class="flex items-baseline justify-between gap-4">
+                <h3 class="font-semibold">{w.title[lang]}</h3>
+                <span class="text-xs text-muted-foreground shrink-0">{w.status[lang]}</span>
+              </div>
+              <ul class="cv-points mt-1">
+                {w.points.map((p) => <li class="text-sm leading-snug">{p[lang]}</li>)}
+              </ul>
+              <p class="mt-1 text-xs text-muted-foreground">
+                {w.tags.join(" · ")}
+                {w.url && (
+                  <>
+                    {" · "}
+                    <a href={w.url} class="text-accent hover:underline">{w.url.replace(/^https?:\/\//, "")}</a>
+                  </>
+                )}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section class="mt-6">
+        <h2 class="cv-section-title">{L.more}</h2>
+        <ul class="mt-2 space-y-1.5">
+          {cvMore.map((m) => (
+            <li class="cv-block text-sm leading-snug">
+              <span class="font-semibold">{m.title}.</span>
+              <span> {m.line[lang]}</span>
+              <a href={m.url} class="ml-1 text-xs text-accent hover:underline">{m.url.replace(/^https?:\/\//, "")}</a>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section class="mt-6">
+        <h2 class="cv-section-title">{L.skills}</h2>
+        <dl class="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1.5 text-sm">
+          {cvSkills.map(({ group, items }) => (
+            <div>
+              <dt class="font-semibold">{group[lang]}</dt>
+              <dd class="text-muted-foreground">{items.join(" · ")}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+
+            <section class="mt-6">
+        <h2 class="cv-section-title">{L.education}</h2>
+        <div class="mt-2">
+          {education.map((e) => (
+            <div class="flex items-baseline justify-between gap-4">
+              <div>
+                <span class="font-semibold">{e.degree[lang]}</span>
+                <span class="text-sm text-muted-foreground"> · {e.institution[lang]}, {e.location[lang]}</span>
+              </div>
+              <span class="text-sm text-muted-foreground shrink-0">{e.period[lang]}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <footer class="cv-footer mt-8 pt-3 border-t border-border text-xs text-muted-foreground">
+        {L.footer} · <a href={SITE_URL}>{SITE_URL.replace("https://", "")}</a>
+      </footer>
+    </div>
+  </body>
+</html>

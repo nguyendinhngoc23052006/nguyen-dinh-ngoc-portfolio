@@ -84,9 +84,6 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Build
-        env:
-          PUBLIC_SUPABASE_URL: ${{ vars.PUBLIC_SUPABASE_URL }}
-          PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${{ vars.PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
         run: npm run build
 
       - name: Upload new version
@@ -95,7 +92,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: versions upload --env production --var PUBLIC_SUPABASE_URL:${{ vars.PUBLIC_SUPABASE_URL }} --var PUBLIC_SUPABASE_PUBLISHABLE_KEY:${{ vars.PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
+          command: versions upload --env production
 
       - name: Parse version ID + preview URL
         id: parse

@@ -18,15 +18,13 @@ vulnerabilities within 7 days.
 
 ## Scope
 
-This policy covers the portfolio site and its contact form endpoint.
-Infrastructure services (Supabase, Cloudflare, GitHub) have their own
+This policy covers the portfolio site. It collects no data: there is no form, account or database.
+Infrastructure services (Cloudflare, GitHub) have their own
 security policies.
 
 ## Security Measures
 
-- **Row-Level Security** on all Supabase tables
 - **Server-side input validation** on all API endpoints
 - **Security headers** (CSP, HSTS, X-Frame-Options, etc.)
-- **Honeypot + origin verification** on the contact form
 - **Automated dependency scanning** via Dependabot and CodeQL
 - **Secret scanning** enabled on the repository
