@@ -5,6 +5,7 @@ import MobileNav from "../components/MobileNav";
 import ThemeToggle from "../components/ThemeToggle";
 import {
   aboutIntro,
+  cvWork,
   faq,
   heroSubhead,
   navLinks,
@@ -38,7 +39,7 @@ const jsonLd = JSON.stringify({
       "@id": `${SITE_URL}/#person`,
       name: "Nguyen Dinh Ngoc",
       alternateName: "Jade",
-      jobTitle: "Full-Stack Developer",
+      jobTitle: "Internal Systems Developer",
       description:
         "Full-stack developer building custom web applications and bespoke software for businesses worldwide.",
       url: SITE_URL,
@@ -147,11 +148,11 @@ const jsonLd = JSON.stringify({
             </p>
 
             <div class="mt-8 flex flex-wrap gap-3">
-              <a href="#contact" class="inline-flex h-10 items-center gap-2 rounded-sm border border-foreground bg-foreground text-background px-6 text-sm font-medium transition-colors hover:bg-transparent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-                Get a quote
+              <a href="#work" class="inline-flex h-10 items-center gap-2 rounded-sm border border-foreground bg-foreground text-background px-6 text-sm font-medium transition-colors hover:bg-transparent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                See what I built
               </a>
-              <a href="#pricing" class="inline-flex h-10 items-center gap-2 rounded-sm border border-accent px-6 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-                See pricing
+              <a href="/cv" class="inline-flex h-10 items-center gap-2 rounded-sm border border-accent px-6 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                CV (EN / VI)
               </a>
             </div>
             </div>
@@ -177,6 +178,33 @@ const jsonLd = JSON.stringify({
                   </p>
                   <p class="mt-1 text-sm text-muted-foreground">{label}</p>
                 </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── WORK: the systems, from the same entries as the CV ── */}
+        <section id="work" class="border-t border-border/40 py-20 sm:py-28">
+          <div class="mx-auto max-w-5xl px-6">
+            <p class="section-label">Work</p>
+            <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Systems I built</h2>
+            <p class="mt-3 max-w-2xl text-muted-foreground">Internal systems run on private data, so they are described here rather than linked.</p>
+            <div class="mt-10 grid gap-4 lg:grid-cols-2">
+              {cvWork.map((w) => (
+                <article class="rounded-sm border border-border/60 bg-card p-6">
+                  <p class="text-xs font-medium uppercase tracking-widest text-accent">{w.status.en}</p>
+                  <h3 class="mt-3 font-semibold tracking-tight">
+                    {w.url ? <a href={w.url} target="_blank" rel="noopener noreferrer" class="hover:underline">{w.title.en} <span class="text-accent" aria-hidden="true">↗</span></a> : w.title.en}
+                  </h3>
+                  <ul class="mt-3 list-disc space-y-1.5 pl-5 text-sm text-muted-foreground leading-relaxed">
+                    {w.points.map((p) => <li>{p.en}</li>)}
+                  </ul>
+                  <div class="mt-4 flex flex-wrap gap-1.5">
+                    {w.tags.map((t) => (
+                      <span class="rounded-sm border border-border/60 bg-muted px-2 py-0.5 text-[11px] font-medium text-muted-foreground">{t}</span>
+                    ))}
+                  </div>
+                </article>
               ))}
             </div>
           </div>
@@ -209,7 +237,7 @@ const jsonLd = JSON.stringify({
                         shipped ? "text-accent" : "text-muted-foreground",
                       ]}
                     >
-                      {shipped ? "Live" : "In progress"}
+                      {shipped ? "Live" : "Source"}
                     </p>
                     <h3 class="mt-3 font-semibold tracking-tight">
                       {title}
@@ -268,19 +296,19 @@ const jsonLd = JSON.stringify({
                 </div>
                 <div>
                   <p class="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">Focus</p>
-                  <p class="mt-0.5 text-sm">Web apps · Automation · Cloud infra</p>
+                  <p class="mt-0.5 text-sm">Internal systems · ERP · Automation · Computer vision</p>
                 </div>
                 <div>
                   <p class="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">Status</p>
-                  <p class="mt-0.5 text-sm text-accent">Open to projects</p>
+                  <p class="mt-0.5 text-sm text-accent">Open to full-time roles and projects</p>
                 </div>
                 <div>
                   <p class="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">What I bring</p>
                   <ul class="mt-1 space-y-1 text-sm">
                     {traits.map((t) => (
                       <li>
-                        <span class="font-semibold">{t.label}</span>
-                        <span class="text-muted-foreground"> — {t.note}</span>
+                        <span class="font-semibold">{t.label.en}</span>
+                        <span class="text-muted-foreground"> — {t.note.en}</span>
                       </li>
                     ))}
                   </ul>

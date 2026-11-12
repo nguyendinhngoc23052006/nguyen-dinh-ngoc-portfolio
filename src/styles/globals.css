@@ -253,6 +253,20 @@ details.faq-item .faq-answer {
   }
 }
 
+.cv-points {
+  list-style: disc;
+  padding-left: 1.1rem;
+}
+.cv-points li + li {
+  margin-top: 0.15rem;
+}
+.cv-todo {
+  background: #fde68a;
+  color: #111111;
+  padding: 0 0.15rem;
+  border-radius: 2px;
+}
+
 .cv-section-title {
   font-family: "EB Garamond", Georgia, serif;
   font-size: 1.25rem;
@@ -287,8 +301,15 @@ details.faq-item .faq-answer {
     padding: 0;
     margin: 0;
   }
-  .cv-page section {
+  .cv-page .cv-block {
     break-inside: avoid;
+  }
+  .cv-page section.mt-6 {
+    margin-top: 3.5mm;
+  }
+  /* The portfolio link is already in the header; the footer only matters on screen. */
+  .cv-footer {
+    display: none;
   }
   .cv-page h1 {
     font-size: 20pt;
