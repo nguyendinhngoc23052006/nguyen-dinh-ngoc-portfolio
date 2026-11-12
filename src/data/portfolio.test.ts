@@ -8,6 +8,7 @@ import {
   cvWork,
   education,
   experience,
+  inTheWorks,
   type T,
   traits,
 } from "./portfolio";
@@ -18,7 +19,13 @@ const texts: T[] = [
   cvTitle,
   cvSummary,
   ...traits.flatMap((t) => [t.label, t.note]),
-  ...cvWork.flatMap((w) => [w.title, w.status, ...w.points]),
+  ...cvWork.flatMap((w) => [
+    w.title,
+    w.status,
+    ...w.points,
+    ...(w.discuss ?? []),
+  ]),
+  ...inTheWorks.flatMap((x) => [x.title, x.line]),
   ...cvMore.map((m) => m.line),
   ...cvSkills.map((s) => s.group),
   ...education.flatMap((e) => [e.degree, e.institution, e.location, e.period]),

@@ -63,6 +63,8 @@ export interface CvWork {
   points: T[];
   tags: string[];
   url?: string;
+  // Private systems: what I can walk an interviewer through, shown on the site.
+  discuss?: T[];
 }
 
 // Selected work for the CV. Private systems are described, never linked.
@@ -103,6 +105,24 @@ export const cvWork: CvWork[] = [
         vi: "Phân quyền theo dòng mặc định từ chối, cấu trúc dữ liệu chỉ qua migration, mỗi pull request có nhánh Supabase và bản xem trước Cloudflare riêng, nhật ký kiểm toán đầy đủ.",
       },
     ],
+    discuss: [
+      {
+        en: "How the privilege system is modelled so new roles and rules need no code",
+        vi: "Cách mô hình hệ thống phân quyền để thêm vai trò, quy tắc mới mà không cần viết code",
+      },
+      {
+        en: "The rules that turn raw door-camera events into check-ins, check-outs and attendance statistics",
+        vi: "Quy tắc biến dữ liệu camera cửa thành check-in, check-out và thống kê chấm công",
+      },
+      {
+        en: "The recruitment-to-onboarding data flow, end to end",
+        vi: "Luồng dữ liệu tuyển dụng đến hội nhập, từ đầu đến cuối",
+      },
+      {
+        en: "A live walkthrough of the running system",
+        vi: "Trình diễn trực tiếp hệ thống đang chạy",
+      },
+    ],
     tags: [
       "Supabase",
       "Postgres RLS",
@@ -128,6 +148,20 @@ export const cvWork: CvWork[] = [
         vi: "Trên điện thoại nhân viên: đăng ký ca, chấm công khuôn mặt + vị trí, sổ tiền cuối ngày, phiếu lương. Chủ cửa hàng: quy tắc lương (KPI, ăn ca, làm đêm/tăng ca/lễ theo mức tối thiểu của BLLĐ) và kỳ trả lương có truy lĩnh. Dữ liệu khuôn mặt chỉ khi có đồng ý (Luật 91/2025); sao lưu mã hóa hằng đêm; kiểm thử chạy lại mọi migration.",
       },
     ],
+    discuss: [
+      {
+        en: "The pay-rule engine: KPI, night, overtime, holiday pay and arrears",
+        vi: "Bộ quy tắc lương: KPI, làm đêm, tăng ca, ngày lễ và truy lĩnh",
+      },
+      {
+        en: "Face data handling under Law 91/2025: consent, withdrawal, backups",
+        vi: "Xử lý dữ liệu khuôn mặt theo Luật 91/2025: đồng ý, rút lại, sao lưu",
+      },
+      {
+        en: "How a non-technical owner configures everything in the app",
+        vi: "Cách chủ cửa hàng không rành kỹ thuật tự cấu hình mọi thứ trong ứng dụng",
+      },
+    ],
     tags: ["Supabase", "Cloudflare Pages", "PWA", "Playwright", "i18n"],
   },
   {
@@ -147,6 +181,16 @@ export const cvWork: CvWork[] = [
       {
         en: "Explained all 349 numbers that changed from the old file, and traced every payslip number to its source cell (2,284 automated checks) for leadership sign-off.",
         vi: "Giải trình toàn bộ 349 con số thay đổi so với file cũ và truy mọi số trên phiếu lương về ô nguồn (2.284 phép kiểm tự động) để Ban Giám đốc duyệt.",
+      },
+    ],
+    discuss: [
+      {
+        en: "The method and the reconciliation that matched every cell",
+        vi: "Phương pháp và cách đối chiếu khớp từng ô",
+      },
+      {
+        en: "Anonymised sample payslips with every number traced to its source",
+        vi: "Phiếu lương mẫu ẩn danh, mỗi con số truy được về nguồn",
       },
     ],
     tags: [
@@ -216,6 +260,24 @@ export const cvMore: { title: string; line: T; url: string }[] = [
       vi: "Tệp và dữ liệu không rời khỏi trình duyệt (CSP chặt); trạng thái nằm trong đường link nên mở link là thấy đúng kết quả.",
     },
     url: "https://github.com/nguyendinhngoc23052006",
+  },
+];
+
+// Designs in progress, shown on the site only; details on request.
+export const inTheWorks: { title: T; line: T }[] = [
+  {
+    title: { en: "AI visor", vi: "Kính AI đeo đầu" },
+    line: {
+      en: "A head-worn visor that labels what is in view, gives step-by-step guidance on a captured photo, and translates a two-person conversation, with the owner's own AI providers. Hardware, firmware and app designed together.",
+      vi: "Kính đeo đầu gắn nhãn những gì đang nhìn, hướng dẫn từng bước từ ảnh chụp và dịch hội thoại hai người, dùng nhà cung cấp AI của chính chủ máy. Thiết kế đồng thời phần cứng, firmware và ứng dụng.",
+    },
+  },
+  {
+    title: { en: "Firmware hub", vi: "Trung tâm firmware" },
+    line: {
+      en: "A private store for every device's firmware releases: flash a board from the browser, register each device with its own credential, and let devices update themselves with signed releases.",
+      vi: "Kho riêng cho mọi bản phát hành firmware: nạp firmware từ trình duyệt, đăng ký từng thiết bị với khóa riêng, và cho thiết bị tự cập nhật bằng bản phát hành có chữ ký.",
+    },
   },
 ];
 
@@ -337,23 +399,25 @@ export interface Project {
 export const projects: Project[] = [
   {
     num: "01",
-    title: "saasmath",
-    desc: "Free calculators and explainers for SaaS founders — runway, burn multiple, LTV/CAC, MRR/ARR growth, Rule of 40, cap-table dilution, option value, seed sizing, bridge notes. Every calculator's state lives in the URL so results are shareable; every formula cites the SaaS canon (Skok, Feld, Bessemer, YC). Static Astro + React islands on Cloudflare Pages.",
-    tags: [
-      "Astro",
-      "React islands",
-      "Tailwind",
-      "URL state",
-      "Cloudflare Pages",
-    ],
-    status: "shipped",
-    url: "https://saasmath.pages.dev",
-    source: "https://github.com/nguyendinhngoc23052006/saasmath",
+    title: "Nguyễn Ngọc Anh — portfolio",
+    desc: "Bilingual scrollytelling portfolio where one silk thread is drawn live through every chapter: cocoon, journey route, globe, supply-chain network, guitar strings, contact knot. GSAP DrawSVG/MotionPath with Lenis, synthesised sound, hidden easter eggs, and every animation off for readers who prefer reduced motion.",
+    tags: ["React", "TypeScript", "GSAP", "Lenis", "i18n", "Web Audio"],
+    source: "https://github.com/nguyendinhngoc23052006/Portfolio-for-Ngoc-Anh",
+    url: "https://github.com/nguyendinhngoc23052006/Portfolio-for-Ngoc-Anh",
   },
   {
     num: "02",
-    title: "nguyen le khanh portfolio",
-    desc: "Bilingual (Vietnamese / English) scrollytelling portfolio for a content and media candidate applying to an environmental conservation project. Nine narrative beats pinned to the scroll, GSAP ScrollTrigger with Lenis smooth-scroll, i18n via react-i18next — no copy hard-coded in JSX. Vite + React + TypeScript + Tailwind on Cloudflare Pages.",
+    title: "Dinh Ngoc Edu",
+    desc: "Upload a subject's materials once and AI builds a Duolingo-style course: chapters, lesson nodes and verified questions that also feed mock tests. Private by default, shareable when public, with a pet companion that grows as you learn.",
+    tags: ["React", "TypeScript", "Supabase", "Edge Functions", "RLS", "AI"],
+    status: "shipped",
+    url: "https://dinhngocedu.vercel.app",
+    source: "https://github.com/nguyendinhngoc23052006/Dinh-Ngoc-Edu",
+  },
+  {
+    num: "03",
+    title: "Nguyễn Lê Khánh — portfolio",
+    desc: "Bilingual (Vietnamese / English) scrollytelling portfolio for a content and media candidate applying to an environmental conservation project. Nine narrative beats pinned to the scroll, GSAP ScrollTrigger with Lenis smooth-scroll, i18n via react-i18next — no copy hard-coded in JSX.",
     tags: [
       "React",
       "TypeScript",
@@ -368,48 +432,28 @@ export const projects: Project[] = [
       "https://github.com/nguyendinhngoc23052006/nguyen-le-khanh-portfolio",
   },
   {
-    num: "03",
-    title: "regex tester",
-    desc: "A regex tester where state lives in the URL. Paste, edit, share — anyone opening the link sees exactly what you saw. One HTML file, zero framework; sometimes that's the right call.",
-    tags: ["Vanilla JS", "URL state", "Cloudflare Pages"],
-    status: "shipped",
-    url: "https://regex-tester-6dz.pages.dev",
-    source: "https://github.com/nguyendinhngoc23052006/regex-tester",
-  },
-  {
     num: "04",
-    title: "format converter",
-    desc: "Convert between JSON, YAML, and TOML in the browser. Two live CodeMirror editors, auto-detected input, and every keystroke saved to the URL — send someone a link, they see exactly what you saw. No server, no data leaves the page.",
-    tags: ["Svelte 5", "Vite", "CodeMirror 6", "Cloudflare Pages"],
+    title: "saasmath",
+    desc: "Free calculators and explainers for SaaS founders — runway, burn multiple, LTV/CAC, MRR/ARR growth, Rule of 40, cap-table dilution, option value, seed sizing, bridge notes. State lives in the URL so results are shareable; every formula cites its source.",
+    tags: [
+      "Astro",
+      "React islands",
+      "Tailwind",
+      "URL state",
+      "Cloudflare Pages",
+    ],
     status: "shipped",
-    url: "https://format-converter-642.pages.dev",
-    source: "https://github.com/nguyendinhngoc23052006/format-converter",
+    url: "https://saasmath.pages.dev",
+    source: "https://github.com/nguyendinhngoc23052006/saasmath",
   },
   {
     num: "05",
-    title: "pdf merger",
-    desc: "Merge, reorder, and slice PDFs in the browser. Drag-and-drop stack, first-page thumbnails, per-file page ranges, optional editorial cover page. Strict CSP with connect-src 'none' — files never leave the tab, and DevTools proves it.",
-    tags: ["Preact", "Vite", "pdf-lib", "@dnd-kit", "Cloudflare Pages"],
+    title: "Browser tools: PDF merger · format converter · regex tester",
+    desc: "Three small tools where nothing leaves the tab: merge and slice PDFs under a strict CSP, convert JSON/YAML/TOML in live editors, and test regexes, with state in the URL so a link reproduces the exact view.",
+    tags: ["Preact", "Svelte 5", "CodeMirror 6", "pdf-lib", "Cloudflare Pages"],
     status: "shipped",
     url: "https://pdf-merger-c6h.pages.dev",
-    source: "https://github.com/nguyendinhngoc23052006/pdf-merger",
-  },
-  {
-    num: "06",
-    title: "Nguyễn Ngọc Anh — portfolio",
-    desc: "Bilingual scrollytelling portfolio where one silk thread is drawn live through every chapter: cocoon, journey route, globe, supply-chain network, guitar strings, contact knot. GSAP DrawSVG/MotionPath with Lenis, synthesised sound, hidden easter eggs, and every animation off for readers who prefer reduced motion.",
-    tags: ["React", "TypeScript", "GSAP", "Lenis", "i18n", "Web Audio"],
-    source: "https://github.com/nguyendinhngoc23052006/Portfolio-for-Ngoc-Anh",
-    url: "https://github.com/nguyendinhngoc23052006/Portfolio-for-Ngoc-Anh",
-  },
-  {
-    num: "07",
-    title: "Dinh Ngoc Edu",
-    desc: "Upload a subject's materials once and AI builds a Duolingo-style course: chapters, lesson nodes and verified questions that also feed mock tests. Private by default, shareable when public, with a pet companion that grows as you learn.",
-    tags: ["React", "TypeScript", "Supabase", "Edge Functions", "RLS", "AI"],
-    status: "shipped",
-    url: "https://dinhngocedu.vercel.app",
-    source: "https://github.com/nguyendinhngoc23052006/Dinh-Ngoc-Edu",
+    source: "https://github.com/nguyendinhngoc23052006",
   },
 ];
 
