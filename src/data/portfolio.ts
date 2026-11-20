@@ -1,10 +1,10 @@
 export const SITE_URL = "https://nguyendinhngoc.dev";
 
 export const heroSubhead =
-  "I build the systems a company runs on: ERP, HR, recruitment, attendance and payroll, on Supabase + Cloudflare, with computer vision where it pays off. Built alone, checked to the đồng, in production.";
+  "I build the systems a company runs on: people and records, face-recognition attendance, recruitment and payroll, on Supabase + Cloudflare, with AI as my engineering team. Three of them have run real businesses.";
 
 export const aboutIntro =
-  "I study international economics at Foreign Trade University and taught myself the rest — production software, cloud infrastructure, AI-directed engineering. The combination isn't padding, it's leverage. Macroeconomic reasoning for the business case. Creative problem-solving for the jobs no template fits. Infrastructure-deep understanding of the systems the code actually runs on. All three in one head at once. Self-taught means I picked up every tool because I needed it, not because a syllabus said to — hand me a framework I've never seen and I ship with it by the end of the week. I direct AI systems the way most developers use search: as an amplifier on the work, not a substitute for the understanding underneath. Every project on this site is live in production. Open the source and see for yourself.";
+  "I study international economics at Foreign Trade University and taught myself the rest — production software, cloud infrastructure, AI-directed engineering. The combination isn't padding, it's leverage. Macroeconomic reasoning for the business case. Creative problem-solving for the jobs no template fits. Infrastructure-deep understanding of the systems the code actually runs on. All three in one head at once. Self-taught means I picked up every tool because I needed it, not because a syllabus said to — hand me a framework I've never seen and I ship with it by the end of the week. I direct AI systems the way most developers use search: as an amplifier on the work, not a substitute for the understanding underneath. The public projects here are live: open them. The systems companies run on are private, and I'll gladly walk you through them.";
 
 // ---------------------------------------------------------------------------
 // CV content — the only source for /cv (English) and /cv/vi (Vietnamese) and
@@ -16,13 +16,13 @@ export type Lang = "en" | "vi";
 export type T = Record<Lang, string>;
 
 export const cvTitle: T = {
-  en: "Internal systems developer — ERP, HR & payroll on Supabase + Cloudflare",
-  vi: "Phát triển hệ thống nội bộ — ERP, nhân sự & tiền lương trên Supabase + Cloudflare",
+  en: "AI-native builder — internal systems on Supabase + Cloudflare",
+  vi: "Xây hệ thống vận hành bằng AI — Supabase + Cloudflare",
 };
 
 export const cvSummary: T = {
-  en: "I build the systems a company runs on: org chart and permissions, hiring, attendance, payroll and the reports leadership decides from. Full stack on Supabase (Postgres, row-level security, migrations) and Cloudflare, delivered with Claude Code under CI gates, with computer vision where it pays off (face-recognition attendance). I check numbers to the đồng against the source before anyone relies on them. Disciplined and always thinking ahead: I built a company ERP alone in two months while running its payroll. Studying international economics at Foreign Trade University, Hanoi.",
-  vi: "Tôi xây các hệ thống mà doanh nghiệp vận hành hằng ngày: sơ đồ tổ chức và phân quyền, tuyển dụng, chấm công, tính lương và báo cáo cho Ban Giám đốc ra quyết định. Làm trọn từ cơ sở dữ liệu đến giao diện trên Supabase (Postgres, phân quyền theo dòng, migration) và Cloudflare, phát triển bằng Claude Code với kiểm tra tự động trước mỗi lần đưa lên; ứng dụng thị giác máy tính khi có lợi (chấm công nhận diện khuôn mặt). Mọi con số được đối chiếu đến từng đồng với nguồn trước khi đưa ra dùng. Kỷ luật cao và không ngừng suy nghĩ cải tiến: một mình xây ERP cho công ty trong hai tháng song song với phụ trách bảng lương. Đang học Kinh tế quốc tế tại Đại học Ngoại thương, Hà Nội.",
+  en: "I design, build and run the systems a business operates on: people and records, face-recognition attendance, recruitment and payroll. Built alone on Supabase and Cloudflare with Claude Code, under tests and CI gates. Three of my systems have run real companies: Ops Platform and Kwook-career at Kwook, and Mau Heritage Hub, which Mau Heritage rents from me and runs its stores on. I write the procedures as well as the software, and check numbers to the đồng. Disciplined and always thinking ahead. Studying international economics at Foreign Trade University, Hanoi.",
+  vi: "Tôi thiết kế, xây dựng và vận hành các hệ thống mà doanh nghiệp chạy hằng ngày: nhân sự và hồ sơ, chấm công nhận diện khuôn mặt, tuyển dụng và tiền lương. Một mình xây dựng trên Supabase và Cloudflare bằng Claude Code, với kiểm thử và kiểm tra tự động. Ba hệ thống của tôi đã vận hành doanh nghiệp thật: Ops Platform và Kwook-career tại Kwook, và Mau Heritage Hub, được Mau Heritage thuê để vận hành chuỗi cửa hàng. Tôi viết cả quy trình lẫn phần mềm, và đối chiếu số liệu đến từng đồng. Kỷ luật cao và luôn suy nghĩ trước. Đang học Kinh tế quốc tế tại Đại học Ngoại thương, Hà Nội.",
 };
 
 // Traits shown on the CV.
@@ -68,69 +68,103 @@ export interface CvWork {
 }
 
 // Selected work for the CV. Private systems are described, never linked.
-// Employers stay unnamed until they agree to be named.
+// Employers are named; their internal data and figures never appear.
 export const cvWork: CvWork[] = [
   {
     title: {
-      en: "Operations system (ERP) — food manufacturer",
-      vi: "Hệ thống vận hành (ERP) — công ty sản xuất thực phẩm",
+      en: "Ops Platform — run a company from one configurable app",
+      vi: "Ops Platform — vận hành doanh nghiệp trên một ứng dụng tự cấu hình",
     },
     status: {
-      en: "In production; still expanding",
-      vi: "Đang chạy thực tế; tiếp tục mở rộng",
+      en: "Used daily at Kwook, Sep – Nov 2026; mine, still developing",
+      vi: "Dùng hằng ngày tại Kwook, 09–11/2026; của tôi, đang phát triển tiếp",
     },
     points: [
       {
-        en: "Attendance in production: face-recognition check-in/out from door cameras, the rules that decide what counts as a check-in or check-out, and attendance statistics; every correction logged with who and why.",
-        vi: "Chấm công đang chạy thực tế: check-in/out bằng nhận diện khuôn mặt qua camera cửa, quy tắc xác định thế nào là check-in/check-out, và thống kê chấm công; mọi chỉnh sửa lưu người sửa và lý do.",
+        en: "At Kwook, HR and I ran employee profiles on it, kept forms, files and regulations as records, and tracked each asset against the employee holding it.",
+        vi: "Tại Kwook, bộ phận nhân sự và tôi quản lý hồ sơ nhân viên trên đó, lưu biểu mẫu, tài liệu và quy chế của công ty thành hồ sơ, và theo dõi từng tài sản gắn với người đang giữ.",
       },
       {
-        en: "Configurable records: admins add fields and record types from inside the app, so a new process becomes a setting, not a software project.",
-        vi: "Hồ sơ cấu hình được: quản trị viên tự thêm trường và loại hồ sơ ngay trong ứng dụng; quy trình mới là một thiết lập, không phải một dự án phần mềm.",
+        en: "Configured, not rewritten: an org creates its own record types and fields (files, formulas, conditional fields), lifecycles with guarded transitions, links between any records, document numbers and required documents, all inside the app.",
+        vi: "Cấu hình thay vì viết lại: doanh nghiệp tự tạo loại hồ sơ và trường (tệp, công thức, trường theo điều kiện), vòng đời với điều kiện chuyển bước, liên kết giữa mọi hồ sơ, số văn bản và giấy tờ bắt buộc, ngay trong ứng dụng.",
       },
       {
-        en: "Fully customisable, extensible privilege system: privileges granted to jobs and positions on an org chart of any depth, one check used by every policy and screen.",
-        vi: "Hệ thống phân quyền tùy biến và mở rộng hoàn toàn: quyền cấp cho chức danh và vị trí trên sơ đồ tổ chức nhiều cấp, mọi chính sách và màn hình dùng chung một hàm kiểm tra.",
+        en: "Face-recognition attendance end to end: a phone becomes a door camera when a manager scans its QR, with no account or password; a person enrols with a three-pose scan that proves a live head; door events become check-ins and check-outs, every correction logged.",
+        vi: "Chấm công khuôn mặt trọn vẹn: điện thoại thành camera cửa khi quản lý quét mã QR, không cần tài khoản hay mật khẩu; nhân viên đăng ký bằng quét ba góc kèm kiểm tra người thật; sự kiện ở cửa thành check-in/check-out, mọi chỉnh sửa được ghi lại.",
       },
       {
-        en: "Streamlined recruitment: public job pages → applications with automatic scoring → candidates book their own interview → appointment to a position → onboarding, with each person's data carried from first application to employee record, never typed twice.",
-        vi: "Quy trình tuyển dụng liền mạch: trang việc làm công khai → hồ sơ ứng tuyển được chấm điểm tự động → ứng viên tự đặt lịch phỏng vấn → bổ nhiệm vào vị trí → hội nhập, dữ liệu mỗi người đi thẳng từ lúc ứng tuyển đến hồ sơ nhân viên, không nhập lại lần nào.",
+        en: "Authority comes from the org chart: privileges granted to jobs and seats and checked by one function every policy and screen calls, with maker-checker, separation of duties and break-glass.",
+        vi: "Quyền hạn đi theo sơ đồ tổ chức: quyền cấp cho chức danh và vị trí, mọi chính sách và màn hình dùng chung một hàm kiểm tra, có duyệt hai người, tách nhiệm vụ xung đột và quyền khẩn cấp.",
       },
       {
-        en: "Self-service sign-up kiosk for low-tech staff; any phone becomes a camera by scanning a QR.",
-        vi: "Kiosk tự đăng ký cho nhân sự ít dùng công nghệ; điện thoại bất kỳ thành camera bằng quét QR.",
-      },
-      {
-        en: "Deny-by-default row-level security, schema only as migrations, an isolated Supabase branch and Cloudflare preview for every pull request, full audit log.",
-        vi: "Phân quyền theo dòng mặc định từ chối, cấu trúc dữ liệu chỉ qua migration, mỗi pull request có nhánh Supabase và bản xem trước Cloudflare riêng, nhật ký kiểm toán đầy đủ.",
+        en: "108 shipped roadmap steps and 441 test files; onboarding a 10,000-person org proven in CI; deny-by-default row-level security; nothing deleted, with retention, legal hold and erasure.",
+        vi: "108 hạng mục đã hoàn thành và 441 tệp kiểm thử; nạp dữ liệu doanh nghiệp 10.000 người đã chứng minh trong CI; phân quyền theo dòng mặc định từ chối; không xóa dữ liệu, có lưu trữ theo hạn, phong tỏa pháp lý và xóa theo yêu cầu.",
       },
     ],
     discuss: [
       {
-        en: "How the privilege system is modelled so new roles and rules need no code",
-        vi: "Cách mô hình hệ thống phân quyền để thêm vai trò, quy tắc mới mà không cần viết code",
+        en: "How an org adds a new kind of record, with its own fields and rules, without code",
+        vi: "Cách doanh nghiệp thêm loại hồ sơ mới, với trường và quy tắc riêng, không cần code",
       },
       {
-        en: "The rules that turn raw door-camera events into check-ins, check-outs and attendance statistics",
-        vi: "Quy tắc biến dữ liệu camera cửa thành check-in, check-out và thống kê chấm công",
+        en: "From pairing a door camera to a person's check-in: the whole face-recognition flow",
+        vi: "Từ ghép camera cửa đến lượt check-in của một người: toàn bộ luồng nhận diện khuôn mặt",
       },
       {
-        en: "The recruitment-to-onboarding data flow, end to end",
-        vi: "Luồng dữ liệu tuyển dụng đến hội nhập, từ đầu đến cuối",
+        en: "How the privilege model keeps every power traceable to a seat on the org chart",
+        vi: "Cách mô hình phân quyền giữ mọi quyền hạn truy được về một vị trí trên sơ đồ tổ chức",
       },
       {
-        en: "A live walkthrough of the running system",
-        vi: "Trình diễn trực tiếp hệ thống đang chạy",
+        en: "A live walkthrough on demo data",
+        vi: "Trình diễn trực tiếp trên dữ liệu mẫu",
       },
     ],
     tags: [
       "Supabase",
       "Postgres RLS",
+      "Edge Functions",
       "Cloudflare Workers",
       "React",
       "TypeScript",
-      "Face recognition",
-      "GitHub Actions",
+      "ONNX face recognition",
+    ],
+  },
+  {
+    title: {
+      en: "Kwook-career — recruitment run from a Telegram bot",
+      vi: "Kwook-career — tuyển dụng vận hành qua bot Telegram",
+    },
+    status: { en: "In production", vi: "Đang chạy thực tế" },
+    points: [
+      {
+        en: "Standardised Kwook's hiring: from a brief the bot drafts the post, publishes it to the Facebook Page, answers comments and collects CVs (files or photos) on the jobs website.",
+        vi: "Chuẩn hóa tuyển dụng tại Kwook: từ một mô tả ngắn, bot soạn tin tuyển dụng, đăng lên Fanpage, trả lời bình luận và nhận hồ sơ, CV (tệp hoặc ảnh chụp) qua trang việc làm.",
+      },
+      {
+        en: "Ranks every CV line by line against the job's checklist, quoting the CV; fixed rules, not the AI, sort candidates into Call / Consider / Reject, so the same CV always gets the same result.",
+        vi: "Chấm từng CV theo từng tiêu chí của vị trí, trích dẫn đúng câu trong CV; quy tắc cố định, không phải AI, xếp ứng viên vào Nên gọi / Cân nhắc / Loại, nên cùng một CV luôn ra cùng một kết quả.",
+      },
+      {
+        en: "Schedules interviews (candidates pick a time from an email link, with reminders), fills contracts from the company's own Word forms with legal pay floors enforced, and deletes candidates' data on a schedule.",
+        vi: "Xếp lịch phỏng vấn (ứng viên tự chọn giờ qua email, có nhắc lịch), điền hợp đồng từ mẫu Word của công ty với mức lương tối thiểu theo luật được kiểm tra, và tự xóa dữ liệu ứng viên theo hạn.",
+      },
+    ],
+    discuss: [
+      {
+        en: "How CV ranking stays consistent and explainable when an AI reads the CV",
+        vi: "Cách giữ việc xếp hạng CV nhất quán và giải thích được khi AI đọc CV",
+      },
+      {
+        en: "A walkthrough of the bot, from posting a job to an offer",
+        vi: "Trình diễn bot, từ đăng tin đến gửi thư mời nhận việc",
+      },
+    ],
+    tags: [
+      "Telegram Bot API",
+      "Supabase Edge Functions",
+      "LLM",
+      "Make",
+      "Cloudflare Pages",
     ],
   },
   {
@@ -139,13 +173,17 @@ export const cvWork: CvWork[] = [
       vi: "Mau Heritage Hub — vận hành cửa hàng & tiền lương",
     },
     status: {
-      en: "Internal app, built as manager",
-      vi: "Ứng dụng nội bộ, xây khi làm quản lý",
+      en: "My product, rented to Mau Heritage; in production",
+      vi: "Sản phẩm của tôi, Mau Heritage đang thuê; đang chạy thực tế",
     },
     points: [
       {
-        en: "Staff phones: shift sign-up, face + location check-in, end-of-day cash logs, payslips. Owner: pay rules (KPI, meals, night/overtime/holiday pay at Labour Code minimums) and a monthly pay run with arrears. Face data only with consent (Law 91/2025); nightly encrypted backups; every migration replayed in tests.",
-        vi: "Trên điện thoại nhân viên: đăng ký ca, chấm công khuôn mặt + vị trí, sổ tiền cuối ngày, phiếu lương. Chủ cửa hàng: quy tắc lương (KPI, ăn ca, làm đêm/tăng ca/lễ theo mức tối thiểu của BLLĐ) và kỳ trả lương có truy lĩnh. Dữ liệu khuôn mặt chỉ khi có đồng ý (Luật 91/2025); sao lưu mã hóa hằng đêm; kiểm thử chạy lại mọi migration.",
+        en: "Staff need no account: a profile opens by face or code and PIN on their phone, for shift sign-up, face and location check-in, end-of-day cash logs and payslips.",
+        vi: "Nhân viên không cần tài khoản: mở hồ sơ bằng khuôn mặt hoặc mã và PIN trên điện thoại để đăng ký ca, chấm công khuôn mặt và vị trí, nhập sổ tiền cuối ngày và xem phiếu lương.",
+      },
+      {
+        en: "The owner configures pay rules (KPI, meals, night, overtime and holiday pay at Labour Code minimums) and runs the monthly payroll with arrears; face data only with consent (Law 91/2025); nightly encrypted backups; every migration replayed in tests.",
+        vi: "Chủ cửa hàng tự cấu hình quy tắc lương (KPI, ăn ca, làm đêm, tăng ca, ngày lễ theo mức tối thiểu của BLLĐ) và chạy kỳ lương có truy lĩnh; dữ liệu khuôn mặt chỉ khi có đồng ý (Luật 91/2025); sao lưu mã hóa hằng đêm; kiểm thử chạy lại mọi migration.",
       },
     ],
     discuss: [
@@ -154,53 +192,11 @@ export const cvWork: CvWork[] = [
         vi: "Bộ quy tắc lương: KPI, làm đêm, tăng ca, ngày lễ và truy lĩnh",
       },
       {
-        en: "Face data handling under Law 91/2025: consent, withdrawal, backups",
-        vi: "Xử lý dữ liệu khuôn mặt theo Luật 91/2025: đồng ý, rút lại, sao lưu",
-      },
-      {
         en: "How a non-technical owner configures everything in the app",
         vi: "Cách chủ cửa hàng không rành kỹ thuật tự cấu hình mọi thứ trong ứng dụng",
       },
     ],
     tags: ["Supabase", "Cloudflare Pages", "PWA", "Playwright", "i18n"],
-  },
-  {
-    title: {
-      en: "Payroll standard for 79 staff in 10 departments",
-      vi: "Chuẩn hóa bảng lương cho 79 nhân sự, 10 bộ phận",
-    },
-    status: {
-      en: "Built and verified on September data",
-      vi: "Đã xây dựng và kiểm chứng trên số liệu tháng 9",
-    },
-    points: [
-      {
-        en: "Replaced hand-edited formulas with one formula per column driven by the month's calendar; an independent Python model matched the workbook on all 2,212 checked cells across three test months.",
-        vi: "Thay công thức sửa tay bằng một công thức cho mỗi cột theo lịch của tháng; mô hình Python độc lập khớp bảng tính trên toàn bộ 2.212 ô kiểm tra qua ba tháng thử.",
-      },
-      {
-        en: "Explained all 349 numbers that changed from the old file, and traced every payslip number to its source cell (2,284 automated checks) for leadership sign-off.",
-        vi: "Giải trình toàn bộ 349 con số thay đổi so với file cũ và truy mọi số trên phiếu lương về ô nguồn (2.284 phép kiểm tự động) để Ban Giám đốc duyệt.",
-      },
-    ],
-    discuss: [
-      {
-        en: "The method and the reconciliation that matched every cell",
-        vi: "Phương pháp và cách đối chiếu khớp từng ô",
-      },
-      {
-        en: "Anonymised sample payslips with every number traced to its source",
-        vi: "Phiếu lương mẫu ẩn danh, mỗi con số truy được về nguồn",
-      },
-    ],
-    tags: [
-      "Excel",
-      "Python",
-      "openpyxl",
-      "Labour Code",
-      "Social insurance",
-      "PIT",
-    ],
   },
   {
     title: {
@@ -252,14 +248,6 @@ export const cvMore: { title: string; line: T; url: string }[] = [
       vi: "Bộ máy tính cho nhà sáng lập SaaS (runway, burn multiple, LTV/CAC, pha loãng cổ phần), chia sẻ kết quả qua đường link, công thức có trích nguồn.",
     },
     url: "https://saasmath.pages.dev",
-  },
-  {
-    title: "Browser tools: PDF merger · format converter · regex tester",
-    line: {
-      en: "Files and data never leave the tab (strict CSP); state lives in the URL so a link reproduces the exact view.",
-      vi: "Tệp và dữ liệu không rời khỏi trình duyệt (CSP chặt); trạng thái nằm trong đường link nên mở link là thấy đúng kết quả.",
-    },
-    url: "https://github.com/nguyendinhngoc23052006",
   },
 ];
 
@@ -356,12 +344,12 @@ export const navLinks = [
 
 export const stats = [
   {
-    number: "2 months",
-    label: "To build a company ERP alone, now in production",
+    number: "3 systems",
+    label: "Built alone and run by real companies",
   },
   {
-    number: "2,212 / 2,212",
-    label: "Payroll cells matching an independent check",
+    number: "108 steps",
+    label: "Shipped on Ops Platform, covered by 441 test files",
   },
   {
     number: "123 people",
@@ -496,19 +484,16 @@ export const experience: {
       en: "AI Solutions & SOP Standardization Specialist",
       vi: "Chuyên viên Giải pháp AI & Chuẩn hóa quy trình (SOP)",
     },
-    organization: {
-      en: "Food manufacturer, Bắc Ninh",
-      vi: "Công ty sản xuất thực phẩm, Bắc Ninh",
-    },
-    period: { en: "Sep 2026 – present", vi: "09/2026 – nay" },
+    organization: { en: "Kwook, Bắc Ninh", vi: "Kwook, Bắc Ninh" },
+    period: { en: "Sep – Nov 2026", vi: "09/2026 – 11/2026" },
     points: [
       {
-        en: "Single-handedly designed and built the company's operations system (ERP) in two months — now in production for attendance, recruitment-to-onboarding, configurable records and privileges — and keep extending it.",
-        vi: "Một mình thiết kế và xây dựng hệ thống vận hành (ERP) của công ty trong hai tháng — đã chạy thực tế cho chấm công, tuyển dụng đến hội nhập, hồ sơ cấu hình được và phân quyền — và đang tiếp tục mở rộng.",
+        en: "Built Ops Platform and Kwook-career alone (below): HR and I ran employee profiles, records and asset tracking with face-recognition attendance on Ops Platform, and hiring was standardised on Kwook-career.",
+        vi: "Một mình xây dựng Ops Platform và Kwook-career (bên dưới): bộ phận nhân sự và tôi quản lý hồ sơ nhân viên, hồ sơ tài liệu và tài sản kèm chấm công khuôn mặt trên Ops Platform, còn tuyển dụng được chuẩn hóa trên Kwook-career.",
       },
       {
-        en: "Standardised company procedures into written rules and tools: the payroll regulation and method, checked to the đồng; HR records and asset-handover documents.",
-        vi: "Chuẩn hóa quy trình của công ty thành quy chế và công cụ: quy chế và cách tính lương, đối chiếu đến từng đồng; hồ sơ nhân sự và biên bản bàn giao tài sản.",
+        en: "Standardised company procedures into written rules and tools: the salary regulation and payroll method checked to the đồng, the meal-allowance rule, asset handover and HR records.",
+        vi: "Chuẩn hóa quy trình của công ty thành quy chế và công cụ: quy chế lương và cách tính lương đối chiếu đến từng đồng, quy định ăn ca, bàn giao tài sản và hồ sơ nhân sự.",
       },
     ],
   },
@@ -521,8 +506,8 @@ export const experience: {
     period: { en: "Aug 2025 – Nov 2026", vi: "08/2025 – 11/2026" },
     points: [
       {
-        en: "Ran the stores; standardised how they work (shifts, attendance, daily cash, pay rules, monthly pay run), then designed and built Mau Heritage Hub, the internal app those procedures run on.",
-        vi: "Vận hành cửa hàng và chuẩn hóa cách làm việc (ca làm, chấm công, tiền mặt cuối ngày, quy tắc lương, kỳ trả lương), rồi thiết kế và xây dựng Mau Heritage Hub, ứng dụng nội bộ để vận hành các quy trình đó.",
+        en: "Ran the stores and standardised how they work (shifts, attendance, daily cash, pay rules, the monthly pay run), then built Mau Heritage Hub to run them; Mau Heritage now rents it from me.",
+        vi: "Vận hành cửa hàng và chuẩn hóa cách làm việc (ca làm, chấm công, tiền mặt cuối ngày, quy tắc lương, kỳ trả lương), rồi xây dựng Mau Heritage Hub để vận hành; Mau Heritage hiện thuê lại từ tôi.",
       },
     ],
   },
