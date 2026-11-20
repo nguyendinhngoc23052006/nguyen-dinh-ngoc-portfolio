@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  aboutIntro,
   contactInfo,
   cvMore,
   cvSkills,
@@ -8,7 +9,9 @@ import {
   cvWork,
   education,
   experience,
+  heroSubhead,
   inTheWorks,
+  stats,
   type T,
   traits,
 } from "./portfolio";
@@ -58,5 +61,32 @@ describe("CV content", () => {
 
   it("names a reachable contact", () => {
     expect(contactInfo.email).toMatch(/^[^@\s]+@[^@\s]+$/);
+  });
+
+  // Kwook's confidentiality agreement covers its internal figures, and the
+  // user left Kwook in Nov 2026: neither may creep back into a public page.
+  it("keeps Kwook's internal figures off and its work in the past", () => {
+    const all = [
+      heroSubhead,
+      aboutIntro,
+      ...stats.flatMap((s) => [s.number, s.label]),
+      ...texts.flatMap((t) => [t.en, t.vi]),
+    ].join("\n");
+    for (const figure of [
+      "79 staff",
+      "79 nhân",
+      "10 departments",
+      "10 bộ phận",
+      "2,212",
+      "2.212",
+      "349",
+      "2,284",
+      "2.284",
+      "KW-",
+    ])
+      expect(all).not.toContain(figure);
+    const kwook = experience.find((e) => e.organization.en.startsWith("Kwook"));
+    expect(kwook?.period.en).not.toMatch(/present/i);
+    expect(kwook?.period.vi).not.toMatch(/nay/);
   });
 });

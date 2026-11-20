@@ -301,8 +301,15 @@ details.faq-item .faq-answer {
     padding: 0;
     margin: 0;
   }
-  .cv-page .cv-block {
+  /* A block may continue on the next page between bullets, so one long
+     project never leaves half a page empty; a bullet and a heading row never split. */
+  .cv-page .cv-block li,
+  .cv-page .cv-block > p,
+  .cv-page .cv-block > div:first-child {
     break-inside: avoid;
+  }
+  .cv-page .cv-block > div:first-child {
+    break-after: avoid;
   }
   .cv-page section.mt-6 {
     margin-top: 3.5mm;
