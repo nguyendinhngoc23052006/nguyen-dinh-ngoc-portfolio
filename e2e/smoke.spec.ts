@@ -4,7 +4,7 @@ import { HEALTH_PATH, HOME_PATH } from "./_mocks";
 test("home page has correct title", async ({ page }) => {
   await page.goto(HOME_PATH);
   await expect(page).toHaveTitle(
-    "Jade — Internal Systems Developer | Nguyen Dinh Ngoc",
+    "Jade — Full-stack Developer | Nguyen Dinh Ngoc",
   );
 });
 
