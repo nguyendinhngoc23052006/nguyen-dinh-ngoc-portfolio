@@ -4,9 +4,10 @@ import metrics from "./metrics.json";
 import * as portfolio from "./portfolio";
 import {
   aboutIntro,
+  availability,
   caseStudies,
   contactInfo,
-  cvMore,
+  cvMethod,
   cvSkills,
   cvSummary,
   cvTitle,
@@ -17,7 +18,9 @@ import {
   howIVerify,
   howIWork,
   inTheWorks,
+  languages,
   n,
+  projects,
   shipRules,
   stats,
   type T,
@@ -29,9 +32,13 @@ import {
 const texts: T[] = [
   cvTitle,
   cvSummary,
+  availability,
+  languages,
+  ...cvMethod.flatMap((m) => [m.label, m.text]),
   ...traits.flatMap((t) => [t.label, t.note]),
   ...caseStudies.flatMap((c) => [
     c.tagline,
+    ...c.highlights,
     c.status,
     c.problem,
     c.idea,
@@ -43,7 +50,7 @@ const texts: T[] = [
     ...(c.model?.layers.flatMap((l) => [l.name, ...l.blocks]) ?? []),
   ]),
   ...inTheWorks.flatMap((x) => [x.title, x.line]),
-  ...cvMore.map((m) => m.line),
+  ...projects.map((p) => p.line),
   ...cvSkills.map((s) => s.group),
   ...education.flatMap((e) => [e.degree, e.institution, e.location, e.period]),
   ...experience.flatMap((e) => [e.role, e.organization, e.period, ...e.points]),
@@ -64,6 +71,9 @@ const ALLOWED_FIGURES = new Set([
   "09",
   "11",
   "2026", // employment periods, e.g. 09/2026 – 11/2026
+  "8.0", // IELTS band, owner-stated (April 2023)
+  "2023",
+  "04",
 ]);
 const measuredFigures = { en: new Set<string>(), vi: new Set<string>() };
 (function collect(v: unknown): void {
@@ -71,7 +81,7 @@ const measuredFigures = { en: new Set<string>(), vi: new Set<string>() };
     for (const lang of ["en", "vi"] as const)
       measuredFigures[lang].add(n(v, lang));
   else if (v && typeof v === "object") Object.values(v).forEach(collect);
-})({ systems: metrics.systems, totals: metrics.totals });
+})(metrics.systems);
 for (const lang of ["en", "vi"] as const)
   measuredFigures[lang].add(n(Object.keys(metrics.systems).length, lang));
 
@@ -111,7 +121,7 @@ describe("CV content", () => {
 
   it("links only to public https pages", () => {
     const urls = [
-      ...cvMore.flatMap((m) => [m.links.live, m.links.source]),
+      ...projects.flatMap((p) => [p.url, p.source]),
       contactInfo.github,
     ].filter((u): u is string => Boolean(u));
     for (const u of urls) expect(u).toMatch(/^https:\/\//);
@@ -141,7 +151,7 @@ describe("CV content", () => {
         ).toBe(true);
   });
 
-  it("publishes only counts and the measurement date in metrics.json", () => {
+  it("publishes only design figures and the measurement date in metrics.json", () => {
     expect(metrics.measuredOn).toMatch(/^\d{4}-\d{2}-\d{2}$/);
     (function check(v: unknown, path: string): void {
       if (v === null || typeof v === "number") return;
@@ -152,11 +162,9 @@ describe("CV content", () => {
       throw new Error(
         `${path} is ${JSON.stringify(v)}: only counts may be published`,
       );
-    })({ systems: metrics.systems, totals: metrics.totals }, "metrics");
-    const s = metrics.systems;
-    expect(s.opsPlatform.roadmap).not.toBeNull();
-    expect(s.mauHeritageHub.history).not.toBeNull();
-    expect(s.kwookCareer.history).not.toBeNull();
+    })(metrics.systems, "systems");
+    for (const [name, system] of Object.entries(metrics.systems))
+      expect(Object.keys(system), name).toEqual(["design"]);
   });
 
   it("never names the private orchestration setup", () => {
@@ -169,8 +177,8 @@ describe("CV content", () => {
   it("links every public project's source and no private system", () => {
     for (const c of caseStudies)
       expect(JSON.stringify(c), c.name).not.toMatch(/https?:\/\//);
-    for (const m of cvMore)
-      expect(m.links.source).toMatch(/^https:\/\/github\.com\//);
+    for (const p of projects)
+      expect(p.source, p.title).toMatch(/^https:\/\/github\.com\//);
   });
 
   // Every design claim names where in its system's own documents it comes
@@ -180,6 +188,7 @@ describe("CV content", () => {
       for (const claim of [
         c.problem,
         c.idea,
+        ...c.highlights,
         ...c.decisions.map((d) => d.text),
         ...c.built,
         ...c.proof,
@@ -192,9 +201,21 @@ describe("CV content", () => {
       if (c.model) expect(c.model.src, c.name).toMatch(/^goals §/);
   });
 
-  // The summary says "the only human author"; the measurement must agree.
-  it("has exactly one human author across the systems", () => {
-    expect(metrics.totals.humanAuthors).toBe(1);
+  // Recruiters read what was built and what it did, not how many commits it
+  // took: process statistics never appear on the CV or the site.
+  it("shows no process statistics", () => {
+    const all = [
+      heroSubhead,
+      aboutIntro,
+      ...stats.flatMap((s) => [s.number, s.label]),
+      ...projects.map((p) => p.desc),
+      ...texts.flatMap((t) => [t.en, t.vi]),
+    ];
+    // A number, at most two words, then a process word ("212 database test
+    // suites", "1.675 ca kiểm thử"); \b is ASCII-only, so end on a non-letter.
+    const stat =
+      /\d[\d.,]*\s+(?:[\p{L}-]+\s+){0,2}?(?:commits?|pull requests?|PRs?|merges?|merged|tests?|test (?:cases?|suites?|files?)|migrations?|roadmap (?:items?|steps?)|workflows?|skills?|review agents?|lines of code|ca kiểm thử|bộ kiểm thử|hạng mục|agent rà soát)(?!\p{L})/iu;
+    for (const text of all) expect(text, text).not.toMatch(stat);
   });
 
   it("names a reachable contact", () => {

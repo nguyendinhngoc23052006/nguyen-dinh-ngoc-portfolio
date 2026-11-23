@@ -15,17 +15,23 @@ const LAUNCH_OPTS = existsSync(PREINSTALLED_CHROMIUM)
 const PORT = 4322;
 // One PDF per language, both rendered from the same CV entries.
 const TARGETS = [
-  { url: `http://127.0.0.1:${PORT}/cv/`, out: "dist/client/jade-cv.pdf" },
-  { url: `http://127.0.0.1:${PORT}/cv/vi/`, out: "dist/client/jade-cv-vi.pdf" },
+  {
+    url: `http://127.0.0.1:${PORT}/cv/`,
+    out: "dist/client/Nguyen-Dinh-Ngoc-CV-EN.pdf",
+  },
+  {
+    url: `http://127.0.0.1:${PORT}/cv/vi/`,
+    out: "dist/client/Nguyen-Dinh-Ngoc-CV-VI.pdf",
+  },
 ];
 
 // A4 = 297mm tall. Print margins: MARGIN_MM below, the same as globals.css @page.
 // Usable content height per page = 297mm minus both margins; at 96 CSS pixels
 // per inch that is about 3.78 CSS px per mm.
 // We warn early (browser-side) and hard-fail late (page count in the emitted PDF).
-// Four-page ceiling: room for the work, the method, verification and shipping;
-// a CV that keeps growing past four isn't.
-const MAX_PAGES = 4;
+// Two-page ceiling: recruiters read one to two pages; the depth lives on the
+// case-study pages the CV links to.
+const MAX_PAGES = 2;
 const MARGIN_MM = { y: 10, x: 14 };
 const USABLE_HEIGHT_CSS_PX = Math.round(
   MAX_PAGES * (297 - 2 * MARGIN_MM.y) * 3.7795,

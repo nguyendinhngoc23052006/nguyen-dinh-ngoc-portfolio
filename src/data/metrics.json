@@ -2,9 +2,6 @@
   "measuredOn": "2026-11-23",
   "systems": {
     "opsPlatform": {
-      "testFiles": 224,
-      "testCases": 1675,
-      "sqlTestSuites": 212,
       "design": {
         "faceMatch": {
           "people": 10000,
@@ -30,52 +27,16 @@
         "removalWait": {
           "days": 7
         }
-      },
-      "migrations": 7,
-      "workflowCount": 10,
-      "reviewAgents": 3,
-      "skills": 10,
-      "roadmap": {
-        "done": 112,
-        "open": 183
-      },
-      "history": {
-        "commits": 158,
-        "mergedPullRequests": 11,
-        "days": 11,
-        "humanAuthors": 1,
-        "agentCommits": 146
       }
     },
     "mauHeritageHub": {
-      "testFiles": 39,
-      "testCases": 253,
-      "sqlTestSuites": 33,
       "design": {
         "compensationCap": {
           "percent": 30
         }
-      },
-      "migrations": 42,
-      "workflowCount": 2,
-      "reviewAgents": null,
-      "skills": 10,
-      "roadmap": {
-        "done": 67,
-        "open": 9
-      },
-      "history": {
-        "commits": 180,
-        "mergedPullRequests": 46,
-        "days": 51,
-        "humanAuthors": 1,
-        "agentCommits": 134
       }
     },
     "kwookCareer": {
-      "testFiles": 45,
-      "testCases": 258,
-      "sqlTestSuites": 0,
       "design": {
         "rejectedCvKept": {
           "days": 14
@@ -89,28 +50,7 @@
         "probationPay": {
           "percent": 85
         }
-      },
-      "migrations": 32,
-      "workflowCount": 1,
-      "reviewAgents": null,
-      "skills": 0,
-      "roadmap": {
-        "done": 63,
-        "open": 0
-      },
-      "history": {
-        "commits": 201,
-        "mergedPullRequests": 89,
-        "days": 32,
-        "humanAuthors": 1,
-        "agentCommits": 112
       }
     }
-  },
-  "totals": {
-    "commits": 539,
-    "agentCommits": 392,
-    "mergedPullRequests": 146,
-    "humanAuthors": 1
   }
 }

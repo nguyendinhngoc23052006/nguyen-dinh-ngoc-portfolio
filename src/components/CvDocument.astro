@@ -3,26 +3,24 @@
 // biome-ignore-all lint/correctness/noUnusedVariables: constants used in the Astro template below the frontmatter fence, which biome cannot see
 // The CV in one language. /cv renders it in English, /cv/vi in Vietnamese;
 // both read the same entries in src/data/portfolio.ts, so they cannot drift.
-// The 4-page ceiling is enforced at build time by scripts/generate-cv-pdf.mjs.
+// The 2-page ceiling is enforced at build time by scripts/generate-cv-pdf.mjs.
+// Order follows how recruiters read: who, what I do, where I worked, what I
+// built, how, then skills and education. Depth lives on the case-study pages.
 import {
+  availability,
   caseStudies,
   contactInfo,
-  cvMore,
+  cvMethod,
   cvSkills,
   cvSummary,
   cvTitle,
   education,
   experience,
-  howIShip,
-  howIVerify,
-  howIWork,
   type Lang,
-  measuredOn,
+  languages,
+  projects,
   SITE_URL,
-  shipRules,
-  traits,
 } from "../data/portfolio";
-import CaseStudyBody from "./CaseStudyBody.astro";
 import "../styles/globals.css";
 
 interface Props {
@@ -35,53 +33,45 @@ const L = {
     download: "Download PDF",
     other: "Tiếng Việt",
     otherHref: "/cv/vi",
-    pdf: "/jade-cv.pdf",
+    pdf: "/Nguyen-Dinh-Ngoc-CV-EN.pdf",
     pdfName: "Nguyen-Dinh-Ngoc-CV-EN.pdf",
     summary: "Summary",
-    caseStudy: "Case study",
-    fullCase: "Details",
-    more: "More projects",
     experience: "Experience",
-    education: "Education",
+    systems: "Systems I solo-developed",
+    method: "How I build",
+    projects: "Public projects",
     skills: "Skills",
+    education: "Education & languages",
+    languages: "Languages",
     footer: "Full portfolio",
     live: "Live",
-    how: "How I work with AI agents",
-    verify: "How I know the agent did what it says",
-    ship: "How I ship",
-    shipAll: "On every system",
-    measured: "Figures measured from the repositories on",
   },
   vi: {
     back: "← Về trang portfolio",
     download: "Tải PDF",
     other: "English",
     otherHref: "/cv",
-    pdf: "/jade-cv-vi.pdf",
+    pdf: "/Nguyen-Dinh-Ngoc-CV-VI.pdf",
     pdfName: "Nguyen-Dinh-Ngoc-CV-VI.pdf",
     summary: "Tóm tắt",
-    caseStudy: "Phân tích hệ thống",
-    fullCase: "Chi tiết",
-    more: "Dự án khác",
     experience: "Kinh nghiệm",
-    education: "Học vấn",
+    systems: "Hệ thống tôi phát triển độc lập",
+    method: "Cách tôi xây dựng",
+    projects: "Dự án công khai",
     skills: "Kỹ năng",
+    education: "Học vấn & ngoại ngữ",
+    languages: "Ngoại ngữ",
     footer: "Portfolio đầy đủ",
-    live: "Trang web",
-    how: "Cách tôi làm việc cùng agent AI",
-    verify: "Cách tôi xác minh agent làm đúng",
-    ship: "Quy trình phát hành",
-    shipAll: "Áp dụng cho mọi hệ thống",
-    measured: "Số liệu đo trực tiếp từ mã nguồn ngày",
+    live: "Web",
   },
 }[lang];
 // Split a text so "[ĐIỀN: …]" placeholders render highlighted.
 const parts = (s: string) => s.split(/(\[ĐIỀN:[^\]]*\])/g).filter(Boolean);
 const isTodo = (s: string) => s.startsWith("[ĐIỀN");
-// Show a link without its scheme; GitHub links as owner/repo.
-const host = (u: string) => u.replace(/^https?:\/\/(github\.com\/)?/, "");
-// The GitHub profile is in the header, so a repository shows by name only.
-const repoName = (u: string) => u.split("/").pop() ?? u;
+// Show a link without its scheme.
+const host = (u: string) => u.replace(/^https?:\/\//, "");
+const caseUrl = (slug: string) =>
+  `${SITE_URL}/work/${slug}${lang === "vi" ? "/vi" : ""}`;
 ---
 
 <!doctype html>
@@ -122,6 +112,7 @@ const repoName = (u: string) => u.split("/").pop() ?? u;
           <p class="mt-1 text-sm text-muted-foreground">
             {contactInfo.location}{contactInfo.phone && <> · <a href={`tel:${contactInfo.phone.replace(/\s/g, "")}`}>{contactInfo.phone}</a></>} · <a href={`mailto:${contactInfo.email}`}>{contactInfo.email}</a> · <a href={contactInfo.github}>github.com/nguyendinhngoc23052006</a> · <a href={SITE_URL}>{SITE_URL.replace("https://", "")}</a>
           </p>
+          <p class="mt-0.5 text-sm font-medium text-accent">{availability[lang]}</p>
         </div>
         <img
           src="/jade-avatar.jpg"
@@ -133,28 +124,11 @@ const repoName = (u: string) => u.split("/").pop() ?? u;
         />
       </header>
 
-      <hr class="my-6 border-border" />
+      <hr class="my-5 border-border" />
 
       <section>
         <h2 class="cv-section-title">{L.summary}</h2>
-        <p class="mt-2 leading-relaxed">{cvSummary[lang]}</p>
-        <dl class="cv-traits cv-dense mt-3 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2">
-          {traits.map((t) => (
-            <div class="cv-block">
-              <dt class="text-sm font-semibold">{t.label[lang]}</dt>
-              <dd class="text-sm leading-snug text-muted-foreground">{t.note[lang]}</dd>
-            </div>
-          ))}
-        </dl>
-      </section>
-
-      <section class="mt-6 cv-dense">
-        <h2 class="cv-section-title">{L.how}</h2>
-        <ol class="cv-points mt-2">
-          {howIWork.map((h) => (
-            <li class="cv-block text-sm leading-snug"><span class="font-semibold">{h.label[lang]}.</span> {h.text[lang]}</li>
-          ))}
-        </ol>
+        <p class="mt-1.5 leading-relaxed">{cvSummary[lang]}</p>
       </section>
 
       <section class="mt-6">
@@ -179,6 +153,58 @@ const repoName = (u: string) => u.split("/").pop() ?? u;
       </section>
 
       <section class="mt-6">
+        <h2 class="cv-section-title">{L.systems}</h2>
+        <div class="mt-2 space-y-3">
+          {caseStudies.map((c) => (
+            <div class="cv-block">
+              <div class="flex items-baseline justify-between gap-4">
+                <h3 class="text-base font-semibold">{c.name}</h3>
+                <a href={caseUrl(c.slug)} class="text-xs text-accent hover:underline shrink-0">{host(caseUrl(c.slug))}</a>
+              </div>
+              <p class="text-xs text-muted-foreground">{c.status[lang]}</p>
+              <ul class="cv-points mt-1">
+                {c.highlights.map((h) => <li class="text-sm leading-snug">{h[lang]}</li>)}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section class="mt-6">
+        <h2 class="cv-section-title">{L.method}</h2>
+        <ul class="cv-points mt-2">
+          {cvMethod.map((m) => (
+            <li class="cv-block text-sm leading-snug"><span class="font-semibold">{m.label[lang]}.</span> {m.text[lang]}</li>
+          ))}
+        </ul>
+      </section>
+
+      <section class="mt-6">
+        <h2 class="cv-section-title">{L.projects}</h2>
+        <ul class="mt-2 space-y-1.5">
+          {projects.map((p) => (
+            <li class="cv-block text-sm leading-snug">
+              <span class="font-semibold">{p.title}.</span>
+              <span> {p.line[lang]}</span>
+              <span class="ml-1 text-xs whitespace-nowrap">
+                {p.url && <><a href={p.url} class="text-accent hover:underline">{L.live} ↗</a> · </>}
+                <a href={p.source} class="text-accent hover:underline">GitHub ↗</a>
+              </span>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section class="mt-6">
+        <h2 class="cv-section-title">{L.skills}</h2>
+        <ul class="mt-2 space-y-0.5">
+          {cvSkills.map(({ group, items }) => (
+            <li class="text-sm leading-snug"><span class="font-semibold">{group[lang]}:</span> <span class="text-muted-foreground">{items.join(" · ")}</span></li>
+          ))}
+        </ul>
+      </section>
+
+      <section class="mt-6">
         <h2 class="cv-section-title">{L.education}</h2>
         <div class="mt-2">
           {education.map((e) => (
@@ -190,72 +216,12 @@ const repoName = (u: string) => u.split("/").pop() ?? u;
               <span class="text-sm text-muted-foreground shrink-0">{e.period[lang]}</span>
             </div>
           ))}
+          <p class="mt-1 text-sm"><span class="font-semibold">{L.languages}:</span> {languages[lang]}</p>
         </div>
       </section>
 
-      {caseStudies.map((c) => (
-        <section class="mt-6 cv-case cv-dense">
-          <div class="cv-case-head">
-          <h2 class="cv-section-title">{L.caseStudy}: {c.name}</h2>
-          <p class="mt-1 font-semibold leading-snug">{c.tagline[lang]}</p>
-          <p class="text-xs text-muted-foreground">
-            {c.status[lang]} · {c.tags.join(" · ")} · {L.fullCase}: <a href={`${SITE_URL}/work/${c.slug}${lang === "vi" ? "/vi" : ""}`} class="text-accent hover:underline">{`${SITE_URL.replace("https://", "")}/work/${c.slug}${lang === "vi" ? "/vi" : ""}`}</a>
-          </p>
-          </div>
-          <div class="mt-1.5">
-            <CaseStudyBody c={c} lang={lang} />
-          </div>
-        </section>
-      ))}
-
-      <section class="mt-6 cv-dense">
-        <h2 class="cv-section-title">{L.verify}</h2>
-        <ul class="cv-points mt-2">
-          {howIVerify.map((v) => <li class="cv-block text-sm leading-snug">{v[lang]}</li>)}
-        </ul>
-      </section>
-
-      <section class="mt-6 cv-dense">
-        <h2 class="cv-section-title">{L.ship}</h2>
-        <div class="mt-2 space-y-2">
-          {howIShip.map((x) => (
-            <p class="cv-block text-sm leading-snug"><span class="font-semibold">{x.system}.</span> {x.lines.map((l) => l[lang]).join(" ")}</p>
-          ))}
-          <p class="cv-block text-sm leading-snug"><span class="font-semibold">{L.shipAll}.</span> {shipRules.map((l) => l[lang]).join(" ")}</p>
-        </div>
-      </section>
-
-      <section class="mt-6 cv-dense">
-        <h2 class="cv-section-title">{L.more}</h2>
-        <ul class="mt-2 space-y-1.5">
-          {cvMore.map((m) => (
-            <li class="cv-block text-sm leading-snug">
-              <span class="font-semibold">{m.title}.</span>
-              <span> {m.line[lang]}</span>
-              <span class="ml-1 text-xs text-muted-foreground">
-                {m.links.live && <>{L.live} <a href={m.links.live} class="text-accent hover:underline">{host(m.links.live)}</a> · </>}
-                GitHub <a href={m.links.source} class="text-accent hover:underline">{repoName(m.links.source)}</a>
-              </span>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      <section class="mt-6 cv-dense">
-        <h2 class="cv-section-title">{L.skills}</h2>
-        <dl class="cv-skills mt-2 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1.5 text-sm">
-          {cvSkills.map(({ group, items }) => (
-            <div>
-              <dt class="font-semibold">{group[lang]}</dt>
-              <dd class="text-muted-foreground">{items.join(" · ")}</dd>
-            </div>
-          ))}
-        </dl>
-      </section>
-
-      
       <footer class="cv-footer mt-8 pt-3 border-t border-border text-xs text-muted-foreground">
-        {L.footer} · <a href={SITE_URL}>{SITE_URL.replace("https://", "")}</a> · {L.measured} {measuredOn}
+        {L.footer} · <a href={SITE_URL}>{SITE_URL.replace("https://", "")}</a>
       </footer>
     </div>
   </body>

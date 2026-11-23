@@ -14,6 +14,15 @@ export default defineConfig({
   trailingSlash: "never",
 
   output: "server",
+  // The CV PDFs carry the owner's name. The old addresses stay valid for
+  // links already sent to employers.
+  redirects: {
+    "/jade-cv.pdf": { status: 301, destination: "/Nguyen-Dinh-Ngoc-CV-EN.pdf" },
+    "/jade-cv-vi.pdf": {
+      status: 301,
+      destination: "/Nguyen-Dinh-Ngoc-CV-VI.pdf",
+    },
+  },
   adapter: cloudflare({ imageService: "compile" }),
   integrations: [
     react(),

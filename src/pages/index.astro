@@ -4,6 +4,7 @@ import MobileNav from "../components/MobileNav";
 import ThemeToggle from "../components/ThemeToggle";
 import {
   aboutIntro,
+  availability,
   caseStudies,
   contactInfo,
   cvSkills,
@@ -12,7 +13,6 @@ import {
   howIVerify,
   howIWork,
   inTheWorks,
-  measuredOn,
   navLinks,
   projects,
   projectsHeading,
@@ -155,7 +155,7 @@ const jsonLd = JSON.stringify({
         <section id="work" class="border-t border-border/40 py-20 sm:py-28">
           <div class="mx-auto max-w-5xl px-6">
             <p class="section-label">Work</p>
-            <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Systems I designed and built alone</h2>
+            <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Systems I solo-developed</h2>
             <p class="mt-3 max-w-2xl text-muted-foreground">Each began inside a business I worked in. They run on private company data, so each is told as a design: the problem, the model, the decisions, what is built and what proves it.</p>
             <div class="mt-10 grid gap-4 lg:grid-cols-3">
               {caseStudies.map((c) => (
@@ -217,7 +217,6 @@ const jsonLd = JSON.stringify({
               ))}
             </div>
             <p class="mt-4 text-sm text-muted-foreground">On every system: {shipRules.map((r) => r.en).join(" ")}</p>
-            <p class="mt-6 text-xs text-muted-foreground">Figures measured from the repositories on {measuredOn}.</p>
           </div>
         </section>
 
@@ -229,8 +228,9 @@ const jsonLd = JSON.stringify({
             <p class="mt-3 max-w-2xl text-muted-foreground">{projectsSubhead}</p>
 
             <div class="mt-10 grid gap-4 sm:grid-cols-3">
-              {projects.map(({ num, title, desc, tags, status, url, source }) => {
-                const shipped = status === "shipped";
+              {projects.map(({ title, desc, tags, url, source }, i) => {
+                const num = String(i + 1).padStart(2, "0");
+                const shipped = Boolean(url);
                 return (
                   <div
                     class:list={[
@@ -313,7 +313,7 @@ const jsonLd = JSON.stringify({
                 </div>
                 <div>
                   <p class="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">Status</p>
-                  <p class="mt-0.5 text-sm text-accent">Open to full-time roles and projects</p>
+                  <p class="mt-0.5 text-sm text-accent">{availability.en}</p>
                 </div>
                 <div>
                   <p class="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">What I bring</p>
@@ -363,7 +363,7 @@ const jsonLd = JSON.stringify({
             <p class="section-label">Contact</p>
             <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Get in touch</h2>
             <p class="mt-3 text-muted-foreground">
-              Open to full-time roles in Hanoi or remote. Call or email me directly.
+              {availability.en} Based in Hanoi. Call or email me directly.
             </p>
             <ul class="mt-8 space-y-3 text-sm">
               {contactInfo.phone && (

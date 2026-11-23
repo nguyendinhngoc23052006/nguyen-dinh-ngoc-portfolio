@@ -27,7 +27,7 @@ test("responses include security headers", async ({ request }) => {
 test("cv page loads and has download link", async ({ page }) => {
   await page.goto("/cv");
   await expect(page).toHaveTitle(/Jade — CV/);
-  const link = page.locator('a[href="/jade-cv.pdf"]');
+  const link = page.locator('a[href="/Nguyen-Dinh-Ngoc-CV-EN.pdf"]');
   await expect(link).toBeVisible();
   await expect(link).toHaveAttribute("download", /\.pdf$/);
 });
