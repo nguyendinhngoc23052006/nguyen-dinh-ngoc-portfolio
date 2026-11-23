@@ -14,7 +14,10 @@ import { join, resolve } from "node:path";
 
 const base = resolve(process.argv[2] ?? "..");
 const repos = {
-  opsPlatform: { dir: "ops-platform", needs: ["roadmap", "scale", "history"] },
+  opsPlatform: {
+    dir: "ops-platform",
+    needs: ["roadmap", "scale", "history", "reviewAgents"],
+  },
   mauHeritageHub: { dir: "mau-heritage-hub", needs: ["history"] },
   kwookCareer: { dir: "kwook-career", needs: ["history"] },
 };
@@ -48,7 +51,12 @@ const designFacts = {
       /(\d[\d,]*) ended links read a page in about (\d+) ms/,
       ["count", "ms"],
     ],
-    ["quorum", "roadmap", /1 to (\d+) other people's confirmation/, ["max"]],
+    [
+      "quorum",
+      "roadmap",
+      /(\d+) to (\d+) other people's confirmation/,
+      ["min", "max"],
+    ],
     ["breakGlass", "roadmap", /for 1 to (\d+) hours/, ["maxHours"]],
     ["removalWait", "roadmap", /platform's (\d+)-day wait/, ["days"]],
   ],
@@ -110,9 +118,21 @@ function measure(dir, repoKey) {
   const workflowCount = files.filter((f) =>
     /^\.github\/workflows\/[^/]+\.ya?ml$/.test(f),
   ).length;
-  const reviewAgents = files.filter((f) =>
-    /^\.claude\/agents\/[^/]+\.md$/.test(f),
-  ).length;
+  // Review agents: those defined in the repo, plus those whose signed verdicts
+  // the repo keeps (.claude/review/*.json names its reviewer). None found is
+  // "not measured" (null), so a repo that needs this fails instead of showing 0.
+  const reviewerNames = new Set(
+    files
+      .filter((f) => /^\.claude\/agents\/[^/.]+\.md$/.test(f))
+      .map((f) => f.split("/").pop().replace(/\.md$/, "")),
+  );
+  for (const f of files.filter((f) =>
+    /^\.claude\/review\/[^/]+\.json$/.test(f),
+  )) {
+    const name = JSON.parse(show(dir, f)).reviewer;
+    if (typeof name === "string") reviewerNames.add(name);
+  }
+  const reviewAgents = reviewerNames.size || null;
   const skills = files.filter((f) => /(^|\/)SKILL\.md$/.test(f)).length;
 
   const rmPath = "goals-and-roadmap/roadmap.md";
@@ -234,6 +254,11 @@ for (const [key, { dir: name, needs }] of Object.entries(repos)) {
 // and how many different people wrote any of it.
 const sum = (f) =>
   Object.values(out.systems).reduce((a, m) => a + m.history[f], 0);
+// The CV says "the only human author": make a second author impossible to miss.
+if (people.size !== 1)
+  console.warn(
+    `collect-metrics: ${people.size} human authors: ${[...people].join(", ")}`,
+  );
 out.totals = {
   commits: sum("commits"),
   agentCommits: sum("agentCommits"),

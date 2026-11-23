@@ -40,6 +40,7 @@ const texts: T[] = [
     ...c.proof,
     c.notYet,
     ...c.discuss,
+    ...(c.model?.layers.flatMap((l) => [l.name, ...l.blocks]) ?? []),
   ]),
   ...inTheWorks.flatMap((x) => [x.title, x.line]),
   ...cvMore.map((m) => m.line),
@@ -63,7 +64,6 @@ const ALLOWED_FIGURES = new Set([
   "09",
   "11",
   "2026", // employment periods, e.g. 09/2026 – 11/2026
-  "1", // "a quorum of 1 to 9" (the lower bound of a measured range)
 ]);
 const measuredFigures = { en: new Set<string>(), vi: new Set<string>() };
 (function collect(v: unknown): void {
@@ -186,7 +186,16 @@ describe("CV content", () => {
         ...c.proof,
         c.notYet,
       ])
-        expect(claim.src, claim.en).toMatch(/^(goals|roadmap|metrics)\b/);
+        expect(claim.src, claim.en).toMatch(
+          /^(goals (§|\()|roadmap [BCS(]|metrics \(repository\)$)/,
+        );
+    for (const c of caseStudies)
+      if (c.model) expect(c.model.src, c.name).toMatch(/^goals §/);
+  });
+
+  // The summary says "the only human author"; the measurement must agree.
+  it("has exactly one human author across the systems", () => {
+    expect(metrics.totals.humanAuthors).toBe(1);
   });
 
   it("names a reachable contact", () => {

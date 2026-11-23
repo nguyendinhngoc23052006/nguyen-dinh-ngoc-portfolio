@@ -176,13 +176,30 @@ const host = (u: string) => u.replace(/^https?:\/\/(github\.com\/)?/, "");
         </div>
       </section>
 
+      <section class="mt-6">
+        <h2 class="cv-section-title">{L.education}</h2>
+        <div class="mt-2">
+          {education.map((e) => (
+            <div class="flex items-baseline justify-between gap-4">
+              <div>
+                <span class="font-semibold">{e.degree[lang]}</span>
+                <span class="text-sm text-muted-foreground"> · {e.institution[lang]}, {e.location[lang]}</span>
+              </div>
+              <span class="text-sm text-muted-foreground shrink-0">{e.period[lang]}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {caseStudies.map((c) => (
         <section class="mt-6 cv-case cv-dense">
+          <div class="cv-case-head">
           <h2 class="cv-section-title">{L.caseStudy}: {c.name}</h2>
           <p class="mt-1 font-semibold leading-snug">{c.tagline[lang]}</p>
           <p class="text-xs text-muted-foreground">
             {c.status[lang]} · {c.tags.join(" · ")} · {L.fullCase}: <a href={`${SITE_URL}/work/${c.slug}${lang === "vi" ? "/vi" : ""}`} class="text-accent hover:underline">{`${SITE_URL.replace("https://", "")}/work/${c.slug}${lang === "vi" ? "/vi" : ""}`}</a>
           </p>
+          </div>
           <div class="mt-1.5">
             <CaseStudyBody c={c} lang={lang} />
           </div>
@@ -234,21 +251,7 @@ const host = (u: string) => u.replace(/^https?:\/\/(github\.com\/)?/, "");
         </dl>
       </section>
 
-            <section class="mt-6">
-        <h2 class="cv-section-title">{L.education}</h2>
-        <div class="mt-2">
-          {education.map((e) => (
-            <div class="flex items-baseline justify-between gap-4">
-              <div>
-                <span class="font-semibold">{e.degree[lang]}</span>
-                <span class="text-sm text-muted-foreground"> · {e.institution[lang]}, {e.location[lang]}</span>
-              </div>
-              <span class="text-sm text-muted-foreground shrink-0">{e.period[lang]}</span>
-            </div>
-          ))}
-        </div>
-      </section>
-
+      
       <footer class="cv-footer mt-8 pt-3 border-t border-border text-xs text-muted-foreground">
         {L.footer} · <a href={SITE_URL}>{SITE_URL.replace("https://", "")}</a> · {L.measured} {measuredOn}
       </footer>

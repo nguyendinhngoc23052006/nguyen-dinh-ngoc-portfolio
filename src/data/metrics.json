@@ -21,6 +21,7 @@
           "ms": 40
         },
         "quorum": {
+          "min": 1,
           "max": 9
         },
         "breakGlass": {
@@ -32,7 +33,7 @@
       },
       "migrations": 7,
       "workflowCount": 10,
-      "reviewAgents": 0,
+      "reviewAgents": 3,
       "skills": 10,
       "roadmap": {
         "done": 112,
@@ -62,7 +63,7 @@
       },
       "migrations": 42,
       "workflowCount": 2,
-      "reviewAgents": 0,
+      "reviewAgents": null,
       "skills": 10,
       "roadmap": {
         "done": 67,
@@ -97,7 +98,7 @@
       },
       "migrations": 32,
       "workflowCount": 1,
-      "reviewAgents": 0,
+      "reviewAgents": null,
       "skills": 0,
       "roadmap": {
         "done": 63,

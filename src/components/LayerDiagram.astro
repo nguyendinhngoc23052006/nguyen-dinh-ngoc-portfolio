@@ -12,7 +12,7 @@ interface Props {
 const { model, lang } = Astro.props;
 ---
 
-<div class="layer-diagram" role="figure" aria-label={model.layers.map((l) => l.name[lang]).join(", ")}>
+<figure class="layer-diagram">
   {model.layers.map((l) => (
     <div class="layer">
       <p class="layer-name">{l.name[lang]}</p>
@@ -21,7 +21,7 @@ const { model, lang } = Astro.props;
       </ul>
     </div>
   ))}
-</div>
+</figure>
 
 <style>
   .layer-diagram {
