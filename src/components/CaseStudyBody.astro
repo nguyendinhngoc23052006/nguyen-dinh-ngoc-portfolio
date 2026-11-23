@@ -1,0 +1,81 @@
+---
+// biome-ignore-all lint/correctness/noUnusedImports: symbols used in the Astro template below the frontmatter fence, which biome cannot see
+// biome-ignore-all lint/correctness/noUnusedVariables: constants used in the Astro template below the frontmatter fence, which biome cannot see
+// One system told as a design: problem, idea, model, decisions, what is built,
+// what proves it, what is not built yet. The CV and /work/[slug] both render
+// this, so the two cannot say different things.
+import type { CaseStudy, Lang } from "../data/portfolio";
+import LayerDiagram from "./LayerDiagram.astro";
+
+interface Props {
+  c: CaseStudy;
+  lang: Lang;
+}
+const { c, lang } = Astro.props;
+const L = {
+  en: {
+    problem: "The problem",
+    idea: "The idea",
+    model: "The model",
+    decisions: "Design decisions",
+    built: "Built",
+    proof: "Proven",
+  },
+  vi: {
+    problem: "Vấn đề",
+    idea: "Ý tưởng",
+    model: "Mô hình",
+    decisions: "Quyết định thiết kế",
+    built: "Đã xây dựng",
+    proof: "Đã kiểm chứng",
+  },
+}[lang];
+---
+
+<div class="case-study">
+  <p class="text-sm leading-snug"><span class="font-semibold">{L.problem}.</span> {c.problem[lang]}</p>
+  <p class="mt-1 text-sm leading-snug"><span class="font-semibold">{L.idea}.</span> {c.idea[lang]}</p>
+
+  {c.model && (
+    <div class="mt-2">
+      <h3 class="cs-label">{L.model}</h3>
+      <div class="mt-1"><LayerDiagram model={c.model} lang={lang} /></div>
+    </div>
+  )}
+
+  <h3 class="cs-label mt-2">{L.decisions}</h3>
+  <ul class="cv-points mt-0.5">
+    {c.decisions.map((d) => (
+      <li class="text-sm leading-snug"><span class="font-semibold">{d.label[lang]}.</span> {d.text[lang]}</li>
+    ))}
+  </ul>
+
+  <h3 class="cs-label mt-2">{L.built}</h3>
+  <ul class="cv-points mt-0.5">
+    {c.built.map((b) => <li class="text-sm leading-snug">{b[lang]}</li>)}
+  </ul>
+
+  <h3 class="cs-label mt-2">{L.proof}</h3>
+  <ul class="cv-points mt-0.5">
+    {c.proof.map((p) => <li class="text-sm leading-snug">{p[lang]}</li>)}
+  </ul>
+
+  <p class="mt-1.5 text-sm leading-snug text-muted-foreground">{c.notYet[lang]}</p>
+
+  <slot />
+</div>
+
+<style>
+  .cs-label {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  @media print {
+    .cs-label {
+      margin-top: 1mm;
+    }
+  }
+</style>

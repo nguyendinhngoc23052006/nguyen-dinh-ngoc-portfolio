@@ -1,0 +1,56 @@
+---
+// biome-ignore-all lint/correctness/noUnusedImports: symbols used in the Astro template below the frontmatter fence, which biome cannot see
+// biome-ignore-all lint/correctness/noUnusedVariables: constants used in the Astro template below the frontmatter fence, which biome cannot see
+// A system's model as layers of blocks, left to right. Drawn from the
+// case study's `model` in src/data/portfolio.ts, so it cannot drift from it.
+import type { CaseStudy, Lang } from "../data/portfolio";
+
+interface Props {
+  model: NonNullable<CaseStudy["model"]>;
+  lang: Lang;
+}
+const { model, lang } = Astro.props;
+---
+
+<figure class="layer-diagram">
+  {model.layers.map((l) => (
+    <div class="layer">
+      <p class="layer-name">{l.name[lang]}</p>
+      <ul>
+        {l.blocks.map((b) => <li>{b[lang]}</li>)}
+      </ul>
+    </div>
+  ))}
+</figure>
+
+<style>
+  .layer-diagram {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0.375rem;
+  }
+  @media (max-width: 640px) {
+    .layer-diagram { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  .layer {
+    border: 1px solid var(--border, #d4d4d4);
+    border-top: 3px solid var(--accent, #2f6f5e);
+    border-radius: 2px;
+    padding: 0.375rem 0.5rem;
+  }
+  .layer-name {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 0.25rem;
+  }
+  .layer ul { display: flex; flex-direction: column; gap: 0.125rem; }
+  .layer li {
+    font-size: 0.6875rem;
+    line-height: 1.25;
+    color: var(--muted-foreground, #555);
+  }
+  @media print {
+    .layer-diagram { break-inside: avoid; }
+  }
+</style>

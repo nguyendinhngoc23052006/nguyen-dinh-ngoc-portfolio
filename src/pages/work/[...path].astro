@@ -1,0 +1,114 @@
+---
+// biome-ignore-all lint/correctness/noUnusedImports: symbols used in the Astro template below the frontmatter fence, which biome cannot see
+// biome-ignore-all lint/correctness/noUnusedVariables: constants used in the Astro template below the frontmatter fence, which biome cannot see
+// One page per system: /work/<slug> in English, /work/<slug>/vi in
+// Vietnamese, both from the same case study the CV prints.
+export const prerender = true;
+
+import CaseStudyBody from "../../components/CaseStudyBody.astro";
+import {
+  type CaseStudy,
+  caseStudies,
+  type Lang,
+  measuredOn,
+  SITE_URL,
+} from "../../data/portfolio";
+import "../../styles/globals.css";
+
+export function getStaticPaths() {
+  return caseStudies.flatMap((c) => [
+    { params: { path: c.slug }, props: { c, lang: "en" as Lang } },
+    { params: { path: `${c.slug}/vi` }, props: { c, lang: "vi" as Lang } },
+  ]);
+}
+const { c, lang } = Astro.props as { c: CaseStudy; lang: Lang };
+const L = {
+  en: {
+    back: "← Portfolio",
+    other: "Tiếng Việt",
+    otherHref: `/work/${c.slug}/vi`,
+    cv: "CV",
+    cvHref: "/cv",
+    discuss: "I can walk you through",
+    private:
+      "Private: it runs on company data, so there is no public link or code. I demonstrate it on sample data.",
+    measured: "Figures measured from the repository on",
+  },
+  vi: {
+    back: "← Portfolio",
+    other: "English",
+    otherHref: `/work/${c.slug}`,
+    cv: "CV",
+    cvHref: "/cv/vi",
+    discuss: "Tôi có thể trình bày chi tiết",
+    private:
+      "Hệ thống riêng: vận hành trên dữ liệu của doanh nghiệp nên không có đường dẫn hay mã nguồn công khai. Tôi có thể trình diễn trên dữ liệu mẫu.",
+    measured: "Số liệu đo trực tiếp từ mã nguồn ngày",
+  },
+}[lang];
+const others = caseStudies.filter((x) => x.slug !== c.slug);
+const href = (slug: string) => `/work/${slug}${lang === "vi" ? "/vi" : ""}`;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={`${c.name} — ${c.tagline[lang]}`} />
+    <link rel="canonical" href={`${SITE_URL}${href(c.slug)}`} />
+    <title>{c.name} — Jade</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script is:inline src="/theme-init.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  </head>
+  <body class="min-h-screen bg-background font-sans antialiased">
+    <main class="mx-auto max-w-3xl px-4 sm:px-6 py-12">
+      <nav aria-label={lang === "vi" ? "Điều hướng" : "Navigation"} class="mb-10 flex items-center justify-between gap-4 text-sm">
+        <a href="/" class="underline">{L.back}</a>
+        <div class="flex gap-4">
+          <a href={L.otherHref} class="underline">{L.other}</a>
+          <a href={L.cvHref} class="underline">{L.cv}</a>
+        </div>
+      </nav>
+
+      <p class="text-sm text-muted-foreground">{c.status[lang]}</p>
+      <h1 class="mt-1 font-serif text-4xl sm:text-5xl font-semibold tracking-tight">{c.name}</h1>
+      <p class="mt-3 text-lg leading-snug">{c.tagline[lang]}</p>
+      <p class="mt-2 text-xs text-muted-foreground">{c.tags.join(" · ")}</p>
+
+      <div class="mt-8 case-page">
+        <CaseStudyBody c={c} lang={lang}>
+          <h2 class="mt-6 text-sm font-semibold">{L.discuss}</h2>
+          <ul class="cv-points mt-1">
+            {c.discuss.map((d) => <li class="text-sm leading-snug">{d[lang]}</li>)}
+          </ul>
+          <p class="mt-4 text-sm text-muted-foreground">{L.private}</p>
+        </CaseStudyBody>
+      </div>
+
+      <nav aria-label={lang === "vi" ? "Hệ thống khác" : "Other systems"} class="mt-12 border-t border-border pt-4 flex flex-wrap gap-x-6 gap-y-2 text-sm">
+        {others.map((o) => <a href={href(o.slug)} class="underline">{o.name} →</a>)}
+      </nav>
+      <p class="mt-6 text-xs text-muted-foreground">{L.measured} {measuredOn}</p>
+    </main>
+  </body>
+</html>
+
+<style>
+  .case-page :global(p),
+  .case-page :global(li) {
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+  .case-page :global(.cs-label) {
+    margin-top: 1.5rem;
+    font-size: 0.75rem;
+  }
+  .case-page :global(.layer li),
+  .case-page :global(.layer-name) {
+    font-size: 0.8125rem;
+  }
+</style>

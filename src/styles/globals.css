@@ -277,7 +277,7 @@ details.faq-item .faq-answer {
 @media print {
   @page {
     size: A4;
-    margin: 12mm 16mm;
+    margin: 10mm 14mm;
   }
   :root[data-theme="light"],
   :root[data-theme="dark"] {
@@ -312,7 +312,36 @@ details.faq-item .faq-answer {
     break-after: avoid;
   }
   .cv-page section.mt-6 {
-    margin-top: 3.5mm;
+    margin-top: 2.5mm;
+  }
+  /* Pages 2-4 carry the detail at a smaller size, so page 1 reads first. */
+  .cv-page .cv-dense .text-sm,
+  .cv-page .cv-dense p,
+  .cv-page .cv-dense li,
+  .cv-page .cv-dense dd,
+  .cv-page .cv-dense dt {
+    font-size: 8.75pt;
+    line-height: 1.3;
+  }
+  /* A case study's heading never ends a page on its own. */
+  .cv-page .cv-case-head {
+    break-inside: avoid;
+    break-after: avoid;
+  }
+  .cv-page .cv-skills {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  /* Vietnamese runs about a fifth longer than English for the same content. */
+  body:lang(vi) {
+    font-size: 9.6pt;
+  }
+  :lang(vi) .cv-page .cv-dense .text-sm,
+  :lang(vi) .cv-page .cv-dense p,
+  :lang(vi) .cv-page .cv-dense li,
+  :lang(vi) .cv-page .cv-dense dd,
+  :lang(vi) .cv-page .cv-dense dt {
+    font-size: 8.25pt;
+    line-height: 1.25;
   }
   /* The portfolio link is already in the header; the footer only matters on screen. */
   .cv-footer {
