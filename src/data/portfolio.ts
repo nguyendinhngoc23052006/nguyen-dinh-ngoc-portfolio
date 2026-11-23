@@ -43,21 +43,21 @@ export const cvMethod: { label: T; text: T }[] = [
     label: { en: "AI-driven development", vi: "Phát triển cùng AI" },
     text: {
       en: "Claude Code writes code to a plan I approve; review agents check security, quality and scale; I read the diff, tests and running preview before anything merges.",
-      vi: "Claude Code viết mã theo kế hoạch tôi phê duyệt; agent rà soát kiểm tra bảo mật, chất lượng và khả năng mở rộng; tôi xem mã thay đổi, kết quả kiểm thử và bản chạy thử trước khi gộp.",
+      vi: "Claude Code viết mã theo kế hoạch do tôi phê duyệt; các agent rà soát kiểm tra bảo mật, chất lượng và khả năng mở rộng; tôi xem xét phần thay đổi, kết quả kiểm thử và bản chạy thử trước khi gộp.",
     },
   },
   {
     label: { en: "Verified, not assumed", vi: "Kiểm chứng thay vì giả định" },
     text: {
       en: "Database tests replay every migration on an empty Postgres and check the rules that must always hold; Playwright walks the app in a real browser.",
-      vi: "Kiểm thử chạy lại mọi migration trên Postgres trống và kiểm tra các quy tắc phải luôn đúng; Playwright chạy thử ứng dụng trên trình duyệt thật.",
+      vi: "Kiểm thử cơ sở dữ liệu chạy lại mọi migration trên Postgres trống và kiểm tra các quy tắc luôn phải được bảo đảm; Playwright duyệt thử ứng dụng trên trình duyệt thật.",
     },
   },
   {
     label: { en: "Careful releases", vi: "Phát hành cẩn trọng" },
     text: {
       en: "Every change gets its own preview; Ops Platform goes through staging before production; schema changes only as migrations; row-level security denies by default.",
-      vi: "Mỗi thay đổi có bản xem trước riêng; Ops Platform qua staging trước khi lên production; cấu trúc dữ liệu chỉ đổi qua migration; phân quyền theo dòng mặc định từ chối.",
+      vi: "Mỗi thay đổi có bản xem trước riêng; Ops Platform đi qua staging trước khi lên production; cấu trúc dữ liệu chỉ thay đổi qua migration; phân quyền theo dòng mặc định từ chối truy cập.",
     },
   },
 ];
@@ -131,17 +131,17 @@ export const caseStudies: CaseStudy[] = [
     highlights: [
       {
         en: "Records, links, ledgers, formulas, events and rules the organisation configures itself in the app, designed so a new process is a setting, not a software project.",
-        vi: "Hồ sơ, liên kết, sổ cái, công thức, sự kiện và quy tắc do tổ chức tự cấu hình trong ứng dụng, được thiết kế để quy trình mới chỉ là một thiết lập thay vì một dự án phần mềm.",
+        vi: "Hồ sơ, liên kết, sổ cái, công thức, sự kiện và quy tắc do tổ chức tự cấu hình trong ứng dụng, được thiết kế để một quy trình mới chỉ cần một thiết lập, không phải một dự án phần mềm.",
         src: "goals §0, §1, §4",
       },
       {
         en: "Trust built in: every power traceable to a position, approvals by a quorum and by a second person, time-limited emergency access with review, and personal data sealed under each person's own key.",
-        vi: "Tin cậy ngay từ thiết kế: mọi quyền hạn truy được về một vị trí, phê duyệt theo số đông và bởi người thứ hai, quyền khẩn cấp có thời hạn kèm rà soát, và dữ liệu cá nhân được niêm phong bằng khóa riêng của từng người.",
+        vi: "Tin cậy được đặt vào thiết kế: mọi quyền hạn truy nguyên được về một vị trí; phê duyệt theo số đông và qua người thứ hai; quyền khẩn cấp có thời hạn, kèm rà soát; dữ liệu cá nhân được niêm phong bằng khóa riêng của từng người.",
         src: "roadmap B3.2–B3.12, B4.9, B4.10",
       },
       {
         en: `Load proven before it is claimed: a face matched against a ${n(od.faceMatch.people, "en")}-person organisation in under ${n(od.faceMatch.ms, "en")} ms, and ${n(od.events.perSecond, "en")} events a second sustained in the load test every release must pass.`,
-        vi: `Khả năng chịu tải được kiểm chứng trước khi nêu: nhận diện một khuôn mặt trong tổ chức ${n(od.faceMatch.people, "vi")} người dưới ${n(od.faceMatch.ms, "vi")} ms, và duy trì ${n(od.events.perSecond, "vi")} sự kiện mỗi giây trong bài kiểm thử tải mà mọi bản phát hành phải vượt qua.`,
+        vi: `Khả năng chịu tải được kiểm chứng trước khi công bố: nhận diện một khuôn mặt trong tổ chức ${n(od.faceMatch.people, "vi")} người với thời gian dưới ${n(od.faceMatch.ms, "vi")} ms, và duy trì ${n(od.events.perSecond, "vi")} sự kiện mỗi giây trong bài kiểm thử tải mà mọi bản phát hành đều phải đạt.`,
         src: "roadmap B11.8, B7.3",
       },
     ],
@@ -243,7 +243,7 @@ export const caseStudies: CaseStudy[] = [
     proof: [
       {
         en: `Load proven before it is claimed: a face matched against a ${n(od.faceMatch.people, "en")}-person organisation in under ${n(od.faceMatch.ms, "en")} ms; ${n(od.events.perSecond, "en")} events a second sustained in the scale run every release must pass; a ${n(od.onboarding.people, "en")}-person onboarding by import; ${n(od.links.count, "en")} ended links read in about ${n(od.links.ms, "en")} ms.`,
-        vi: `Khả năng chịu tải được kiểm chứng trước khi nêu: nhận diện một khuôn mặt trong tổ chức ${n(od.faceMatch.people, "vi")} người dưới ${n(od.faceMatch.ms, "vi")} ms; duy trì ${n(od.events.perSecond, "vi")} sự kiện mỗi giây trong bài kiểm thử tải mà mọi bản phát hành phải đạt; nạp dữ liệu ${n(od.onboarding.people, "vi")} nhân sự bằng tệp; đọc ${n(od.links.count, "vi")} liên kết đã kết thúc trong khoảng ${n(od.links.ms, "vi")} ms.`,
+        vi: `Khả năng chịu tải được kiểm chứng trước khi công bố: nhận diện một khuôn mặt trong tổ chức ${n(od.faceMatch.people, "vi")} người với thời gian dưới ${n(od.faceMatch.ms, "vi")} ms; duy trì ${n(od.events.perSecond, "vi")} sự kiện mỗi giây trong bài kiểm thử tải mà mọi bản phát hành đều phải đạt; tiếp nhận ${n(od.onboarding.people, "vi")} nhân sự bằng tệp nhập; đọc ${n(od.links.count, "vi")} liên kết đã kết thúc trong khoảng ${n(od.links.ms, "vi")} ms.`,
         src: "roadmap B11.8, B7.3, C106, B5.2",
       },
     ],
@@ -336,17 +336,17 @@ export const caseStudies: CaseStudy[] = [
     highlights: [
       {
         en: "Pay follows evidence: a face and location check-in decides who worked, and no-shows, covers and late arrivals are worked out from the records, never marked by hand.",
-        vi: "Tiền lương theo bằng chứng: chấm công bằng khuôn mặt và vị trí xác định ai đã đi làm; vắng ca, làm thay và đi muộn được xác định từ dữ liệu, không đánh dấu thủ công.",
+        vi: "Tiền lương dựa trên bằng chứng: chấm công bằng khuôn mặt và vị trí cho biết ai đã đi làm; vắng ca, làm thay và đi muộn được xác định từ dữ liệu chứ không đánh dấu thủ công.",
         src: "goals (Words; Guarantees)",
       },
       {
         en: "Cash control at every shift change: whoever leaves counts the safe without seeing the expected amount, and someone else confirms.",
-        vi: "Kiểm soát tiền mặt ở mỗi lần bàn giao: người rời ca đếm két mà không được xem trước số dự kiến, và một người khác xác nhận.",
+        vi: "Kiểm soát tiền mặt ở mỗi lần bàn giao ca: người rời ca đếm két khi chưa biết số dự kiến, sau đó một người khác xác nhận lại.",
         src: "goals (Handover; Guarantees)",
       },
       {
         en: `Lawful pay as settings the owner changes: no fines, bonus cuts never below zero, compensation capped at ${n(md.compensationCap.percent, "en")}% of pay after insurance and tax, corrections paid as arrears.`,
-        vi: `Lương đúng luật dưới dạng thiết lập chủ cửa hàng tự đổi: không phạt tiền, giảm thưởng không âm, bồi thường tối đa ${n(md.compensationCap.percent, "vi")}% lương sau bảo hiểm và thuế, chỉnh sửa truy lĩnh kỳ sau.`,
+        vi: `Lương đúng luật theo các thiết lập chủ cửa hàng tự điều chỉnh: không phạt tiền, mức giảm thưởng không vượt quá số thưởng, bồi thường tối đa ${n(md.compensationCap.percent, "vi")}% lương sau bảo hiểm và thuế, khoản chỉnh sửa được truy lĩnh ở kỳ sau.`,
         src: "goals (Guarantees); roadmap B6.4, B6.9",
       },
     ],
@@ -427,7 +427,7 @@ export const caseStudies: CaseStudy[] = [
     proof: [
       {
         en: "Database tests replay every migration on an empty Postgres and check the guarantees: nothing recorded is edited, a face is stored only with consent, and pay is reduced only by a lawful route.",
-        vi: "Bộ kiểm thử cơ sở dữ liệu chạy lại mọi migration trên một Postgres trống và kiểm tra các bảo đảm: dữ liệu đã ghi nhận không bị sửa, khuôn mặt chỉ được lưu khi có sự đồng ý, và tiền lương chỉ bị giảm theo con đường hợp pháp.",
+        vi: "Bộ kiểm thử cơ sở dữ liệu chạy lại mọi migration trên một Postgres trống và kiểm tra các bảo đảm: dữ liệu đã ghi nhận không bị chỉnh sửa, dữ liệu khuôn mặt chỉ được lưu khi có sự đồng ý, và tiền lương chỉ bị giảm theo đúng quy định.",
         src: "roadmap B7.1; goals (Guarantees)",
       },
     ],
@@ -453,17 +453,17 @@ export const caseStudies: CaseStudy[] = [
     highlights: [
       {
         en: "The AI quotes the CV's evidence for each checklist line and fixed rules decide, so the same CV always gets the same result and is never rejected just for not mentioning something.",
-        vi: "AI trích dẫn bằng chứng trong CV cho từng tiêu chí, quy tắc cố định quyết định, nên cùng một CV luôn cho cùng kết quả và không bị loại chỉ vì không đề cập.",
+        vi: "AI trích dẫn bằng chứng trong CV cho từng tiêu chí và các quy tắc cố định đưa ra quyết định, nên cùng một CV luôn cho cùng kết quả, và hồ sơ không bị loại chỉ vì chưa đề cập một nội dung nào đó.",
         src: "goals (Rules); roadmap B5.5, B5.12",
       },
       {
         en: `Company Word forms become fill-in tables; contracts are filled by code in the company's layout, pay split by its salary regulation, legal floors enforced (probation pay at least ${n(kd.probationPay.percent, "en")}%).`,
-        vi: `Biểu mẫu Word của công ty thành bảng điền; hợp đồng được điền bằng mã theo định dạng công ty, cơ cấu lương theo quy chế, bảo đảm mức sàn pháp lý (lương thử việc ít nhất ${n(kd.probationPay.percent, "vi")}%).`,
+        vi: `Biểu mẫu Word của công ty được chuyển thành bảng điền; hợp đồng được điền tự động theo đúng bố cục của công ty, cơ cấu lương theo quy chế lương, bảo đảm mức tối thiểu theo luật (lương thử việc tối thiểu ${n(kd.probationPay.percent, "vi")}%).`,
         src: "goals (Rules); roadmap B7.2, B7.5, B7.6",
       },
       {
         en: "Owners approve every post, reply and email with one tap in Telegram; it runs on free tiers, and the AI provider is swapped by changing three settings.",
-        vi: "Người tuyển dụng phê duyệt mọi bài đăng, câu trả lời và email chỉ với một lần chạm trên Telegram; hệ thống chạy trên các gói miễn phí, và có thể đổi nhà cung cấp AI chỉ bằng ba thiết lập.",
+        vi: "Người tuyển dụng phê duyệt mọi bài đăng, câu trả lời và email chỉ với một lần chạm trên Telegram; hệ thống vận hành trên các gói dịch vụ miễn phí và có thể thay nhà cung cấp AI chỉ bằng ba thiết lập.",
         src: "goals (Rules); roadmap B6.2, B1.4",
       },
     ],
@@ -596,7 +596,7 @@ export const projects: Project[] = [
     title: "Dinh Ngoc Edu",
     line: {
       en: "AI turns a subject's materials into a Duolingo-style course with mock tests; React + Supabase.",
-      vi: "AI biến tài liệu môn học thành khóa học kiểu Duolingo kèm đề thi thử; React + Supabase.",
+      vi: "AI chuyển tài liệu môn học thành khóa học theo phong cách Duolingo, kèm đề thi thử; React + Supabase.",
     },
     desc: "Upload a subject's materials once and AI builds a Duolingo-style course: chapters, lesson nodes and verified questions that also feed mock tests. Private by default, shareable when public, with a pet companion that grows as you learn.",
     tags: ["React", "TypeScript", "Supabase", "Edge Functions", "RLS", "AI"],
@@ -607,7 +607,7 @@ export const projects: Project[] = [
     title: "Face recognition in the browser",
     line: {
       en: "Runs in one browser tab with no server; thresholds tuned on 123 people across six ethnic groups.",
-      vi: "Chạy trong một tab trình duyệt, không cần máy chủ; ngưỡng hiệu chỉnh trên 123 người thuộc sáu nhóm dân tộc.",
+      vi: "Chạy ngay trong một tab trình duyệt, không cần máy chủ; ngưỡng nhận diện được hiệu chỉnh trên 123 người thuộc sáu nhóm dân tộc.",
     },
     desc: "Face detection and recognition that runs entirely in one browser tab with OpenCV's YuNet and SFace models. Match thresholds were tuned on 123 people across six ethnic groups and set by the group with the weakest results, so no group is recognised worse than the rest; it refuses duplicate enrolments and impostors claiming a known name.",
     tags: ["OpenCV", "YuNet", "SFace", "WebAssembly", "Computer vision"],
@@ -618,7 +618,7 @@ export const projects: Project[] = [
     title: "saasmath",
     line: {
       en: "Calculators for SaaS founders (runway, LTV/CAC, dilution) with shareable links and cited formulas.",
-      vi: "Công cụ tính cho nhà sáng lập SaaS (runway, LTV/CAC, pha loãng), chia sẻ qua đường dẫn, công thức có nguồn.",
+      vi: "Công cụ tính toán dành cho nhà sáng lập SaaS (runway, LTV/CAC, pha loãng), có thể chia sẻ qua đường dẫn, công thức đều ghi rõ nguồn.",
     },
     desc: "Free calculators and explainers for SaaS founders — runway, burn multiple, LTV/CAC, MRR/ARR growth, Rule of 40, cap-table dilution, option value, seed sizing, bridge notes. State lives in the URL so results are shareable; every formula cites its source.",
     tags: [
@@ -646,7 +646,7 @@ export const projects: Project[] = [
     title: "Nguyễn Ngọc Anh — portfolio",
     line: {
       en: "Bilingual scrollytelling portfolio with one thread drawn through every chapter; GSAP, Lenis, Web Audio.",
-      vi: "Portfolio song ngữ kể chuyện theo cuộn trang, một sợi chỉ vẽ xuyên suốt; GSAP, Lenis, Web Audio.",
+      vi: "Portfolio song ngữ kể chuyện theo cuộn trang, với một đường nét xuyên suốt các chương; GSAP, Lenis, Web Audio.",
     },
     desc: "Bilingual scrollytelling portfolio where one silk thread is drawn live through every chapter: cocoon, journey route, globe, supply-chain network, guitar strings, contact knot. GSAP DrawSVG/MotionPath with Lenis, synthesised sound, hidden easter eggs, and every animation off for readers who prefer reduced motion.",
     tags: ["React", "TypeScript", "GSAP", "Lenis", "i18n", "Web Audio"],
@@ -656,7 +656,7 @@ export const projects: Project[] = [
     title: "Nguyễn Lê Khánh — portfolio",
     line: {
       en: "Bilingual scrollytelling portfolio for a conservation-project candidate; GSAP ScrollTrigger, i18n.",
-      vi: "Portfolio song ngữ kể chuyện theo cuộn trang cho ứng viên dự án bảo tồn; GSAP ScrollTrigger, i18n.",
+      vi: "Portfolio song ngữ kể chuyện theo cuộn trang, dành cho một ứng viên dự án bảo tồn; GSAP ScrollTrigger, i18n.",
     },
     desc: "Bilingual (Vietnamese / English) scrollytelling portfolio for a content and media candidate applying to an environmental conservation project. Nine narrative beats pinned to the scroll, GSAP ScrollTrigger with Lenis smooth-scroll, i18n via react-i18next — no copy hard-coded in JSX.",
     tags: [
@@ -966,15 +966,15 @@ export const experience: {
     points: [
       {
         en: "Designed and built Ops Platform alone (below); HR ran employee records and face-recognition attendance on it.",
-        vi: "Một mình thiết kế và xây dựng Ops Platform (bên dưới); bộ phận nhân sự quản lý hồ sơ nhân viên và chấm công nhận diện khuôn mặt trên nền tảng này.",
+        vi: "Tự thiết kế và xây dựng Ops Platform (xem bên dưới); bộ phận nhân sự quản lý hồ sơ nhân viên và chấm công nhận diện khuôn mặt trên nền tảng này.",
       },
       {
         en: "Designed and built Kwook-career (below), the Telegram bot the company hired through: job posts, comment replies, CV ranking and contracts.",
-        vi: "Thiết kế và xây dựng Kwook-career (bên dưới), bot Telegram công ty dùng để tuyển dụng: đăng tin, trả lời bình luận, xếp hạng CV và lập hợp đồng.",
+        vi: "Thiết kế và xây dựng Kwook-career (xem bên dưới), bot Telegram phục vụ tuyển dụng của công ty: đăng tin, trả lời bình luận, xếp hạng CV và lập hợp đồng.",
       },
       {
         en: "Standardised company procedures into written rules and tools: the salary regulation and payroll method checked to the đồng, the meal-allowance rule, asset handover and HR records.",
-        vi: "Chuẩn hóa quy trình công ty thành quy chế và công cụ: quy chế lương và cách tính lương đối chiếu đến từng đồng, quy định ăn ca, bàn giao tài sản, hồ sơ nhân sự.",
+        vi: "Chuẩn hóa quy trình công ty thành quy chế và công cụ: quy chế lương và cách tính lương được đối chiếu chính xác đến từng đồng, quy định ăn ca, bàn giao tài sản và hồ sơ nhân sự.",
       },
     ],
   },
@@ -988,11 +988,11 @@ export const experience: {
     points: [
       {
         en: "Ran the stores and standardised how they work: shifts, attendance, daily cash and the monthly pay run.",
-        vi: "Vận hành các cửa hàng và chuẩn hóa cách làm việc: ca làm, chấm công, tiền mặt hằng ngày và kỳ trả lương hằng tháng.",
+        vi: "Điều hành các cửa hàng và chuẩn hóa quy trình làm việc: ca làm, chấm công, tiền mặt hằng ngày và kỳ trả lương hằng tháng.",
       },
       {
         en: "Designed and built Mau Heritage Hub (below), which the stores run on for shifts, attendance, cash and pay; Mau Heritage now rents it from me.",
-        vi: "Thiết kế và xây dựng Mau Heritage Hub (bên dưới) để các cửa hàng vận hành ca làm, chấm công, tiền mặt và tiền lương; hiện Mau Heritage thuê hệ thống này từ tôi.",
+        vi: "Thiết kế và xây dựng Mau Heritage Hub (xem bên dưới) để các cửa hàng quản lý ca làm, chấm công, tiền mặt và tiền lương; hiện Mau Heritage đang thuê sử dụng hệ thống này.",
       },
     ],
   },
