@@ -59,8 +59,8 @@ export const cvMethod: { label: T; text: T }[] = [
   {
     label: { en: "Verified, not assumed", vi: "Kiểm chứng thay vì giả định" },
     text: {
-      en: "On Ops Platform and Mau Heritage Hub, database tests replay every migration on an empty Postgres and check the rules that must hold; flows are tested in a real browser.",
-      vi: "Tại Ops Platform và Mau Heritage Hub, kiểm thử chạy lại mọi migration trên Postgres trống và kiểm tra các quy tắc bắt buộc; các luồng chính được thử trên trình duyệt.",
+      en: "On Ops Platform and Mau Heritage Hub, database tests replay every migration on an empty Postgres and check the rules that must hold; Mau Heritage Hub's flows are also tested in a real browser.",
+      vi: "Tại Ops Platform và Mau Heritage Hub, kiểm thử chạy lại mọi migration trên Postgres trống và kiểm tra các quy tắc bắt buộc; các luồng của Mau Heritage Hub còn được thử trên trình duyệt.",
     },
   },
   {
@@ -143,8 +143,8 @@ export const caseStudies: CaseStudy[] = [
     slug: "ops-platform",
     highlights: [
       {
-        en: "Records, links, ledgers, formulas and events the organisation configures itself in the app, so a new process is a setting, not a software project; any record prints a QR tag, so a physical asset is always traceable.",
-        vi: "Hồ sơ, liên kết, sổ cái, công thức và sự kiện do tổ chức tự cấu hình trong ứng dụng, nên quy trình mới chỉ là một thiết lập; mọi hồ sơ in được tem QR để luôn truy vết được tài sản thực tế.",
+        en: "Records, links, ledgers, formulas and events the organisation configures itself in the app, so most new processes are a setting, not a software project; any record prints a QR tag that traces a physical asset to its record.",
+        vi: "Hồ sơ, liên kết, sổ cái, công thức và sự kiện do tổ chức tự cấu hình trong ứng dụng, nên phần lớn quy trình mới chỉ là một thiết lập; mọi hồ sơ in được tem QR để truy vết tài sản thực tế về hồ sơ của nó.",
         src: "goals §0, §1, §4; roadmap B4.40",
       },
       {
@@ -373,9 +373,9 @@ export const caseStudies: CaseStudy[] = [
         src: "goals (Guarantees); roadmap B6.4, B6.9",
       },
       {
-        en: "One owner account; everyone else opens their profile by face, or code and PIN, on their phone. A face is stored only with recorded consent, and a manager's role never acts on its own holder's record.",
-        vi: "Chỉ chủ cửa hàng có tài khoản; mọi người khác mở hồ sơ bằng khuôn mặt, hoặc mã kèm PIN, trên điện thoại. Khuôn mặt chỉ được lưu khi đã ghi nhận sự đồng ý, và vai trò quản lý không bao giờ thao tác trên hồ sơ của chính người nắm giữ.",
-        src: "goals (Words; Rules; Guarantees)",
+        en: "One owner account; everyone else opens their profile by face, or code and PIN, on their phone. A face is stored only with recorded consent, and no role acts on its own holder's record.",
+        vi: "Chỉ chủ cửa hàng có tài khoản; mọi người khác mở hồ sơ bằng khuôn mặt, hoặc mã kèm PIN, trên điện thoại. Khuôn mặt chỉ được lưu khi đã ghi nhận sự đồng ý, và không vai trò nào thao tác trên hồ sơ của chính người nắm giữ.",
+        src: "goals (Words; Rules; Guarantees); roadmap B1.4, B1.5, B1.6",
       },
     ],
     name: "Mau Heritage Hub",
@@ -480,14 +480,14 @@ export const caseStudies: CaseStudy[] = [
     slug: "kwook-career",
     highlights: [
       {
-        en: "From a one-line brief in Telegram, it drafts the post, publishes it to the company's Facebook Page through Make, answers comments from the approved FAQ, and reads CVs as PDF, Word or a phone photo.",
-        vi: "Từ một dòng mô tả trên Telegram, bot soạn bài, đăng lên Fanpage của công ty qua Make, trả lời bình luận theo bộ câu hỏi đã duyệt, và đọc CV dạng PDF, Word hoặc ảnh chụp.",
-        src: "roadmap B3.2, B6.1, B5.1, B4.8",
+        en: "From a short brief in Telegram, it drafts the post, publishes it to the company's Facebook Page through Make, answers comments from the approved FAQ, and reads CVs as PDF, Word or a phone photo.",
+        vi: "Từ một mô tả ngắn trên Telegram, bot soạn bài, đăng lên Fanpage của công ty qua Make, trả lời bình luận theo bộ câu hỏi đã duyệt, và đọc CV dạng PDF, Word hoặc ảnh chụp.",
+        src: "goals (What it is); roadmap B4.2, B3.5, B3.2, B6.1, B5.1, B4.8",
       },
       {
-        en: "The AI quotes the CV's evidence for each checklist line and fixed rules decide, so the same CV always gets the same result and is never rejected just for not mentioning something.",
-        vi: "AI trích dẫn bằng chứng trong CV cho từng tiêu chí, còn quy tắc cố định đưa ra quyết định, nên cùng một CV luôn cho cùng kết quả và không bị loại chỉ vì chưa đề cập.",
-        src: "goals (Rules); roadmap B5.5, B5.12",
+        en: "The AI quotes the CV's evidence for each checklist line and fixed rules decide the lane; a CV is never rejected just for not mentioning something, and a re-sent CV gets the same result.",
+        vi: "AI trích dẫn bằng chứng trong CV cho từng tiêu chí, còn quy tắc cố định quyết định kết quả; CV không bị loại chỉ vì chưa đề cập, và CV gửi lại luôn cho cùng kết quả.",
+        src: "goals (Rules); roadmap B5.5, B5.12 (a re-sent file reuses its check)",
       },
       {
         en: `Company Word forms become fill-in tables; contracts are filled by code in the company's layout, pay split by its salary regulation, legal floors enforced (probation pay at least ${n(kd.probationPay.percent, "en")}%).`,
@@ -497,7 +497,7 @@ export const caseStudies: CaseStudy[] = [
       {
         en: "Owners approve each post, candidate email and reply outside the approved FAQ with one tap; it runs on free tiers, and the AI provider swaps by changing three settings.",
         vi: "Người tuyển dụng duyệt từng bài đăng, email gửi ứng viên và câu trả lời ngoài bộ câu hỏi đã duyệt chỉ với một lần chạm; hệ thống chạy trên gói miễn phí và đổi nhà cung cấp AI bằng ba thiết lập.",
-        src: "goals (Rules); roadmap B6.2, B1.4",
+        src: "goals (Rules); roadmap B6.2 (provider settings: README)",
       },
     ],
     name: "Kwook-career",
@@ -757,7 +757,6 @@ export const cvSkills: { group: T; items: string[] }[] = [
       "Telegram Bot API",
       "Facebook via Make",
       "Gmail SMTP",
-      "Cloudflare Realtime",
       "Excel/DOCX/PDF",
     ],
   },
