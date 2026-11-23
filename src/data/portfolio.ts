@@ -35,12 +35,12 @@ const mauHistory = mau.history;
 
 export const cvTitle: T = {
   en: "AI-native builder — internal systems on Supabase + Cloudflare",
-  vi: "Xây hệ thống vận hành bằng AI — Supabase + Cloudflare",
+  vi: "Phát triển hệ thống vận hành nội bộ ứng dụng AI — Supabase + Cloudflare",
 };
 
 export const cvSummary: T = {
   en: "I design, build and run the systems a business operates on: people and records, face-recognition attendance, recruitment and payroll. Built alone on Supabase and Cloudflare with Claude Code, under tests and CI gates. Three of my systems have run real companies: Ops Platform and Kwook-career at Kwook, and Mau Heritage Hub, which Mau Heritage rents from me and runs its stores on. I write the procedures as well as the software, and check numbers to the đồng. Disciplined and always thinking ahead. Studying international economics at Foreign Trade University, Hanoi.",
-  vi: "Tôi thiết kế, xây dựng và vận hành các hệ thống mà doanh nghiệp chạy hằng ngày: nhân sự và hồ sơ, chấm công nhận diện khuôn mặt, tuyển dụng và tiền lương. Một mình xây dựng trên Supabase và Cloudflare bằng Claude Code, với kiểm thử và kiểm tra tự động. Ba hệ thống của tôi đã vận hành doanh nghiệp thật: Ops Platform và Kwook-career tại Kwook, và Mau Heritage Hub, được Mau Heritage thuê để vận hành chuỗi cửa hàng. Tôi viết cả quy trình lẫn phần mềm, và đối chiếu số liệu đến từng đồng. Kỷ luật cao và luôn suy nghĩ trước. Đang học Kinh tế quốc tế tại Đại học Ngoại thương, Hà Nội.",
+  vi: "Tôi thiết kế, xây dựng và vận hành các hệ thống phục vụ hoạt động hằng ngày của doanh nghiệp: nhân sự và hồ sơ, chấm công nhận diện khuôn mặt, tuyển dụng và tiền lương. Tôi tự mình xây dựng trên Supabase và Cloudflare bằng Claude Code, với kiểm thử và kiểm tra tự động. Ba hệ thống của tôi đã được đưa vào vận hành thực tế tại doanh nghiệp: Ops Platform và Kwook-career tại Kwook, và Mau Heritage Hub, hệ thống Mau Heritage thuê sử dụng để vận hành các cửa hàng của mình. Tôi viết cả quy trình lẫn phần mềm, và đối chiếu số liệu đến từng đồng. Tôi làm việc có kỷ luật và luôn chủ động nhìn trước. Hiện tôi đang học ngành Kinh tế quốc tế tại Đại học Ngoại thương, Hà Nội.",
 };
 
 // Traits shown on the CV.
@@ -53,24 +53,27 @@ export const traits: { label: T; note: T }[] = [
     },
   },
   {
-    label: { en: "Built to grow", vi: "Xây để mở rộng" },
+    label: { en: "Built to grow", vi: "Thiết kế để mở rộng" },
     note: {
       en: "Systems a company configures instead of rewriting: a new process becomes a setting, not a software project.",
-      vi: "Hệ thống để doanh nghiệp tự cấu hình thay vì viết lại: quy trình mới là một thiết lập, không phải một dự án phần mềm.",
+      vi: "Hệ thống cho phép doanh nghiệp tự cấu hình thay vì viết lại: quy trình mới được bổ sung bằng một thiết lập, thay cho một dự án phần mềm.",
     },
   },
   {
     label: { en: "Knows the business", vi: "Hiểu nghiệp vụ" },
     note: {
       en: "Vietnamese labour, social-insurance and personal-income-tax rules applied in real payroll; reads accounts and operations, not just code.",
-      vi: "Áp dụng Bộ luật Lao động, BHXH và thuế TNCN vào bảng lương thực tế; đọc được số liệu kế toán, vận hành chứ không chỉ code.",
+      vi: "Áp dụng quy định lao động, BHXH và thuế TNCN của Việt Nam vào bảng lương thực tế; đọc hiểu được số liệu kế toán và vận hành, không chỉ mã nguồn.",
     },
   },
   {
-    label: { en: "AI in the real workflow", vi: "AI trong công việc thật" },
+    label: {
+      en: "AI in the real workflow",
+      vi: "AI trong quy trình làm việc thực tế",
+    },
     note: {
       en: "Claude Code with written specs, review agents and CI gates; I check what the AI produces before it ships.",
-      vi: "Claude Code với đặc tả rõ ràng, agent rà soát và kiểm tra CI; tôi kiểm tra kỹ những gì AI làm ra trước khi đưa vào dùng.",
+      vi: "Claude Code với đặc tả rõ ràng, agent rà soát và các bước kiểm tra CI; tôi trực tiếp kiểm tra kết quả do AI tạo ra trước khi đưa vào sử dụng.",
     },
   },
 ];
@@ -100,24 +103,24 @@ export const cvWork: CvWork[] = [
   {
     title: {
       en: "Ops Platform — run a company from one configurable app",
-      vi: "Ops Platform — vận hành doanh nghiệp trên một ứng dụng tự cấu hình",
+      vi: "Ops Platform — vận hành doanh nghiệp trên một ứng dụng cấu hình được",
     },
     status: {
       en: "Used daily at Kwook, Sep – Nov 2026; mine, still developing",
-      vi: "Dùng hằng ngày tại Kwook, 09–11/2026; của tôi, đang phát triển tiếp",
+      vi: "Được sử dụng hằng ngày tại Kwook, 09–11/2026; sản phẩm do tôi sở hữu, đang tiếp tục phát triển",
     },
     points: [
       {
         en: "At Kwook, HR and I ran employee profiles on it, kept forms, files and regulations as records, and tracked each asset against the employee holding it.",
-        vi: "Tại Kwook, bộ phận nhân sự và tôi quản lý hồ sơ nhân viên trên đó, lưu biểu mẫu, tài liệu và quy chế của công ty thành hồ sơ, và theo dõi từng tài sản gắn với người đang giữ.",
+        vi: "Tại Kwook, bộ phận nhân sự và tôi quản lý hồ sơ nhân viên trên hệ thống, lưu biểu mẫu, tài liệu và quy chế của công ty dưới dạng hồ sơ, và theo dõi từng tài sản theo người đang giữ.",
       },
       {
         en: "Configured, not rewritten: an org creates its own record types and fields (files, formulas, conditional fields), lifecycles with guarded transitions, links between any records, document numbers and required documents, all inside the app.",
-        vi: "Cấu hình thay vì viết lại: doanh nghiệp tự tạo loại hồ sơ và trường (tệp, công thức, trường theo điều kiện), vòng đời với điều kiện chuyển bước, liên kết giữa mọi hồ sơ, số văn bản và giấy tờ bắt buộc, ngay trong ứng dụng.",
+        vi: "Cấu hình thay vì viết lại: tổ chức tự tạo loại hồ sơ và trường (tệp, công thức, trường theo điều kiện), vòng đời với điều kiện chuyển bước, liên kết giữa mọi hồ sơ, số văn bản và giấy tờ bắt buộc, ngay trong ứng dụng.",
       },
       {
         en: "Face-recognition attendance end to end: a phone becomes a door camera when a manager scans its QR, with no account or password; a person enrols with a three-pose scan that proves a live head; door events become check-ins and check-outs, every correction logged.",
-        vi: "Chấm công khuôn mặt trọn vẹn: điện thoại thành camera cửa khi quản lý quét mã QR, không cần tài khoản hay mật khẩu; nhân viên đăng ký bằng quét ba góc kèm kiểm tra người thật; sự kiện ở cửa thành check-in/check-out, mọi chỉnh sửa được ghi lại.",
+        vi: "Chấm công nhận diện khuôn mặt từ đầu đến cuối: điện thoại trở thành camera cửa khi quản lý quét mã QR, không yêu cầu tài khoản hay mật khẩu; mỗi người đăng ký bằng thao tác quét ba góc mặt kèm xác thực người thật; các sự kiện tại cửa được ghi nhận thành check-in và check-out, mọi chỉnh sửa đều được ghi lại.",
       },
       {
         en: "Authority comes from the org chart: privileges granted to jobs and seats and checked by one function every policy and screen calls, with maker-checker, separation of duties and break-glass.",
@@ -131,11 +134,11 @@ export const cvWork: CvWork[] = [
     discuss: [
       {
         en: "How an org adds a new kind of record, with its own fields and rules, without code",
-        vi: "Cách doanh nghiệp thêm loại hồ sơ mới, với trường và quy tắc riêng, không cần code",
+        vi: "Cách một tổ chức thêm loại hồ sơ mới, với trường và quy tắc riêng, mà không cần lập trình",
       },
       {
         en: "From pairing a door camera to a person's check-in: the whole face-recognition flow",
-        vi: "Từ ghép camera cửa đến lượt check-in của một người: toàn bộ luồng nhận diện khuôn mặt",
+        vi: "Từ việc ghép nối camera cửa đến lần check-in của từng người: toàn bộ luồng nhận diện khuôn mặt",
       },
       {
         en: "How the privilege model keeps every power traceable to a seat on the org chart",
@@ -161,7 +164,7 @@ export const cvWork: CvWork[] = [
       en: "Kwook-career — recruitment run from a Telegram bot",
       vi: "Kwook-career — tuyển dụng vận hành qua bot Telegram",
     },
-    status: { en: "In production", vi: "Đang chạy thực tế" },
+    status: { en: "In production", vi: "Đang vận hành thực tế" },
     points: [
       {
         en: "Standardised Kwook's hiring: from a brief the bot drafts the post, publishes it to the Facebook Page, answers comments and collects CVs (files or photos) on the jobs website.",
@@ -169,15 +172,15 @@ export const cvWork: CvWork[] = [
       },
       {
         en: "Ranks every CV line by line against the job's checklist, quoting the CV; fixed rules, not the AI, sort candidates into Call / Consider / Reject, so the same CV always gets the same result.",
-        vi: "Chấm từng CV theo từng tiêu chí của vị trí, trích dẫn đúng câu trong CV; quy tắc cố định, không phải AI, xếp ứng viên vào Nên gọi / Cân nhắc / Loại, nên cùng một CV luôn ra cùng một kết quả.",
+        vi: "Đánh giá từng CV theo từng tiêu chí của vị trí, trích dẫn nguyên văn từ CV; việc xếp ứng viên vào Nên gọi / Cân nhắc / Loại do quy tắc cố định thực hiện thay cho AI, nhờ đó cùng một CV luôn cho cùng một kết quả.",
       },
       {
         en: "Schedules interviews (candidates pick a time from an email link, with reminders), fills contracts from the company's own Word forms with legal pay floors enforced, and deletes candidates' data on a schedule.",
-        vi: "Xếp lịch phỏng vấn (ứng viên tự chọn giờ qua email, có nhắc lịch), điền hợp đồng từ mẫu Word của công ty với mức lương tối thiểu theo luật được kiểm tra, và tự xóa dữ liệu ứng viên theo hạn.",
+        vi: "Xếp lịch phỏng vấn (ứng viên tự chọn giờ qua đường dẫn trong email, có nhắc lịch), điền hợp đồng từ mẫu Word của công ty với việc kiểm tra mức lương tối thiểu theo quy định pháp luật, và tự động xóa dữ liệu ứng viên theo lịch định kỳ.",
       },
       {
         en: `Built in ${n(kwcHistory.days, "en")} days: ${n(kwcHistory.commits, "en")} commits and ${n(kwcHistory.mergedPullRequests, "en")} merged pull requests, ${n(kwc.testCases, "en")} test cases, ${n(kwc.migrations, "en")} database migrations.`,
-        vi: `Hoàn thành trong ${n(kwcHistory.days, "vi")} ngày: ${n(kwcHistory.commits, "vi")} commit và ${n(kwcHistory.mergedPullRequests, "vi")} pull request đã được gộp, ${n(kwc.testCases, "vi")} ca kiểm thử, ${n(kwc.migrations, "vi")} migration cơ sở dữ liệu.`,
+        vi: `Hoàn thành trong ${n(kwcHistory.days, "vi")} ngày: ${n(kwcHistory.commits, "vi")} commit và ${n(kwcHistory.mergedPullRequests, "vi")} pull request đã được gộp mã, ${n(kwc.testCases, "vi")} ca kiểm thử, ${n(kwc.migrations, "vi")} migration cơ sở dữ liệu.`,
       },
     ],
     discuss: [
@@ -205,20 +208,20 @@ export const cvWork: CvWork[] = [
     },
     status: {
       en: "My product, rented to Mau Heritage; in production",
-      vi: "Sản phẩm của tôi, Mau Heritage đang thuê; đang chạy thực tế",
+      vi: "Sản phẩm do tôi phát triển, Mau Heritage đang thuê sử dụng; đang vận hành thực tế",
     },
     points: [
       {
         en: "Staff need no account: a profile opens by face or code and PIN on their phone, for shift sign-up, face and location check-in, end-of-day cash logs and payslips.",
-        vi: "Nhân viên không cần tài khoản: mở hồ sơ bằng khuôn mặt hoặc mã và PIN trên điện thoại để đăng ký ca, chấm công khuôn mặt và vị trí, nhập sổ tiền cuối ngày và xem phiếu lương.",
+        vi: "Nhân viên sử dụng mà không cần tài khoản: mở hồ sơ bằng khuôn mặt hoặc mã kèm PIN ngay trên điện thoại để đăng ký ca, chấm công bằng khuôn mặt và vị trí, ghi sổ tiền mặt cuối ngày và xem phiếu lương.",
       },
       {
         en: "The owner configures pay rules (KPI, meals, night, overtime and holiday pay at Labour Code minimums) and runs the monthly payroll with arrears; face data only with consent (Law 91/2025); nightly encrypted backups; every migration replayed in tests.",
-        vi: "Chủ cửa hàng tự cấu hình quy tắc lương (KPI, ăn ca, làm đêm, tăng ca, ngày lễ theo mức tối thiểu của BLLĐ) và chạy kỳ lương có truy lĩnh; dữ liệu khuôn mặt chỉ khi có đồng ý (Luật 91/2025); sao lưu mã hóa hằng đêm; kiểm thử chạy lại mọi migration.",
+        vi: "Chủ cửa hàng tự cấu hình quy tắc lương (KPI, ăn ca, làm đêm, tăng ca và ngày lễ theo mức tối thiểu của Bộ luật Lao động) và chạy kỳ lương hằng tháng có truy lĩnh; chỉ xử lý dữ liệu khuôn mặt khi có sự đồng ý (Luật 91/2025); sao lưu mã hóa hằng đêm; mọi migration đều được chạy lại trong kiểm thử.",
       },
       {
         en: `${n(mauHistory.commits, "en")} commits and ${n(mauHistory.mergedPullRequests, "en")} merged pull requests; all ${n(mau.migrations, "en")} migrations replayed on an empty database in every test run; ${n(mau.testCases, "en")} test cases.`,
-        vi: `${n(mauHistory.commits, "vi")} commit và ${n(mauHistory.mergedPullRequests, "vi")} pull request đã được gộp; toàn bộ ${n(mau.migrations, "vi")} migration được chạy lại trên cơ sở dữ liệu trống ở mỗi lần kiểm thử; ${n(mau.testCases, "vi")} ca kiểm thử.`,
+        vi: `${n(mauHistory.commits, "vi")} commit và ${n(mauHistory.mergedPullRequests, "vi")} pull request đã được gộp mã; toàn bộ ${n(mau.migrations, "vi")} migration được chạy lại trên cơ sở dữ liệu trống ở mỗi lần kiểm thử; ${n(mau.testCases, "vi")} ca kiểm thử.`,
       },
     ],
     discuss: [
@@ -228,7 +231,7 @@ export const cvWork: CvWork[] = [
       },
       {
         en: "How a non-technical owner configures everything in the app",
-        vi: "Cách chủ cửa hàng không rành kỹ thuật tự cấu hình mọi thứ trong ứng dụng",
+        vi: "Cách chủ cửa hàng không chuyên về kỹ thuật tự cấu hình toàn bộ trong ứng dụng",
       },
     ],
     tags: ["Supabase", "Cloudflare Pages", "PWA", "Playwright", "i18n"],
@@ -236,13 +239,13 @@ export const cvWork: CvWork[] = [
   {
     title: {
       en: "Face recognition in the browser",
-      vi: "Nhận diện khuôn mặt chạy trong trình duyệt",
+      vi: "Nhận diện khuôn mặt ngay trong trình duyệt",
     },
     status: { en: "Public demo", vi: "Bản demo công khai" },
     points: [
       {
         en: "OpenCV YuNet + SFace in one browser tab, no server; match thresholds tuned on 123 people across six ethnic groups and set by the worst-served group; rejects duplicates and impostors under a known name.",
-        vi: "OpenCV YuNet + SFace trong một tab trình duyệt, không cần máy chủ; ngưỡng nhận diện hiệu chỉnh trên 123 người thuộc sáu nhóm dân tộc, chọn theo nhóm khó nhất; chặn người trùng và người mạo danh.",
+        vi: "OpenCV YuNet + SFace chạy trong một tab trình duyệt, không dùng máy chủ; ngưỡng nhận diện được hiệu chỉnh trên 123 người thuộc sáu nhóm dân tộc và đặt theo nhóm có kết quả kém nhất; từ chối đăng ký trùng và trường hợp mạo danh người đã có tên.",
       },
     ],
     tags: ["OpenCV.js", "Computer vision", "TypeScript"],
@@ -259,7 +262,7 @@ export const cvMore: { title: string; line: T; links: ProjectLinks }[] = [
     title: "Nguyễn Ngọc Anh — portfolio",
     line: {
       en: "Bilingual scrollytelling site: one silk thread drawn live through every chapter (GSAP DrawSVG/MotionPath, Lenis), synthesised sound, hidden easter eggs, reduced-motion safe.",
-      vi: "Portfolio kể chuyện theo cuộn trang, song ngữ: một sợi tơ vẽ xuyên suốt mọi chương (GSAP DrawSVG/MotionPath, Lenis), âm thanh tự tổng hợp, easter egg, an toàn với chế độ giảm chuyển động.",
+      vi: "Portfolio song ngữ kể chuyện theo cuộn trang: một sợi tơ vẽ xuyên suốt mọi chương (GSAP DrawSVG/MotionPath, Lenis), âm thanh tự tổng hợp, chi tiết ẩn (easter egg), hỗ trợ chế độ giảm chuyển động.",
     },
     links: {
       source:
@@ -270,7 +273,7 @@ export const cvMore: { title: string; line: T; links: ProjectLinks }[] = [
     title: "Dinh Ngoc Edu",
     line: {
       en: "Upload a subject's materials and AI builds a Duolingo-style course with verified questions and mock tests; React + Supabase (Auth, Storage, Edge Functions, RLS).",
-      vi: "Tải tài liệu môn học lên, AI tạo khóa học kiểu Duolingo với câu hỏi đã kiểm chứng và đề thi thử; React + Supabase (Auth, Storage, Edge Functions, RLS).",
+      vi: "Người dùng tải tài liệu môn học lên, AI tạo khóa học theo phong cách Duolingo với câu hỏi đã được kiểm chứng và đề thi thử; React + Supabase (Auth, Storage, Edge Functions, RLS).",
     },
     links: {
       live: "https://dinhngocedu.vercel.app",
@@ -281,7 +284,7 @@ export const cvMore: { title: string; line: T; links: ProjectLinks }[] = [
     title: "Nguyễn Lê Khánh — portfolio",
     line: {
       en: "Bilingual scrollytelling portfolio for a conservation-project candidate: nine narrative beats pinned to the scroll, GSAP ScrollTrigger, i18n with no copy in JSX.",
-      vi: "Portfolio song ngữ kể chuyện theo cuộn trang cho ứng viên dự án bảo tồn: chín phân cảnh ghim theo cuộn, GSAP ScrollTrigger, đa ngôn ngữ không viết cứng chữ trong code.",
+      vi: "Portfolio song ngữ kể chuyện theo cuộn trang cho ứng viên dự án bảo tồn: chín phân cảnh ghim theo cuộn, GSAP ScrollTrigger, đa ngôn ngữ với nội dung tách khỏi mã JSX.",
     },
     links: {
       live: "https://nguyen-le-khanh-portfolio.pages.dev",
@@ -293,7 +296,7 @@ export const cvMore: { title: string; line: T; links: ProjectLinks }[] = [
     title: "saasmath",
     line: {
       en: "Calculators for SaaS founders (runway, burn multiple, LTV/CAC, dilution) with shareable URL state and cited formulas.",
-      vi: "Bộ máy tính cho nhà sáng lập SaaS (runway, burn multiple, LTV/CAC, pha loãng cổ phần), chia sẻ kết quả qua đường link, công thức có trích nguồn.",
+      vi: "Bộ công cụ tính toán cho nhà sáng lập SaaS (runway, burn multiple, LTV/CAC, pha loãng cổ phần), chia sẻ kết quả qua đường dẫn, công thức có trích dẫn nguồn.",
     },
     links: {
       live: "https://saasmath.pages.dev",
@@ -305,10 +308,10 @@ export const cvMore: { title: string; line: T; links: ProjectLinks }[] = [
 // Designs in progress, shown on the site only; details on request.
 export const inTheWorks: { title: T; line: T }[] = [
   {
-    title: { en: "AI visor", vi: "Kính AI đeo đầu" },
+    title: { en: "AI visor", vi: "Kính đeo đầu tích hợp AI" },
     line: {
       en: "A head-worn visor that labels what is in view, gives step-by-step guidance on a captured photo, and translates a two-person conversation, with the owner's own AI providers. Hardware, firmware and app designed together.",
-      vi: "Kính đeo đầu gắn nhãn những gì đang nhìn, hướng dẫn từng bước từ ảnh chụp và dịch hội thoại hai người, dùng nhà cung cấp AI của chính chủ máy. Thiết kế đồng thời phần cứng, firmware và ứng dụng.",
+      vi: "Kính đeo đầu nhận biết và gắn nhãn các đối tượng trong tầm nhìn, hướng dẫn từng bước dựa trên ảnh chụp và dịch hội thoại giữa hai người, sử dụng nhà cung cấp AI do chính chủ sở hữu thiết bị lựa chọn. Phần cứng, firmware và ứng dụng được thiết kế đồng bộ.",
     },
   },
   {
@@ -693,7 +696,7 @@ export const experience: {
     points: [
       {
         en: "Ran the stores and standardised how they work (shifts, attendance, daily cash, pay rules, the monthly pay run), then built Mau Heritage Hub to run them; Mau Heritage now rents it from me.",
-        vi: "Vận hành cửa hàng và chuẩn hóa cách làm việc (ca làm, chấm công, tiền mặt cuối ngày, quy tắc lương, kỳ trả lương), rồi xây dựng Mau Heritage Hub để vận hành; Mau Heritage hiện thuê lại từ tôi.",
+        vi: "Vận hành các cửa hàng và chuẩn hóa cách làm việc (ca làm, chấm công, tiền mặt cuối ngày, quy tắc lương, kỳ trả lương), rồi xây dựng Mau Heritage Hub để vận hành các cửa hàng này; hiện Mau Heritage thuê sử dụng hệ thống từ tôi.",
       },
     ],
   },
