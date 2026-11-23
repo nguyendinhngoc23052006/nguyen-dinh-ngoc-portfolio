@@ -198,14 +198,11 @@ const caseUrl = (slug: string) =>
 
       <section class="mt-6">
         <h2 class="cv-section-title">{L.skills}</h2>
-        <dl class="cv-skills mt-2 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1.5 text-sm">
+        <ul class="mt-2 space-y-0.5">
           {cvSkills.map(({ group, items }) => (
-            <div>
-              <dt class="font-semibold">{group[lang]}</dt>
-              <dd class="text-muted-foreground">{items.join(" · ")}</dd>
-            </div>
+            <li class="text-sm leading-snug"><span class="font-semibold">{group[lang]}:</span> <span class="text-muted-foreground">{items.join(" · ")}</span></li>
           ))}
-        </dl>
+        </ul>
       </section>
 
       <section class="mt-6">

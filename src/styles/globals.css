@@ -319,9 +319,6 @@ details.faq-item .faq-answer {
   .cv-page dd {
     line-height: 1.3;
   }
-  .cv-page .cv-skills {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
   /* The portfolio link is already in the header; the footer only matters on screen. */
   .cv-footer {
     display: none;
