@@ -5,7 +5,7 @@ export const SITE_URL = "https://nguyendinhngoc.dev";
 export const heroSubhead =
   "I design and build, alone, the systems a company runs on: people and records, face-recognition attendance, recruitment and payroll, on Supabase + Cloudflare, directing AI agents as my engineering team. Three of them have run real businesses.";
 
-export const aboutIntro = `I study international economics at Foreign Trade University and taught myself the rest — production software, cloud infrastructure, AI-directed engineering. The combination isn't padding, it's leverage. Macroeconomic reasoning for the business case. Creative problem-solving for the jobs no template fits. Infrastructure-deep understanding of the systems the code actually runs on. All three in one head at once. Self-taught means I picked up every tool because I needed it, not because a syllabus said to — each system here needed a field I learned from published sources first, and Kwook-career went through all ${metrics.systems.kwookCareer.roadmap.done} of its roadmap steps in ${metrics.systems.kwookCareer.history.days} days. I direct AI systems the way most developers use search: as an amplifier on the work, not a substitute for the understanding underneath. The public projects here are live: open them. The systems companies run on are private, and I'll gladly walk you through them.`;
+export const aboutIntro = `I study international economics at Foreign Trade University and taught myself the rest — production software, cloud infrastructure, AI-directed engineering. The combination isn't padding, it's leverage. Macroeconomic reasoning for the business case. Creative problem-solving for the jobs no template fits. Infrastructure-deep understanding of the systems the code actually runs on. All three in one head at once. Self-taught means I picked up every tool because I needed it, not because a syllabus said to — each system here needed a field I learned from published sources first: labour law, cash control, pay regulations, face recognition. I direct AI systems the way most developers use search: as an amplifier on the work, not a substitute for the understanding underneath. The public projects here are live: open them. The systems companies run on are private, and I'll gladly walk you through them.`;
 
 // ---------------------------------------------------------------------------
 // CV content — the only source for /cv (English) and /cv/vi (Vietnamese) and
@@ -16,54 +16,73 @@ export const aboutIntro = `I study international economics at Foreign Trade Univ
 export type Lang = "en" | "vi";
 export type T = Record<Lang, string>;
 
-// Every figure about the systems comes from metrics.json, written by
-// scripts/collect-metrics.mjs from the repositories themselves. Never type a
-// figure into the texts below; read it from metrics and format it with n().
-export const measuredOn = metrics.measuredOn;
+// The only figures on the CV and site describe what the systems do (speed,
+// scale, legal limits). They come from metrics.json, read by
+// scripts/collect-metrics.mjs from each system's own roadmap and goals; never
+// type one into the texts below. Process statistics (commits, pull requests,
+// test counts) are not shown: a test fails if one appears.
 export const n = (x: number, lang: Lang) =>
   x.toLocaleString(lang === "en" ? "en-US" : "vi-VN");
-// scripts/collect-metrics.mjs refuses to write metrics.json unless every field
-// read here (roadmap, history and review agents for Ops Platform, history for the other two) exists.
-const ops = metrics.systems.opsPlatform;
-const mau = metrics.systems.mauHeritageHub;
-const kwc = metrics.systems.kwookCareer;
-const opsRoadmap = ops.roadmap;
-const kwcHistory = kwc.history;
-const mauHistory = mau.history;
-
-const tot = metrics.totals;
+const od = metrics.systems.opsPlatform.design;
+const md = metrics.systems.mauHeritageHub.design;
+const kd = metrics.systems.kwookCareer.design;
 
 export const cvTitle: T = {
-  en: "Designer and builder of operations platforms — built alone, by directing AI agents",
-  vi: "Thiết kế và xây dựng nền tảng vận hành doanh nghiệp — tự thực hiện, điều phối agent AI",
+  en: "Full-stack & AI engineer · Supabase + Cloudflare",
+  vi: "Kỹ sư Full-stack & AI · Supabase + Cloudflare",
 };
 
 export const cvSummary: T = {
-  en: `I design operations platforms end to end, from the trust model to the database, and build them alone by directing AI agents. Each of my three systems began inside a business I worked in: I ran Mau Heritage's stores before building the hub they now rent from me, and I standardised Kwook's procedures before building its platform and its recruiting bot. Each also needed a specialist field, which I learned from published sources before designing: Vietnam's labour and personal-data law, cash control, a company pay regulation, database security, face recognition. I am the only human author in all three: agents wrote the code to my specifications, ${n(tot.agentCommits, "en")} of ${n(tot.commits, "en")} commits across ${n(tot.mergedPullRequests, "en")} merged pull requests. Self-taught in software, alongside my economics degree.`,
-  vi: `Tôi thiết kế nền tảng vận hành doanh nghiệp từ đầu đến cuối, từ mô hình tin cậy đến cơ sở dữ liệu, và tự xây dựng bằng cách điều phối các agent AI. Cả ba hệ thống đều bắt nguồn từ doanh nghiệp nơi tôi làm việc: tôi trực tiếp quản lý các cửa hàng của Mau Heritage trước khi xây dựng hệ thống mà nay họ thuê sử dụng, và chuẩn hóa quy trình của Kwook trước khi xây dựng nền tảng vận hành cùng bot tuyển dụng. Mỗi hệ thống còn đòi hỏi một lĩnh vực chuyên môn mà tôi tự nghiên cứu từ các nguồn đã công bố trước khi thiết kế: pháp luật lao động và bảo vệ dữ liệu cá nhân của Việt Nam, kiểm soát tiền mặt, quy chế tiền lương của doanh nghiệp, bảo mật cơ sở dữ liệu và nhận diện khuôn mặt. Tôi là người duy nhất đứng tên tác giả trong cả ba kho mã: các agent viết mã theo đặc tả của tôi, ${n(tot.agentCommits, "vi")} trên ${n(tot.commits, "vi")} commit qua ${n(tot.mergedPullRequests, "vi")} pull request đã gộp. Tôi tự học phát triển phần mềm song song với chương trình kinh tế.`,
+  en: "Self-taught full-stack engineer in Hanoi. I design and build, on my own, the systems a business runs on: people records, face-recognition attendance, recruiting, shifts and payroll; three of them have run real companies. I build with Claude Code and own the design, data model, review and testing. I learn the business first: I ran the stores and wrote the procedures, and learned labour law, cash control and pay regulations to build them in.",
+  vi: "Kỹ sư full-stack tự học tại Hà Nội. Tôi tự thiết kế và xây dựng các hệ thống vận hành doanh nghiệp: hồ sơ nhân sự, chấm công nhận diện khuôn mặt, tuyển dụng, xếp ca và tính lương; ba hệ thống đã được đưa vào vận hành tại doanh nghiệp. Tôi phát triển cùng Claude Code và trực tiếp đảm nhận thiết kế, mô hình dữ liệu, rà soát và kiểm thử. Tôi tìm hiểu nghiệp vụ trước: tôi đã trực tiếp quản lý cửa hàng, soạn thảo quy trình, và nghiên cứu pháp luật lao động, kiểm soát tiền mặt cùng quy chế tiền lương để đưa vào hệ thống.",
 };
 
-// Traits shown on the CV's first page. Each is a claim the pages after it prove.
+// How I work, condensed for the CV. The site's "How I work" section has the detail.
+export const cvMethod: { label: T; text: T }[] = [
+  {
+    label: { en: "AI-driven development", vi: "Phát triển cùng AI" },
+    text: {
+      en: "Claude Code writes code to a plan I approve; review agents check security, quality and scale; I read the diff, tests and running preview before anything merges.",
+      vi: "Claude Code viết mã theo kế hoạch tôi phê duyệt; agent rà soát kiểm tra bảo mật, chất lượng và khả năng mở rộng; tôi xem mã thay đổi, kết quả kiểm thử và bản chạy thử trước khi gộp.",
+    },
+  },
+  {
+    label: { en: "Verified, not assumed", vi: "Kiểm chứng thay vì giả định" },
+    text: {
+      en: "Database tests replay every migration on an empty Postgres and check the rules that must always hold; Playwright walks the app in a real browser.",
+      vi: "Kiểm thử chạy lại mọi migration trên Postgres trống và kiểm tra các quy tắc phải luôn đúng; Playwright chạy thử ứng dụng trên trình duyệt thật.",
+    },
+  },
+  {
+    label: { en: "Careful releases", vi: "Phát hành cẩn trọng" },
+    text: {
+      en: "Every change gets its own preview; Ops Platform goes through staging before production; schema changes only as migrations; row-level security denies by default.",
+      vi: "Mỗi thay đổi có bản xem trước riêng; Ops Platform qua staging trước khi lên production; cấu trúc dữ liệu chỉ đổi qua migration; phân quyền theo dòng mặc định từ chối.",
+    },
+  },
+];
+
+// Traits shown on the site's About section.
 export const traits: { label: T; note: T }[] = [
   {
     label: { en: "Designs the whole system", vi: "Thiết kế toàn bộ hệ thống" },
     note: {
-      en: "The model, the rules no setting can switch off, the data and the screens: every design decision in the case studies that follow is mine.",
-      vi: "Mô hình, các nguyên tắc không thể tắt bằng cấu hình, dữ liệu và giao diện: mọi quyết định thiết kế trong các phần sau đều do tôi đưa ra.",
+      en: "The model, the rules no setting can switch off, the data and the screens: every design decision in these systems is mine.",
+      vi: "Mô hình, các nguyên tắc không thể tắt bằng cấu hình, dữ liệu và giao diện: mọi quyết định thiết kế trong các hệ thống này đều do tôi đưa ra.",
     },
   },
   {
     label: { en: "Builds alone, with agents", vi: "Tự xây dựng cùng agent AI" },
     note: {
-      en: `${n(tot.humanAuthors, "en")} human author in every repository: me. Agents write to my written specification; every change is merged only after I review and test it.`,
-      vi: `Mỗi kho mã chỉ có ${n(tot.humanAuthors, "vi")} người viết là tôi. Các agent viết mã theo đặc tả tôi soạn; mọi thay đổi chỉ được gộp sau khi tôi rà soát và kiểm thử.`,
+      en: "Each system is designed and built by me alone. Agents write code to my written specification; nothing ships until I have reviewed and tested it.",
+      vi: "Mỗi hệ thống do tôi tự thiết kế và xây dựng. Các agent viết mã theo đặc tả do tôi soạn; không thay đổi nào được phát hành khi chưa được tôi rà soát và kiểm thử.",
     },
   },
   {
     label: { en: "Learns a new field fast", vi: "Tiếp thu lĩnh vực mới nhanh" },
     note: {
-      en: `Law, cash control, pay regulations, database security, face recognition: each learned from published sources when a system needed it, then turned into rules the code enforces. Kwook-career went through all ${n(kwc.roadmap.done, "en")} of its roadmap steps in ${n(kwcHistory.days, "en")} days.`,
-      vi: `Pháp luật, kiểm soát tiền mặt, quy chế tiền lương, bảo mật cơ sở dữ liệu, nhận diện khuôn mặt: mỗi lĩnh vực tôi tự nghiên cứu từ nguồn đã công bố khi hệ thống cần, rồi chuyển thành quy tắc do mã nguồn bảo đảm. Kwook-career hoàn thành cả ${n(kwc.roadmap.done, "vi")} hạng mục lộ trình trong ${n(kwcHistory.days, "vi")} ngày.`,
+      en: "Labour law, cash control, pay regulations, database security, face recognition: each learned from published sources when a system needed it, then turned into rules the code enforces.",
+      vi: "Pháp luật lao động, kiểm soát tiền mặt, quy chế tiền lương, bảo mật cơ sở dữ liệu, nhận diện khuôn mặt: mỗi lĩnh vực được tôi tự nghiên cứu từ nguồn đã công bố khi hệ thống cần, rồi chuyển thành quy tắc do mã nguồn bảo đảm.",
     },
   },
   {
@@ -72,18 +91,11 @@ export const traits: { label: T; note: T }[] = [
       vi: "Nắm bắt toàn diện hoạt động doanh nghiệp",
     },
     note: {
-      en: "I ran the stores and wrote the procedures before writing software for them, so the hard calls are business and legal judgement: no fines, silence never rejects a candidate, nobody counts cash knowing the expected amount.",
-      vi: "Tôi trực tiếp vận hành cửa hàng và soạn quy trình trước khi viết phần mềm, nên các quyết định quan trọng dựa trên hiểu biết kinh doanh và pháp luật: không áp dụng tiền phạt, không loại ứng viên chỉ vì CV không đề cập, không ai đếm tiền khi đã biết trước số dự kiến.",
+      en: "I ran the stores and wrote the procedures before writing software for them, so the hard calls are business and legal judgement: no fines, a CV is never rejected just for not mentioning something, nobody counts cash knowing the expected amount.",
+      vi: "Tôi trực tiếp vận hành cửa hàng và soạn quy trình trước khi viết phần mềm, nên các quyết định quan trọng dựa trên hiểu biết kinh doanh và pháp luật: không áp dụng tiền phạt, không loại CV chỉ vì không đề cập, không ai đếm tiền khi đã biết trước số dự kiến.",
     },
   },
 ];
-
-// Where a public project can be seen and read. `live` is left out until its
-// address is known; a guessed link that 404s is worse than none.
-export interface ProjectLinks {
-  live?: string;
-  source: string;
-}
 
 // A claim about a system's design, with the place in that system's own design
 // documents it comes from ("goals §5", "roadmap B7.1"). The accuracy review
@@ -96,6 +108,8 @@ export interface CaseStudy {
   slug: string;
   name: string;
   tagline: T;
+  // What the CV says about the system: three lines, each cited.
+  highlights: Claim[];
   status: T;
   problem: Claim;
   idea: Claim;
@@ -110,14 +124,27 @@ export interface CaseStudy {
   model?: { src: string; layers: { name: T; blocks: T[] }[] };
 }
 
-const od = ops.design;
-const md = mau.design;
-const kd = kwc.design;
-
 // The three systems, as designs. Private: described, never linked.
 export const caseStudies: CaseStudy[] = [
   {
     slug: "ops-platform",
+    highlights: [
+      {
+        en: "Records, links, ledgers, formulas, events and rules the organisation configures itself in the app, designed so a new process is a setting, not a software project.",
+        vi: "Hồ sơ, liên kết, sổ cái, công thức, sự kiện và quy tắc do tổ chức tự cấu hình trong ứng dụng, được thiết kế để quy trình mới chỉ là một thiết lập thay vì một dự án phần mềm.",
+        src: "goals §0, §1, §4",
+      },
+      {
+        en: "Trust built in: every power traceable to a position, approvals by a quorum and by a second person, time-limited emergency access with review, and personal data sealed under each person's own key.",
+        vi: "Tin cậy ngay từ thiết kế: mọi quyền hạn truy được về một vị trí, phê duyệt theo số đông và bởi người thứ hai, quyền khẩn cấp có thời hạn kèm rà soát, và dữ liệu cá nhân được niêm phong bằng khóa riêng của từng người.",
+        src: "roadmap B3.2–B3.12, B4.9, B4.10",
+      },
+      {
+        en: `Load proven before it is claimed: a face matched against a ${n(od.faceMatch.people, "en")}-person organisation in under ${n(od.faceMatch.ms, "en")} ms, and ${n(od.events.perSecond, "en")} events a second sustained in the load test every release must pass.`,
+        vi: `Khả năng chịu tải được kiểm chứng trước khi nêu: nhận diện một khuôn mặt trong tổ chức ${n(od.faceMatch.people, "vi")} người dưới ${n(od.faceMatch.ms, "vi")} ms, và duy trì ${n(od.events.perSecond, "vi")} sự kiện mỗi giây trong bài kiểm thử tải mà mọi bản phát hành phải vượt qua.`,
+        src: "roadmap B11.8, B7.3",
+      },
+    ],
     name: "Ops Platform",
     tagline: {
       en: "One configurable platform an organisation runs on: fifteen general blocks instead of one module per department.",
@@ -219,11 +246,6 @@ export const caseStudies: CaseStudy[] = [
         vi: `Khả năng chịu tải được kiểm chứng trước khi nêu: nhận diện một khuôn mặt trong tổ chức ${n(od.faceMatch.people, "vi")} người dưới ${n(od.faceMatch.ms, "vi")} ms; duy trì ${n(od.events.perSecond, "vi")} sự kiện mỗi giây trong bài kiểm thử tải mà mọi bản phát hành phải đạt; nạp dữ liệu ${n(od.onboarding.people, "vi")} nhân sự bằng tệp; đọc ${n(od.links.count, "vi")} liên kết đã kết thúc trong khoảng ${n(od.links.ms, "vi")} ms.`,
         src: "roadmap B11.8, B7.3, C106, B5.2",
       },
-      {
-        en: `${n(opsRoadmap.done, "en")} roadmap items shipped (building steps, end-to-end proofs and fixes), covered by ${n(ops.testCases, "en")} test cases and ${n(ops.sqlTestSuites, "en")} database test suites.`,
-        vi: `${n(opsRoadmap.done, "vi")} hạng mục lộ trình đã hoàn thành (bước xây dựng, kiểm chứng đầu-cuối và sửa lỗi), kèm ${n(ops.testCases, "vi")} ca kiểm thử và ${n(ops.sqlTestSuites, "vi")} bộ kiểm thử cơ sở dữ liệu.`,
-        src: "metrics (repository)",
-      },
     ],
     notYet: {
       en: "Designed, not built yet: workflows beyond tasks, rules and automation, dashboards and metrics, pay runs, posting rules, bookings, connections to other software, devices and agents holding seats, the offline outbox, installable packages, self-service sign-up and dedicated deployments.",
@@ -311,6 +333,23 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     slug: "mau-heritage-hub",
+    highlights: [
+      {
+        en: "Pay follows evidence: a face and location check-in decides who worked, and no-shows, covers and late arrivals are worked out from the records, never marked by hand.",
+        vi: "Tiền lương theo bằng chứng: chấm công bằng khuôn mặt và vị trí xác định ai đã đi làm; vắng ca, làm thay và đi muộn được xác định từ dữ liệu, không đánh dấu thủ công.",
+        src: "goals (Words; Guarantees)",
+      },
+      {
+        en: "Cash control at every shift change: whoever leaves counts the safe without seeing the expected amount, and someone else confirms.",
+        vi: "Kiểm soát tiền mặt ở mỗi lần bàn giao: người rời ca đếm két mà không được xem trước số dự kiến, và một người khác xác nhận.",
+        src: "goals (Handover; Guarantees)",
+      },
+      {
+        en: `Lawful pay as settings the owner changes: no fines, bonus cuts never below zero, compensation capped at ${n(md.compensationCap.percent, "en")}% of pay after insurance and tax, corrections paid as arrears.`,
+        vi: `Lương đúng luật dưới dạng thiết lập chủ cửa hàng tự đổi: không phạt tiền, giảm thưởng không âm, bồi thường tối đa ${n(md.compensationCap.percent, "vi")}% lương sau bảo hiểm và thuế, chỉnh sửa truy lĩnh kỳ sau.`,
+        src: "goals (Guarantees); roadmap B6.4, B6.9",
+      },
+    ],
     name: "Mau Heritage Hub",
     tagline: {
       en: "Scheduling, face check-in, cash handovers and lawful payroll for a store chain, run by its owner alone.",
@@ -387,9 +426,9 @@ export const caseStudies: CaseStudy[] = [
     ],
     proof: [
       {
-        en: `${n(mau.sqlTestSuites, "en")} database test suites replay all ${n(mau.migrations, "en")} migrations on an empty Postgres and check the guarantees; ${n(mau.testCases, "en")} application test cases; ${n(mauHistory.commits, "en")} commits and ${n(mauHistory.mergedPullRequests, "en")} merged pull requests in ${n(mauHistory.days, "en")} days.`,
-        vi: `${n(mau.sqlTestSuites, "vi")} bộ kiểm thử cơ sở dữ liệu chạy lại cả ${n(mau.migrations, "vi")} migration trên một Postgres trống và kiểm tra các bảo đảm; ${n(mau.testCases, "vi")} ca kiểm thử ứng dụng; ${n(mauHistory.commits, "vi")} commit và ${n(mauHistory.mergedPullRequests, "vi")} pull request đã gộp trong ${n(mauHistory.days, "vi")} ngày.`,
-        src: "metrics (repository)",
+        en: "Database tests replay every migration on an empty Postgres and check the guarantees: nothing recorded is edited, a face is stored only with consent, and pay is reduced only by a lawful route.",
+        vi: "Bộ kiểm thử cơ sở dữ liệu chạy lại mọi migration trên một Postgres trống và kiểm tra các bảo đảm: dữ liệu đã ghi nhận không bị sửa, khuôn mặt chỉ được lưu khi có sự đồng ý, và tiền lương chỉ bị giảm theo con đường hợp pháp.",
+        src: "roadmap B7.1; goals (Guarantees)",
       },
     ],
     notYet: {
@@ -411,6 +450,23 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     slug: "kwook-career",
+    highlights: [
+      {
+        en: "The AI quotes the CV's evidence for each checklist line and fixed rules decide, so the same CV always gets the same result and is never rejected just for not mentioning something.",
+        vi: "AI trích dẫn bằng chứng trong CV cho từng tiêu chí, quy tắc cố định quyết định, nên cùng một CV luôn cho cùng kết quả và không bị loại chỉ vì không đề cập.",
+        src: "goals (Rules); roadmap B5.5, B5.12",
+      },
+      {
+        en: `Company Word forms become fill-in tables; contracts are filled by code in the company's layout, pay split by its salary regulation, legal floors enforced (probation pay at least ${n(kd.probationPay.percent, "en")}%).`,
+        vi: `Biểu mẫu Word của công ty thành bảng điền; hợp đồng được điền bằng mã theo định dạng công ty, cơ cấu lương theo quy chế, bảo đảm mức sàn pháp lý (lương thử việc ít nhất ${n(kd.probationPay.percent, "vi")}%).`,
+        src: "goals (Rules); roadmap B7.2, B7.5, B7.6",
+      },
+      {
+        en: "Owners approve every post, reply and email with one tap in Telegram; it runs on free tiers, and the AI provider is swapped by changing three settings.",
+        vi: "Người tuyển dụng phê duyệt mọi bài đăng, câu trả lời và email chỉ với một lần chạm trên Telegram; hệ thống chạy trên các gói miễn phí, và có thể đổi nhà cung cấp AI chỉ bằng ba thiết lập.",
+        src: "goals (Rules); roadmap B6.2, B1.4",
+      },
+    ],
     name: "Kwook-career",
     tagline: {
       en: "Recruiting run from a Telegram bot: from a one-line brief to a published post, ranked CVs and a filled contract.",
@@ -493,9 +549,9 @@ export const caseStudies: CaseStudy[] = [
     ],
     proof: [
       {
-        en: `All ${n(kwc.roadmap.done, "en")} roadmap steps done; ${n(kwcHistory.commits, "en")} commits and ${n(kwcHistory.mergedPullRequests, "en")} merged pull requests in ${n(kwcHistory.days, "en")} days; ${n(kwc.testCases, "en")} test cases.`,
-        vi: `Hoàn thành cả ${n(kwc.roadmap.done, "vi")} hạng mục lộ trình; ${n(kwcHistory.commits, "vi")} commit và ${n(kwcHistory.mergedPullRequests, "vi")} pull request đã gộp trong ${n(kwcHistory.days, "vi")} ngày; ${n(kwc.testCases, "vi")} ca kiểm thử.`,
-        src: "metrics (repository)",
+        en: "Every step on its roadmap is built, and it ran Kwook's hiring while I worked there.",
+        vi: "Mọi hạng mục trong lộ trình đã được xây dựng, và hệ thống đã vận hành công tác tuyển dụng của Kwook trong thời gian tôi làm việc tại đây.",
+        src: "roadmap (all steps ticked)",
       },
     ],
     notYet: {
@@ -523,63 +579,97 @@ export const caseStudies: CaseStudy[] = [
   },
 ];
 
-// More shipped projects, one line each on the CV (public, so linked).
-export const cvMore: { title: string; line: T; links: ProjectLinks }[] = [
-  {
-    title: "Face recognition in the browser",
-    line: {
-      en: "OpenCV YuNet + SFace in one browser tab, no server; match thresholds tuned on 123 people across six ethnic groups and set by the group with the weakest results; refuses duplicate enrolments and impostors under a known name.",
-      vi: "OpenCV YuNet + SFace chạy trong một tab trình duyệt, không dùng máy chủ; ngưỡng nhận diện được hiệu chỉnh trên 123 người thuộc sáu nhóm dân tộc và đặt theo nhóm có kết quả kém nhất; từ chối đăng ký trùng và mạo danh.",
-    },
-    links: {
-      source:
-        "https://github.com/nguyendinhngoc23052006/demo-computer-vision-nhom-10",
-    },
-  },
-  {
-    title: "Nguyễn Ngọc Anh — portfolio",
-    line: {
-      en: "Bilingual scrollytelling site: one silk thread drawn live through every chapter (GSAP DrawSVG/MotionPath, Lenis), synthesised sound, hidden easter eggs, reduced-motion safe.",
-      vi: "Portfolio song ngữ kể chuyện theo cuộn trang: một sợi tơ vẽ xuyên suốt mọi chương (GSAP DrawSVG/MotionPath, Lenis), âm thanh tự tổng hợp, chi tiết ẩn (easter egg), hỗ trợ chế độ giảm chuyển động.",
-    },
-    links: {
-      source:
-        "https://github.com/nguyendinhngoc23052006/Portfolio-for-Ngoc-Anh",
-    },
-  },
+// Public projects: one list for the CV (line, in both languages) and the site
+// (desc). Each links its source; `url` is its live address, left out until
+// known, since a guessed link that 404s is worse than none.
+export interface Project {
+  title: string;
+  line: T;
+  desc: string;
+  tags: string[];
+  url?: string;
+  source: string;
+}
+
+export const projects: Project[] = [
   {
     title: "Dinh Ngoc Edu",
     line: {
-      en: "Upload a subject's materials and AI builds a Duolingo-style course with verified questions and mock tests; React + Supabase (Auth, Storage, Edge Functions, RLS).",
-      vi: "Người dùng tải tài liệu môn học lên, AI tạo khóa học theo phong cách Duolingo với câu hỏi đã được kiểm chứng và đề thi thử; React + Supabase (Auth, Storage, Edge Functions, RLS).",
+      en: "AI turns a subject's materials into a Duolingo-style course with mock tests; React + Supabase.",
+      vi: "AI biến tài liệu môn học thành khóa học kiểu Duolingo kèm đề thi thử; React + Supabase.",
     },
-    links: {
-      live: "https://dinhngocedu.vercel.app",
-      source: "https://github.com/nguyendinhngoc23052006/Dinh-Ngoc-Edu",
-    },
+    desc: "Upload a subject's materials once and AI builds a Duolingo-style course: chapters, lesson nodes and verified questions that also feed mock tests. Private by default, shareable when public, with a pet companion that grows as you learn.",
+    tags: ["React", "TypeScript", "Supabase", "Edge Functions", "RLS", "AI"],
+    url: "https://dinhngocedu.vercel.app",
+    source: "https://github.com/nguyendinhngoc23052006/Dinh-Ngoc-Edu",
   },
   {
-    title: "Nguyễn Lê Khánh — portfolio",
+    title: "Face recognition in the browser",
     line: {
-      en: "Bilingual scrollytelling portfolio for a conservation-project candidate: nine narrative beats pinned to the scroll, GSAP ScrollTrigger, i18n with no copy in JSX.",
-      vi: "Portfolio song ngữ kể chuyện theo cuộn trang cho ứng viên dự án bảo tồn: chín phân cảnh ghim theo cuộn, GSAP ScrollTrigger, nội dung tách khỏi mã JSX.",
+      en: "Runs in one browser tab with no server; thresholds tuned on 123 people across six ethnic groups.",
+      vi: "Chạy trong một tab trình duyệt, không cần máy chủ; ngưỡng hiệu chỉnh trên 123 người thuộc sáu nhóm dân tộc.",
     },
-    links: {
-      live: "https://nguyen-le-khanh-portfolio.pages.dev",
-      source:
-        "https://github.com/nguyendinhngoc23052006/nguyen-le-khanh-portfolio",
-    },
+    desc: "Face detection and recognition that runs entirely in one browser tab with OpenCV's YuNet and SFace models. Match thresholds were tuned on 123 people across six ethnic groups and set by the group with the weakest results, so no group is recognised worse than the rest; it refuses duplicate enrolments and impostors claiming a known name.",
+    tags: ["OpenCV", "YuNet", "SFace", "WebAssembly", "Computer vision"],
+    source:
+      "https://github.com/nguyendinhngoc23052006/demo-computer-vision-nhom-10",
   },
   {
     title: "saasmath",
     line: {
-      en: "Calculators for SaaS founders (runway, burn multiple, LTV/CAC, dilution) with shareable URL state and cited formulas.",
-      vi: "Công cụ tính cho nhà sáng lập SaaS (runway, burn multiple, LTV/CAC, pha loãng cổ phần), chia sẻ qua đường dẫn, công thức có nguồn.",
+      en: "Calculators for SaaS founders (runway, LTV/CAC, dilution) with shareable links and cited formulas.",
+      vi: "Công cụ tính cho nhà sáng lập SaaS (runway, LTV/CAC, pha loãng), chia sẻ qua đường dẫn, công thức có nguồn.",
     },
-    links: {
-      live: "https://saasmath.pages.dev",
-      source: "https://github.com/nguyendinhngoc23052006/saasmath",
+    desc: "Free calculators and explainers for SaaS founders — runway, burn multiple, LTV/CAC, MRR/ARR growth, Rule of 40, cap-table dilution, option value, seed sizing, bridge notes. State lives in the URL so results are shareable; every formula cites its source.",
+    tags: [
+      "Astro",
+      "React islands",
+      "Tailwind",
+      "URL state",
+      "Cloudflare Pages",
+    ],
+    url: "https://saasmath.pages.dev",
+    source: "https://github.com/nguyendinhngoc23052006/saasmath",
+  },
+  {
+    title: "Browser tools",
+    line: {
+      en: "A PDF merger, a JSON/YAML/TOML converter and a regex tester; nothing leaves the browser tab.",
+      vi: "Công cụ gộp PDF, chuyển đổi JSON/YAML/TOML và kiểm tra regex; dữ liệu không rời khỏi trình duyệt.",
     },
+    desc: "Three small tools where nothing leaves the tab: merge and slice PDFs under a strict CSP, convert JSON/YAML/TOML in live editors, and test regexes, with state in the URL so a link reproduces the exact view.",
+    tags: ["Preact", "Svelte 5", "CodeMirror 6", "pdf-lib", "Cloudflare Pages"],
+    url: "https://pdf-merger-c6h.pages.dev",
+    source: "https://github.com/nguyendinhngoc23052006",
+  },
+  {
+    title: "Nguyễn Ngọc Anh — portfolio",
+    line: {
+      en: "Bilingual scrollytelling portfolio with one thread drawn through every chapter; GSAP, Lenis, Web Audio.",
+      vi: "Portfolio song ngữ kể chuyện theo cuộn trang, một sợi chỉ vẽ xuyên suốt; GSAP, Lenis, Web Audio.",
+    },
+    desc: "Bilingual scrollytelling portfolio where one silk thread is drawn live through every chapter: cocoon, journey route, globe, supply-chain network, guitar strings, contact knot. GSAP DrawSVG/MotionPath with Lenis, synthesised sound, hidden easter eggs, and every animation off for readers who prefer reduced motion.",
+    tags: ["React", "TypeScript", "GSAP", "Lenis", "i18n", "Web Audio"],
+    source: "https://github.com/nguyendinhngoc23052006/Portfolio-for-Ngoc-Anh",
+  },
+  {
+    title: "Nguyễn Lê Khánh — portfolio",
+    line: {
+      en: "Bilingual scrollytelling portfolio for a conservation-project candidate; GSAP ScrollTrigger, i18n.",
+      vi: "Portfolio song ngữ kể chuyện theo cuộn trang cho ứng viên dự án bảo tồn; GSAP ScrollTrigger, i18n.",
+    },
+    desc: "Bilingual (Vietnamese / English) scrollytelling portfolio for a content and media candidate applying to an environmental conservation project. Nine narrative beats pinned to the scroll, GSAP ScrollTrigger with Lenis smooth-scroll, i18n via react-i18next — no copy hard-coded in JSX.",
+    tags: [
+      "React",
+      "TypeScript",
+      "GSAP ScrollTrigger",
+      "Lenis",
+      "i18n",
+      "Cloudflare Pages",
+    ],
+    url: "https://nguyen-le-khanh-portfolio.pages.dev",
+    source:
+      "https://github.com/nguyendinhngoc23052006/nguyen-le-khanh-portfolio",
   },
 ];
 
@@ -601,60 +691,58 @@ export const inTheWorks: { title: T; line: T }[] = [
   },
 ];
 
-// Skills shown on the CV, grouped by what a hiring team looks for.
+// Skills shown on the CV, grouped by what a hiring team looks for. Only what
+// the systems and projects above actually use.
 export const cvSkills: { group: T; items: string[] }[] = [
+  {
+    group: { en: "Languages & frontend", vi: "Ngôn ngữ & frontend" },
+    items: [
+      "TypeScript",
+      "JavaScript",
+      "React",
+      "Astro",
+      "Svelte",
+      "Tailwind CSS",
+      "PWA",
+    ],
+  },
   {
     group: { en: "Backend & data", vi: "Backend & dữ liệu" },
     items: [
-      "Supabase",
+      "Supabase (Auth, Storage, Edge Functions)",
       "PostgreSQL",
       "Row-level security",
-      "Migrations",
-      "Edge Functions",
-      "SQL",
+      "SQL migrations",
+      "Python",
     ],
   },
   {
     group: { en: "Cloud & delivery", vi: "Cloud & triển khai" },
     items: [
-      "Cloudflare Workers / Pages",
+      "Cloudflare Workers & Pages",
       "GitHub Actions CI/CD",
       "Preview environments",
-      "Backups",
+      "Playwright",
+      "Vitest",
     ],
-  },
-  {
-    group: { en: "Frontend", vi: "Frontend" },
-    items: ["TypeScript", "React", "Astro", "Tailwind CSS", "PWA"],
   },
   {
     group: { en: "AI & computer vision", vi: "AI & thị giác máy tính" },
     items: [
       "Claude Code",
       "MCP",
-      "Review agents",
+      "LLM APIs",
       "OpenCV (YuNet, SFace)",
       "Face recognition",
-    ],
-  },
-  {
-    group: { en: "Data & reporting", vi: "Dữ liệu & báo cáo" },
-    items: [
-      "Python",
-      "Excel / openpyxl",
-      "Reconciliation",
-      "Playwright",
-      "Vitest",
     ],
   },
   {
     group: { en: "Business domain", vi: "Nghiệp vụ" },
     items: [
       "HR & payroll",
-      "Labour Code 2019",
-      "Social insurance",
-      "Personal income tax",
-      "Asset handover",
+      "Vietnam Labour Code 2019",
+      "Social insurance & personal income tax",
+      "Cash control",
     ],
   },
 ];
@@ -688,8 +776,8 @@ export const howIWork: { label: T; text: T }[] = [
   {
     label: { en: "Specialist reviewers", vi: "Agent rà soát chuyên trách" },
     text: {
-      en: `Review agents check each change for security, code quality and scale: on Ops Platform ${n(ops.reviewAgents, "en")} of them sign off every change, alongside ${n(ops.skills, "en")} skills.`,
-      vi: `Agent rà soát kiểm tra từng thay đổi về bảo mật, chất lượng mã và khả năng mở rộng: tại Ops Platform, ${n(ops.reviewAgents, "vi")} agent phê duyệt mọi thay đổi, cùng ${n(ops.skills, "vi")} skill.`,
+      en: "Review agents check each change for security, code quality and scale, and sign it off before it can merge.",
+      vi: "Các agent rà soát kiểm tra từng thay đổi về bảo mật, chất lượng mã và khả năng mở rộng, và phải phê duyệt trước khi thay đổi được gộp.",
     },
   },
   {
@@ -716,8 +804,8 @@ export const howIWork: { label: T; text: T }[] = [
 
 export const howIVerify: T[] = [
   {
-    en: `Every database migration replayed on an empty Postgres in each test run (all ${n(mau.migrations, "en")} on Mau Heritage Hub), then the guarantees checked: append-only history, face consent, lawful pay.`,
-    vi: `Mọi migration cơ sở dữ liệu được chạy lại trên một Postgres trống ở mỗi lần kiểm thử (toàn bộ ${n(mau.migrations, "vi")} migration của Mau Heritage Hub), sau đó kiểm tra các bảo đảm: lịch sử chỉ được ghi thêm, sự đồng ý sử dụng dữ liệu khuôn mặt, tiền lương đúng quy định pháp luật.`,
+    en: "Every database migration replayed on an empty Postgres in each test run, then the guarantees checked: append-only history, face consent, lawful pay.",
+    vi: "Mọi migration cơ sở dữ liệu được chạy lại trên một Postgres trống ở mỗi lần kiểm thử, sau đó kiểm tra các bảo đảm: lịch sử chỉ được ghi thêm, sự đồng ý sử dụng dữ liệu khuôn mặt, tiền lương đúng quy định pháp luật.",
   },
   {
     en: "The whole app walked through in a real browser with Playwright, a screenshot at every step, collected into a report.",
@@ -742,8 +830,8 @@ export const howIShip: { system: string; lines: T[] }[] = [
         vi: "Mỗi thay đổi đi từ nhánh làm việc qua pull request vào staging, rồi qua pull request thứ hai vào main. Mỗi pull request có bản xem trước riêng: nhánh cơ sở dữ liệu độc lập đã áp dụng migration, kèm đường dẫn riêng.",
       },
       {
-        en: `Staging deploys on merge; production sits behind a gate check, with rollback, nightly backup and scale-test workflows (${n(ops.workflowCount, "en")} workflows in all). Production is not live yet.`,
-        vi: `Staging tự triển khai khi gộp mã; production có bước kiểm tra cổng (gate check), cùng các workflow hoàn tác, sao lưu hằng đêm và kiểm thử tải (tổng cộng ${n(ops.workflowCount, "vi")} workflow). Production chưa vận hành.`,
+        en: "Staging deploys on merge; production sits behind a gate check, with rollback, nightly backup and scale-test workflows. Production is not live yet.",
+        vi: "Staging tự triển khai khi gộp mã; production có bước kiểm tra cổng (gate check), cùng các workflow hoàn tác, sao lưu hằng đêm và kiểm thử tải. Production chưa vận hành.",
       },
     ],
   },
@@ -808,8 +896,8 @@ export const stats = [
     label: "Built alone and run by real companies",
   },
   {
-    number: `${n(opsRoadmap.done, "en")} roadmap items`,
-    label: `Shipped on Ops Platform, covered by ${n(ops.testCases, "en")} test cases`,
+    number: `${n(od.faceMatch.people, "en")} people`,
+    label: `Face matched in under ${n(od.faceMatch.ms, "en")} ms on Ops Platform`,
   },
   {
     number: "123 people",
@@ -832,76 +920,6 @@ export const techMarquee = [
   "GitHub Actions",
   "Anthropic API",
   "Tailwind",
-];
-
-export interface Project {
-  num: string;
-  title: string;
-  desc: string;
-  tags: string[];
-  status?: "shipped";
-  url?: string;
-  source?: string;
-}
-
-export const projects: Project[] = [
-  {
-    num: "01",
-    title: "Nguyễn Ngọc Anh — portfolio",
-    desc: "Bilingual scrollytelling portfolio where one silk thread is drawn live through every chapter: cocoon, journey route, globe, supply-chain network, guitar strings, contact knot. GSAP DrawSVG/MotionPath with Lenis, synthesised sound, hidden easter eggs, and every animation off for readers who prefer reduced motion.",
-    tags: ["React", "TypeScript", "GSAP", "Lenis", "i18n", "Web Audio"],
-    source: "https://github.com/nguyendinhngoc23052006/Portfolio-for-Ngoc-Anh",
-  },
-  {
-    num: "02",
-    title: "Dinh Ngoc Edu",
-    desc: "Upload a subject's materials once and AI builds a Duolingo-style course: chapters, lesson nodes and verified questions that also feed mock tests. Private by default, shareable when public, with a pet companion that grows as you learn.",
-    tags: ["React", "TypeScript", "Supabase", "Edge Functions", "RLS", "AI"],
-    status: "shipped",
-    url: "https://dinhngocedu.vercel.app",
-    source: "https://github.com/nguyendinhngoc23052006/Dinh-Ngoc-Edu",
-  },
-  {
-    num: "03",
-    title: "Nguyễn Lê Khánh — portfolio",
-    desc: "Bilingual (Vietnamese / English) scrollytelling portfolio for a content and media candidate applying to an environmental conservation project. Nine narrative beats pinned to the scroll, GSAP ScrollTrigger with Lenis smooth-scroll, i18n via react-i18next — no copy hard-coded in JSX.",
-    tags: [
-      "React",
-      "TypeScript",
-      "GSAP ScrollTrigger",
-      "Lenis",
-      "i18n",
-      "Cloudflare Pages",
-    ],
-    status: "shipped",
-    url: "https://nguyen-le-khanh-portfolio.pages.dev",
-    source:
-      "https://github.com/nguyendinhngoc23052006/nguyen-le-khanh-portfolio",
-  },
-  {
-    num: "04",
-    title: "saasmath",
-    desc: "Free calculators and explainers for SaaS founders — runway, burn multiple, LTV/CAC, MRR/ARR growth, Rule of 40, cap-table dilution, option value, seed sizing, bridge notes. State lives in the URL so results are shareable; every formula cites its source.",
-    tags: [
-      "Astro",
-      "React islands",
-      "Tailwind",
-      "URL state",
-      "Cloudflare Pages",
-    ],
-    status: "shipped",
-    url: "https://saasmath.pages.dev",
-    source: "https://github.com/nguyendinhngoc23052006/saasmath",
-  },
-  {
-    num: "05",
-    title: "Browser tools: PDF merger · format converter · regex tester",
-    desc: "Three small tools where nothing leaves the tab: merge and slice PDFs under a strict CSP, convert JSON/YAML/TOML in live editors, and test regexes, with state in the URL so a link reproduces the exact view.",
-    tags: ["Preact", "Svelte 5", "CodeMirror 6", "pdf-lib", "Cloudflare Pages"],
-    status: "shipped",
-    url: "https://pdf-merger-c6h.pages.dev",
-    source: "https://github.com/nguyendinhngoc23052006",
-  },
 ];
 
 export const contactInfo = {
@@ -947,8 +965,12 @@ export const experience: {
     period: { en: "Sep – Nov 2026", vi: "09/2026 – 11/2026" },
     points: [
       {
-        en: "Built Ops Platform and Kwook-career alone (below): HR and I ran employee profiles, records and asset tracking with face-recognition attendance on Ops Platform, and hiring was standardised on Kwook-career.",
-        vi: "Một mình xây dựng Ops Platform và Kwook-career (bên dưới): nhân sự quản lý hồ sơ, tài sản và chấm công khuôn mặt trên Ops Platform; tuyển dụng chuẩn hóa trên Kwook-career.",
+        en: "Designed and built Ops Platform alone (below); HR ran employee records and face-recognition attendance on it.",
+        vi: "Một mình thiết kế và xây dựng Ops Platform (bên dưới); bộ phận nhân sự quản lý hồ sơ nhân viên và chấm công nhận diện khuôn mặt trên nền tảng này.",
+      },
+      {
+        en: "Designed and built Kwook-career (below), the Telegram bot the company hired through: job posts, comment replies, CV ranking and contracts.",
+        vi: "Thiết kế và xây dựng Kwook-career (bên dưới), bot Telegram công ty dùng để tuyển dụng: đăng tin, trả lời bình luận, xếp hạng CV và lập hợp đồng.",
       },
       {
         en: "Standardised company procedures into written rules and tools: the salary regulation and payroll method checked to the đồng, the meal-allowance rule, asset handover and HR records.",
@@ -965,8 +987,12 @@ export const experience: {
     period: { en: "Aug 2025 – Nov 2026", vi: "08/2025 – 11/2026" },
     points: [
       {
-        en: "Ran the stores and standardised how they work (shifts, attendance, daily cash, pay rules, the monthly pay run), then built Mau Heritage Hub to run them; Mau Heritage now rents it from me.",
-        vi: "Vận hành các cửa hàng và chuẩn hóa cách làm việc (ca làm, chấm công, tiền mặt cuối ngày, quy tắc lương, kỳ trả lương), rồi xây dựng Mau Heritage Hub để vận hành các cửa hàng; hiện Mau Heritage thuê hệ thống này từ tôi.",
+        en: "Ran the stores and standardised how they work: shifts, attendance, daily cash and the monthly pay run.",
+        vi: "Vận hành các cửa hàng và chuẩn hóa cách làm việc: ca làm, chấm công, tiền mặt hằng ngày và kỳ trả lương hằng tháng.",
+      },
+      {
+        en: "Designed and built Mau Heritage Hub (below), which the stores run on for shifts, attendance, cash and pay; Mau Heritage now rents it from me.",
+        vi: "Thiết kế và xây dựng Mau Heritage Hub (bên dưới) để các cửa hàng vận hành ca làm, chấm công, tiền mặt và tiền lương; hiện Mau Heritage thuê hệ thống này từ tôi.",
       },
     ],
   },

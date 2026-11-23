@@ -23,9 +23,9 @@ const TARGETS = [
 // Usable content height per page = 297mm minus both margins; at 96 CSS pixels
 // per inch that is about 3.78 CSS px per mm.
 // We warn early (browser-side) and hard-fail late (page count in the emitted PDF).
-// Four-page ceiling: room for the work, the method, verification and shipping;
-// a CV that keeps growing past four isn't.
-const MAX_PAGES = 4;
+// Two-page ceiling: recruiters read one to two pages; the depth lives on the
+// case-study pages the CV links to.
+const MAX_PAGES = 2;
 const MARGIN_MM = { y: 10, x: 14 };
 const USABLE_HEIGHT_CSS_PX = Math.round(
   MAX_PAGES * (297 - 2 * MARGIN_MM.y) * 3.7795,

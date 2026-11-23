@@ -10,7 +10,6 @@ import {
   type CaseStudy,
   caseStudies,
   type Lang,
-  measuredOn,
   SITE_URL,
 } from "../../data/portfolio";
 import "../../styles/globals.css";
@@ -32,7 +31,6 @@ const L = {
     discuss: "I can walk you through",
     private:
       "Private: it runs on company data, so there is no public link or code. I demonstrate it on sample data.",
-    measured: "Figures measured from the repository on",
   },
   vi: {
     back: "← Portfolio",
@@ -43,7 +41,6 @@ const L = {
     discuss: "Tôi có thể trình bày chi tiết",
     private:
       "Hệ thống riêng: vận hành trên dữ liệu của doanh nghiệp nên không có đường dẫn hay mã nguồn công khai. Tôi có thể trình diễn trên dữ liệu mẫu.",
-    measured: "Số liệu đo trực tiếp từ mã nguồn ngày",
   },
 }[lang];
 const others = caseStudies.filter((x) => x.slug !== c.slug);
@@ -92,7 +89,6 @@ const href = (slug: string) => `/work/${slug}${lang === "vi" ? "/vi" : ""}`;
       <nav aria-label={lang === "vi" ? "Hệ thống khác" : "Other systems"} class="mt-12 border-t border-border pt-4 flex flex-wrap gap-x-6 gap-y-2 text-sm">
         {others.map((o) => <a href={href(o.slug)} class="underline">{o.name} →</a>)}
       </nav>
-      <p class="mt-6 text-xs text-muted-foreground">{L.measured} {measuredOn}</p>
     </main>
   </body>
 </html>
