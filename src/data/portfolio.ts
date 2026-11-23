@@ -644,6 +644,7 @@ export const projects: Project[] = [
     },
     desc: "Face detection and recognition that runs entirely in one browser tab with OpenCV's YuNet and SFace models. Match thresholds were tuned on 123 people across six ethnic groups and set by the group with the weakest results rather than the average; it refuses duplicate enrolments and impostors claiming a known name.",
     tags: ["OpenCV", "YuNet", "SFace", "WebAssembly", "Computer vision"],
+    url: "https://demo-computer-vision-nhom-10.pages.dev",
     source:
       "https://github.com/nguyendinhngoc23052006/demo-computer-vision-nhom-10",
   },
