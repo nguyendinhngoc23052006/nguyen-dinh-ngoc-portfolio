@@ -143,9 +143,9 @@ export const caseStudies: CaseStudy[] = [
     slug: "ops-platform",
     highlights: [
       {
-        en: "Records, links, ledgers, formulas and events the organisation configures itself in the app, designed so a new process is a setting, not a software project.",
-        vi: "Hồ sơ, liên kết, sổ cái, công thức và sự kiện do tổ chức tự cấu hình trong ứng dụng, được thiết kế để một quy trình mới chỉ cần một thiết lập, không phải một dự án phần mềm.",
-        src: "goals §0, §1, §4",
+        en: "Records, links, ledgers, formulas and events the organisation configures itself in the app, so a new process is a setting, not a software project; any record prints a QR tag, so a physical asset is always traceable.",
+        vi: "Hồ sơ, liên kết, sổ cái, công thức và sự kiện do tổ chức tự cấu hình trong ứng dụng, nên quy trình mới chỉ là một thiết lập; mọi hồ sơ in được tem QR để luôn truy vết được tài sản thực tế.",
+        src: "goals §0, §1, §4; roadmap B4.40",
       },
       {
         en: `Face attendance on any device with a camera and a browser: paired with no account, it becomes a registration kiosk or a door; duplicate faces are refused, and a face is matched against a ${n(od.faceMatch.people, "en")}-person organisation in under ${n(od.faceMatch.ms, "en")} ms.`,
@@ -364,7 +364,7 @@ export const caseStudies: CaseStudy[] = [
       },
       {
         en: "Cash control at every shift change: whoever leaves counts the safe without seeing the expected amount, and someone else confirms.",
-        vi: "Kiểm soát tiền mặt mỗi lần bàn giao ca: người rời ca đếm két khi chưa biết số dự kiến, người khác xác nhận.",
+        vi: "Kiểm soát tiền mặt khi bàn giao ca: người rời ca đếm két khi chưa biết số dự kiến, người khác xác nhận.",
         src: "goals (Handover; Guarantees)",
       },
       {
@@ -640,7 +640,7 @@ export const projects: Project[] = [
     title: "Face recognition in the browser",
     line: {
       en: "In-tab, serverless; tuned on 123 people across six ethnic groups.",
-      vi: "Chạy trong trình duyệt; hiệu chỉnh trên 123 người, sáu nhóm dân tộc.",
+      vi: "Chạy trong trình duyệt; hiệu chỉnh trên 123 người, sáu dân tộc.",
     },
     desc: "Face detection and recognition that runs entirely in one browser tab with OpenCV's YuNet and SFace models. Match thresholds were tuned on 123 people across six ethnic groups and set by the group with the weakest results rather than the average; it refuses duplicate enrolments and impostors claiming a known name.",
     tags: ["OpenCV", "YuNet", "SFace", "WebAssembly", "Computer vision"],
@@ -679,7 +679,7 @@ export const projects: Project[] = [
     title: "Nguyễn Ngọc Anh — portfolio",
     line: {
       en: "Bilingual scrollytelling site; GSAP, Lenis, Web Audio.",
-      vi: "Portfolio song ngữ kể chuyện theo cuộn; GSAP, Lenis, Web Audio.",
+      vi: "Portfolio song ngữ kể chuyện; GSAP, Lenis, Web Audio.",
     },
     desc: "Bilingual scrollytelling portfolio where one silk thread is drawn live through every chapter: cocoon, journey route, globe, supply-chain network, guitar strings, contact knot. GSAP DrawSVG/MotionPath with Lenis, synthesised sound, hidden easter eggs, and every animation off for readers who prefer reduced motion.",
     tags: ["React", "TypeScript", "GSAP", "Lenis", "i18n", "Web Audio"],
@@ -689,7 +689,7 @@ export const projects: Project[] = [
     title: "Nguyễn Lê Khánh — portfolio",
     line: {
       en: "Bilingual scrollytelling site; GSAP ScrollTrigger, i18n.",
-      vi: "Portfolio song ngữ kể chuyện theo cuộn; GSAP ScrollTrigger, i18n.",
+      vi: "Portfolio song ngữ kể chuyện; GSAP ScrollTrigger, i18n.",
     },
     desc: "Bilingual (Vietnamese / English) scrollytelling portfolio for a content and media candidate applying to an environmental conservation project. Ten narrative sections driven by GSAP ScrollTrigger with Lenis smooth-scroll, i18n via react-i18next with the copy kept out of JSX.",
     tags: [
@@ -746,7 +746,7 @@ export const cvSkills: { group: T; items: string[] }[] = [
       "Supabase",
       "PostgreSQL",
       "Row-level security",
-      "Deno Edge Functions",
+      "Deno",
       "pg_cron",
       "Python",
     ],
@@ -758,7 +758,7 @@ export const cvSkills: { group: T; items: string[] }[] = [
       "Facebook via Make",
       "Gmail SMTP",
       "Cloudflare Realtime",
-      "Excel, DOCX & PDF",
+      "Excel/DOCX/PDF",
     ],
   },
   {
@@ -970,10 +970,21 @@ export const techMarquee = [
 
 export const contactInfo = {
   // Shown on the site and the CV only when filled in.
-  phone: "",
+  phone: "+84 339 497 255",
   email: "nguyendinhngoc23052006@gmail.com",
   github: "https://github.com/nguyendinhngoc23052006",
   location: "Hanoi, Vietnam",
+};
+
+// Shown under the CV header and on the site's contact section.
+export const availability: T = {
+  en: "Available for full-time and remote roles; flexible hours.",
+  vi: "Sẵn sàng làm việc toàn thời gian và từ xa; linh hoạt thời gian.",
+};
+
+export const languages: T = {
+  en: "Vietnamese (native) · English (fluent, IELTS 8.0, April 2023)",
+  vi: "Tiếng Việt (bản ngữ) · Tiếng Anh (thành thạo, IELTS 8.0, 04/2023)",
 };
 
 export const education: {
@@ -1011,8 +1022,8 @@ export const experience: {
     period: { en: "Sep – Nov 2026", vi: "09/2026 – 11/2026" },
     points: [
       {
-        en: "Solo-developed Ops Platform and Kwook-career (below): HR ran employee records and face attendance on Ops Platform, and the company hired through Kwook-career.",
-        vi: "Phát triển độc lập Ops Platform và Kwook-career (xem bên dưới): bộ phận nhân sự quản lý hồ sơ nhân viên và chấm công khuôn mặt trên Ops Platform, và công ty tuyển dụng qua Kwook-career.",
+        en: "Solo-developed Ops Platform and Kwook-career (below): HR ran employee records, QR-tagged asset tracking and face attendance on Ops Platform, and the company hired through Kwook-career.",
+        vi: "Phát triển độc lập Ops Platform và Kwook-career (xem bên dưới): nhân sự quản lý hồ sơ, tài sản gắn mã QR và chấm công khuôn mặt trên Ops Platform; công ty tuyển dụng qua Kwook-career.",
       },
       {
         en: "Standardised company procedures into written rules and tools: the salary regulation and payroll method checked to the đồng, the meal-allowance rule, asset handover and HR records.",

@@ -7,6 +7,7 @@
 // Order follows how recruiters read: who, what I do, where I worked, what I
 // built, how, then skills and education. Depth lives on the case-study pages.
 import {
+  availability,
   caseStudies,
   contactInfo,
   cvMethod,
@@ -16,6 +17,7 @@ import {
   education,
   experience,
   type Lang,
+  languages,
   projects,
   SITE_URL,
 } from "../data/portfolio";
@@ -39,7 +41,8 @@ const L = {
     method: "How I build",
     projects: "Public projects",
     skills: "Skills",
-    education: "Education",
+    education: "Education & languages",
+    languages: "Languages",
     footer: "Full portfolio",
     live: "Live",
   },
@@ -56,7 +59,8 @@ const L = {
     method: "Cách tôi xây dựng",
     projects: "Dự án công khai",
     skills: "Kỹ năng",
-    education: "Học vấn",
+    education: "Học vấn & ngoại ngữ",
+    languages: "Ngoại ngữ",
     footer: "Portfolio đầy đủ",
     live: "Web",
   },
@@ -108,6 +112,7 @@ const caseUrl = (slug: string) =>
           <p class="mt-1 text-sm text-muted-foreground">
             {contactInfo.location}{contactInfo.phone && <> · <a href={`tel:${contactInfo.phone.replace(/\s/g, "")}`}>{contactInfo.phone}</a></>} · <a href={`mailto:${contactInfo.email}`}>{contactInfo.email}</a> · <a href={contactInfo.github}>github.com/nguyendinhngoc23052006</a> · <a href={SITE_URL}>{SITE_URL.replace("https://", "")}</a>
           </p>
+          <p class="mt-0.5 text-sm font-medium text-accent">{availability[lang]}</p>
         </div>
         <img
           src="/jade-avatar.jpg"
@@ -211,6 +216,7 @@ const caseUrl = (slug: string) =>
               <span class="text-sm text-muted-foreground shrink-0">{e.period[lang]}</span>
             </div>
           ))}
+          <p class="mt-1 text-sm"><span class="font-semibold">{L.languages}:</span> {languages[lang]}</p>
         </div>
       </section>
 

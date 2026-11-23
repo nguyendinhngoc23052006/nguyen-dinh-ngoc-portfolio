@@ -4,6 +4,7 @@ import metrics from "./metrics.json";
 import * as portfolio from "./portfolio";
 import {
   aboutIntro,
+  availability,
   caseStudies,
   contactInfo,
   cvMethod,
@@ -17,6 +18,7 @@ import {
   howIVerify,
   howIWork,
   inTheWorks,
+  languages,
   n,
   projects,
   shipRules,
@@ -30,6 +32,8 @@ import {
 const texts: T[] = [
   cvTitle,
   cvSummary,
+  availability,
+  languages,
   ...cvMethod.flatMap((m) => [m.label, m.text]),
   ...traits.flatMap((t) => [t.label, t.note]),
   ...caseStudies.flatMap((c) => [
@@ -67,6 +71,9 @@ const ALLOWED_FIGURES = new Set([
   "09",
   "11",
   "2026", // employment periods, e.g. 09/2026 – 11/2026
+  "8.0", // IELTS band, owner-stated (April 2023)
+  "2023",
+  "04",
 ]);
 const measuredFigures = { en: new Set<string>(), vi: new Set<string>() };
 (function collect(v: unknown): void {
