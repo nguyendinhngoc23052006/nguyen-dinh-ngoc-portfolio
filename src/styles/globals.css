@@ -341,6 +341,7 @@ details.faq-item .faq-answer {
   :lang(vi) .cv-page .cv-dense dd,
   :lang(vi) .cv-page .cv-dense dt {
     font-size: 8.25pt;
+    line-height: 1.25;
   }
   /* The portfolio link is already in the header; the footer only matters on screen. */
   .cv-footer {

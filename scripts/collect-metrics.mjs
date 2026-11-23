@@ -16,7 +16,7 @@ const base = resolve(process.argv[2] ?? "..");
 const repos = {
   opsPlatform: {
     dir: "ops-platform",
-    needs: ["roadmap", "scale", "history", "reviewAgents"],
+    needs: ["roadmap", "history", "reviewAgents"],
   },
   mauHeritageHub: { dir: "mau-heritage-hub", needs: ["history"] },
   kwookCareer: { dir: "kwook-career", needs: ["history"] },
@@ -147,20 +147,6 @@ function measure(dir, repoKey) {
   // Load proofs only from items the roadmap marks done.
   const num = (x) => Number(x.replace(/,/g, ""));
   const doneText = done.join("\n");
-  const seeded = doneText.match(
-    /(\d[\d,]*)-person, (\d[\d,]*)-unit org with a month of door passes is seeded/,
-  );
-  const saves = doneText.match(
-    /Proven on a (\d[\d,]*)-person sample org: every save answers in under a second/,
-  );
-  const scale =
-    seeded && saves
-      ? {
-          seededPeople: num(seeded[1]),
-          seededUnits: num(seeded[2]),
-          subSecondSavePeople: num(saves[1]),
-        }
-      : null;
 
   const shallow = git(dir, "rev-parse", "--is-shallow-repository") === "true";
   const commits = Number(git(dir, "rev-list", "--count", "HEAD"));
@@ -225,7 +211,6 @@ function measure(dir, repoKey) {
       reviewAgents,
       skills,
       roadmap,
-      scale,
       history,
     },
     provenance,

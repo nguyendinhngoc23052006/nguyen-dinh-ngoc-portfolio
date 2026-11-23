@@ -39,11 +39,6 @@
         "done": 112,
         "open": 183
       },
-      "scale": {
-        "seededPeople": 10000,
-        "seededUnits": 1500,
-        "subSecondSavePeople": 30000
-      },
       "history": {
         "commits": 158,
         "mergedPullRequests": 11,
@@ -69,7 +64,6 @@
         "done": 67,
         "open": 9
       },
-      "scale": null,
       "history": {
         "commits": 180,
         "mergedPullRequests": 46,
@@ -104,7 +98,6 @@
         "done": 63,
         "open": 0
       },
-      "scale": null,
       "history": {
         "commits": 201,
         "mergedPullRequests": 89,

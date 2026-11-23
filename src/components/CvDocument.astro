@@ -39,7 +39,7 @@ const L = {
     pdfName: "Nguyen-Dinh-Ngoc-CV-EN.pdf",
     summary: "Summary",
     caseStudy: "Case study",
-    fullCase: "Full case study with diagrams",
+    fullCase: "Details",
     more: "More projects",
     experience: "Experience",
     education: "Education",
@@ -61,7 +61,7 @@ const L = {
     pdfName: "Nguyen-Dinh-Ngoc-CV-VI.pdf",
     summary: "Tóm tắt",
     caseStudy: "Phân tích hệ thống",
-    fullCase: "Bản đầy đủ kèm sơ đồ",
+    fullCase: "Chi tiết",
     more: "Dự án khác",
     experience: "Kinh nghiệm",
     education: "Học vấn",
@@ -80,6 +80,8 @@ const parts = (s: string) => s.split(/(\[ĐIỀN:[^\]]*\])/g).filter(Boolean);
 const isTodo = (s: string) => s.startsWith("[ĐIỀN");
 // Show a link without its scheme; GitHub links as owner/repo.
 const host = (u: string) => u.replace(/^https?:\/\/(github\.com\/)?/, "");
+// The GitHub profile is in the header, so a repository shows by name only.
+const repoName = (u: string) => u.split("/").pop() ?? u;
 ---
 
 <!doctype html>
@@ -232,7 +234,7 @@ const host = (u: string) => u.replace(/^https?:\/\/(github\.com\/)?/, "");
               <span> {m.line[lang]}</span>
               <span class="ml-1 text-xs text-muted-foreground">
                 {m.links.live && <>{L.live} <a href={m.links.live} class="text-accent hover:underline">{host(m.links.live)}</a> · </>}
-                GitHub <a href={m.links.source} class="text-accent hover:underline">{host(m.links.source)}</a>
+                GitHub <a href={m.links.source} class="text-accent hover:underline">{repoName(m.links.source)}</a>
               </span>
             </li>
           ))}

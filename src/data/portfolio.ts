@@ -23,12 +23,11 @@ export const measuredOn = metrics.measuredOn;
 export const n = (x: number, lang: Lang) =>
   x.toLocaleString(lang === "en" ? "en-US" : "vi-VN");
 // scripts/collect-metrics.mjs refuses to write metrics.json unless every field
-// read here (roadmap and scale for Ops Platform, history for the other two) exists.
+// read here (roadmap, history and review agents for Ops Platform, history for the other two) exists.
 const ops = metrics.systems.opsPlatform;
 const mau = metrics.systems.mauHeritageHub;
 const kwc = metrics.systems.kwookCareer;
 const opsRoadmap = ops.roadmap;
-const opsScale = ops.scale;
 const kwcHistory = kwc.history;
 const mauHistory = mau.history;
 
@@ -40,8 +39,8 @@ export const cvTitle: T = {
 };
 
 export const cvSummary: T = {
-  en: `I design operations platforms end to end, from the trust model to the database, and build them alone by directing AI agents. Each of my three systems began inside a business I worked in: I ran Mau Heritage's stores before building the hub they now rent from me, and I standardised Kwook's procedures before building its platform and its recruiting bot. Each also needed a specialist field, which I learned from published sources before designing: Vietnam's labour and personal-data law, cash control, a company pay regulation, database security, face recognition. I am the only human author in all three: agents wrote the code to my specifications, ${n(tot.agentCommits, "en")} of ${n(tot.commits, "en")} commits across ${n(tot.mergedPullRequests, "en")} merged pull requests. Studying international economics at Foreign Trade University, Hanoi; self-taught in software.`,
-  vi: `Tôi thiết kế nền tảng vận hành doanh nghiệp từ đầu đến cuối, từ mô hình tin cậy đến cơ sở dữ liệu, và tự xây dựng bằng cách điều phối các agent AI. Cả ba hệ thống đều bắt nguồn từ doanh nghiệp nơi tôi làm việc: tôi trực tiếp quản lý các cửa hàng của Mau Heritage trước khi xây dựng hệ thống mà nay họ thuê sử dụng, và chuẩn hóa quy trình của Kwook trước khi xây dựng nền tảng vận hành cùng bot tuyển dụng. Mỗi hệ thống còn đòi hỏi một lĩnh vực chuyên môn mà tôi tự nghiên cứu từ các nguồn đã công bố trước khi thiết kế: pháp luật lao động và bảo vệ dữ liệu cá nhân của Việt Nam, kiểm soát tiền mặt, quy chế tiền lương của doanh nghiệp, bảo mật cơ sở dữ liệu và nhận diện khuôn mặt. Tôi là người duy nhất đứng tên tác giả trong cả ba kho mã: các agent viết mã theo đặc tả của tôi, ${n(tot.agentCommits, "vi")} trên ${n(tot.commits, "vi")} commit qua ${n(tot.mergedPullRequests, "vi")} pull request đã gộp. Tôi đang học ngành Kinh tế quốc tế tại Đại học Ngoại thương, Hà Nội, và tự học phát triển phần mềm.`,
+  en: `I design operations platforms end to end, from the trust model to the database, and build them alone by directing AI agents. Each of my three systems began inside a business I worked in: I ran Mau Heritage's stores before building the hub they now rent from me, and I standardised Kwook's procedures before building its platform and its recruiting bot. Each also needed a specialist field, which I learned from published sources before designing: Vietnam's labour and personal-data law, cash control, a company pay regulation, database security, face recognition. I am the only human author in all three: agents wrote the code to my specifications, ${n(tot.agentCommits, "en")} of ${n(tot.commits, "en")} commits across ${n(tot.mergedPullRequests, "en")} merged pull requests. Self-taught in software, alongside my economics degree.`,
+  vi: `Tôi thiết kế nền tảng vận hành doanh nghiệp từ đầu đến cuối, từ mô hình tin cậy đến cơ sở dữ liệu, và tự xây dựng bằng cách điều phối các agent AI. Cả ba hệ thống đều bắt nguồn từ doanh nghiệp nơi tôi làm việc: tôi trực tiếp quản lý các cửa hàng của Mau Heritage trước khi xây dựng hệ thống mà nay họ thuê sử dụng, và chuẩn hóa quy trình của Kwook trước khi xây dựng nền tảng vận hành cùng bot tuyển dụng. Mỗi hệ thống còn đòi hỏi một lĩnh vực chuyên môn mà tôi tự nghiên cứu từ các nguồn đã công bố trước khi thiết kế: pháp luật lao động và bảo vệ dữ liệu cá nhân của Việt Nam, kiểm soát tiền mặt, quy chế tiền lương của doanh nghiệp, bảo mật cơ sở dữ liệu và nhận diện khuôn mặt. Tôi là người duy nhất đứng tên tác giả trong cả ba kho mã: các agent viết mã theo đặc tả của tôi, ${n(tot.agentCommits, "vi")} trên ${n(tot.commits, "vi")} commit qua ${n(tot.mergedPullRequests, "vi")} pull request đã gộp. Tôi tự học phát triển phần mềm song song với chương trình kinh tế.`,
 };
 
 // Traits shown on the CV's first page. Each is a claim the pages after it prove.
@@ -63,8 +62,8 @@ export const traits: { label: T; note: T }[] = [
   {
     label: { en: "Learns a new field fast", vi: "Tiếp thu lĩnh vực mới nhanh" },
     note: {
-      en: `Law, cash control, pay regulations, database security, face recognition: each learned from published sources, the law or the company's own regulation, when a system needed it, then turned into rules the code enforces. Kwook-career went through all ${n(kwc.roadmap.done, "en")} of its roadmap steps in ${n(kwcHistory.days, "en")} days.`,
-      vi: `Pháp luật, kiểm soát tiền mặt, quy chế tiền lương, bảo mật cơ sở dữ liệu, nhận diện khuôn mặt: mỗi lĩnh vực tôi tự nghiên cứu từ các nguồn đã công bố, văn bản pháp luật hay quy chế của doanh nghiệp, khi hệ thống cần, rồi chuyển thành quy tắc do mã nguồn bảo đảm. Kwook-career hoàn thành cả ${n(kwc.roadmap.done, "vi")} hạng mục lộ trình trong ${n(kwcHistory.days, "vi")} ngày.`,
+      en: `Law, cash control, pay regulations, database security, face recognition: each learned from published sources when a system needed it, then turned into rules the code enforces. Kwook-career went through all ${n(kwc.roadmap.done, "en")} of its roadmap steps in ${n(kwcHistory.days, "en")} days.`,
+      vi: `Pháp luật, kiểm soát tiền mặt, quy chế tiền lương, bảo mật cơ sở dữ liệu, nhận diện khuôn mặt: mỗi lĩnh vực tôi tự nghiên cứu từ nguồn đã công bố khi hệ thống cần, rồi chuyển thành quy tắc do mã nguồn bảo đảm. Kwook-career hoàn thành cả ${n(kwc.roadmap.done, "vi")} hạng mục lộ trình trong ${n(kwcHistory.days, "vi")} ngày.`,
     },
   },
   {
@@ -669,28 +668,28 @@ export const howIWork: { label: T; text: T }[] = [
     label: { en: "A written rulebook", vi: "Bộ quy tắc thành văn" },
     text: {
       en: "Every agent loads the same rules at the start of a session: scope, conventions, what needs my approval and what counts as done.",
-      vi: "Mọi agent đều nạp cùng một bộ quy tắc khi bắt đầu phiên làm việc: phạm vi, quy ước, những việc cần tôi phê duyệt và tiêu chí hoàn thành.",
+      vi: "Mọi agent nạp cùng một bộ quy tắc khi bắt đầu phiên: phạm vi, quy ước, việc cần tôi phê duyệt và tiêu chí hoàn thành.",
     },
   },
   {
     label: { en: "Plan before code", vi: "Lập kế hoạch trước khi viết mã" },
     text: {
       en: "Each change starts as a written plan with acceptance criteria. Building starts only after I approve it.",
-      vi: "Mỗi thay đổi bắt đầu bằng một kế hoạch có tiêu chí nghiệm thu rõ ràng. Việc triển khai chỉ bắt đầu sau khi tôi phê duyệt.",
+      vi: "Mỗi thay đổi bắt đầu bằng kế hoạch có tiêu chí nghiệm thu; chỉ triển khai sau khi tôi phê duyệt.",
     },
   },
   {
     label: { en: "Hooks that enforce it", vi: "Hook bảo đảm quy trình" },
     text: {
       en: "Hooks hold that order: until a plan is approved, an agent may read and plan, and its edits and commands are blocked.",
-      vi: "Các hook duy trì đúng trình tự đó: khi kế hoạch chưa được phê duyệt, agent chỉ được đọc và lập kế hoạch; các thao tác chỉnh sửa và chạy lệnh đều bị chặn.",
+      vi: "Hook giữ đúng trình tự đó: khi kế hoạch chưa được duyệt, agent chỉ được đọc và lập kế hoạch; chỉnh sửa và chạy lệnh đều bị chặn.",
     },
   },
   {
     label: { en: "Specialist reviewers", vi: "Agent rà soát chuyên trách" },
     text: {
       en: `Review agents check each change for security, code quality and scale: on Ops Platform ${n(ops.reviewAgents, "en")} of them sign off every change, alongside ${n(ops.skills, "en")} skills.`,
-      vi: `Các agent rà soát kiểm tra từng thay đổi về bảo mật, chất lượng mã và khả năng mở rộng: tại Ops Platform, ${n(ops.reviewAgents, "vi")} agent rà soát phê duyệt mọi thay đổi, cùng ${n(ops.skills, "vi")} skill.`,
+      vi: `Agent rà soát kiểm tra từng thay đổi về bảo mật, chất lượng mã và khả năng mở rộng: tại Ops Platform, ${n(ops.reviewAgents, "vi")} agent phê duyệt mọi thay đổi, cùng ${n(ops.skills, "vi")} skill.`,
     },
   },
   {
@@ -700,7 +699,7 @@ export const howIWork: { label: T; text: T }[] = [
     },
     text: {
       en: "Scripts hold back a pull request until the evidence exists: test results, step-by-step screenshots and a report I read myself.",
-      vi: "Các script chỉ cho phép mở pull request khi đã có đủ bằng chứng: kết quả kiểm thử, ảnh chụp màn hình từng bước và một báo cáo do chính tôi trực tiếp xem xét.",
+      vi: "Script chỉ cho mở pull request khi đủ bằng chứng: kết quả kiểm thử, ảnh chụp từng bước và báo cáo do tôi trực tiếp xem xét.",
     },
   },
   {
@@ -710,16 +709,12 @@ export const howIWork: { label: T; text: T }[] = [
     },
     text: {
       en: "CI is the last gate, and I merge by hand. Agents propose; they do not merge or deploy.",
-      vi: "CI là bước kiểm tra cuối cùng, và việc gộp mã do chính tôi thực hiện. Agent chỉ đề xuất, không tự động gộp mã hoặc triển khai.",
+      vi: "CI là bước kiểm tra cuối, và tôi trực tiếp gộp mã. Agent chỉ đề xuất, không tự gộp mã hay triển khai.",
     },
   },
 ];
 
 export const howIVerify: T[] = [
-  {
-    en: `Tests written to fail when the feature breaks: ${n(ops.testCases, "en")} test cases on Ops Platform, ${n(kwc.testCases, "en")} on Kwook-career, ${n(mau.testCases, "en")} on Mau Heritage Hub.`,
-    vi: `Kiểm thử được viết để phát hiện lỗi ngay khi tính năng gặp sự cố: ${n(ops.testCases, "vi")} ca kiểm thử trên Ops Platform, ${n(kwc.testCases, "vi")} trên Kwook-career, ${n(mau.testCases, "vi")} trên Mau Heritage Hub.`,
-  },
   {
     en: `Every database migration replayed on an empty Postgres in each test run (all ${n(mau.migrations, "en")} on Mau Heritage Hub), then the guarantees checked: append-only history, face consent, lawful pay.`,
     vi: `Mọi migration cơ sở dữ liệu được chạy lại trên một Postgres trống ở mỗi lần kiểm thử (toàn bộ ${n(mau.migrations, "vi")} migration của Mau Heritage Hub), sau đó kiểm tra các bảo đảm: lịch sử chỉ được ghi thêm, sự đồng ý sử dụng dữ liệu khuôn mặt, tiền lương đúng quy định pháp luật.`,
@@ -733,10 +728,6 @@ export const howIVerify: T[] = [
     vi: "Tôi kiểm tra trực tiếp sản phẩm thực tế chứ không chỉ dựa vào bản tóm tắt của agent: phần mã thay đổi (diff), kết quả kiểm thử và bản xem trước đang chạy.",
   },
   {
-    en: `Load proven before it is claimed: a ${n(opsScale.seededPeople, "en")}-person org seeded and checked in CI, and every save answering in under a second on a ${n(opsScale.subSecondSavePeople, "en")}-person sample org.`,
-    vi: `Khả năng chịu tải được kiểm chứng trước khi nêu trong tài liệu: dữ liệu mẫu ${n(opsScale.seededPeople, "vi")} người được nạp và kiểm tra trong CI, và mọi thao tác lưu đều phản hồi trong vòng dưới một giây trên tổ chức mẫu ${n(opsScale.subSecondSavePeople, "vi")} người.`,
-  },
-  {
     en: "Where output cannot be unit-tested, a read-back gate: for an AI-voiced course, every generated sentence was transcribed back and compared with the script, and failing takes were regenerated.",
     vi: "Với những kết quả không thể kiểm thử tự động, tôi áp dụng bước đối chiếu ngược (read-back): trong một khóa học lồng tiếng bằng AI, từng câu được chuyển lại thành văn bản để so với kịch bản, và những đoạn chưa đạt được tạo lại.",
   },
@@ -748,11 +739,11 @@ export const howIShip: { system: string; lines: T[] }[] = [
     lines: [
       {
         en: "Every change moves from a working branch to a pull request, into staging, then by a second pull request into main. Each pull request gets its own preview: an isolated database branch with the migrations applied, and its own URL.",
-        vi: "Mỗi thay đổi đi từ nhánh làm việc qua pull request vào môi trường staging, rồi qua một pull request thứ hai vào main. Mỗi pull request có bản xem trước riêng: một nhánh cơ sở dữ liệu độc lập đã áp dụng migration, kèm đường dẫn riêng.",
+        vi: "Mỗi thay đổi đi từ nhánh làm việc qua pull request vào staging, rồi qua pull request thứ hai vào main. Mỗi pull request có bản xem trước riêng: nhánh cơ sở dữ liệu độc lập đã áp dụng migration, kèm đường dẫn riêng.",
       },
       {
         en: `Staging deploys on merge; production sits behind a gate check, with rollback, nightly backup and scale-test workflows (${n(ops.workflowCount, "en")} workflows in all). Production is not live yet.`,
-        vi: `Staging được tự động triển khai khi gộp mã; production có bước kiểm tra cổng (gate check) trước khi phát hành, cùng các workflow hoàn tác (rollback), sao lưu hằng đêm và kiểm thử tải (tổng cộng ${n(ops.workflowCount, "vi")} workflow). Production hiện chưa đi vào vận hành.`,
+        vi: `Staging tự triển khai khi gộp mã; production có bước kiểm tra cổng (gate check), cùng các workflow hoàn tác, sao lưu hằng đêm và kiểm thử tải (tổng cộng ${n(ops.workflowCount, "vi")} workflow). Production chưa vận hành.`,
       },
     ],
   },
@@ -760,16 +751,16 @@ export const howIShip: { system: string; lines: T[] }[] = [
     system: "Mau Heritage Hub",
     lines: [
       {
-        en: "Live for a retail chain. Each pull request gets a preview link, labelled on every screen because the free tier shares the live database.",
-        vi: "Đang vận hành cho một chuỗi cửa hàng bán lẻ. Mỗi pull request có đường dẫn xem trước, được gắn nhãn trên mọi màn hình vì gói miễn phí dùng chung cơ sở dữ liệu đang vận hành.",
+        en: "Live for a retail chain. Each pull request gets a preview link that says on every screen it uses the live database, since database branching is not bought.",
+        vi: "Đang vận hành cho một chuỗi bán lẻ. Mỗi pull request có bản xem trước, ghi rõ trên mọi màn hình là đang dùng cơ sở dữ liệu thật vì chưa mua tính năng phân nhánh.",
       },
       {
         en: "Merging runs the migration workflow. Main is protected: lint, typecheck, tests, the database suite and the site build must all pass before a merge.",
-        vi: "Khi gộp mã, workflow migration tự động chạy. Nhánh main được bảo vệ: lint, kiểm tra kiểu (typecheck), kiểm thử, bộ kiểm thử cơ sở dữ liệu và bản dựng trang web đều phải đạt trước khi gộp.",
+        vi: "Khi gộp mã, workflow migration tự chạy. Nhánh main được bảo vệ: lint, typecheck, kiểm thử, bộ kiểm thử cơ sở dữ liệu và bản dựng trang web đều phải đạt trước khi gộp.",
       },
       {
         en: "Daily database backups kept for seven days on Supabase Pro, and a written restore procedure that re-applies any face withdrawn after the backup was taken.",
-        vi: "Sao lưu cơ sở dữ liệu hằng ngày, lưu giữ bảy ngày trên Supabase Pro, cùng quy trình khôi phục bằng văn bản, trong đó các yêu cầu rút dữ liệu khuôn mặt sau thời điểm sao lưu được áp dụng lại.",
+        vi: "Sao lưu cơ sở dữ liệu hằng ngày, giữ bảy ngày trên Supabase Pro; quy trình khôi phục bằng văn bản áp dụng lại các yêu cầu rút dữ liệu khuôn mặt sau thời điểm sao lưu.",
       },
     ],
   },
@@ -778,7 +769,7 @@ export const howIShip: { system: string; lines: T[] }[] = [
     lines: [
       {
         en: "Merging to main deploys the database and the site. Undoing a change means reverting its pull request; migrations only move forward.",
-        vi: "Khi gộp vào main, cơ sở dữ liệu và trang web được tự động triển khai. Hoàn tác bằng cách hoàn nguyên (revert) pull request tương ứng; migration chỉ áp dụng theo một chiều.",
+        vi: "Khi gộp vào main, cơ sở dữ liệu và trang web tự triển khai. Hoàn tác bằng cách revert pull request tương ứng; migration chỉ đi theo một chiều.",
       },
     ],
   },

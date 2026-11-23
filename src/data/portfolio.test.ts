@@ -155,7 +155,6 @@ describe("CV content", () => {
     })({ systems: metrics.systems, totals: metrics.totals }, "metrics");
     const s = metrics.systems;
     expect(s.opsPlatform.roadmap).not.toBeNull();
-    expect(s.opsPlatform.scale).not.toBeNull();
     expect(s.mauHeritageHub.history).not.toBeNull();
     expect(s.kwookCareer.history).not.toBeNull();
   });
