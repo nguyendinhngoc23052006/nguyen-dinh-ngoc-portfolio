@@ -3,7 +3,7 @@ import metrics from "./metrics.json";
 export const SITE_URL = "https://nguyendinhngoc.dev";
 
 export const heroSubhead =
-  "Solo developer: I design and build the systems a company runs on: people and records, face-recognition attendance, recruitment and payroll, on Supabase + Cloudflare, directing AI agents as my engineering team. Three of them have run real businesses.";
+  "Full-stack developer who builds apps tailored to the job, end to end: business platforms (people records, face-recognition attendance, recruiting, payroll), AI learning apps, computer vision in the browser, founder calculators, motion-rich portfolio sites and private-by-design browser tools. Solo, on React/TypeScript, Supabase and Cloudflare, directing AI agents as my engineering team. Three of my systems have run real businesses.";
 
 export const aboutIntro = `I study international economics at Foreign Trade University and taught myself the rest — production software, cloud infrastructure, AI-directed engineering. The combination isn't padding, it's leverage. Macroeconomic reasoning for the business case. Creative problem-solving for the jobs no template fits. Infrastructure-deep understanding of the systems the code actually runs on. All three in one head at once. Self-taught means I picked up every tool because I needed it, not because a syllabus said to — each system here needed a field I learned from published sources first: labour law, cash control, pay regulations, face recognition. I direct AI systems the way most developers use search: as an amplifier on the work, not a substitute for the understanding underneath. Most public projects here are live: open them. The systems companies run on are private, and I'll gladly walk you through them.`;
 
@@ -33,8 +33,8 @@ export const cvTitle: T = {
 };
 
 export const cvSummary: T = {
-  en: "Self-taught full-stack engineer and solo developer in Hanoi. I design and build the systems a business runs on: people records, face-recognition attendance, recruiting, shifts and payroll; three of them have run real companies. I build with Claude Code and own the design, data model, review and testing. I learn the business first: I ran the stores and wrote the procedures, and learned labour law, cash control and pay regulations to build them in.",
-  vi: "Kỹ sư full-stack tự học, phát triển độc lập, tại Hà Nội. Tôi thiết kế và xây dựng các hệ thống vận hành doanh nghiệp: hồ sơ nhân sự, chấm công nhận diện khuôn mặt, tuyển dụng, xếp ca và tính lương; ba hệ thống đã được đưa vào vận hành tại doanh nghiệp. Tôi phát triển cùng Claude Code và trực tiếp đảm nhận thiết kế, mô hình dữ liệu, rà soát và kiểm thử. Tôi tìm hiểu nghiệp vụ trước khi xây dựng: đã trực tiếp quản lý cửa hàng, soạn thảo quy trình, và nghiên cứu pháp luật lao động, kiểm soát tiền mặt, quy chế tiền lương.",
+  en: "Self-taught full-stack engineer and solo developer in Hanoi. I build apps tailored to what each client or business needs, end to end: operations platforms (people records, face-recognition attendance, recruiting, shifts and payroll), AI learning apps, computer vision, calculators and portfolio sites; three of my systems have run real companies. I build with Claude Code and own the design, data model, review and testing. I learn the business first: I ran the stores and wrote the procedures, and learned labour law, cash control and pay regulations to build them in.",
+  vi: "Kỹ sư full-stack tự học, phát triển độc lập, tại Hà Nội. Tôi xây dựng trọn vẹn các ứng dụng được thiết kế riêng theo nhu cầu của từng khách hàng và doanh nghiệp: nền tảng vận hành (hồ sơ nhân sự, chấm công nhận diện khuôn mặt, tuyển dụng, xếp ca và tính lương), ứng dụng học tập ứng dụng AI, thị giác máy tính, công cụ tính toán và website portfolio; ba hệ thống đã được đưa vào vận hành tại doanh nghiệp. Tôi phát triển cùng Claude Code và trực tiếp đảm nhận thiết kế, mô hình dữ liệu, rà soát và kiểm thử. Tôi tìm hiểu nghiệp vụ trước khi xây dựng: đã trực tiếp quản lý cửa hàng, soạn thảo quy trình, và nghiên cứu pháp luật lao động, kiểm soát tiền mặt, quy chế tiền lương.",
 };
 
 // How I work, condensed for the CV. The site's "How I work" section has the detail.
@@ -684,10 +684,11 @@ export const projects: Project[] = [
     },
     desc: "Bilingual scrollytelling portfolio where one silk thread is drawn live through every chapter: cocoon, journey route, globe, supply-chain network, guitar strings, contact knot. GSAP DrawSVG/MotionPath with Lenis, synthesised sound, hidden easter eggs, and every animation off for readers who prefer reduced motion.",
     tags: ["React", "TypeScript", "GSAP", "Lenis", "i18n", "Web Audio"],
+    url: "https://portfolio-for-ngoc-anh.pages.dev",
     source: "https://github.com/nguyendinhngoc23052006/Portfolio-for-Ngoc-Anh",
   },
   {
-    title: "Nguyễn Lê Khánh — portfolio",
+    title: "Nguyễn Lê Khanh — portfolio",
     line: {
       en: "Bilingual scrollytelling site; GSAP ScrollTrigger, i18n.",
       vi: "Portfolio song ngữ kể chuyện; GSAP ScrollTrigger, i18n.",
