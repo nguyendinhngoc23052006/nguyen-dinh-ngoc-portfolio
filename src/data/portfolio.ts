@@ -1,3 +1,5 @@
+import metrics from "./metrics.json";
+
 export const SITE_URL = "https://nguyendinhngoc.dev";
 
 export const heroSubhead =
@@ -14,6 +16,22 @@ export const aboutIntro =
 // ---------------------------------------------------------------------------
 export type Lang = "en" | "vi";
 export type T = Record<Lang, string>;
+
+// Every figure about the systems comes from metrics.json, written by
+// scripts/collect-metrics.mjs from the repositories themselves. Never type a
+// figure into the texts below; read it from metrics and format it with n().
+export const measuredOn = metrics.measuredOn;
+export const n = (x: number, lang: Lang) =>
+  x.toLocaleString(lang === "en" ? "en-US" : "vi-VN");
+// scripts/collect-metrics.mjs refuses to write metrics.json unless every field
+// read here (roadmap and scale for Ops Platform, history for the other two) exists.
+const ops = metrics.systems.opsPlatform;
+const mau = metrics.systems.mauHeritageHub;
+const kwc = metrics.systems.kwookCareer;
+const opsRoadmap = ops.roadmap;
+const opsScale = ops.scale;
+const kwcHistory = kwc.history;
+const mauHistory = mau.history;
 
 export const cvTitle: T = {
   en: "AI-native builder — internal systems on Supabase + Cloudflare",
@@ -57,12 +75,21 @@ export const traits: { label: T; note: T }[] = [
   },
 ];
 
+// Where a public project can be seen and read. `live` is left out until its
+// address is known; a guessed link that 404s is worse than none.
+export interface ProjectLinks {
+  live?: string;
+  source: string;
+}
+
 export interface CvWork {
   title: T;
   status: T;
   points: T[];
   tags: string[];
-  url?: string;
+  // Public projects only: the live site (when it has one) and the source.
+  // Ops Platform, Mau Heritage Hub and Kwook-career are private: never linked.
+  links?: ProjectLinks;
   // Private systems: what I can walk an interviewer through, shown on the site.
   discuss?: T[];
 }
@@ -97,8 +124,8 @@ export const cvWork: CvWork[] = [
         vi: "Quyền hạn đi theo sơ đồ tổ chức: quyền cấp cho chức danh và vị trí, mọi chính sách và màn hình dùng chung một hàm kiểm tra, có duyệt hai người, tách nhiệm vụ xung đột và quyền khẩn cấp.",
       },
       {
-        en: "108 shipped roadmap steps and 441 test files; onboarding a 10,000-person org proven in CI; deny-by-default row-level security; nothing deleted, with retention, legal hold and erasure.",
-        vi: "108 hạng mục đã hoàn thành và 441 tệp kiểm thử; nạp dữ liệu doanh nghiệp 10.000 người đã chứng minh trong CI; phân quyền theo dòng mặc định từ chối; không xóa dữ liệu, có lưu trữ theo hạn, phong tỏa pháp lý và xóa theo yêu cầu.",
+        en: `${n(opsRoadmap.done, "en")} roadmap steps shipped, ${n(ops.testCases, "en")} test cases in ${n(ops.testFiles, "en")} files; a ${n(opsScale.seededPeople, "en")}-person, ${n(opsScale.seededUnits, "en")}-unit org seeded and checked in CI; deny-by-default row-level security; nothing deleted, with retention, legal hold and erasure.`,
+        vi: `${n(opsRoadmap.done, "vi")} hạng mục lộ trình đã hoàn thành, ${n(ops.testCases, "vi")} ca kiểm thử trong ${n(ops.testFiles, "vi")} tệp; dữ liệu mẫu một tổ chức ${n(opsScale.seededPeople, "vi")} người, ${n(opsScale.seededUnits, "vi")} đơn vị được nạp và kiểm tra trong CI; phân quyền theo dòng mặc định từ chối truy cập; dữ liệu không bị xóa, kèm cơ chế lưu trữ theo thời hạn, phong tỏa pháp lý và xóa theo yêu cầu.`,
       },
     ],
     discuss: [
@@ -148,6 +175,10 @@ export const cvWork: CvWork[] = [
         en: "Schedules interviews (candidates pick a time from an email link, with reminders), fills contracts from the company's own Word forms with legal pay floors enforced, and deletes candidates' data on a schedule.",
         vi: "Xếp lịch phỏng vấn (ứng viên tự chọn giờ qua email, có nhắc lịch), điền hợp đồng từ mẫu Word của công ty với mức lương tối thiểu theo luật được kiểm tra, và tự xóa dữ liệu ứng viên theo hạn.",
       },
+      {
+        en: `Built in ${n(kwcHistory.days, "en")} days: ${n(kwcHistory.commits, "en")} commits and ${n(kwcHistory.mergedPullRequests, "en")} merged pull requests, ${n(kwc.testCases, "en")} test cases, ${n(kwc.migrations, "en")} database migrations.`,
+        vi: `Hoàn thành trong ${n(kwcHistory.days, "vi")} ngày: ${n(kwcHistory.commits, "vi")} commit và ${n(kwcHistory.mergedPullRequests, "vi")} pull request đã được gộp, ${n(kwc.testCases, "vi")} ca kiểm thử, ${n(kwc.migrations, "vi")} migration cơ sở dữ liệu.`,
+      },
     ],
     discuss: [
       {
@@ -185,6 +216,10 @@ export const cvWork: CvWork[] = [
         en: "The owner configures pay rules (KPI, meals, night, overtime and holiday pay at Labour Code minimums) and runs the monthly payroll with arrears; face data only with consent (Law 91/2025); nightly encrypted backups; every migration replayed in tests.",
         vi: "Chủ cửa hàng tự cấu hình quy tắc lương (KPI, ăn ca, làm đêm, tăng ca, ngày lễ theo mức tối thiểu của BLLĐ) và chạy kỳ lương có truy lĩnh; dữ liệu khuôn mặt chỉ khi có đồng ý (Luật 91/2025); sao lưu mã hóa hằng đêm; kiểm thử chạy lại mọi migration.",
       },
+      {
+        en: `${n(mauHistory.commits, "en")} commits and ${n(mauHistory.mergedPullRequests, "en")} merged pull requests; all ${n(mau.migrations, "en")} migrations replayed on an empty database in every test run; ${n(mau.testCases, "en")} test cases.`,
+        vi: `${n(mauHistory.commits, "vi")} commit và ${n(mauHistory.mergedPullRequests, "vi")} pull request đã được gộp; toàn bộ ${n(mau.migrations, "vi")} migration được chạy lại trên cơ sở dữ liệu trống ở mỗi lần kiểm thử; ${n(mau.testCases, "vi")} ca kiểm thử.`,
+      },
     ],
     discuss: [
       {
@@ -211,19 +246,25 @@ export const cvWork: CvWork[] = [
       },
     ],
     tags: ["OpenCV.js", "Computer vision", "TypeScript"],
-    url: "https://github.com/nguyendinhngoc23052006/demo-computer-vision-nhom-10",
+    links: {
+      source:
+        "https://github.com/nguyendinhngoc23052006/demo-computer-vision-nhom-10",
+    },
   },
 ];
 
 // More shipped projects, one line each on the CV (public, so linked).
-export const cvMore: { title: string; line: T; url: string }[] = [
+export const cvMore: { title: string; line: T; links: ProjectLinks }[] = [
   {
     title: "Nguyễn Ngọc Anh — portfolio",
     line: {
       en: "Bilingual scrollytelling site: one silk thread drawn live through every chapter (GSAP DrawSVG/MotionPath, Lenis), synthesised sound, hidden easter eggs, reduced-motion safe.",
       vi: "Portfolio kể chuyện theo cuộn trang, song ngữ: một sợi tơ vẽ xuyên suốt mọi chương (GSAP DrawSVG/MotionPath, Lenis), âm thanh tự tổng hợp, easter egg, an toàn với chế độ giảm chuyển động.",
     },
-    url: "https://github.com/nguyendinhngoc23052006/Portfolio-for-Ngoc-Anh",
+    links: {
+      source:
+        "https://github.com/nguyendinhngoc23052006/Portfolio-for-Ngoc-Anh",
+    },
   },
   {
     title: "Dinh Ngoc Edu",
@@ -231,7 +272,10 @@ export const cvMore: { title: string; line: T; url: string }[] = [
       en: "Upload a subject's materials and AI builds a Duolingo-style course with verified questions and mock tests; React + Supabase (Auth, Storage, Edge Functions, RLS).",
       vi: "Tải tài liệu môn học lên, AI tạo khóa học kiểu Duolingo với câu hỏi đã kiểm chứng và đề thi thử; React + Supabase (Auth, Storage, Edge Functions, RLS).",
     },
-    url: "https://dinhngocedu.vercel.app",
+    links: {
+      live: "https://dinhngocedu.vercel.app",
+      source: "https://github.com/nguyendinhngoc23052006/Dinh-Ngoc-Edu",
+    },
   },
   {
     title: "Nguyễn Lê Khánh — portfolio",
@@ -239,7 +283,11 @@ export const cvMore: { title: string; line: T; url: string }[] = [
       en: "Bilingual scrollytelling portfolio for a conservation-project candidate: nine narrative beats pinned to the scroll, GSAP ScrollTrigger, i18n with no copy in JSX.",
       vi: "Portfolio song ngữ kể chuyện theo cuộn trang cho ứng viên dự án bảo tồn: chín phân cảnh ghim theo cuộn, GSAP ScrollTrigger, đa ngôn ngữ không viết cứng chữ trong code.",
     },
-    url: "https://nguyen-le-khanh-portfolio.pages.dev",
+    links: {
+      live: "https://nguyen-le-khanh-portfolio.pages.dev",
+      source:
+        "https://github.com/nguyendinhngoc23052006/nguyen-le-khanh-portfolio",
+    },
   },
   {
     title: "saasmath",
@@ -247,7 +295,10 @@ export const cvMore: { title: string; line: T; url: string }[] = [
       en: "Calculators for SaaS founders (runway, burn multiple, LTV/CAC, dilution) with shareable URL state and cited formulas.",
       vi: "Bộ máy tính cho nhà sáng lập SaaS (runway, burn multiple, LTV/CAC, pha loãng cổ phần), chia sẻ kết quả qua đường link, công thức có trích nguồn.",
     },
-    url: "https://saasmath.pages.dev",
+    links: {
+      live: "https://saasmath.pages.dev",
+      source: "https://github.com/nguyendinhngoc23052006/saasmath",
+    },
   },
 ];
 
@@ -327,6 +378,141 @@ export const cvSkills: { group: T; items: string[] }[] = [
   },
 ];
 
+// ---------------------------------------------------------------------------
+// How I work, verify and ship. The orchestration setup itself is private: it is
+// described here only by the kind of mechanism, never named or linked.
+// ---------------------------------------------------------------------------
+export const howIWork: { label: T; text: T }[] = [
+  {
+    label: { en: "A written rulebook", vi: "Bộ quy tắc thành văn" },
+    text: {
+      en: "Every agent loads the same rules at the start of a session: scope, conventions, what needs my approval and what counts as done.",
+      vi: "Mọi agent đều nạp cùng một bộ quy tắc khi bắt đầu phiên làm việc: phạm vi, quy ước, những việc cần tôi phê duyệt và tiêu chí hoàn thành.",
+    },
+  },
+  {
+    label: { en: "Plan before code", vi: "Lập kế hoạch trước khi viết mã" },
+    text: {
+      en: "Each change starts as a written plan with acceptance criteria. Building starts only after I approve it.",
+      vi: "Mỗi thay đổi bắt đầu bằng một kế hoạch có tiêu chí nghiệm thu rõ ràng. Việc triển khai chỉ bắt đầu sau khi tôi phê duyệt.",
+    },
+  },
+  {
+    label: { en: "Hooks that enforce it", vi: "Hook bảo đảm quy trình" },
+    text: {
+      en: "Hooks hold that order: until a plan is approved, an agent may read and plan, and its edits and commands are blocked.",
+      vi: "Các hook duy trì đúng trình tự đó: khi kế hoạch chưa được phê duyệt, agent chỉ được đọc và lập kế hoạch; các thao tác chỉnh sửa và chạy lệnh đều bị chặn.",
+    },
+  },
+  {
+    label: { en: "Specialist reviewers", vi: "Agent rà soát chuyên trách" },
+    text: {
+      en: `Review agents check each change for security, code quality, scale and the accuracy of what it claims. Ops Platform runs ${n(ops.reviewAgents, "en")} of them alongside ${n(ops.skills, "en")} skills.`,
+      vi: `Các agent rà soát kiểm tra từng thay đổi về bảo mật, chất lượng mã, khả năng mở rộng và độ chính xác của nội dung được nêu. Riêng Ops Platform sử dụng ${n(ops.reviewAgents, "vi")} agent rà soát cùng ${n(ops.skills, "vi")} skill.`,
+    },
+  },
+  {
+    label: {
+      en: "Evidence before a pull request",
+      vi: "Mở pull request khi đã có bằng chứng",
+    },
+    text: {
+      en: "Scripts hold back a pull request until the evidence exists: test results, step-by-step screenshots and a report I read myself.",
+      vi: "Các script chỉ cho phép mở pull request khi đã có đủ bằng chứng: kết quả kiểm thử, ảnh chụp màn hình từng bước và một báo cáo do chính tôi trực tiếp xem xét.",
+    },
+  },
+  {
+    label: {
+      en: "A human merges",
+      vi: "Con người là người quyết định cuối cùng",
+    },
+    text: {
+      en: "CI is the last gate, and I merge by hand. Agents propose; they do not merge or deploy.",
+      vi: "CI là bước kiểm tra cuối cùng, và việc gộp mã do chính tôi thực hiện. Agent chỉ đề xuất, không tự động gộp mã hoặc triển khai.",
+    },
+  },
+];
+
+export const howIVerify: T[] = [
+  {
+    en: `Tests written to fail when the feature breaks: ${n(ops.testCases, "en")} test cases on Ops Platform, ${n(kwc.testCases, "en")} on Kwook-career, ${n(mau.testCases, "en")} on Mau Heritage Hub.`,
+    vi: `Kiểm thử được viết để phát hiện lỗi ngay khi tính năng gặp sự cố: ${n(ops.testCases, "vi")} ca kiểm thử trên Ops Platform, ${n(kwc.testCases, "vi")} trên Kwook-career, ${n(mau.testCases, "vi")} trên Mau Heritage Hub.`,
+  },
+  {
+    en: `Every database migration replayed on an empty Postgres in each test run (all ${n(mau.migrations, "en")} on Mau Heritage Hub), then the guarantees checked: append-only history, face consent, lawful pay.`,
+    vi: `Mọi migration cơ sở dữ liệu được chạy lại trên một Postgres trống ở mỗi lần kiểm thử (toàn bộ ${n(mau.migrations, "vi")} migration của Mau Heritage Hub), sau đó kiểm tra các bảo đảm: lịch sử chỉ được ghi thêm, sự đồng ý sử dụng dữ liệu khuôn mặt, tiền lương đúng quy định pháp luật.`,
+  },
+  {
+    en: "The whole app walked through in a real browser with Playwright, a screenshot at every step, collected into a report.",
+    vi: "Toàn bộ ứng dụng được chạy thử trên trình duyệt thật bằng Playwright, chụp ảnh ở từng bước và tổng hợp thành báo cáo.",
+  },
+  {
+    en: "I check the artefact, not the agent's summary: the diff, the test output, the running preview.",
+    vi: "Tôi kiểm tra trực tiếp sản phẩm thực tế chứ không chỉ dựa vào bản tóm tắt của agent: phần mã thay đổi (diff), kết quả kiểm thử và bản xem trước đang chạy.",
+  },
+  {
+    en: `Load proven before it is claimed: a ${n(opsScale.seededPeople, "en")}-person org seeded and checked in CI, and every save answering in under a second on a ${n(opsScale.subSecondSavePeople, "en")}-person sample org.`,
+    vi: `Khả năng chịu tải được kiểm chứng trước khi nêu trong tài liệu: dữ liệu mẫu ${n(opsScale.seededPeople, "vi")} người được nạp và kiểm tra trong CI, và mọi thao tác lưu đều phản hồi trong vòng dưới một giây trên tổ chức mẫu ${n(opsScale.subSecondSavePeople, "vi")} người.`,
+  },
+  {
+    en: "Where output cannot be unit-tested, a read-back gate: for an AI-voiced course, every generated sentence was transcribed back and compared with the script, and failing takes were regenerated.",
+    vi: "Với những kết quả không thể kiểm thử tự động, tôi áp dụng bước đối chiếu ngược (read-back): trong một khóa học lồng tiếng bằng AI, từng câu được chuyển lại thành văn bản để so với kịch bản, và những đoạn chưa đạt được tạo lại.",
+  },
+];
+
+export const howIShip: { system: string; lines: T[] }[] = [
+  {
+    system: "Ops Platform",
+    lines: [
+      {
+        en: "Every change moves from a working branch to a pull request, into staging, then by a second pull request into main. Each pull request gets its own preview: an isolated database branch with the migrations applied, and its own URL.",
+        vi: "Mỗi thay đổi đi từ nhánh làm việc qua pull request vào môi trường staging, rồi qua một pull request thứ hai vào main. Mỗi pull request có bản xem trước riêng: một nhánh cơ sở dữ liệu độc lập đã áp dụng migration, kèm đường dẫn riêng.",
+      },
+      {
+        en: `Staging deploys on merge; production sits behind a gate check, with rollback, nightly backup and scale-test workflows (${n(ops.workflowCount, "en")} workflows in all). Production is not live yet.`,
+        vi: `Staging được tự động triển khai khi gộp mã; production có bước kiểm tra cổng (gate check) trước khi phát hành, cùng các workflow hoàn tác (rollback), sao lưu hằng đêm và kiểm thử tải (tổng cộng ${n(ops.workflowCount, "vi")} workflow). Production hiện chưa đi vào vận hành.`,
+      },
+    ],
+  },
+  {
+    system: "Mau Heritage Hub",
+    lines: [
+      {
+        en: "Live for a retail chain. Each pull request gets a preview link, labelled on every screen because the free tier shares the live database.",
+        vi: "Đang vận hành cho một chuỗi cửa hàng bán lẻ. Mỗi pull request có đường dẫn xem trước, được gắn nhãn trên mọi màn hình vì gói miễn phí dùng chung cơ sở dữ liệu đang vận hành.",
+      },
+      {
+        en: "Merging runs the migration workflow. Main is protected: lint, typecheck, tests, the database suite and the site build must all pass before a merge.",
+        vi: "Khi gộp mã, workflow migration được tự động chạy. Nhánh main được bảo vệ: lint, kiểm tra kiểu (typecheck), kiểm thử, bộ kiểm thử cơ sở dữ liệu và bản dựng trang web đều phải đạt yêu cầu trước khi được gộp.",
+      },
+      {
+        en: "An encrypted backup every night that emails on failure, a written restore procedure, and face data deliberately kept out of backups.",
+        vi: "Sao lưu mã hóa hằng đêm, tự động gửi email khi xảy ra lỗi; quy trình khôi phục được lập thành văn bản; dữ liệu khuôn mặt được chủ động loại khỏi bản sao lưu.",
+      },
+    ],
+  },
+  {
+    system: "Kwook-career",
+    lines: [
+      {
+        en: "Merging to main deploys the database and the site. Undoing a change means reverting its pull request; migrations only move forward.",
+        vi: "Khi gộp vào main, cơ sở dữ liệu và trang web được tự động triển khai. Việc hoàn tác được thực hiện bằng cách hoàn nguyên (revert) pull request tương ứng; migration chỉ được áp dụng theo một chiều tiến.",
+      },
+    ],
+  },
+];
+
+export const shipRules: T[] = [
+  {
+    en: "Schema changes only as migration files, and an applied migration is never edited.",
+    vi: "Mọi thay đổi cấu trúc dữ liệu chỉ được thực hiện qua tệp migration; migration đã áp dụng không được chỉnh sửa.",
+  },
+  {
+    en: "Row-level security denies by default; secrets stay on the server.",
+    vi: "Phân quyền theo dòng (row-level security) mặc định từ chối truy cập; khóa bí mật chỉ được lưu trên máy chủ.",
+  },
+];
+
 export const projectsHeading = "More things I shipped";
 export const projectsSubhead =
   "Public sites and tools. Open them, or read the source on GitHub.";
@@ -335,6 +521,7 @@ export const projectsTail =
 
 export const navLinks = [
   { href: "#work", label: "Work" },
+  { href: "#method", label: "How I work" },
   { href: "#projects", label: "Projects" },
   { href: "#about", label: "About" },
   { href: "#skills", label: "Skills" },
@@ -348,8 +535,8 @@ export const stats = [
     label: "Built alone and run by real companies",
   },
   {
-    number: "108 steps",
-    label: "Shipped on Ops Platform, covered by 441 test files",
+    number: `${n(opsRoadmap.done, "en")} steps`,
+    label: `Shipped on Ops Platform, covered by ${n(ops.testCases, "en")} test cases`,
   },
   {
     number: "123 people",
@@ -391,7 +578,6 @@ export const projects: Project[] = [
     desc: "Bilingual scrollytelling portfolio where one silk thread is drawn live through every chapter: cocoon, journey route, globe, supply-chain network, guitar strings, contact knot. GSAP DrawSVG/MotionPath with Lenis, synthesised sound, hidden easter eggs, and every animation off for readers who prefer reduced motion.",
     tags: ["React", "TypeScript", "GSAP", "Lenis", "i18n", "Web Audio"],
     source: "https://github.com/nguyendinhngoc23052006/Portfolio-for-Ngoc-Anh",
-    url: "https://github.com/nguyendinhngoc23052006/Portfolio-for-Ngoc-Anh",
   },
   {
     num: "02",

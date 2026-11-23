@@ -8,13 +8,18 @@ import {
   cvSkills,
   cvWork,
   heroSubhead,
+  howIShip,
+  howIVerify,
+  howIWork,
   inTheWorks,
+  measuredOn,
   navLinks,
   projects,
   projectsHeading,
   projectsSubhead,
   projectsTail,
   SITE_URL,
+  shipRules,
   stats,
   traits,
 } from "../data/portfolio";
@@ -157,7 +162,7 @@ const jsonLd = JSON.stringify({
                 <article class="rounded-sm border border-border/60 bg-card p-6">
                   <p class="text-xs font-medium uppercase tracking-widest text-accent">{w.status.en}</p>
                   <h3 class="mt-3 font-semibold tracking-tight">
-                    {w.url ? <a href={w.url} target="_blank" rel="noopener noreferrer" class="hover:underline">{w.title.en} <span class="text-accent" aria-hidden="true">↗</span></a> : w.title.en}
+                    {w.title.en}
                   </h3>
                   <ul class="mt-3 list-disc space-y-1.5 pl-5 text-sm text-muted-foreground leading-relaxed">
                     {w.points.map((p) => <li>{p.en}</li>)}
@@ -169,6 +174,12 @@ const jsonLd = JSON.stringify({
                         {w.discuss.map((d) => <li>{d.en}</li>)}
                       </ul>
                     </div>
+                  )}
+                  {w.links && (
+                    <p class="mt-4 flex gap-4 text-sm">
+                      {w.links.live && <a href={w.links.live} target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">Live ↗</a>}
+                      <a href={w.links.source} target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">GitHub ↗</a>
+                    </p>
                   )}
                   <div class="mt-4 flex flex-wrap gap-1.5">
                     {w.tags.map((t) => (
@@ -192,6 +203,43 @@ const jsonLd = JSON.stringify({
           </div>
         </section>
 
+        {/* ── HOW I WORK: method, verification, shipping ── */}
+        <section id="method" class="border-t border-border/40 bg-card/50 py-20 sm:py-28">
+          <div class="mx-auto max-w-5xl px-6">
+            <p class="section-label">How I work</p>
+            <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">AI agents build. Gates decide what ships.</h2>
+            <p class="mt-3 max-w-2xl text-muted-foreground">I direct AI coding agents through a process that does not rely on trusting them: a plan I approve, hooks that enforce it, specialist reviewers, evidence before every pull request, and a human merge.</p>
+            <ol class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {howIWork.map((h, i) => (
+                <li class="rounded-sm border border-border/60 bg-card p-5">
+                  <p class="text-xs font-medium uppercase tracking-widest text-accent">Step {i + 1}</p>
+                  <h3 class="mt-2 font-semibold tracking-tight">{h.label.en}</h3>
+                  <p class="mt-2 text-sm text-muted-foreground leading-relaxed">{h.text.en}</p>
+                </li>
+              ))}
+            </ol>
+
+            <h3 class="mt-14 text-xl font-bold tracking-tight">How I know the agent did what it says</h3>
+            <ul class="mt-4 list-disc space-y-2 pl-5 text-sm leading-relaxed text-muted-foreground max-w-3xl">
+              {howIVerify.map((v) => <li>{v.en}</li>)}
+            </ul>
+
+            <h3 class="mt-14 text-xl font-bold tracking-tight">How I ship</h3>
+            <div class="mt-6 grid gap-4 lg:grid-cols-3">
+              {howIShip.map((x) => (
+                <article class="rounded-sm border border-border/60 bg-card p-5">
+                  <h4 class="font-semibold tracking-tight">{x.system}</h4>
+                  <ul class="mt-2 list-disc space-y-1.5 pl-5 text-sm text-muted-foreground leading-relaxed">
+                    {x.lines.map((l) => <li>{l.en}</li>)}
+                  </ul>
+                </article>
+              ))}
+            </div>
+            <p class="mt-4 text-sm text-muted-foreground">On every system: {shipRules.map((r) => r.en).join(" ")}</p>
+            <p class="mt-6 text-xs text-muted-foreground">Figures measured from the repositories on {measuredOn}.</p>
+          </div>
+        </section>
+
         {/* ── PROJECTS (proof-first — moved above About) ── */}
         <section id="projects" class="border-t border-border/40 py-20 sm:py-28">
           <div class="mx-auto max-w-5xl px-6">
@@ -200,16 +248,13 @@ const jsonLd = JSON.stringify({
             <p class="mt-3 max-w-2xl text-muted-foreground">{projectsSubhead}</p>
 
             <div class="mt-10 grid gap-4 sm:grid-cols-3">
-              {projects.map(({ num, title, desc, tags, status, url }) => {
+              {projects.map(({ num, title, desc, tags, status, url, source }) => {
                 const shipped = status === "shipped";
-                const Tag = url ? "a" : "div";
-                const tagProps = url ? { href: url, target: "_blank", rel: "noopener noreferrer" } : {};
                 return (
-                  <Tag
-                    {...tagProps}
+                  <div
                     class:list={[
                       "group relative block rounded-sm border bg-card p-6 transition-colors",
-                      url ? "border-border/60 hover:border-accent" : "border-border/60",
+                      "border-border/60",
                     ]}
                   >
                     <span class="text-4xl font-black text-muted-foreground select-none" aria-hidden="true">{num}</span>
@@ -219,11 +264,10 @@ const jsonLd = JSON.stringify({
                         shipped ? "text-accent" : "text-muted-foreground",
                       ]}
                     >
-                      {shipped ? "Live" : "Source"}
+                      {url ? "Live" : "Source"}
                     </p>
                     <h3 class="mt-3 font-semibold tracking-tight">
                       {title}
-                      {url && <span class="ml-1 text-accent" aria-hidden="true">↗</span>}
                     </h3>
                     <p class="mt-2 text-sm text-muted-foreground leading-relaxed">{desc}</p>
                     <div class="mt-4 flex flex-wrap gap-1.5">
@@ -233,7 +277,13 @@ const jsonLd = JSON.stringify({
                         </span>
                       ))}
                     </div>
-                  </Tag>
+                    {(url || source) && (
+                      <p class="mt-4 flex gap-4 text-sm">
+                        {url && <a href={url} target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">Live ↗</a>}
+                        {source && <a href={source} target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">GitHub ↗</a>}
+                      </p>
+                    )}
+                  </div>
                 );
               })}
             </div>
