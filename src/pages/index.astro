@@ -4,9 +4,9 @@ import MobileNav from "../components/MobileNav";
 import ThemeToggle from "../components/ThemeToggle";
 import {
   aboutIntro,
+  caseStudies,
   contactInfo,
   cvSkills,
-  cvWork,
   heroSubhead,
   howIShip,
   howIVerify,
@@ -155,38 +155,19 @@ const jsonLd = JSON.stringify({
         <section id="work" class="border-t border-border/40 py-20 sm:py-28">
           <div class="mx-auto max-w-5xl px-6">
             <p class="section-label">Work</p>
-            <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Systems I built</h2>
-            <p class="mt-3 max-w-2xl text-muted-foreground">Internal systems run on private company data, so they are described here rather than linked. Ask me and I'll walk you through any of them in an interview.</p>
-            <div class="mt-10 grid gap-4 lg:grid-cols-2">
-              {cvWork.map((w) => (
-                <article class="rounded-sm border border-border/60 bg-card p-6">
-                  <p class="text-xs font-medium uppercase tracking-widest text-accent">{w.status.en}</p>
-                  <h3 class="mt-3 font-semibold tracking-tight">
-                    {w.title.en}
-                  </h3>
-                  <ul class="mt-3 list-disc space-y-1.5 pl-5 text-sm text-muted-foreground leading-relaxed">
-                    {w.points.map((p) => <li>{p.en}</li>)}
+            <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Systems I designed and built alone</h2>
+            <p class="mt-3 max-w-2xl text-muted-foreground">Each began inside a business I worked in. They run on private company data, so each is told as a design: the problem, the model, the decisions, what is built and what proves it.</p>
+            <div class="mt-10 grid gap-4 lg:grid-cols-3">
+              {caseStudies.map((c) => (
+                <a href={`/work/${c.slug}`} class="group flex flex-col rounded-sm border border-border/60 bg-card p-6 transition-colors hover:border-accent">
+                  <p class="text-xs font-medium uppercase tracking-widest text-accent">{c.status.en}</p>
+                  <h3 class="mt-3 text-lg font-semibold tracking-tight">{c.name}</h3>
+                  <p class="mt-2 text-sm leading-relaxed">{c.tagline.en}</p>
+                  <ul class="mt-4 space-y-1 text-sm text-muted-foreground">
+                    {c.decisions.map((d) => <li>— {d.label.en}</li>)}
                   </ul>
-                  {w.discuss && (
-                    <div class="mt-4 rounded-sm border-l-2 border-accent bg-secondary/30 px-3 py-2">
-                      <p class="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">Private system · happy to walk you through</p>
-                      <ul class="mt-1 list-disc space-y-0.5 pl-5 text-sm leading-relaxed">
-                        {w.discuss.map((d) => <li>{d.en}</li>)}
-                      </ul>
-                    </div>
-                  )}
-                  {w.links && (
-                    <p class="mt-4 flex gap-4 text-sm">
-                      {w.links.live && <a href={w.links.live} target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">Live ↗</a>}
-                      <a href={w.links.source} target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">GitHub ↗</a>
-                    </p>
-                  )}
-                  <div class="mt-4 flex flex-wrap gap-1.5">
-                    {w.tags.map((t) => (
-                      <span class="rounded-sm border border-border/60 bg-muted px-2 py-0.5 text-[11px] font-medium text-muted-foreground">{t}</span>
-                    ))}
-                  </div>
-                </article>
+                  <p class="mt-auto pt-5 text-sm font-medium text-accent group-hover:underline">Read the case study →</p>
+                </a>
               ))}
             </div>
             <h3 class="mt-14 text-xl font-bold tracking-tight">In the works</h3>

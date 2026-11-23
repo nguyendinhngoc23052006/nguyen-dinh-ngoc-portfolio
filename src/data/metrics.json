@@ -2,44 +2,99 @@
   "measuredOn": "2026-11-23",
   "systems": {
     "opsPlatform": {
-      "testFiles": 221,
-      "testCases": 1646,
-      "migrations": 3,
+      "testFiles": 224,
+      "testCases": 1675,
+      "sqlTestSuites": 212,
+      "design": {
+        "faceMatch": {
+          "people": 10000,
+          "ms": 100
+        },
+        "events": {
+          "perSecond": 1200
+        },
+        "onboarding": {
+          "people": 10055
+        },
+        "links": {
+          "count": 100000,
+          "ms": 40
+        },
+        "quorum": {
+          "max": 9
+        },
+        "breakGlass": {
+          "maxHours": 12
+        },
+        "removalWait": {
+          "days": 7
+        }
+      },
+      "migrations": 7,
       "workflowCount": 10,
-      "reviewAgents": 8,
+      "reviewAgents": 0,
       "skills": 10,
       "roadmap": {
-        "done": 108,
-        "open": 185
+        "done": 112,
+        "open": 183
       },
       "scale": {
         "seededPeople": 10000,
         "seededUnits": 1500,
         "subSecondSavePeople": 30000
       },
-      "history": null
+      "history": {
+        "commits": 158,
+        "mergedPullRequests": 11,
+        "days": 11,
+        "humanAuthors": 1,
+        "agentCommits": 146
+      }
     },
     "mauHeritageHub": {
       "testFiles": 39,
       "testCases": 253,
+      "sqlTestSuites": 33,
+      "design": {
+        "compensationCap": {
+          "percent": 30
+        }
+      },
       "migrations": 42,
-      "workflowCount": 3,
+      "workflowCount": 2,
       "reviewAgents": 0,
-      "skills": 0,
+      "skills": 10,
       "roadmap": {
-        "done": 66,
-        "open": 5
+        "done": 67,
+        "open": 9
       },
       "scale": null,
       "history": {
-        "commits": 176,
-        "mergedPullRequests": 42,
-        "days": 44
+        "commits": 180,
+        "mergedPullRequests": 46,
+        "days": 51,
+        "humanAuthors": 1,
+        "agentCommits": 134
       }
     },
     "kwookCareer": {
       "testFiles": 45,
       "testCases": 258,
+      "sqlTestSuites": 0,
+      "design": {
+        "rejectedCvKept": {
+          "days": 14
+        },
+        "closedJobCvKept": {
+          "months": 6
+        },
+        "blockingLine": {
+          "percent": 80
+        },
+        "probationPay": {
+          "percent": 85
+        }
+      },
       "migrations": 32,
       "workflowCount": 1,
       "reviewAgents": 0,
@@ -52,8 +107,16 @@
       "history": {
         "commits": 201,
         "mergedPullRequests": 89,
-        "days": 32
+        "days": 32,
+        "humanAuthors": 1,
+        "agentCommits": 112
       }
     }
+  },
+  "totals": {
+    "commits": 539,
+    "agentCommits": 392,
+    "mergedPullRequests": 146,
+    "humanAuthors": 1
   }
 }

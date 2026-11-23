@@ -4,12 +4,12 @@ import metrics from "./metrics.json";
 import * as portfolio from "./portfolio";
 import {
   aboutIntro,
+  caseStudies,
   contactInfo,
   cvMore,
   cvSkills,
   cvSummary,
   cvTitle,
-  cvWork,
   education,
   experience,
   heroSubhead,
@@ -30,11 +30,16 @@ const texts: T[] = [
   cvTitle,
   cvSummary,
   ...traits.flatMap((t) => [t.label, t.note]),
-  ...cvWork.flatMap((w) => [
-    w.title,
-    w.status,
-    ...w.points,
-    ...(w.discuss ?? []),
+  ...caseStudies.flatMap((c) => [
+    c.tagline,
+    c.status,
+    c.problem,
+    c.idea,
+    ...c.decisions.flatMap((d) => [d.label, d.text]),
+    ...c.built,
+    ...c.proof,
+    c.notYet,
+    ...c.discuss,
   ]),
   ...inTheWorks.flatMap((x) => [x.title, x.line]),
   ...cvMore.map((m) => m.line),
@@ -58,6 +63,7 @@ const ALLOWED_FIGURES = new Set([
   "09",
   "11",
   "2026", // employment periods, e.g. 09/2026 – 11/2026
+  "1", // "a quorum of 1 to 9" (the lower bound of a measured range)
 ]);
 const measuredFigures = { en: new Set<string>(), vi: new Set<string>() };
 (function collect(v: unknown): void {
@@ -65,7 +71,7 @@ const measuredFigures = { en: new Set<string>(), vi: new Set<string>() };
     for (const lang of ["en", "vi"] as const)
       measuredFigures[lang].add(n(v, lang));
   else if (v && typeof v === "object") Object.values(v).forEach(collect);
-})(metrics.systems);
+})({ systems: metrics.systems, totals: metrics.totals });
 for (const lang of ["en", "vi"] as const)
   measuredFigures[lang].add(n(Object.keys(metrics.systems).length, lang));
 
@@ -105,7 +111,6 @@ describe("CV content", () => {
 
   it("links only to public https pages", () => {
     const urls = [
-      ...cvWork.flatMap((w) => (w.links ? [w.links.live, w.links.source] : [])),
       ...cvMore.flatMap((m) => [m.links.live, m.links.source]),
       contactInfo.github,
     ].filter((u): u is string => Boolean(u));
@@ -147,7 +152,7 @@ describe("CV content", () => {
       throw new Error(
         `${path} is ${JSON.stringify(v)}: only counts may be published`,
       );
-    })(metrics.systems, "systems");
+    })({ systems: metrics.systems, totals: metrics.totals }, "metrics");
     const s = metrics.systems;
     expect(s.opsPlatform.roadmap).not.toBeNull();
     expect(s.opsPlatform.scale).not.toBeNull();
@@ -163,14 +168,25 @@ describe("CV content", () => {
   // Ops Platform, Mau Heritage Hub and Kwook-career run on private company
   // data: described, never linked. Every public project links its source.
   it("links every public project's source and no private system", () => {
-    for (const w of cvWork) {
-      const isPrivate = Boolean(w.discuss);
-      expect(Boolean(w.links), w.title.en).toBe(!isPrivate);
-    }
+    for (const c of caseStudies)
+      expect(JSON.stringify(c), c.name).not.toMatch(/https?:\/\//);
     for (const m of cvMore)
       expect(m.links.source).toMatch(/^https:\/\/github\.com\//);
-    for (const w of cvWork)
-      if (w.links) expect(w.links.source).toMatch(/^https:\/\/github\.com\//);
+  });
+
+  // Every design claim names where in its system's own documents it comes
+  // from, so a reviewer can check it line by line.
+  it("cites a source for every design claim", () => {
+    for (const c of caseStudies)
+      for (const claim of [
+        c.problem,
+        c.idea,
+        ...c.decisions.map((d) => d.text),
+        ...c.built,
+        ...c.proof,
+        c.notYet,
+      ])
+        expect(claim.src, claim.en).toMatch(/^(goals|roadmap|metrics)\b/);
   });
 
   it("names a reachable contact", () => {

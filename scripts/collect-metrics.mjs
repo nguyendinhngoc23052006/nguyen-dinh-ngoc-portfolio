@@ -14,9 +14,68 @@ import { join, resolve } from "node:path";
 
 const base = resolve(process.argv[2] ?? "..");
 const repos = {
-  opsPlatform: { dir: "ops-platform", needs: ["roadmap", "scale"] },
+  opsPlatform: { dir: "ops-platform", needs: ["roadmap", "scale", "history"] },
   mauHeritageHub: { dir: "mau-heritage-hub", needs: ["history"] },
   kwookCareer: { dir: "kwook-career", needs: ["history"] },
+};
+// Design figures the CV quotes, read from each system's own design documents:
+// a completed roadmap step ("- [x]") or goals.md. Each pattern captures the
+// figures exactly as written there; if a phrase changes, collection fails
+// instead of publishing a stale number.
+const designFacts = {
+  opsPlatform: [
+    [
+      "faceMatch",
+      "roadmap",
+      /(\d[\d,]*)-person org exactly, with the same cut-off, margin and scope, in under (\d+) ms/,
+      ["people", "ms"],
+    ],
+    [
+      "events",
+      "roadmap",
+      /sustained (\d[\d,]*) events a second/,
+      ["perSecond"],
+    ],
+    [
+      "onboarding",
+      "roadmap",
+      /then (\d[\d,]*) people seated in six pastes/,
+      ["people"],
+    ],
+    [
+      "links",
+      "roadmap",
+      /(\d[\d,]*) ended links read a page in about (\d+) ms/,
+      ["count", "ms"],
+    ],
+    ["quorum", "roadmap", /1 to (\d+) other people's confirmation/, ["max"]],
+    ["breakGlass", "roadmap", /for 1 to (\d+) hours/, ["maxHours"]],
+    ["removalWait", "roadmap", /platform's (\d+)-day wait/, ["days"]],
+  ],
+  mauHeritageHub: [
+    [
+      "compensationCap",
+      "roadmap",
+      /deducted at most (\d+)% of pay/,
+      ["percent"],
+    ],
+  ],
+  kwookCareer: [
+    [
+      "rejectedCvKept",
+      "roadmap",
+      /rejected CV's file is deleted (\d+) days after/,
+      ["days"],
+    ],
+    [
+      "closedJobCvKept",
+      "roadmap",
+      /CVs are deleted (\d+) months after it closes/,
+      ["months"],
+    ],
+    ["blockingLine", "roadmap", /(\d+)% or more/, ["percent"]],
+    ["probationPay", "goals", /probation pay at least (\d+)%/, ["percent"]],
+  ],
 };
 const git = (dir, ...a) =>
   execFileSync("git", ["-C", dir, ...a], {
@@ -29,7 +88,7 @@ const fail = (msg) => {
   throw new Error(`collect-metrics: ${msg}`);
 };
 
-function measure(dir) {
+function measure(dir, repoKey) {
   if (git(dir, "status", "--porcelain"))
     fail(`${dir} has uncommitted changes; measure a clean tree`);
   const files = git(dir, "ls-tree", "-r", "--name-only", "HEAD")
@@ -86,6 +145,7 @@ function measure(dir) {
   const shallow = git(dir, "rev-parse", "--is-shallow-repository") === "true";
   const commits = Number(git(dir, "rev-list", "--count", "HEAD"));
   let history = null;
+  let people = new Set();
   if (!shallow && commits > 1) {
     const subjects = git(dir, "log", "--format=%s");
     const prs = new Set(
@@ -94,8 +154,37 @@ function measure(dir) {
     const dates = git(dir, "log", "--format=%as").split("\n").sort();
     const days =
       Math.round((Date.parse(dates.at(-1)) - Date.parse(dates[0])) / 864e5) + 1;
-    history = { commits, mergedPullRequests: prs, days };
+    // Who wrote the commits: people, versus the agents they directed. Bots
+    // (Dependabot, Actions) are neither.
+    const authors = git(dir, "log", "--format=%ae").split("\n");
+    const agent = (e) => e === "noreply@anthropic.com";
+    people = new Set(authors.filter((e) => !agent(e) && !e.includes("[bot]")));
+    const humanAuthors = people.size;
+    const agentCommits = authors.filter(agent).length;
+    history = {
+      commits,
+      mergedPullRequests: prs,
+      days,
+      humanAuthors,
+      agentCommits,
+    };
   }
+  const goalsPath = "goals-and-roadmap/goals.md";
+  const sources = {
+    roadmap: doneText,
+    goals: files.includes(goalsPath) ? show(dir, goalsPath) : "",
+  };
+  const design = {};
+  for (const [key, where, re, names] of designFacts[repoKey] ?? []) {
+    const m = sources[where].match(re);
+    if (!m) fail(`${dir}: design fact "${key}" not found in ${where}`);
+    design[key] = Object.fromEntries(
+      names.map((name, i) => [name, num(m[i + 1])]),
+    );
+  }
+  const sqlTestSuites = files.filter((f) =>
+    /^supabase\/tests\/[^/]+\.test\.sql$/.test(f),
+  ).length;
   const provenance = {
     repo: git(dir, "remote", "get-url", "origin").replace(
       /^.*github\.com[/:]|\.git$/g,
@@ -103,11 +192,14 @@ function measure(dir) {
     ),
     branch: git(dir, "rev-parse", "--abbrev-ref", "HEAD"),
     commit: git(dir, "rev-parse", "--short", "HEAD"),
+    people,
   };
   return {
     metrics: {
       testFiles: codeTests.length,
       testCases,
+      sqlTestSuites,
+      design,
       migrations,
       workflowCount,
       reviewAgents,
@@ -120,18 +212,34 @@ function measure(dir) {
   };
 }
 
-const out = { measuredOn: new Date().toISOString().slice(0, 10), systems: {} };
+const out = {
+  measuredOn: new Date().toISOString().slice(0, 10),
+  systems: {},
+  totals: {},
+};
+const people = new Set();
 for (const [key, { dir: name, needs }] of Object.entries(repos)) {
   const dir = join(base, name);
   if (!existsSync(join(dir, ".git"))) fail(`missing checkout ${dir}`);
-  const { metrics, provenance } = measure(dir);
+  const { metrics, provenance } = measure(dir, key);
   for (const field of needs)
     if (metrics[field] == null) fail(`${name}: ${field} could not be measured`);
   out.systems[key] = metrics;
+  for (const p of provenance.people) people.add(p);
   console.log(
     `${key}: ${provenance.repo} @ ${provenance.branch} ${provenance.commit}`,
   );
 }
+// Across the three systems: commits, the agents' share, merged pull requests,
+// and how many different people wrote any of it.
+const sum = (f) =>
+  Object.values(out.systems).reduce((a, m) => a + m.history[f], 0);
+out.totals = {
+  commits: sum("commits"),
+  agentCommits: sum("agentCommits"),
+  mergedPullRequests: sum("mergedPullRequests"),
+  humanAuthors: people.size,
+};
 writeFileSync(
   new URL("../src/data/metrics.json", import.meta.url),
   `${JSON.stringify(out, null, 2)}\n`,

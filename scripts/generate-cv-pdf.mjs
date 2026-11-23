@@ -19,14 +19,17 @@ const TARGETS = [
   { url: `http://127.0.0.1:${PORT}/cv/vi/`, out: "dist/client/jade-cv-vi.pdf" },
 ];
 
-// A4 = 297mm tall. Print margins are 12mm top + 12mm bottom (globals.css @page).
-// Usable content height per page = 273mm; we allow up to 4 pages.
-// At 96 CSS pixels per inch: usable-per-page ≈ 1032 CSS px, 4-page ≈ 4128 CSS px.
+// A4 = 297mm tall. Print margins: MARGIN_MM below, the same as globals.css @page.
+// Usable content height per page = 297mm minus both margins; at 96 CSS pixels
+// per inch that is about 3.78 CSS px per mm.
 // We warn early (browser-side) and hard-fail late (page count in the emitted PDF).
 // Four-page ceiling: room for the work, the method, verification and shipping;
 // a CV that keeps growing past four isn't.
 const MAX_PAGES = 4;
-const USABLE_HEIGHT_CSS_PX = Math.round(MAX_PAGES * (297 - 12 - 12) * 3.7795);
+const MARGIN_MM = { y: 10, x: 14 };
+const USABLE_HEIGHT_CSS_PX = Math.round(
+  MAX_PAGES * (297 - 2 * MARGIN_MM.y) * 3.7795,
+);
 
 async function waitForServer(url, timeoutMs = 30_000) {
   const deadline = Date.now() + timeoutMs;
@@ -103,7 +106,12 @@ async function main() {
       await page.pdf({
         path: OUT_PATH,
         format: "A4",
-        margin: { top: "12mm", right: "16mm", bottom: "12mm", left: "16mm" },
+        margin: {
+          top: `${MARGIN_MM.y}mm`,
+          right: `${MARGIN_MM.x}mm`,
+          bottom: `${MARGIN_MM.y}mm`,
+          left: `${MARGIN_MM.x}mm`,
+        },
         printBackground: true,
       });
       // Authoritative check: fail the build if the emitted PDF is more than one page.
