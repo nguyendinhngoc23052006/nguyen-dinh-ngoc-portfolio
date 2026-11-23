@@ -5,7 +5,7 @@ export const SITE_URL = "https://nguyendinhngoc.dev";
 export const heroSubhead =
   "I design and build, alone, the systems a company runs on: people and records, face-recognition attendance, recruitment and payroll, on Supabase + Cloudflare, directing AI agents as my engineering team. Three of them have run real businesses.";
 
-export const aboutIntro = `I study international economics at Foreign Trade University and taught myself the rest — production software, cloud infrastructure, AI-directed engineering. The combination isn't padding, it's leverage. Macroeconomic reasoning for the business case. Creative problem-solving for the jobs no template fits. Infrastructure-deep understanding of the systems the code actually runs on. All three in one head at once. Self-taught means I picked up every tool because I needed it, not because a syllabus said to — each system here needed a field I learned from its own sources first, and Kwook-career went through all ${metrics.systems.kwookCareer.roadmap.done} of its roadmap steps in ${metrics.systems.kwookCareer.history.days} days. I direct AI systems the way most developers use search: as an amplifier on the work, not a substitute for the understanding underneath. The public projects here are live: open them. The systems companies run on are private, and I'll gladly walk you through them.`;
+export const aboutIntro = `I study international economics at Foreign Trade University and taught myself the rest — production software, cloud infrastructure, AI-directed engineering. The combination isn't padding, it's leverage. Macroeconomic reasoning for the business case. Creative problem-solving for the jobs no template fits. Infrastructure-deep understanding of the systems the code actually runs on. All three in one head at once. Self-taught means I picked up every tool because I needed it, not because a syllabus said to — each system here needed a field I learned from published sources first, and Kwook-career went through all ${metrics.systems.kwookCareer.roadmap.done} of its roadmap steps in ${metrics.systems.kwookCareer.history.days} days. I direct AI systems the way most developers use search: as an amplifier on the work, not a substitute for the understanding underneath. The public projects here are live: open them. The systems companies run on are private, and I'll gladly walk you through them.`;
 
 // ---------------------------------------------------------------------------
 // CV content — the only source for /cv (English) and /cv/vi (Vietnamese) and
@@ -40,8 +40,8 @@ export const cvTitle: T = {
 };
 
 export const cvSummary: T = {
-  en: `I design operations platforms end to end, from the trust model to the database, and build them alone by directing AI agents. Each of my three systems began inside a business I worked in: I ran Mau Heritage's stores before building the hub they now rent from me, and I standardised Kwook's procedures before building its platform and its recruiting bot. Each also needed a specialist field, which I learned from its own sources before designing: Vietnam's labour and personal-data law, cash control, a company pay regulation, database security, face recognition. Across the three, I am the only person who wrote code: my agents wrote ${n(tot.agentCommits, "en")} of ${n(tot.commits, "en")} commits, and all ${n(tot.mergedPullRequests, "en")} pull requests were merged only after my review. Studying international economics at Foreign Trade University, Hanoi; self-taught in software.`,
-  vi: `Tôi thiết kế nền tảng vận hành doanh nghiệp từ đầu đến cuối, từ mô hình tin cậy đến cơ sở dữ liệu, và tự xây dựng bằng cách điều phối các agent AI. Cả ba hệ thống đều bắt nguồn từ doanh nghiệp nơi tôi làm việc: tôi trực tiếp quản lý các cửa hàng của Mau Heritage trước khi xây dựng hệ thống mà nay họ thuê sử dụng, và chuẩn hóa quy trình của Kwook trước khi xây dựng nền tảng vận hành cùng bot tuyển dụng. Mỗi hệ thống còn đòi hỏi một lĩnh vực chuyên môn mà tôi tự nghiên cứu từ nguồn gốc trước khi thiết kế: pháp luật lao động và bảo vệ dữ liệu cá nhân của Việt Nam, kiểm soát tiền mặt, quy chế tiền lương của doanh nghiệp, bảo mật cơ sở dữ liệu và nhận diện khuôn mặt. Trong cả ba hệ thống, tôi là người duy nhất viết mã: các agent do tôi điều phối thực hiện ${n(tot.agentCommits, "vi")} trên ${n(tot.commits, "vi")} commit, và cả ${n(tot.mergedPullRequests, "vi")} pull request chỉ được gộp sau khi tôi rà soát. Tôi đang học ngành Kinh tế quốc tế tại Đại học Ngoại thương, Hà Nội, và tự học phát triển phần mềm.`,
+  en: `I design operations platforms end to end, from the trust model to the database, and build them alone by directing AI agents. Each of my three systems began inside a business I worked in: I ran Mau Heritage's stores before building the hub they now rent from me, and I standardised Kwook's procedures before building its platform and its recruiting bot. Each also needed a specialist field, which I learned from published sources before designing: Vietnam's labour and personal-data law, cash control, a company pay regulation, database security, face recognition. I am the only human author in all three: agents wrote the code to my specifications (${n(tot.agentCommits, "en")} of ${n(tot.commits, "en")} commits; the rest are my merges), and I merged all ${n(tot.mergedPullRequests, "en")} pull requests after reviewing them. Studying international economics at Foreign Trade University, Hanoi; self-taught in software.`,
+  vi: `Tôi thiết kế nền tảng vận hành doanh nghiệp từ đầu đến cuối, từ mô hình tin cậy đến cơ sở dữ liệu, và tự xây dựng bằng cách điều phối các agent AI. Cả ba hệ thống đều bắt nguồn từ doanh nghiệp nơi tôi làm việc: tôi trực tiếp quản lý các cửa hàng của Mau Heritage trước khi xây dựng hệ thống mà nay họ thuê sử dụng, và chuẩn hóa quy trình của Kwook trước khi xây dựng nền tảng vận hành cùng bot tuyển dụng. Mỗi hệ thống còn đòi hỏi một lĩnh vực chuyên môn mà tôi tự nghiên cứu từ các nguồn đã công bố trước khi thiết kế: pháp luật lao động và bảo vệ dữ liệu cá nhân của Việt Nam, kiểm soát tiền mặt, quy chế tiền lương của doanh nghiệp, bảo mật cơ sở dữ liệu và nhận diện khuôn mặt. Tôi là người duy nhất đứng tên tác giả trong cả ba kho mã: các agent viết mã theo đặc tả của tôi (${n(tot.agentCommits, "vi")} trên ${n(tot.commits, "vi")} commit; phần còn lại là các lần gộp mã của tôi), và tôi rà soát rồi gộp cả ${n(tot.mergedPullRequests, "vi")} pull request. Tôi đang học ngành Kinh tế quốc tế tại Đại học Ngoại thương, Hà Nội, và tự học phát triển phần mềm.`,
 };
 
 // Traits shown on the CV's first page. Each is a claim the pages after it prove.
@@ -63,8 +63,8 @@ export const traits: { label: T; note: T }[] = [
   {
     label: { en: "Learns a new field fast", vi: "Tiếp thu lĩnh vực mới nhanh" },
     note: {
-      en: `Law, cash control, pay regulations, database security, face recognition: each learned from its primary sources when a system needed it, then turned into rules the code enforces. Kwook-career went through all ${n(kwc.roadmap.done, "en")} of its roadmap steps in ${n(kwcHistory.days, "en")} days.`,
-      vi: `Pháp luật, kiểm soát tiền mặt, quy chế tiền lương, bảo mật cơ sở dữ liệu, nhận diện khuôn mặt: mỗi lĩnh vực tôi tự nghiên cứu từ nguồn gốc khi hệ thống cần, rồi chuyển thành quy tắc do mã nguồn bảo đảm. Kwook-career hoàn thành cả ${n(kwc.roadmap.done, "vi")} hạng mục lộ trình trong ${n(kwcHistory.days, "vi")} ngày.`,
+      en: `Law, cash control, pay regulations, database security, face recognition: each learned from published sources, the law or the company's own regulation, when a system needed it, then turned into rules the code enforces. Kwook-career went through all ${n(kwc.roadmap.done, "en")} of its roadmap steps in ${n(kwcHistory.days, "en")} days.`,
+      vi: `Pháp luật, kiểm soát tiền mặt, quy chế tiền lương, bảo mật cơ sở dữ liệu, nhận diện khuôn mặt: mỗi lĩnh vực tôi tự nghiên cứu từ các nguồn đã công bố, văn bản pháp luật hay quy chế của doanh nghiệp, khi hệ thống cần, rồi chuyển thành quy tắc do mã nguồn bảo đảm. Kwook-career hoàn thành cả ${n(kwc.roadmap.done, "vi")} hạng mục lộ trình trong ${n(kwcHistory.days, "vi")} ngày.`,
     },
   },
   {
@@ -134,8 +134,8 @@ export const caseStudies: CaseStudy[] = [
       src: "goals §1",
     },
     idea: {
-      en: "One app whose modules are places to work, never separate data. Every area of every organisation is a configuration of the same fifteen blocks in five layers: structure, records, motion, surface and governance. The organisation builds and reshapes it in the app, with no developer and no code release; when it cannot express a flow, the block is improved once, for every organisation.",
-      vi: "Một ứng dụng duy nhất, trong đó các phân hệ là nơi làm việc chứ không phải kho dữ liệu riêng. Mọi mảng hoạt động của mọi tổ chức đều là cấu hình của cùng mười lăm khối chức năng thuộc năm tầng: cấu trúc, hồ sơ, vận động, giao diện và quản trị cấu hình. Tổ chức tự xây dựng và điều chỉnh ngay trong ứng dụng, không cần lập trình viên hay phát hành mã mới; khi một quy trình chưa diễn đạt được, khối chức năng tương ứng được cải tiến một lần cho mọi tổ chức.",
+      en: "One app whose modules are places to work, never separate data. Every area of every organisation is a configuration of the same fifteen blocks in five layers: structure, records, motion, surface and governance. It is designed so the organisation builds and reshapes it in the app, with no developer and no code release; when it cannot express a flow, the block is improved once, for every organisation.",
+      vi: "Một ứng dụng duy nhất, trong đó các phân hệ là nơi làm việc chứ không phải kho dữ liệu riêng. Mọi mảng hoạt động của mọi tổ chức đều là cấu hình của cùng mười lăm khối chức năng thuộc năm tầng: cấu trúc, hồ sơ, vận động, giao diện và quản trị cấu hình. Nền tảng được thiết kế để tổ chức tự xây dựng và điều chỉnh ngay trong ứng dụng, không cần lập trình viên hay phát hành mã mới; khi một quy trình chưa diễn đạt được, khối chức năng tương ứng được cải tiến một lần cho mọi tổ chức.",
       src: "goals §0, §1, §4",
     },
     decisions: [
@@ -145,9 +145,9 @@ export const caseStudies: CaseStudy[] = [
           vi: "Người nắm giữ và phương thức xác thực",
         },
         text: {
-          en: "Authority belongs to seats. A seat's holder may be a person, a device or an AI agent, always with exactly the seat's privileges. Who someone is stays separate from how they prove it: a login, a face with liveness, a PIN or a paired device each has a strength, and a privilege can demand a stronger one. A worker with no phone or email is still a complete person in the system.",
-          vi: "Quyền hạn thuộc về vị trí. Người nắm giữ vị trí có thể là con người, thiết bị hoặc agent AI, và luôn có đúng các quyền của vị trí đó. Danh tính tách khỏi phương thức xác thực: đăng nhập, khuôn mặt kèm kiểm tra người thật, mã PIN hay thiết bị đã ghép nối đều có mức tin cậy riêng, và một quyền có thể yêu cầu phương thức mạnh hơn. Người lao động không có điện thoại hay email vẫn là một hồ sơ đầy đủ trong hệ thống.",
-          src: "goals §3, §4.2, §5",
+          en: "Authority belongs to seats, and a seat's holder has exactly the seat's privileges: a person today, with devices and AI agents designed to hold seats too. Who someone is stays separate from how they prove it: a login, a face, a PIN and a second factor are separate proofs, and a privilege can demand a stronger one. A worker with no phone or email is still a complete person in the system.",
+          vi: "Quyền hạn thuộc về vị trí, và người nắm giữ có đúng các quyền của vị trí đó: hiện là con người, còn thiết bị và agent AI đã được thiết kế để cũng nắm giữ vị trí. Danh tính tách khỏi phương thức xác thực: đăng nhập, khuôn mặt, mã PIN và xác thực hai lớp là các phương thức riêng, và một quyền có thể yêu cầu phương thức mạnh hơn. Người lao động không có điện thoại hay email vẫn là một hồ sơ đầy đủ trong hệ thống.",
+          src: "goals §3, §4.2, §5; roadmap B2.2 (unticked)",
         },
       },
       {
@@ -167,8 +167,8 @@ export const caseStudies: CaseStudy[] = [
           vi: "Cố định, tùy chỉnh, tự xây dựng",
         },
         text: {
-          en: "Everything sits in one of three tiers. The grammar is fixed, so a number means the same thing across organisations and over time; policy is shaped through plain questions with defaults; formulas, record types and rules are built behind type-checked previews and versioned. Four tests decide where anything new belongs.",
-          vi: "Mọi thành phần thuộc một trong ba tầng. Ngữ pháp được cố định để mỗi con số mang cùng một ý nghĩa giữa các tổ chức và theo thời gian; chính sách được tùy chỉnh qua các câu hỏi đơn giản có giá trị mặc định; công thức, loại hồ sơ và quy tắc được tự xây dựng qua bản xem trước có kiểm tra kiểu dữ liệu và quản lý phiên bản. Bốn phép kiểm tra xác định một yêu cầu mới thuộc tầng nào.",
+          en: "Everything sits in one of three tiers. The grammar is fixed, so a number means the same thing across organisations and over time; policy is shaped through plain questions with defaults; formulas and record types are built behind type-checked previews, with rules and versioned packages designed next. Four tests decide where anything new belongs.",
+          vi: "Mọi thành phần thuộc một trong ba tầng. Ngữ pháp được cố định để mỗi con số mang cùng một ý nghĩa giữa các tổ chức và theo thời gian; chính sách được tùy chỉnh qua các câu hỏi đơn giản có giá trị mặc định; công thức và loại hồ sơ được tự xây dựng qua bản xem trước có kiểm tra kiểu dữ liệu, còn quy tắc và gói cấu hình có phiên bản đã được thiết kế cho giai đoạn tiếp theo. Bốn phép kiểm tra xác định một yêu cầu mới thuộc tầng nào.",
           src: "goals §6",
         },
       },
@@ -186,9 +186,9 @@ export const caseStudies: CaseStudy[] = [
       {
         label: { en: "The observation layer", vi: "Tầng quan sát" },
         text: {
-          en: "Any device with a camera and a browser pairs as a door, kiosk or counter by showing a rotating QR code a manager claims: no account, and its function set by the server. Every observed event names the model version that produced it. Camera law: no audio, no stored live video, rates rather than names.",
-          vi: "Thiết bị nào có camera và trình duyệt cũng có thể ghép nối làm cửa chấm công, kiosk hoặc quầy, bằng cách hiển thị mã QR thay đổi liên tục để quản lý xác nhận: không cần tài khoản, chức năng do máy chủ quy định. Mỗi sự kiện quan sát đều ghi rõ phiên bản mô hình đã tạo ra. Quy tắc cho camera: không thu âm, không lưu video trực tiếp, chỉ báo cáo tỷ lệ thay vì tên người.",
-          src: "goals §4.14 (owner ruling 2026-11-23: any device with a camera and a browser), §9 (camera law)",
+          en: "Any device with a camera and a browser pairs as a camera by showing a QR code a manager claims: no account, and its function set by the server, today from a fixed list, with functions as data designed next. Every observed event names the model version that produced it. Camera law: no audio, no stored live video, rates rather than names.",
+          vi: "Thiết bị nào có camera và trình duyệt cũng có thể ghép nối làm camera bằng cách hiển thị mã QR để quản lý xác nhận: không cần tài khoản, chức năng do máy chủ quy định, hiện chọn từ một danh sách cố định và đã thiết kế để chức năng trở thành dữ liệu cấu hình. Mỗi sự kiện quan sát đều ghi rõ phiên bản mô hình đã tạo ra. Quy tắc cho camera: không thu âm, không lưu video trực tiếp, chỉ báo cáo tỷ lệ thay vì tên người.",
+          src: "goals §4.14 (owner ruling 2026-11-23: any device with a camera and a browser), §9 (camera law); roadmap B14.2 (unticked)",
         },
       },
     ],
@@ -221,15 +221,15 @@ export const caseStudies: CaseStudy[] = [
         src: "roadmap B11.8, B7.3, C106, B5.2",
       },
       {
-        en: `${n(opsRoadmap.done, "en")} roadmap steps shipped, covered by ${n(ops.testCases, "en")} test cases and ${n(ops.sqlTestSuites, "en")} database test suites.`,
-        vi: `${n(opsRoadmap.done, "vi")} hạng mục lộ trình đã hoàn thành, kèm ${n(ops.testCases, "vi")} ca kiểm thử và ${n(ops.sqlTestSuites, "vi")} bộ kiểm thử cơ sở dữ liệu.`,
+        en: `${n(opsRoadmap.done, "en")} roadmap items shipped (building steps, end-to-end proofs and fixes), covered by ${n(ops.testCases, "en")} test cases and ${n(ops.sqlTestSuites, "en")} database test suites.`,
+        vi: `${n(opsRoadmap.done, "vi")} hạng mục lộ trình đã hoàn thành (bước xây dựng, kiểm chứng đầu-cuối và sửa lỗi), kèm ${n(ops.testCases, "vi")} ca kiểm thử và ${n(ops.sqlTestSuites, "vi")} bộ kiểm thử cơ sở dữ liệu.`,
         src: "metrics (repository)",
       },
     ],
     notYet: {
-      en: "Designed, not built yet: workflows beyond tasks, connections to other software, devices and agents holding seats, the offline outbox, installable packages, self-service sign-up and dedicated deployments.",
-      vi: "Đã thiết kế, chưa xây dựng: quy trình nhiều bước ngoài giao việc, kết nối với phần mềm khác, thiết bị và agent nắm giữ vị trí, hàng đợi ngoại tuyến, gói cấu hình cài đặt được, tự đăng ký tổ chức và triển khai riêng cho doanh nghiệp lớn.",
-      src: "roadmap B9.2, B14.1, B2.2, B14.9, B15, S2, S3",
+      en: "Designed, not built yet: workflows beyond tasks, rules and automation, dashboards and metrics, pay runs, posting rules, bookings, connections to other software, devices and agents holding seats, the offline outbox, installable packages, self-service sign-up and dedicated deployments.",
+      vi: "Đã thiết kế, chưa xây dựng: quy trình nhiều bước ngoài giao việc, quy tắc và tự động hóa, bảng điều khiển và chỉ số, kỳ lương, quy tắc hạch toán, đặt lịch tài nguyên, kết nối với phần mềm khác, thiết bị và agent nắm giữ vị trí, hàng đợi ngoại tuyến, gói cấu hình cài đặt được, tự đăng ký tổ chức và triển khai riêng cho doanh nghiệp lớn.",
+      src: "roadmap B9.2, B8.1, B12.3, B12.19, B6.2, B11.2, B14.1, B2.2, B14.9, B15.2, S2, S3",
     },
     model: {
       src: "goals §4",
@@ -357,16 +357,16 @@ export const caseStudies: CaseStudy[] = [
           vi: "Bàn giao tiền mặt không xem trước",
         },
         text: {
-          en: "Cash is handed over per stretch of one crew: whoever leaves records the takings, the cash paid out and the safe count without seeing the expected amount, and someone else confirms; only a confirmed log counts.",
-          vi: "Tiền mặt được bàn giao theo từng đợt làm việc của một nhóm: người rời ca ghi doanh thu, khoản chi và số tiền đếm trong két mà không xem trước số dự kiến, và một người khác xác nhận; chỉ sổ đã xác nhận mới được tính.",
+          en: "Cash is handed over per stretch of one crew: whoever leaves records the takings, the cash paid out and the safe count without seeing the expected amount, and someone else confirms; only a confirmed log counts toward pay rules and the safe balance.",
+          vi: "Tiền mặt được bàn giao theo từng đợt làm việc của một nhóm: người rời ca ghi doanh thu, khoản chi và số tiền đếm trong két mà không xem trước số dự kiến, và một người khác xác nhận; chỉ sổ đã xác nhận mới được tính vào quy tắc lương và số dư két.",
           src: "goals (Handover; Guarantees)",
         },
       },
       {
         label: { en: "Lawful pay", vi: "Tiền lương đúng luật" },
         text: {
-          en: `Pay rules use a closed list of recorded facts and print as the published bonus regulation. There are no fines: a bonus reduction never goes below zero or touches base pay, compensation for a loss is capped at ${n(md.compensationCap.percent, "en")}% of pay, and an overpayment is shown, never deducted. A correction is a new record; a fact about an approved month is paid as arrears.`,
-          vi: `Quy tắc lương chỉ dùng một danh sách dữ kiện đã ghi nhận và được in thành quy chế thưởng công bố. Không có tiền phạt: khoản giảm thưởng không làm thưởng âm và không chạm vào lương cơ bản, bồi thường thiệt hại tối đa ${n(md.compensationCap.percent, "vi")}% tiền lương, và khoản trả thừa chỉ hiển thị, không khấu trừ. Mỗi chỉnh sửa là một bản ghi mới; dữ kiện thuộc tháng đã duyệt được truy lĩnh ở kỳ sau.`,
+          en: `Pay rules use a closed list of recorded facts and print as the published bonus regulation. There are no fines: a bonus reduction never goes below zero or touches base pay, compensation for a loss is capped at ${n(md.compensationCap.percent, "en")}% of pay after insurance and tax, and an overpayment is shown, never deducted. A correction is a new record; a fact about an approved month is paid as arrears.`,
+          vi: `Quy tắc lương chỉ dùng một danh sách dữ kiện đã ghi nhận và được in thành quy chế thưởng công bố. Không có tiền phạt: khoản giảm thưởng không làm thưởng âm và không chạm vào lương cơ bản, bồi thường thiệt hại tối đa ${n(md.compensationCap.percent, "vi")}% tiền lương sau bảo hiểm và thuế, và khoản trả thừa chỉ hiển thị, không khấu trừ. Mỗi chỉnh sửa là một bản ghi mới; dữ kiện thuộc tháng đã duyệt được truy lĩnh ở kỳ sau.`,
           src: "goals (Guarantees); roadmap B6.4, B6.9",
         },
       },
@@ -381,9 +381,9 @@ export const caseStudies: CaseStudy[] = [
     ],
     built: [
       {
-        en: "Identity and delegation, face enrolment and check-in with location checks, the weekly schedule and its cap, the blind handover, the pay-rule engine and the monthly pay run with arrears; an installable web app in Vietnamese and English; a nightly encrypted backup.",
-        vi: "Danh tính và ủy quyền, đăng ký khuôn mặt và chấm công có kiểm tra vị trí, lịch tuần và giới hạn định biên, bàn giao không xem trước, bộ quy tắc lương và kỳ lương hằng tháng có truy lĩnh; ứng dụng web cài đặt được, song ngữ Việt - Anh; sao lưu mã hóa hằng đêm.",
-        src: "roadmap B1–B8",
+        en: "Identity and delegation, face enrolment and check-in with location checks, the weekly schedule and its cap, the blind handover, the pay-rule engine and the monthly pay run with arrears; an installable web app in Vietnamese and English; daily database backups on Supabase Pro.",
+        vi: "Danh tính và ủy quyền, đăng ký khuôn mặt và chấm công có kiểm tra vị trí, lịch tuần và giới hạn định biên, bàn giao không xem trước, bộ quy tắc lương và kỳ lương hằng tháng có truy lĩnh; ứng dụng web cài đặt được, song ngữ Việt - Anh; sao lưu cơ sở dữ liệu hằng ngày trên Supabase Pro.",
+        src: "roadmap B1.1–B1.8, B2.1–B2.3, B3.1–B3.4, B4–B5, B6.1–B6.30, B6.32–B6.39, B7.1–B7.2, B8",
       },
     ],
     proof: [
@@ -394,9 +394,9 @@ export const caseStudies: CaseStudy[] = [
       },
     ],
     notYet: {
-      en: "Not built yet: a proven restore from the backup, and a health report.",
-      vi: "Chưa hoàn thành: kiểm chứng khôi phục từ bản sao lưu và báo cáo tình trạng hệ thống.",
-      src: "roadmap B7.2, B7.3",
+      en: "Not built yet: a health report that checks the backups and the site, and letting a role other than the owner set up stores, rules, pay and roles.",
+      vi: "Chưa xây dựng: báo cáo tình trạng kiểm tra bản sao lưu và trang web, và cho phép vai trò khác ngoài chủ cửa hàng thiết lập cửa hàng, quy tắc, tiền lương và vai trò.",
+      src: "roadmap B7.3, B1.9, B1.10, B2.4, B3.5, B6.40",
     },
     tags: ["Supabase", "Postgres", "Cloudflare", "PWA", "Playwright", "i18n"],
     discuss: [
@@ -449,8 +449,8 @@ export const caseStudies: CaseStudy[] = [
           vi: "Không đề cập không phải lý do loại",
         },
         text: {
-          en: `Only a contradicted must-have or a shown deal-breaker rejects; a silent one is marked to ask on the call. The owner's call is kept apart from the AI's result, so no re-check undoes it, and a line that blocks ${n(kd.blockingLine.percent, "en")}% or more of CVs is flagged for the owner to relax.`,
-          vi: `Chỉ tiêu chí bắt buộc bị mâu thuẫn hoặc điểm loại trừ được thể hiện mới dẫn đến loại; tiêu chí không được đề cập được đánh dấu để hỏi khi gọi. Quyết định của người tuyển dụng được lưu riêng với kết quả của AI nên không lần kiểm tra lại nào ghi đè được, và tiêu chí chặn từ ${n(kd.blockingLine.percent, "vi")}% CV trở lên được báo để người tuyển dụng cân nhắc nới lỏng.`,
+          en: `Only a contradicted must-have or a shown deal-breaker rejects; a silent one is marked to ask on the call. The owner's call is kept apart from the AI's result, so no re-check undoes it, and a line behind ${n(kd.blockingLine.percent, "en")}% or more of at least ten checked CVs is flagged as possibly too strict.`,
+          vi: `Chỉ tiêu chí bắt buộc bị mâu thuẫn hoặc điểm loại trừ được thể hiện mới dẫn đến loại; tiêu chí không được đề cập được đánh dấu để hỏi khi gọi. Quyết định của người tuyển dụng được lưu riêng với kết quả của AI nên không lần kiểm tra lại nào ghi đè được, và tiêu chí là lý do của từ ${n(kd.blockingLine.percent, "vi")}% trong ít nhất mười CV trở lên được báo là có thể quá chặt.`,
           src: "goals (Rules); roadmap B5.12, B5.13, B5.9",
         },
       },
@@ -768,8 +768,8 @@ export const howIShip: { system: string; lines: T[] }[] = [
         vi: "Khi gộp mã, workflow migration tự động chạy. Nhánh main được bảo vệ: lint, kiểm tra kiểu (typecheck), kiểm thử, bộ kiểm thử cơ sở dữ liệu và bản dựng trang web đều phải đạt trước khi gộp.",
       },
       {
-        en: "An encrypted backup every night that emails on failure, a written restore procedure, and face data deliberately kept out of backups.",
-        vi: "Sao lưu mã hóa hằng đêm, tự gửi email khi lỗi; quy trình khôi phục được lập thành văn bản; dữ liệu khuôn mặt được loại khỏi bản sao lưu.",
+        en: "Daily database backups kept for seven days on Supabase Pro, and a written restore procedure that re-applies any face withdrawn after the backup was taken.",
+        vi: "Sao lưu cơ sở dữ liệu hằng ngày, lưu giữ bảy ngày trên Supabase Pro, cùng quy trình khôi phục bằng văn bản, trong đó các yêu cầu rút dữ liệu khuôn mặt sau thời điểm sao lưu được áp dụng lại.",
       },
     ],
   },
@@ -817,7 +817,7 @@ export const stats = [
     label: "Built alone and run by real companies",
   },
   {
-    number: `${n(opsRoadmap.done, "en")} steps`,
+    number: `${n(opsRoadmap.done, "en")} roadmap items`,
     label: `Shipped on Ops Platform, covered by ${n(ops.testCases, "en")} test cases`,
   },
   {
