@@ -15,8 +15,14 @@ const LAUNCH_OPTS = existsSync(PREINSTALLED_CHROMIUM)
 const PORT = 4322;
 // One PDF per language, both rendered from the same CV entries.
 const TARGETS = [
-  { url: `http://127.0.0.1:${PORT}/cv/`, out: "dist/client/jade-cv.pdf" },
-  { url: `http://127.0.0.1:${PORT}/cv/vi/`, out: "dist/client/jade-cv-vi.pdf" },
+  {
+    url: `http://127.0.0.1:${PORT}/cv/`,
+    out: "dist/client/Nguyen-Dinh-Ngoc-CV-EN.pdf",
+  },
+  {
+    url: `http://127.0.0.1:${PORT}/cv/vi/`,
+    out: "dist/client/Nguyen-Dinh-Ngoc-CV-VI.pdf",
+  },
 ];
 
 // A4 = 297mm tall. Print margins: MARGIN_MM below, the same as globals.css @page.

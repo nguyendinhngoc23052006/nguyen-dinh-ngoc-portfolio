@@ -31,12 +31,11 @@ const L = {
     download: "Download PDF",
     other: "Tiếng Việt",
     otherHref: "/cv/vi",
-    pdf: "/jade-cv.pdf",
+    pdf: "/Nguyen-Dinh-Ngoc-CV-EN.pdf",
     pdfName: "Nguyen-Dinh-Ngoc-CV-EN.pdf",
     summary: "Summary",
     experience: "Experience",
     systems: "Systems I designed and built",
-    caseStudy: "Case study",
     method: "How I build",
     projects: "Public projects",
     skills: "Skills",
@@ -49,18 +48,17 @@ const L = {
     download: "Tải PDF",
     other: "English",
     otherHref: "/cv",
-    pdf: "/jade-cv-vi.pdf",
+    pdf: "/Nguyen-Dinh-Ngoc-CV-VI.pdf",
     pdfName: "Nguyen-Dinh-Ngoc-CV-VI.pdf",
     summary: "Tóm tắt",
     experience: "Kinh nghiệm",
     systems: "Hệ thống tôi thiết kế và xây dựng",
-    caseStudy: "Chi tiết",
     method: "Cách tôi xây dựng",
     projects: "Dự án công khai",
     skills: "Kỹ năng",
     education: "Học vấn",
     footer: "Portfolio đầy đủ",
-    live: "Trang web",
+    live: "Web",
   },
 }[lang];
 // Split a text so "[ĐIỀN: …]" placeholders render highlighted.
@@ -68,11 +66,6 @@ const parts = (s: string) => s.split(/(\[ĐIỀN:[^\]]*\])/g).filter(Boolean);
 const isTodo = (s: string) => s.startsWith("[ĐIỀN");
 // Show a link without its scheme.
 const host = (u: string) => u.replace(/^https?:\/\//, "");
-// The GitHub profile is in the header, so a repository shows by name only.
-const repoName = (u: string) => {
-  const path = u.replace(/^https:\/\/github\.com\//, "").replace(/\/$/, "");
-  return path.includes("/") ? (path.split("/").pop() ?? path) : "profile";
-};
 const caseUrl = (slug: string) =>
   `${SITE_URL}/work/${slug}${lang === "vi" ? "/vi" : ""}`;
 ---
@@ -159,13 +152,14 @@ const caseUrl = (slug: string) =>
         <div class="mt-2 space-y-3">
           {caseStudies.map((c) => (
             <div class="cv-block">
-              <p class="text-sm leading-snug"><span class="font-semibold text-base">{c.name}.</span> {c.tagline[lang]}</p>
+              <div class="flex items-baseline justify-between gap-4">
+                <h3 class="font-semibold">{c.name}</h3>
+                <a href={caseUrl(c.slug)} class="text-xs text-accent hover:underline shrink-0">{host(caseUrl(c.slug))}</a>
+              </div>
+              <p class="text-xs text-muted-foreground">{c.status[lang]}</p>
               <ul class="cv-points mt-1">
                 {c.highlights.map((h) => <li class="text-sm leading-snug">{h[lang]}</li>)}
               </ul>
-              <p class="mt-0.5 text-xs text-muted-foreground">
-                {c.status[lang]} · {L.caseStudy}: <a href={caseUrl(c.slug)} class="text-accent hover:underline">{host(caseUrl(c.slug))}</a>
-              </p>
             </div>
           ))}
         </div>
@@ -187,9 +181,9 @@ const caseUrl = (slug: string) =>
             <li class="cv-block text-sm leading-snug">
               <span class="font-semibold">{p.title}.</span>
               <span> {p.line[lang]}</span>
-              <span class="ml-1 text-xs text-muted-foreground">
-                {p.url && <>{L.live} <a href={p.url} class="text-accent hover:underline">{host(p.url)}</a> · </>}
-                GitHub <a href={p.source} class="text-accent hover:underline">{repoName(p.source)}</a>
+              <span class="ml-1 text-xs whitespace-nowrap">
+                {p.url && <><a href={p.url} class="text-accent hover:underline">{L.live} ↗</a> · </>}
+                <a href={p.source} class="text-accent hover:underline">GitHub ↗</a>
               </span>
             </li>
           ))}

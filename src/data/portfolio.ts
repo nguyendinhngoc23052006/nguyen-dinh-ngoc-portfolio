@@ -3,7 +3,7 @@ import metrics from "./metrics.json";
 export const SITE_URL = "https://nguyendinhngoc.dev";
 
 export const heroSubhead =
-  "I design and build, alone, the systems a company runs on: people and records, face-recognition attendance, recruitment and payroll, on Supabase + Cloudflare, directing AI agents as my engineering team. Three of them have run real businesses.";
+  "Solo developer: I design and build the systems a company runs on: people and records, face-recognition attendance, recruitment and payroll, on Supabase + Cloudflare, directing AI agents as my engineering team. Three of them have run real businesses.";
 
 export const aboutIntro = `I study international economics at Foreign Trade University and taught myself the rest — production software, cloud infrastructure, AI-directed engineering. The combination isn't padding, it's leverage. Macroeconomic reasoning for the business case. Creative problem-solving for the jobs no template fits. Infrastructure-deep understanding of the systems the code actually runs on. All three in one head at once. Self-taught means I picked up every tool because I needed it, not because a syllabus said to — each system here needed a field I learned from published sources first: labour law, cash control, pay regulations, face recognition. I direct AI systems the way most developers use search: as an amplifier on the work, not a substitute for the understanding underneath. Most public projects here are live: open them. The systems companies run on are private, and I'll gladly walk you through them.`;
 
@@ -33,31 +33,41 @@ export const cvTitle: T = {
 };
 
 export const cvSummary: T = {
-  en: "Self-taught full-stack engineer in Hanoi. I design and build, on my own, the systems a business runs on: people records, face-recognition attendance, recruiting, shifts and payroll; three of them have run real companies. I build with Claude Code and own the design, data model, review and testing. I learn the business first: I ran the stores and wrote the procedures, and learned labour law, cash control and pay regulations to build them in.",
-  vi: "Kỹ sư full-stack tự học tại Hà Nội. Tôi tự thiết kế và xây dựng các hệ thống vận hành doanh nghiệp: hồ sơ nhân sự, chấm công nhận diện khuôn mặt, tuyển dụng, xếp ca và tính lương; ba hệ thống đã được đưa vào vận hành tại doanh nghiệp. Tôi phát triển cùng Claude Code và trực tiếp đảm nhận thiết kế, mô hình dữ liệu, rà soát và kiểm thử. Tôi tìm hiểu nghiệp vụ trước khi xây dựng: đã trực tiếp quản lý cửa hàng, soạn thảo quy trình, và nghiên cứu pháp luật lao động, kiểm soát tiền mặt, quy chế tiền lương.",
+  en: "Self-taught full-stack engineer and solo developer in Hanoi. I design and build the systems a business runs on: people records, face-recognition attendance, recruiting, shifts and payroll; three of them have run real companies. I build with Claude Code and own the design, data model, review and testing. I learn the business first: I ran the stores and wrote the procedures, and learned labour law, cash control and pay regulations to build them in.",
+  vi: "Kỹ sư full-stack tự học, phát triển độc lập, tại Hà Nội. Tôi thiết kế và xây dựng các hệ thống vận hành doanh nghiệp: hồ sơ nhân sự, chấm công nhận diện khuôn mặt, tuyển dụng, xếp ca và tính lương; ba hệ thống đã được đưa vào vận hành tại doanh nghiệp. Tôi phát triển cùng Claude Code và trực tiếp đảm nhận thiết kế, mô hình dữ liệu, rà soát và kiểm thử. Tôi tìm hiểu nghiệp vụ trước khi xây dựng: đã trực tiếp quản lý cửa hàng, soạn thảo quy trình, và nghiên cứu pháp luật lao động, kiểm soát tiền mặt, quy chế tiền lương.",
 };
 
 // How I work, condensed for the CV. The site's "How I work" section has the detail.
 export const cvMethod: { label: T; text: T }[] = [
   {
-    label: { en: "AI-driven development", vi: "Phát triển cùng AI" },
+    label: {
+      en: "Agents under rules I set",
+      vi: "Agent làm việc theo quy tắc tôi đặt ra",
+    },
     text: {
-      en: "Claude Code writes code to a plan I approve; review agents check security, quality and scale; nothing I or an agent writes merges until I have read the diff, the tests and the running preview.",
-      vi: "Claude Code viết mã theo kế hoạch tôi phê duyệt; agent rà soát kiểm tra bảo mật, chất lượng và khả năng mở rộng; mọi thay đổi chỉ được gộp sau khi tôi xem mã, kết quả kiểm thử và bản chạy thử.",
+      en: "Claude Code agents load a written rulebook every session; hooks block edits and commands until I approve the plan, and a readiness check refuses a pull request until the tests, step-by-step screenshots and an evidence report exist.",
+      vi: "Các agent Claude Code nạp bộ quy tắc thành văn ở mỗi phiên làm việc; hook chặn chỉnh sửa và chạy lệnh cho đến khi tôi duyệt kế hoạch, và bước kiểm tra sẵn sàng chỉ cho mở pull request khi đã có kết quả kiểm thử, ảnh chụp từng bước và báo cáo.",
+    },
+  },
+  {
+    label: { en: "Reviewed before it merges", vi: "Rà soát trước khi gộp" },
+    text: {
+      en: "Review agents check security, code quality and scale; I read the diff, tests and running preview; nothing merges without my approval except routine dependency updates.",
+      vi: "Agent rà soát kiểm tra bảo mật, chất lượng mã và khả năng mở rộng; tôi xem mã thay đổi, kết quả kiểm thử và bản chạy thử; không gì được gộp khi chưa có phê duyệt của tôi, trừ cập nhật thư viện định kỳ.",
     },
   },
   {
     label: { en: "Verified, not assumed", vi: "Kiểm chứng thay vì giả định" },
     text: {
-      en: "On Ops Platform and Mau Heritage Hub, database tests replay every migration on an empty Postgres and check the rules that must always hold; flows are walked through in a real browser.",
-      vi: "Tại Ops Platform và Mau Heritage Hub, kiểm thử chạy lại mọi migration trên Postgres trống và kiểm tra các quy tắc bắt buộc; các luồng chính được chạy thử trên trình duyệt thật.",
+      en: "On Ops Platform and Mau Heritage Hub, database tests replay every migration on an empty Postgres and check the rules that must hold; flows are tested in a real browser.",
+      vi: "Tại Ops Platform và Mau Heritage Hub, kiểm thử chạy lại mọi migration trên Postgres trống và kiểm tra các quy tắc bắt buộc; các luồng chính được thử trên trình duyệt.",
     },
   },
   {
     label: { en: "Careful releases", vi: "Phát hành cẩn trọng" },
     text: {
-      en: "Each Ops Platform change gets its own preview with an isolated database, then goes through staging before production; Mau Heritage Hub changes get a preview link; schema changes only as migrations; row-level security denies by default.",
-      vi: "Ops Platform: mỗi thay đổi có bản xem trước với cơ sở dữ liệu riêng, qua staging rồi mới lên production; Mau Heritage Hub: mỗi thay đổi có đường dẫn xem trước; cấu trúc dữ liệu chỉ thay đổi qua migration; RLS mặc định từ chối truy cập.",
+      en: "Ops Platform: a preview with its own database for each change, then staging, then production. Mau Heritage Hub: a preview link for each change. Schema changes only as migrations; row-level security denies by default.",
+      vi: "Ops Platform: mỗi thay đổi có bản xem trước với cơ sở dữ liệu riêng, rồi qua staging trước khi lên production. Mau Heritage Hub: mỗi thay đổi có đường dẫn xem trước. Cấu trúc dữ liệu chỉ đổi qua migration; RLS mặc định từ chối truy cập.",
     },
   },
 ];
@@ -72,10 +82,13 @@ export const traits: { label: T; note: T }[] = [
     },
   },
   {
-    label: { en: "Builds alone, with agents", vi: "Tự xây dựng cùng agent AI" },
+    label: {
+      en: "Solo developer, with agents",
+      vi: "Phát triển độc lập cùng agent AI",
+    },
     note: {
-      en: "Each system is designed and built by me alone. Agents write code to my written specification; nothing I or an agent writes ships until I have reviewed and tested it.",
-      vi: "Mỗi hệ thống do tôi tự thiết kế và xây dựng. Các agent viết mã theo đặc tả do tôi soạn; mọi thay đổi do tôi hoặc agent viết chỉ được phát hành sau khi tôi rà soát và kiểm thử.",
+      en: "I solo-developed each system. Agents write code to my written specification; nothing I or an agent writes ships until I have reviewed and tested it.",
+      vi: "Mỗi hệ thống do tôi phát triển độc lập. Các agent viết mã theo đặc tả do tôi soạn; mọi thay đổi do tôi hoặc agent viết chỉ được phát hành sau khi tôi rà soát và kiểm thử.",
     },
   },
   {
@@ -135,14 +148,24 @@ export const caseStudies: CaseStudy[] = [
         src: "goals §0, §1, §4",
       },
       {
+        en: `Face attendance on any device with a camera and a browser: paired with no account, it becomes a registration kiosk or a door; duplicate faces are refused, and a face is matched against a ${n(od.faceMatch.people, "en")}-person organisation in under ${n(od.faceMatch.ms, "en")} ms.`,
+        vi: `Chấm công khuôn mặt trên bất kỳ thiết bị nào có camera và trình duyệt: ghép nối không cần tài khoản để làm kiosk đăng ký hoặc cửa chấm công; khuôn mặt trùng bị từ chối, và một khuôn mặt được nhận diện trong tổ chức ${n(od.faceMatch.people, "vi")} người dưới ${n(od.faceMatch.ms, "vi")} ms.`,
+        src: "roadmap B14.15, B11.8 (owner ruling 2026-11-23: any device with a camera and a browser)",
+      },
+      {
+        en: "Door passes become each person's worked and late minutes, priced by the organisation's own formulas, which it writes as plain questions; a door that sent nothing reads 'no data', never absent.",
+        vi: "Lượt qua cửa được quy đổi thành số phút làm việc và đi muộn của từng người, tính giá trị theo công thức riêng của tổ chức dưới dạng câu hỏi đơn giản; cửa không gửi dữ liệu được ghi là 'không có dữ liệu', không bao giờ bị tính vắng mặt.",
+        src: "roadmap B11.4",
+      },
+      {
         en: "Trust built in: powers held through positions, approvals by a quorum and by a second person, time-limited emergency access with review, and sensitive values such as national IDs and bank numbers sealed under each person's own key.",
-        vi: "Tin cậy ngay trong thiết kế: quyền hạn gắn với vị trí, phê duyệt theo số đông và bởi người thứ hai, quyền khẩn cấp có thời hạn kèm rà soát, dữ liệu nhạy cảm được niêm phong bằng khóa riêng của từng người.",
+        vi: "Tin cậy từ thiết kế: quyền hạn gắn với vị trí, phê duyệt theo số đông và bởi người thứ hai, quyền khẩn cấp có thời hạn kèm rà soát, dữ liệu nhạy cảm được niêm phong bằng khóa riêng của mỗi người.",
         src: "roadmap B3.2–B3.12, B4.9, B4.10",
       },
       {
-        en: `Load proven before it is claimed: a face matched against a ${n(od.faceMatch.people, "en")}-person organisation in under ${n(od.faceMatch.ms, "en")} ms, and ${n(od.events.perSecond, "en")} events a second sustained in the scale test that runs on every pull request into main.`,
-        vi: `Khả năng chịu tải được kiểm chứng trước khi công bố: nhận diện một khuôn mặt trong tổ chức ${n(od.faceMatch.people, "vi")} người dưới ${n(od.faceMatch.ms, "vi")} ms, duy trì ${n(od.events.perSecond, "vi")} sự kiện mỗi giây trong kiểm thử tải chạy trên mọi pull request vào main.`,
-        src: "roadmap B11.8, B7.3",
+        en: `Proven at scale: ${n(od.events.perSecond, "en")} events a second in the scale test on every pull request into main, and a ${n(od.onboarding.people, "en")}-person organisation onboarded from pasted spreadsheets in ordered, restartable stages.`,
+        vi: `Kiểm chứng ở quy mô lớn: ${n(od.events.perSecond, "vi")} sự kiện mỗi giây trong kiểm thử tải chạy trên mọi pull request vào main, và tiếp nhận tổ chức ${n(od.onboarding.people, "vi")} người từ bảng tính theo từng giai đoạn, có thể chạy lại.`,
+        src: "roadmap B7.3, C106",
       },
     ],
     name: "Ops Platform",
@@ -341,13 +364,18 @@ export const caseStudies: CaseStudy[] = [
       },
       {
         en: "Cash control at every shift change: whoever leaves counts the safe without seeing the expected amount, and someone else confirms.",
-        vi: "Kiểm soát tiền mặt ở mỗi lần bàn giao ca: người rời ca đếm két khi chưa biết số dự kiến, rồi một người khác xác nhận.",
+        vi: "Kiểm soát tiền mặt mỗi lần bàn giao ca: người rời ca đếm két khi chưa biết số dự kiến, người khác xác nhận.",
         src: "goals (Handover; Guarantees)",
       },
       {
         en: `Lawful pay as settings the owner changes: no fines, bonus cuts never below zero, compensation capped at ${n(md.compensationCap.percent, "en")}% of pay after insurance and tax, corrections paid as arrears.`,
         vi: `Lương đúng luật qua thiết lập chủ cửa hàng tự điều chỉnh: không phạt tiền, giảm thưởng không vượt số thưởng, bồi thường tối đa ${n(md.compensationCap.percent, "vi")}% lương sau bảo hiểm và thuế, chỉnh sửa được truy lĩnh kỳ sau.`,
         src: "goals (Guarantees); roadmap B6.4, B6.9",
+      },
+      {
+        en: "One owner account; everyone else opens their profile by face, or code and PIN, on their phone. A face is stored only with recorded consent, and a manager's role never acts on its own holder's record.",
+        vi: "Chỉ chủ cửa hàng có tài khoản; mọi người khác mở hồ sơ bằng khuôn mặt, hoặc mã kèm PIN, trên điện thoại. Khuôn mặt chỉ được lưu khi đã ghi nhận sự đồng ý, và vai trò quản lý không bao giờ thao tác trên hồ sơ của chính người nắm giữ.",
+        src: "goals (Words; Rules; Guarantees)",
       },
     ],
     name: "Mau Heritage Hub",
@@ -452,6 +480,11 @@ export const caseStudies: CaseStudy[] = [
     slug: "kwook-career",
     highlights: [
       {
+        en: "From a one-line brief in Telegram, it drafts the post, publishes it to the company's Facebook Page through Make, answers comments from the approved FAQ, and reads CVs as PDF, Word or a phone photo.",
+        vi: "Từ một dòng mô tả trên Telegram, bot soạn bài, đăng lên Fanpage của công ty qua Make, trả lời bình luận theo bộ câu hỏi đã duyệt, và đọc CV dạng PDF, Word hoặc ảnh chụp.",
+        src: "roadmap B3.2, B6.1, B5.1, B4.8",
+      },
+      {
         en: "The AI quotes the CV's evidence for each checklist line and fixed rules decide, so the same CV always gets the same result and is never rejected just for not mentioning something.",
         vi: "AI trích dẫn bằng chứng trong CV cho từng tiêu chí, còn quy tắc cố định đưa ra quyết định, nên cùng một CV luôn cho cùng kết quả và không bị loại chỉ vì chưa đề cập.",
         src: "goals (Rules); roadmap B5.5, B5.12",
@@ -462,8 +495,8 @@ export const caseStudies: CaseStudy[] = [
         src: "goals (Rules); roadmap B7.2, B7.5, B7.6",
       },
       {
-        en: "Owners approve every post, every email to a candidate and every reply outside the approved FAQ with one tap in Telegram; it runs on free tiers, and the AI provider is swapped by changing three settings.",
-        vi: "Người tuyển dụng duyệt mọi bài đăng, email gửi ứng viên và câu trả lời ngoài bộ câu hỏi đã duyệt chỉ với một lần chạm trên Telegram; hệ thống chạy trên gói miễn phí và đổi được nhà cung cấp AI bằng ba thiết lập.",
+        en: "Owners approve each post, candidate email and reply outside the approved FAQ with one tap; it runs on free tiers, and the AI provider swaps by changing three settings.",
+        vi: "Người tuyển dụng duyệt từng bài đăng, email gửi ứng viên và câu trả lời ngoài bộ câu hỏi đã duyệt chỉ với một lần chạm; hệ thống chạy trên gói miễn phí và đổi nhà cung cấp AI bằng ba thiết lập.",
         src: "goals (Rules); roadmap B6.2, B1.4",
       },
     ],
@@ -595,8 +628,8 @@ export const projects: Project[] = [
   {
     title: "Dinh Ngoc Edu",
     line: {
-      en: "AI turns a subject's materials into a Duolingo-style course with mock tests; React + Supabase.",
-      vi: "AI chuyển tài liệu môn học thành khóa học theo phong cách Duolingo, kèm đề thi thử; React + Supabase.",
+      en: "AI turns course materials into Duolingo-style lessons and mock tests.",
+      vi: "AI biến tài liệu học thành bài học kiểu Duolingo và đề thi thử.",
     },
     desc: "Upload a subject's materials once and AI builds a Duolingo-style course: chapters, lesson nodes and verified questions that also feed mock tests. Private by default, shareable when public, with a pet companion that grows as you learn.",
     tags: ["React", "TypeScript", "Supabase", "Edge Functions", "RLS", "AI"],
@@ -606,8 +639,8 @@ export const projects: Project[] = [
   {
     title: "Face recognition in the browser",
     line: {
-      en: "Runs in one browser tab with no server; thresholds tuned on 123 people across six ethnic groups.",
-      vi: "Chạy ngay trong một tab trình duyệt, không cần máy chủ; ngưỡng nhận diện được hiệu chỉnh trên 123 người thuộc sáu nhóm dân tộc.",
+      en: "In-tab, serverless; tuned on 123 people across six ethnic groups.",
+      vi: "Chạy trong trình duyệt; hiệu chỉnh trên 123 người, sáu nhóm dân tộc.",
     },
     desc: "Face detection and recognition that runs entirely in one browser tab with OpenCV's YuNet and SFace models. Match thresholds were tuned on 123 people across six ethnic groups and set by the group with the weakest results rather than the average; it refuses duplicate enrolments and impostors claiming a known name.",
     tags: ["OpenCV", "YuNet", "SFace", "WebAssembly", "Computer vision"],
@@ -617,8 +650,8 @@ export const projects: Project[] = [
   {
     title: "saasmath",
     line: {
-      en: "Calculators for SaaS founders (runway, LTV/CAC, dilution) with shareable links and listed sources.",
-      vi: "Công cụ tính toán dành cho nhà sáng lập SaaS (runway, LTV/CAC, pha loãng), có thể chia sẻ qua đường dẫn, kèm nguồn tham khảo.",
+      en: "SaaS founder calculators: runway, LTV/CAC, dilution.",
+      vi: "Công cụ tính cho nhà sáng lập SaaS: runway, LTV/CAC, pha loãng.",
     },
     desc: "Free calculators and explainers for SaaS founders — runway, burn multiple, LTV/CAC, MRR/ARR growth, Rule of 40, cap-table dilution, option value, seed sizing, bridge notes. State lives in the URL so results are shareable; each calculator lists the sources it draws on.",
     tags: [
@@ -634,8 +667,8 @@ export const projects: Project[] = [
   {
     title: "Browser tools",
     line: {
-      en: "A PDF merger, a JSON/YAML/TOML converter and a regex tester; nothing leaves the browser tab.",
-      vi: "Công cụ gộp PDF, chuyển đổi JSON/YAML/TOML và kiểm tra regex; dữ liệu không rời khỏi trình duyệt.",
+      en: "PDF merger, format converter, regex tester; files never leave the tab.",
+      vi: "Gộp PDF, chuyển đổi định dạng, kiểm tra regex; dữ liệu không rời trình duyệt.",
     },
     desc: "Three small tools where nothing leaves the tab: merge and slice PDFs under a strict CSP (pdf-merger), convert JSON/YAML/TOML in live editors (format-converter), and test regexes in a single HTML file (regex-tester); the converter and the tester keep state in the URL, so a link reproduces the exact view.",
     tags: ["Preact", "Svelte 5", "CodeMirror 6", "pdf-lib", "Vanilla JS"],
@@ -645,8 +678,8 @@ export const projects: Project[] = [
   {
     title: "Nguyễn Ngọc Anh — portfolio",
     line: {
-      en: "Bilingual scrollytelling portfolio with one thread drawn through every chapter; GSAP, Lenis, Web Audio.",
-      vi: "Portfolio song ngữ kể chuyện theo cuộn trang, với một đường nét xuyên suốt các chương; GSAP, Lenis, Web Audio.",
+      en: "Bilingual scrollytelling site; GSAP, Lenis, Web Audio.",
+      vi: "Portfolio song ngữ kể chuyện theo cuộn; GSAP, Lenis, Web Audio.",
     },
     desc: "Bilingual scrollytelling portfolio where one silk thread is drawn live through every chapter: cocoon, journey route, globe, supply-chain network, guitar strings, contact knot. GSAP DrawSVG/MotionPath with Lenis, synthesised sound, hidden easter eggs, and every animation off for readers who prefer reduced motion.",
     tags: ["React", "TypeScript", "GSAP", "Lenis", "i18n", "Web Audio"],
@@ -655,8 +688,8 @@ export const projects: Project[] = [
   {
     title: "Nguyễn Lê Khánh — portfolio",
     line: {
-      en: "Bilingual scrollytelling portfolio for a conservation-project candidate; GSAP ScrollTrigger, i18n.",
-      vi: "Portfolio song ngữ kể chuyện theo cuộn trang, dành cho một ứng viên dự án bảo tồn; GSAP ScrollTrigger, i18n.",
+      en: "Bilingual scrollytelling site; GSAP ScrollTrigger, i18n.",
+      vi: "Portfolio song ngữ kể chuyện theo cuộn; GSAP ScrollTrigger, i18n.",
     },
     desc: "Bilingual (Vietnamese / English) scrollytelling portfolio for a content and media candidate applying to an environmental conservation project. Ten narrative sections driven by GSAP ScrollTrigger with Lenis smooth-scroll, i18n via react-i18next with the copy kept out of JSX.",
     tags: [
@@ -695,53 +728,66 @@ export const inTheWorks: { title: T; line: T }[] = [
 // the systems and projects above actually use.
 export const cvSkills: { group: T; items: string[] }[] = [
   {
-    group: { en: "Languages & frontend", vi: "Ngôn ngữ & frontend" },
+    group: { en: "Frontend", vi: "Frontend" },
     items: [
       "TypeScript",
-      "JavaScript",
       "React",
+      "TanStack Query",
       "Astro",
       "Svelte",
       "Tailwind CSS",
       "PWA",
+      "GSAP",
     ],
   },
   {
     group: { en: "Backend & data", vi: "Backend & dữ liệu" },
     items: [
-      "Supabase (Auth, Storage, Edge Functions)",
+      "Supabase",
       "PostgreSQL",
       "Row-level security",
-      "SQL migrations",
+      "Deno Edge Functions",
+      "pg_cron",
       "Python",
     ],
   },
   {
-    group: { en: "Cloud & delivery", vi: "Cloud & triển khai" },
+    group: { en: "Integrations", vi: "Tích hợp" },
     items: [
-      "Cloudflare Workers & Pages",
-      "GitHub Actions CI/CD",
-      "Preview environments",
-      "Playwright",
-      "Vitest",
+      "Telegram Bot API",
+      "Facebook via Make",
+      "Gmail SMTP",
+      "Cloudflare Realtime",
+      "Excel, DOCX & PDF",
     ],
   },
   {
-    group: { en: "AI & computer vision", vi: "AI & thị giác máy tính" },
+    group: { en: "AI & vision", vi: "AI & thị giác máy tính" },
     items: [
       "Claude Code",
       "MCP",
-      "LLM APIs",
-      "OpenCV (YuNet, SFace)",
-      "Face recognition",
+      "LLM & vision APIs",
+      "ONNX Runtime",
+      "MediaPipe",
+      "OpenCV",
+    ],
+  },
+  {
+    group: { en: "Cloud & quality", vi: "Cloud & chất lượng" },
+    items: [
+      "Cloudflare Workers & Pages",
+      "GitHub Actions",
+      "Playwright",
+      "Vitest",
+      "Biome",
     ],
   },
   {
     group: { en: "Business domain", vi: "Nghiệp vụ" },
     items: [
       "HR & payroll",
-      "Vietnam Labour Code 2019",
-      "Social insurance & personal income tax",
+      "Labour Code 2019",
+      "Social insurance & PIT",
       "Cash control",
     ],
   },
@@ -893,7 +939,7 @@ export const navLinks = [
 export const stats = [
   {
     number: "3 systems",
-    label: "Built alone and run by real companies",
+    label: "Solo-developed and run by real companies",
   },
   {
     number: `${n(od.faceMatch.people, "en")} people`,
@@ -965,12 +1011,8 @@ export const experience: {
     period: { en: "Sep – Nov 2026", vi: "09/2026 – 11/2026" },
     points: [
       {
-        en: "Designed and built Ops Platform alone (below); HR ran employee records and face-recognition attendance on it.",
-        vi: "Tự thiết kế và xây dựng Ops Platform (xem bên dưới); bộ phận nhân sự quản lý hồ sơ nhân viên và chấm công nhận diện khuôn mặt trên nền tảng này.",
-      },
-      {
-        en: "Designed and built Kwook-career (below), the Telegram bot the company hired through: job posts, comment replies, CV ranking and contracts.",
-        vi: "Thiết kế và xây dựng Kwook-career (xem bên dưới), bot Telegram phục vụ tuyển dụng của công ty: đăng tin, trả lời bình luận, xếp hạng CV và lập hợp đồng.",
+        en: "Solo-developed Ops Platform and Kwook-career (below): HR ran employee records and face attendance on Ops Platform, and the company hired through Kwook-career.",
+        vi: "Phát triển độc lập Ops Platform và Kwook-career (xem bên dưới): bộ phận nhân sự quản lý hồ sơ nhân viên và chấm công khuôn mặt trên Ops Platform, và công ty tuyển dụng qua Kwook-career.",
       },
       {
         en: "Standardised company procedures into written rules and tools: the salary regulation and payroll method checked to the đồng, the meal-allowance rule, asset handover and HR records.",
