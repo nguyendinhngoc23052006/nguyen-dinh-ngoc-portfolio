@@ -1033,8 +1033,8 @@ export const experience: {
         vi: "Điều hành các cửa hàng và chuẩn hóa quy trình làm việc: ca làm, chấm công, tiền mặt hằng ngày và kỳ trả lương hằng tháng.",
       },
       {
-        en: "Designed and built Mau Heritage Hub (below), which the stores run on for shifts, attendance, cash and pay; Mau Heritage now rents it from me.",
-        vi: "Thiết kế và xây dựng Mau Heritage Hub (xem bên dưới) để các cửa hàng quản lý ca làm, chấm công, tiền mặt và tiền lương; hiện Mau Heritage đang thuê sử dụng hệ thống này.",
+        en: "Solo-developed Mau Heritage Hub (below), which the stores run on for shifts, attendance, cash and pay; Mau Heritage now rents it from me.",
+        vi: "Phát triển độc lập Mau Heritage Hub (xem bên dưới) để các cửa hàng quản lý ca làm, chấm công, tiền mặt và tiền lương; hiện Mau Heritage đang thuê sử dụng hệ thống này.",
       },
     ],
   },
