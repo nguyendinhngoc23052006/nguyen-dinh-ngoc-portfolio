@@ -2,8 +2,8 @@ name: Rollback
 
 # Manual production rollback via GitHub Actions. Mirror of the Cloudflare
 # dashboard path (Worker → Deployments → ⋯ → Rollback), useful when you'd
-# rather do it from a keyboard than log into the dashboard. See Part 4
-# step 1 of the cloud-pipeline-guide for the full incident-response flow.
+# rather do it from a keyboard than log into the dashboard. Pair a rollback
+# with a revert PR, or the next push to main redeploys the bad version.
 #
 # Retention: the 100 most recent Worker versions are eligible rollback
 # targets, per Cloudflare's Sept 2025 changelog. Gotcha: rollback is

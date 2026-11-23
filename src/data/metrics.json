@@ -1,0 +1,59 @@
+{
+  "measuredOn": "2026-11-23",
+  "systems": {
+    "opsPlatform": {
+      "testFiles": 221,
+      "testCases": 1646,
+      "migrations": 3,
+      "workflowCount": 10,
+      "reviewAgents": 8,
+      "skills": 10,
+      "roadmap": {
+        "done": 108,
+        "open": 185
+      },
+      "scale": {
+        "seededPeople": 10000,
+        "seededUnits": 1500,
+        "subSecondSavePeople": 30000
+      },
+      "history": null
+    },
+    "mauHeritageHub": {
+      "testFiles": 39,
+      "testCases": 253,
+      "migrations": 42,
+      "workflowCount": 3,
+      "reviewAgents": 0,
+      "skills": 0,
+      "roadmap": {
+        "done": 66,
+        "open": 5
+      },
+      "scale": null,
+      "history": {
+        "commits": 176,
+        "mergedPullRequests": 42,
+        "days": 44
+      }
+    },
+    "kwookCareer": {
+      "testFiles": 45,
+      "testCases": 258,
+      "migrations": 32,
+      "workflowCount": 1,
+      "reviewAgents": 0,
+      "skills": 0,
+      "roadmap": {
+        "done": 63,
+        "open": 0
+      },
+      "scale": null,
+      "history": {
+        "commits": 201,
+        "mergedPullRequests": 89,
+        "days": 32
+      }
+    }
+  }
+}
