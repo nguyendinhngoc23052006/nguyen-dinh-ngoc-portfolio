@@ -67,6 +67,38 @@ test("each project's screens open over the page and close with Escape", async ({
 
 test.describe("on a phone", () => {
   test.use({ viewport: { width: 390, height: 844 } });
+  test("a swipe moves the counter, and the deck is as tall as the slide on screen", async ({
+    page,
+  }) => {
+    for (const path of await caseStudyPaths(page)) {
+      await page.goto(path, { waitUntil: "networkidle" });
+      const track = page.locator(".deck-track");
+      const total = await track.locator(".deck-slide").count();
+      for (const i of [1, 2, 1]) {
+        // A swipe is a scroll of the track with no button or key involved.
+        await track.evaluate((t, n) => {
+          const s = t.querySelectorAll<HTMLElement>(".deck-slide");
+          t.scrollTo({
+            left: s[n].offsetLeft - s[0].offsetLeft,
+            behavior: "auto",
+          });
+        }, i);
+        await expect(page.locator("[data-pos]"), path).toHaveText(
+          `${i + 1} of ${total}`,
+        );
+        await expect
+          .poll(() =>
+            track.evaluate((t, n) => {
+              const slide = t.querySelectorAll<HTMLElement>(".deck-slide")[n];
+              return Math.abs(
+                t.getBoundingClientRect().height - slide.offsetHeight,
+              );
+            }, i),
+          )
+          .toBeLessThan(2);
+      }
+    }
+  });
   test("case studies fit the width, in both languages", async ({ page }) => {
     for (const path of await caseStudyPaths(page)) {
       for (const p of [path, `${path}/vi`]) {

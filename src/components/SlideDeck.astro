@@ -69,19 +69,27 @@ const L = {
 </section>
 
 <script>
-  // One handler per deck on the page: buttons and arrow keys move one slide;
-  // the counter follows whatever brought a slide into view, swipes included.
+  // One handler per deck on the page. The counter and the deck's height follow
+  // the scroll position itself, so a swipe, a button and an arrow key all agree,
+  // and the deck is only as tall as the slide on screen.
   for (const deck of document.querySelectorAll<HTMLElement>("[data-deck]")) {
     const track = deck.querySelector<HTMLElement>(".deck-track");
     const pos = deck.querySelector<HTMLElement>("[data-pos]");
-    if (!track || !pos) continue;
+    if (!track) continue;
     const slides = [...track.querySelectorAll<HTMLElement>(".deck-slide")];
-    const sep = pos.textContent?.match(/^\d+ (\S+) \d+$/)?.[1] ?? "of";
+    const sep = pos?.textContent?.match(/^\d+ (\S+) \d+$/)?.[1] ?? "of";
     const still = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const left = (i: number) => slides[i].offsetLeft - slides[0].offsetLeft;
     let current = 0;
+    const show = () => {
+      const step = slides.length > 1 ? left(1) : 1;
+      current = Math.max(0, Math.min(slides.length - 1, Math.round(track.scrollLeft / step)));
+      if (pos) pos.textContent = `${current + 1} ${sep} ${slides.length}`;
+      track.style.height = `${slides[current].offsetHeight}px`;
+    };
     const go = (i: number) => {
       const to = Math.max(0, Math.min(slides.length - 1, i));
-      track.scrollTo({ left: slides[to].offsetLeft - slides[0].offsetLeft, behavior: still.matches ? "auto" : "smooth" });
+      track.scrollTo({ left: left(to), behavior: still.matches ? "auto" : "smooth" });
     };
     deck.querySelector("[data-prev]")?.addEventListener("click", () => go(current - 1));
     deck.querySelector("[data-next]")?.addEventListener("click", () => go(current + 1));
@@ -89,17 +97,12 @@ const L = {
       if (e.key === "ArrowRight") { e.preventDefault(); go(current + 1); }
       if (e.key === "ArrowLeft") { e.preventDefault(); go(current - 1); }
     });
-    const seen = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (!entry.isIntersecting) continue;
-          current = slides.indexOf(entry.target as HTMLElement);
-          pos.textContent = `${current + 1} ${sep} ${slides.length}`;
-        }
-      },
-      { root: track, threshold: 0.6 },
-    );
-    for (const s of slides) seen.observe(s);
+    let frame = 0;
+    const soon = () => { cancelAnimationFrame(frame); frame = requestAnimationFrame(show); };
+    track.addEventListener("scroll", soon, { passive: true });
+    window.addEventListener("resize", soon);
+    for (const img of track.querySelectorAll("img")) img.addEventListener("load", soon);
+    show();
   }
 </script>
 
@@ -116,6 +119,9 @@ const L = {
     scroll-snap-type: x mandatory;
     overscroll-behavior-x: contain;
     scrollbar-width: thin;
+    align-items: start;
+    overflow-y: hidden;
+    transition: height 0.2s ease;
     border-radius: 0.25rem;
   }
   .deck-track:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
@@ -151,9 +157,9 @@ const L = {
     .deck-frame { height: auto; max-height: 70vh; }
     .deck-frame img { max-height: 70vh; }
   }
-  @media (prefers-reduced-motion: reduce) { .deck-track { scroll-behavior: auto; } }
+  @media (prefers-reduced-motion: reduce) { .deck-track { scroll-behavior: auto; transition: none; } }
   @media print {
-    .deck-track { display: block; overflow: visible; }
+    .deck-track { display: block; overflow: visible; height: auto !important; }
     .deck-slide { break-inside: avoid; margin-bottom: 1rem; }
     .deck-controls { display: none; }
   }
