@@ -622,6 +622,8 @@ export interface Project {
   tags: string[];
   url?: string;
   source: string;
+  /** Its slide deck in slides.ts. */
+  deck: string;
 }
 
 export const projects: Project[] = [
@@ -635,6 +637,7 @@ export const projects: Project[] = [
     tags: ["React", "TypeScript", "Supabase", "Edge Functions", "RLS", "AI"],
     url: "https://dinhngocedu.vercel.app",
     source: "https://github.com/nguyendinhngoc23052006/Dinh-Ngoc-Edu",
+    deck: "dinh-ngoc-edu",
   },
   {
     title: "Face recognition in the browser",
@@ -647,6 +650,7 @@ export const projects: Project[] = [
     url: "https://demo-computer-vision-nhom-10.pages.dev",
     source:
       "https://github.com/nguyendinhngoc23052006/demo-computer-vision-nhom-10",
+    deck: "face-demo",
   },
   {
     title: "saasmath",
@@ -664,6 +668,7 @@ export const projects: Project[] = [
     ],
     url: "https://saasmath.pages.dev",
     source: "https://github.com/nguyendinhngoc23052006/saasmath",
+    deck: "saasmath",
   },
   {
     title: "Browser tools",
@@ -675,6 +680,7 @@ export const projects: Project[] = [
     tags: ["Preact", "Svelte 5", "CodeMirror 6", "pdf-lib", "Vanilla JS"],
     url: "https://pdf-merger-c6h.pages.dev",
     source: "https://github.com/nguyendinhngoc23052006/pdf-merger",
+    deck: "browser-tools",
   },
   {
     title: "Nguyễn Ngọc Anh — portfolio",
@@ -686,6 +692,7 @@ export const projects: Project[] = [
     tags: ["React", "TypeScript", "GSAP", "Lenis", "i18n", "Web Audio"],
     url: "https://portfolio-for-ngoc-anh.pages.dev",
     source: "https://github.com/nguyendinhngoc23052006/Portfolio-for-Ngoc-Anh",
+    deck: "ngoc-anh",
   },
   {
     title: "Nguyễn Lê Khanh — portfolio",
@@ -705,6 +712,7 @@ export const projects: Project[] = [
     url: "https://nguyen-le-khanh-portfolio.pages.dev",
     source:
       "https://github.com/nguyendinhngoc23052006/nguyen-le-khanh-portfolio",
+    deck: "le-khanh",
   },
 ];
 

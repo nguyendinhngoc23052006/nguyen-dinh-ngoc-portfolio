@@ -1,0 +1,320 @@
+{
+  "browser-tools/01-pdf-merger-empty": {
+    "width": 1440,
+    "height": 900,
+    "from": "the live site, pdf-merger-c6h.pages.dev and regex-tester-6dz.pages.dev",
+    "taken": "2026-11-27"
+  },
+  "browser-tools/02-pdf-merger-two-files": {
+    "width": 1440,
+    "height": 900,
+    "from": "the live site, pdf-merger-c6h.pages.dev and regex-tester-6dz.pages.dev",
+    "taken": "2026-11-27"
+  },
+  "browser-tools/03-regex-email-matches": {
+    "width": 1440,
+    "height": 900,
+    "from": "the live site, pdf-merger-c6h.pages.dev and regex-tester-6dz.pages.dev",
+    "taken": "2026-11-27"
+  },
+  "browser-tools/04-regex-invalid-pattern": {
+    "width": 1440,
+    "height": 900,
+    "from": "the live site, pdf-merger-c6h.pages.dev and regex-tester-6dz.pages.dev",
+    "taken": "2026-11-27"
+  },
+  "dinh-ngoc-edu/01-landing-top": {
+    "width": 1440,
+    "height": 900,
+    "from": "the live site, dinhngocedu.vercel.app",
+    "taken": "2026-11-27"
+  },
+  "dinh-ngoc-edu/02-landing-scrolled-bottom": {
+    "width": 1440,
+    "height": 900,
+    "from": "the live site, dinhngocedu.vercel.app",
+    "taken": "2026-11-27"
+  },
+  "dinh-ngoc-edu/03-login-screen": {
+    "width": 1440,
+    "height": 900,
+    "from": "the live site, dinhngocedu.vercel.app",
+    "taken": "2026-11-27"
+  },
+  "face-demo/01-start-screen": {
+    "width": 1440,
+    "height": 900,
+    "from": "the live site, demo-computer-vision-nhom-10.pages.dev",
+    "taken": "2026-11-27"
+  },
+  "face-demo/02-camera-tab-idle": {
+    "width": 1440,
+    "height": 900,
+    "from": "the live site, demo-computer-vision-nhom-10.pages.dev",
+    "taken": "2026-11-27"
+  },
+  "face-demo/03-camera-running": {
+    "width": 1440,
+    "height": 900,
+    "from": "the live site, demo-computer-vision-nhom-10.pages.dev",
+    "taken": "2026-11-27"
+  },
+  "face-demo/04-add-face-form": {
+    "width": 1440,
+    "height": 900,
+    "from": "the live site, demo-computer-vision-nhom-10.pages.dev",
+    "taken": "2026-11-27"
+  },
+  "kwook-career/01-jobs": {
+    "width": 390,
+    "height": 844,
+    "from": "kwook-career@f1d3787 web pages served offline with invented jobs; the company is renamed Example Co.",
+    "taken": "2026-11-27"
+  },
+  "kwook-career/02-job": {
+    "width": 390,
+    "height": 1443,
+    "from": "kwook-career@f1d3787 web pages served offline with invented jobs; the company is renamed Example Co.",
+    "taken": "2026-11-27"
+  },
+  "kwook-career/03-validation": {
+    "width": 390,
+    "height": 617,
+    "from": "kwook-career@f1d3787 web pages served offline with invented jobs; the company is renamed Example Co.",
+    "taken": "2026-11-27"
+  },
+  "kwook-career/04-sent": {
+    "width": 390,
+    "height": 844,
+    "from": "kwook-career@f1d3787 web pages served offline with invented jobs; the company is renamed Example Co.",
+    "taken": "2026-11-27"
+  },
+  "kwook-career/05-english": {
+    "width": 390,
+    "height": 844,
+    "from": "kwook-career@f1d3787 web pages served offline with invented jobs; the company is renamed Example Co.",
+    "taken": "2026-11-27"
+  },
+  "kwook-career/06-rsvp-yes": {
+    "width": 390,
+    "height": 844,
+    "from": "kwook-career@f1d3787 web pages served offline with invented jobs; the company is renamed Example Co.",
+    "taken": "2026-11-27"
+  },
+  "kwook-career/07-rsvp-move": {
+    "width": 390,
+    "height": 844,
+    "from": "kwook-career@f1d3787 web pages served offline with invented jobs; the company is renamed Example Co.",
+    "taken": "2026-11-27"
+  },
+  "le-khanh/02-belief": {
+    "width": 1440,
+    "height": 900,
+    "from": "the live site, nguyen-le-khanh-portfolio.pages.dev",
+    "taken": "2026-11-27"
+  },
+  "le-khanh/03-work-events": {
+    "width": 1440,
+    "height": 900,
+    "from": "the live site, nguyen-le-khanh-portfolio.pages.dev",
+    "taken": "2026-11-27"
+  },
+  "le-khanh/04-community": {
+    "width": 1440,
+    "height": 900,
+    "from": "the live site, nguyen-le-khanh-portfolio.pages.dev",
+    "taken": "2026-11-27"
+  },
+  "le-khanh/05-contact": {
+    "width": 1440,
+    "height": 900,
+    "from": "the live site, nguyen-le-khanh-portfolio.pages.dev",
+    "taken": "2026-11-27"
+  },
+  "mau-heritage-hub/04-owner-stores": {
+    "width": 1280,
+    "height": 860,
+    "from": "mau-heritage-hub@73bd7c7, its own e2e walkthrough on a local Supabase with invented staff",
+    "taken": "2026-11-26"
+  },
+  "mau-heritage-hub/07-owner-person-face-enrolled": {
+    "width": 1280,
+    "height": 1060,
+    "from": "mau-heritage-hub@73bd7c7, its own e2e walkthrough on a local Supabase with invented staff",
+    "taken": "2026-11-26"
+  },
+  "mau-heritage-hub/10-staff-open-profile": {
+    "width": 780,
+    "height": 1700,
+    "from": "mau-heritage-hub@73bd7c7, its own e2e walkthrough on a local Supabase with invented staff",
+    "taken": "2026-11-26"
+  },
+  "mau-heritage-hub/12-staff-unknown-face-refused": {
+    "width": 780,
+    "height": 1700,
+    "from": "mau-heritage-hub@73bd7c7, its own e2e walkthrough on a local Supabase with invented staff",
+    "taken": "2026-11-26"
+  },
+  "mau-heritage-hub/14-staff-full-shift": {
+    "width": 780,
+    "height": 1520,
+    "from": "mau-heritage-hub@73bd7c7, its own e2e walkthrough on a local Supabase with invented staff",
+    "taken": "2026-11-26"
+  },
+  "mau-heritage-hub/17-staff-refused-wrong-place": {
+    "width": 780,
+    "height": 1320,
+    "from": "mau-heritage-hub@73bd7c7, its own e2e walkthrough on a local Supabase with invented staff",
+    "taken": "2026-11-26"
+  },
+  "mau-heritage-hub/21-manager-confirmed-log-short": {
+    "width": 780,
+    "height": 1092,
+    "from": "mau-heritage-hub@73bd7c7, its own e2e walkthrough on a local Supabase with invented staff",
+    "taken": "2026-11-26"
+  },
+  "mau-heritage-hub/28-owner-pay-draft": {
+    "width": 1280,
+    "height": 1615,
+    "from": "mau-heritage-hub@73bd7c7, its own e2e walkthrough on a local Supabase with invented staff",
+    "taken": "2026-11-26"
+  },
+  "mau-heritage-hub/30-staff-payslip": {
+    "width": 780,
+    "height": 1600,
+    "from": "mau-heritage-hub@73bd7c7, its own e2e walkthrough on a local Supabase with invented staff",
+    "taken": "2026-11-26"
+  },
+  "mau-heritage-hub/35-staff-today-vietnamese": {
+    "width": 780,
+    "height": 1688,
+    "from": "mau-heritage-hub@73bd7c7, its own e2e walkthrough on a local Supabase with invented staff",
+    "taken": "2026-11-26"
+  },
+  "ngoc-anh/01-hero": {
+    "width": 1440,
+    "height": 900,
+    "from": "the live site, portfolio-for-ngoc-anh.pages.dev",
+    "taken": "2026-11-27"
+  },
+  "ngoc-anh/02-about": {
+    "width": 1440,
+    "height": 900,
+    "from": "the live site, portfolio-for-ngoc-anh.pages.dev",
+    "taken": "2026-11-27"
+  },
+  "ngoc-anh/03-journey": {
+    "width": 1440,
+    "height": 900,
+    "from": "the live site, portfolio-for-ngoc-anh.pages.dev",
+    "taken": "2026-11-27"
+  },
+  "ngoc-anh/04-principles": {
+    "width": 1440,
+    "height": 900,
+    "from": "the live site, portfolio-for-ngoc-anh.pages.dev",
+    "taken": "2026-11-27"
+  },
+  "ngoc-anh/05-projects": {
+    "width": 1440,
+    "height": 900,
+    "from": "the live site, portfolio-for-ngoc-anh.pages.dev",
+    "taken": "2026-11-27"
+  },
+  "ngoc-anh/06-english-hero": {
+    "width": 1440,
+    "height": 900,
+    "from": "the live site, portfolio-for-ngoc-anh.pages.dev",
+    "taken": "2026-11-27"
+  },
+  "ops-platform/01-careers": {
+    "width": 1280,
+    "height": 860,
+    "from": "ops-platform@7eee67b on a local Supabase with its demo seed (an invented company, Ví dụ Foods)",
+    "taken": "2026-11-27"
+  },
+  "ops-platform/02-owner-today": {
+    "width": 1280,
+    "height": 860,
+    "from": "ops-platform@7eee67b on a local Supabase with its demo seed (an invented company, Ví dụ Foods)",
+    "taken": "2026-11-27"
+  },
+  "ops-platform/03-org-chart": {
+    "width": 1280,
+    "height": 860,
+    "from": "ops-platform@7eee67b on a local Supabase with its demo seed (an invented company, Ví dụ Foods)",
+    "taken": "2026-11-27"
+  },
+  "ops-platform/05-person-fields": {
+    "width": 1280,
+    "height": 860,
+    "from": "ops-platform@7eee67b on a local Supabase with its demo seed (an invented company, Ví dụ Foods)",
+    "taken": "2026-11-27"
+  },
+  "ops-platform/06-privileges": {
+    "width": 1280,
+    "height": 860,
+    "from": "ops-platform@7eee67b on a local Supabase with its demo seed (an invented company, Ví dụ Foods)",
+    "taken": "2026-11-27"
+  },
+  "ops-platform/07-machine-fields": {
+    "width": 1280,
+    "height": 860,
+    "from": "ops-platform@7eee67b on a local Supabase with its demo seed (an invented company, Ví dụ Foods)",
+    "taken": "2026-11-27"
+  },
+  "ops-platform/09b-machine-tag": {
+    "width": 1280,
+    "height": 860,
+    "from": "ops-platform@7eee67b on a local Supabase with its demo seed (an invented company, Ví dụ Foods)",
+    "taken": "2026-11-27"
+  },
+  "ops-platform/10-postings": {
+    "width": 1280,
+    "height": 860,
+    "from": "ops-platform@7eee67b on a local Supabase with its demo seed (an invented company, Ví dụ Foods)",
+    "taken": "2026-11-27"
+  },
+  "ops-platform/11-manager-work": {
+    "width": 1280,
+    "height": 860,
+    "from": "ops-platform@7eee67b on a local Supabase with its demo seed (an invented company, Ví dụ Foods)",
+    "taken": "2026-11-27"
+  },
+  "ops-platform/12b-unit-timesheet": {
+    "width": 1280,
+    "height": 860,
+    "from": "ops-platform@7eee67b on a local Supabase with its demo seed (an invented company, Ví dụ Foods)",
+    "taken": "2026-11-27"
+  },
+  "ops-platform/13b-worker-attendance": {
+    "width": 390,
+    "height": 844,
+    "from": "ops-platform@7eee67b on a local Supabase with its demo seed (an invented company, Ví dụ Foods)",
+    "taken": "2026-11-27"
+  },
+  "saasmath/01-home": {
+    "width": 1440,
+    "height": 900,
+    "from": "the live site, saasmath.pages.dev",
+    "taken": "2026-11-27"
+  },
+  "saasmath/02-runway-filled": {
+    "width": 1440,
+    "height": 900,
+    "from": "the live site, saasmath.pages.dev",
+    "taken": "2026-11-27"
+  },
+  "saasmath/03-ltv-cac-filled": {
+    "width": 1440,
+    "height": 900,
+    "from": "the live site, saasmath.pages.dev",
+    "taken": "2026-11-27"
+  },
+  "saasmath/05-rule-of-40-filled": {
+    "width": 1440,
+    "height": 900,
+    "from": "the live site, saasmath.pages.dev",
+    "taken": "2026-11-27"
+  }
+}
