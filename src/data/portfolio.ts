@@ -2,10 +2,15 @@ import metrics from "./metrics.json";
 
 export const SITE_URL = "https://nguyendinhngoc.dev";
 
-export const heroSubhead =
-  "Full-stack developer who builds apps tailored to the job, end to end: business platforms (people records, face-recognition attendance, recruiting, payroll), AI learning apps, computer vision in the browser, founder calculators, motion-rich portfolio sites and private-by-design browser tools. Solo, on React/TypeScript, Supabase and Cloudflare, directing AI agents as my engineering team. Three of my systems have run real businesses.";
+export const heroSubhead: T = {
+  en: "Full-stack developer who builds apps tailored to the job, end to end: business platforms (people records, face-recognition attendance, recruiting, payroll), AI learning apps, computer vision in the browser, founder calculators, motion-rich portfolio sites and private-by-design browser tools. Solo, on React/TypeScript, Supabase and Cloudflare, directing AI agents as my engineering team. Three of my systems have run real businesses.",
+  vi: "Lập trình viên full-stack xây dựng trọn vẹn các ứng dụng được thiết kế riêng theo từng nhu cầu: nền tảng quản trị doanh nghiệp (hồ sơ nhân sự, chấm công nhận diện khuôn mặt, tuyển dụng, tính lương), ứng dụng học tập tích hợp AI, thị giác máy tính chạy trên trình duyệt, công cụ tính cho nhà sáng lập, website portfolio giàu hiệu ứng và công cụ trình duyệt bảo vệ quyền riêng tư ngay từ thiết kế. Phát triển độc lập trên React/TypeScript, Supabase và Cloudflare, điều phối các AI agent như một đội ngũ kỹ sư. Ba hệ thống do tôi xây dựng đã được đưa vào vận hành tại doanh nghiệp thực tế.",
+};
 
-export const aboutIntro = `I study international economics at Foreign Trade University and taught myself the rest — production software, cloud infrastructure, AI-directed engineering. The combination isn't padding, it's leverage. Macroeconomic reasoning for the business case. Creative problem-solving for the jobs no template fits. Infrastructure-deep understanding of the systems the code actually runs on. All three in one head at once. Self-taught means I picked up every tool because I needed it, not because a syllabus said to — each system here needed a field I learned from published sources first: labour law, cash control, pay regulations, face recognition. I direct AI systems the way most developers use search: as an amplifier on the work, not a substitute for the understanding underneath. Most public projects here are live: open them. The systems companies run on are private, and I'll gladly walk you through them.`;
+export const aboutIntro: T = {
+  en: `I study international economics at Foreign Trade University and taught myself the rest — production software, cloud infrastructure, AI-directed engineering. The combination isn't padding, it's leverage. Macroeconomic reasoning for the business case. Creative problem-solving for the jobs no template fits. Infrastructure-deep understanding of the systems the code actually runs on. All three in one head at once. Self-taught means I picked up every tool because I needed it, not because a syllabus said to — each system here needed a field I learned from published sources first: labour law, cash control, pay regulations, face recognition. I direct AI systems the way most developers use search: as an amplifier on the work, not a substitute for the understanding underneath. Most public projects here are live: open them. The systems companies run on are private, and I'll gladly walk you through them.`,
+  vi: `Tôi theo học ngành Kinh tế quốc tế tại Trường Đại học Ngoại thương và tự học phần còn lại: phát triển phần mềm thực tế, hạ tầng đám mây và kỹ thuật phần mềm với AI do tôi điều phối. Sự kết hợp này không phải để trang trí, mà là lợi thế: tư duy kinh tế vĩ mô để hiểu bài toán kinh doanh, khả năng sáng tạo cho những vấn đề không có khuôn mẫu sẵn, và hiểu biết sâu về hạ tầng mà mã nguồn thực sự vận hành trên đó. Cả ba hội tụ trong cùng một người. Tự học nghĩa là tôi tiếp cận mỗi công cụ vì công việc cần đến, không phải vì giáo trình yêu cầu; mỗi hệ thống ở đây đòi hỏi một lĩnh vực tôi đã tìm hiểu trước từ các nguồn chính thống: pháp luật lao động, kiểm soát tiền mặt, quy định về tiền lương, nhận diện khuôn mặt. Tôi điều phối AI như cách nhiều lập trình viên dùng công cụ tìm kiếm: để khuếch đại hiệu quả công việc, không thay thế cho sự hiểu biết nền tảng. Phần lớn dự án công khai ở đây đang hoạt động, mời anh chị mở trực tiếp. Các hệ thống mà doanh nghiệp vận hành không công khai, và tôi sẵn lòng trình bày chi tiết.`,
+};
 
 // ---------------------------------------------------------------------------
 // CV content — the only source for /cv (English) and /cv/vi (Vietnamese) and
@@ -618,7 +623,7 @@ export const caseStudies: CaseStudy[] = [
 export interface Project {
   title: string;
   line: T;
-  desc: string;
+  desc: T;
   tags: string[];
   url?: string;
   source: string;
@@ -633,7 +638,10 @@ export const projects: Project[] = [
       en: "AI turns course materials into Duolingo-style lessons and mock tests.",
       vi: "AI biến tài liệu học thành bài học kiểu Duolingo và đề thi thử.",
     },
-    desc: "Upload a subject's materials once and AI builds a Duolingo-style course: chapters, lesson nodes and verified questions that also feed mock tests. Private by default, shareable when public, with a pet companion that grows as you learn.",
+    desc: {
+      en: "Upload a subject's materials once and AI builds a Duolingo-style course: chapters, lesson nodes and verified questions that also feed mock tests. Private by default, shareable when public, with a pet companion that grows as you learn.",
+      vi: "Tải tài liệu của một môn học lên một lần, AI sẽ xây dựng khoá học theo phong cách Duolingo: các chương, các bài học và câu hỏi đã được kiểm chứng, đồng thời dùng để tạo đề thi thử. Mặc định ở chế độ riêng tư, có thể chia sẻ khi công khai, kèm một thú cưng đồng hành lớn dần theo quá trình học.",
+    },
     tags: ["React", "TypeScript", "Supabase", "Edge Functions", "RLS", "AI"],
     url: "https://dinhngocedu.vercel.app",
     source: "https://github.com/nguyendinhngoc23052006/Dinh-Ngoc-Edu",
@@ -645,7 +653,10 @@ export const projects: Project[] = [
       en: "In-tab, serverless; tuned on 123 people across six ethnic groups.",
       vi: "Chạy trong trình duyệt; hiệu chỉnh trên 123 người, sáu dân tộc.",
     },
-    desc: "Face detection and recognition that runs entirely in one browser tab with OpenCV's YuNet and SFace models. Match thresholds were tuned on 123 people across six ethnic groups and set by the group with the weakest results rather than the average; it refuses duplicate enrolments and impostors claiming a known name.",
+    desc: {
+      en: "Face detection and recognition that runs entirely in one browser tab with OpenCV's YuNet and SFace models. Match thresholds were tuned on 123 people across six ethnic groups and set by the group with the weakest results rather than the average; it refuses a face that matches someone enrolled under another name, and a new face under a name already enrolled.",
+      vi: "Phát hiện và nhận diện khuôn mặt chạy hoàn toàn trong một thẻ trình duyệt, sử dụng các mô hình YuNet và SFace của OpenCV. Ngưỡng so khớp được hiệu chỉnh trên 123 người thuộc sáu nhóm dân tộc và được đặt theo nhóm có kết quả thấp nhất chứ không theo mức trung bình; hệ thống từ chối khuôn mặt trùng với người đã đăng ký dưới tên khác và khuôn mặt mới dưới một tên đã có.",
+    },
     tags: ["OpenCV", "YuNet", "SFace", "WebAssembly", "Computer vision"],
     url: "https://demo-computer-vision-nhom-10.pages.dev",
     source:
@@ -658,7 +669,10 @@ export const projects: Project[] = [
       en: "SaaS founder calculators: runway, LTV/CAC, dilution.",
       vi: "Công cụ tính cho nhà sáng lập SaaS: runway, LTV/CAC, pha loãng.",
     },
-    desc: "Free calculators and explainers for SaaS founders — runway, burn multiple, LTV/CAC, MRR/ARR growth, Rule of 40, cap-table dilution, option value, seed sizing, bridge notes. State lives in the URL so results are shareable; each calculator lists the sources it draws on.",
+    desc: {
+      en: "Free calculators and explainers for SaaS founders — runway, burn multiple, LTV/CAC, MRR/ARR growth, Rule of 40, cap-table dilution, option value, seed sizing, bridge notes. State lives in the URL so results are shareable; each calculator lists the sources it draws on.",
+      vi: "Các công cụ tính và bài giải thích miễn phí cho nhà sáng lập SaaS: runway, burn multiple, LTV/CAC, tăng trưởng MRR/ARR, Quy tắc 40, mức pha loãng cổ phần, giá trị quyền chọn, quy mô vòng seed, khoản vay cầu nối. Trạng thái được lưu trong đường dẫn nên kết quả có thể chia sẻ; mỗi công cụ đều liệt kê nguồn tham khảo.",
+    },
     tags: [
       "Astro",
       "React islands",
@@ -676,7 +690,10 @@ export const projects: Project[] = [
       en: "PDF merger, format converter, regex tester; files never leave the tab.",
       vi: "Gộp PDF, chuyển đổi định dạng, kiểm tra regex; dữ liệu không rời trình duyệt.",
     },
-    desc: "Three small tools where nothing leaves the tab: merge and slice PDFs under a strict CSP (pdf-merger), convert JSON/YAML/TOML in live editors (format-converter), and test regexes in a single HTML file (regex-tester); the converter and the tester keep state in the URL, so a link reproduces the exact view.",
+    desc: {
+      en: "Three small tools where nothing leaves the tab: merge and slice PDFs under a strict CSP (pdf-merger), convert JSON/YAML/TOML in live editors (format-converter), and test regexes in a single HTML file (regex-tester); the converter and the tester keep state in the URL, so a link reproduces the exact view.",
+      vi: "Ba công cụ nhỏ, dữ liệu không rời khỏi thẻ trình duyệt: gộp và tách PDF với chính sách bảo mật nội dung nghiêm ngặt (pdf-merger), chuyển đổi JSON/YAML/TOML trong trình soạn thảo trực tiếp (format-converter), và kiểm tra biểu thức chính quy trong một tệp HTML duy nhất (regex-tester); công cụ chuyển đổi định dạng và công cụ kiểm tra regex lưu trạng thái trong đường dẫn, nên một đường dẫn có thể tái hiện đúng giao diện đang xem.",
+    },
     tags: ["Preact", "Svelte 5", "CodeMirror 6", "pdf-lib", "Vanilla JS"],
     url: "https://pdf-merger-c6h.pages.dev",
     source: "https://github.com/nguyendinhngoc23052006/pdf-merger",
@@ -688,7 +705,10 @@ export const projects: Project[] = [
       en: "Bilingual scrollytelling site; GSAP, Lenis, Web Audio.",
       vi: "Portfolio song ngữ kể chuyện; GSAP, Lenis, Web Audio.",
     },
-    desc: "Bilingual scrollytelling portfolio where one silk thread is drawn live through every chapter: cocoon, journey route, globe, supply-chain network, guitar strings, contact knot. GSAP DrawSVG/MotionPath with Lenis, synthesised sound, hidden easter eggs, and every animation off for readers who prefer reduced motion.",
+    desc: {
+      en: "Bilingual scrollytelling portfolio where one silk thread is drawn live through every chapter: cocoon, journey route, globe, supply-chain network, guitar strings, contact knot. GSAP DrawSVG/MotionPath with Lenis, synthesised sound, hidden easter eggs, and every animation off for readers who prefer reduced motion.",
+      vi: "Portfolio song ngữ kể chuyện theo cuộn trang, trong đó một sợi chỉ tơ được vẽ trực tiếp qua từng chương: kén tằm, hành trình, quả địa cầu, mạng lưới chuỗi cung ứng, dây đàn guitar, nút thắt liên hệ. Sử dụng GSAP DrawSVG/MotionPath với Lenis, âm thanh tổng hợp, các chi tiết ẩn thú vị, và mọi hiệu ứng chuyển động đều được tắt cho người đọc ưu tiên giảm chuyển động.",
+    },
     tags: ["React", "TypeScript", "GSAP", "Lenis", "i18n", "Web Audio"],
     url: "https://portfolio-for-ngoc-anh.pages.dev",
     source: "https://github.com/nguyendinhngoc23052006/Portfolio-for-Ngoc-Anh",
@@ -700,7 +720,10 @@ export const projects: Project[] = [
       en: "Bilingual scrollytelling site; GSAP ScrollTrigger, i18n.",
       vi: "Portfolio song ngữ kể chuyện; GSAP ScrollTrigger, i18n.",
     },
-    desc: "Bilingual (Vietnamese / English) scrollytelling portfolio for a content and media candidate applying to an environmental conservation project. Ten narrative sections driven by GSAP ScrollTrigger with Lenis smooth-scroll, i18n via react-i18next with the copy kept out of JSX.",
+    desc: {
+      en: "Bilingual (Vietnamese / English) scrollytelling portfolio for a content and media candidate applying to an environmental conservation project. Ten narrative sections driven by GSAP ScrollTrigger with Lenis smooth-scroll, i18n via react-i18next with the copy kept out of JSX.",
+      vi: "Portfolio song ngữ (tiếng Việt / tiếng Anh) kể chuyện theo cuộn trang cho một ứng viên mảng nội dung và truyền thông ứng tuyển vào dự án bảo tồn môi trường. Mười phần kể chuyện được điều khiển bằng GSAP ScrollTrigger với Lenis (cuộn mượt), đa ngôn ngữ bằng react-i18next và nội dung được tách khỏi JSX.",
+    },
     tags: [
       "React",
       "TypeScript",
@@ -929,34 +952,54 @@ export const shipRules: T[] = [
   },
 ];
 
-export const projectsHeading = "More things I shipped";
-export const projectsSubhead =
-  "Public sites and tools. Open them, or read the source on GitHub.";
-export const projectsTail =
-  "Follow along on GitHub — more shipping this quarter.";
+export const projectsHeading: T = {
+  en: "More things I shipped",
+  vi: "Các sản phẩm khác đã phát hành",
+};
+export const projectsSubhead: T = {
+  en: "Public sites and tools. Open them, or read the source on GitHub.",
+  vi: "Các trang web và công cụ công khai. Anh chị có thể mở trực tiếp hoặc xem mã nguồn trên GitHub.",
+};
+export const projectsTail: T = {
+  en: "Follow along on GitHub — more shipping this quarter.",
+  vi: "Mời anh chị theo dõi trên GitHub; các sản phẩm mới sẽ tiếp tục ra mắt trong quý này.",
+};
 
-export const navLinks = [
-  { href: "#work", label: "Work" },
-  { href: "#method", label: "How I work" },
-  { href: "#projects", label: "Projects" },
-  { href: "#about", label: "About" },
-  { href: "#skills", label: "Skills" },
-  { href: "/cv", label: "CV" },
-  { href: "#contact", label: "Contact" },
+// "/cv" is the English CV; pages in Vietnamese link "/cv/vi" instead.
+export const navLinks: { href: string; label: T }[] = [
+  { href: "#work", label: { en: "Work", vi: "Hệ thống" } },
+  { href: "#method", label: { en: "How I work", vi: "Cách làm việc" } },
+  { href: "#projects", label: { en: "Projects", vi: "Dự án" } },
+  { href: "#about", label: { en: "About", vi: "Giới thiệu" } },
+  { href: "#skills", label: { en: "Skills", vi: "Kỹ năng" } },
+  { href: "/cv", label: { en: "CV", vi: "CV" } },
+  { href: "#contact", label: { en: "Contact", vi: "Liên hệ" } },
 ];
 
-export const stats = [
+export const stats: { number: T; label: T }[] = [
   {
-    number: "3 systems",
-    label: "Solo-developed and run by real companies",
+    number: { en: "3 systems", vi: "3 hệ thống" },
+    label: {
+      en: "Solo-developed and run by real companies",
+      vi: "Phát triển độc lập và đã vận hành tại doanh nghiệp thực tế",
+    },
   },
   {
-    number: `${n(od.faceMatch.people, "en")} people`,
-    label: `Face matched in under ${n(od.faceMatch.ms, "en")} ms on Ops Platform`,
+    number: {
+      en: `${n(od.faceMatch.people, "en")} people`,
+      vi: `${n(od.faceMatch.people, "vi")} người`,
+    },
+    label: {
+      en: `Face matched in under ${n(od.faceMatch.ms, "en")} ms on Ops Platform`,
+      vi: `So khớp một khuôn mặt dưới ${n(od.faceMatch.ms, "vi")} ms trên Ops Platform`,
+    },
   },
   {
-    number: "123 people",
-    label: "Face recognition tuned across six ethnic groups",
+    number: { en: "123 people", vi: "123 người" },
+    label: {
+      en: "Face recognition tuned across six ethnic groups",
+      vi: "Nhận diện khuôn mặt được hiệu chỉnh trên sáu nhóm dân tộc",
+    },
   },
 ];
 
@@ -1059,3 +1102,114 @@ export const experience: {
     ],
   },
 ];
+
+// Every word on the home page that is not content above: the page reads its
+// labels from here in the visitor's language, so /, /vi and the tests share one
+// source. "{n}" and "{title}" are filled in by the page.
+export const home = {
+  description: {
+    en: "Nguyen Dinh Ngoc (Jade) is a full-stack developer who builds tailored web apps end to end: business platforms, AI and computer-vision tools, calculators and portfolio sites, on React/TypeScript, Supabase and Cloudflare. Hanoi, open to remote.",
+    vi: "Nguyễn Đình Ngọc (Jade) là lập trình viên full-stack xây dựng trọn vẹn các ứng dụng web được thiết kế riêng: nền tảng quản trị doanh nghiệp, công cụ AI và thị giác máy tính, công cụ tính toán và website portfolio, trên React/TypeScript, Supabase và Cloudflare. Sống tại Hà Nội, sẵn sàng làm việc từ xa.",
+  },
+  title: {
+    en: "Jade — Full-stack Developer | Nguyen Dinh Ngoc",
+    vi: "Jade — Lập trình viên Full-stack | Nguyễn Đình Ngọc",
+  },
+  // The name as each language writes it, in two lines for the hero.
+  name: { en: "Nguyen\nDinh Ngoc", vi: "Nguyễn\nĐình Ngọc" },
+  role: { en: "Full-stack Developer", vi: "Lập trình viên Full-stack" },
+  otherLanguage: { en: "Tiếng Việt", vi: "English" },
+  menuOpen: { en: "Open menu", vi: "Mở menu" },
+  menuClose: { en: "Close menu", vi: "Đóng menu" },
+  mainNav: { en: "Main navigation", vi: "Điều hướng chính" },
+  skip: { en: "Skip to content", vi: "Chuyển đến nội dung" },
+  seeBuilt: { en: "See what I built", vi: "Xem các sản phẩm đã xây dựng" },
+  cvButton: { en: "CV (EN / VI)", vi: "CV (VI / EN)" },
+  avatarAlt: {
+    en: "Jade — Nguyen Dinh Ngoc, full-stack developer",
+    vi: "Jade — Nguyễn Đình Ngọc, lập trình viên full-stack",
+  },
+  keyFacts: { en: "Key facts", vi: "Thông tin nổi bật" },
+  workLabel: { en: "Work", vi: "Hệ thống" },
+  workHeading: {
+    en: "Systems I solo-developed",
+    vi: "Các hệ thống tôi phát triển độc lập",
+  },
+  workIntro: {
+    en: "Each began inside a business I worked in. They run on private company data, so each is told as a design: the problem, the model, the decisions, what is built and what proves it.",
+    vi: "Mỗi hệ thống bắt đầu từ chính doanh nghiệp tôi từng làm việc. Các hệ thống vận hành trên dữ liệu riêng của doanh nghiệp, nên mỗi hệ thống được trình bày dưới dạng thiết kế: vấn đề, mô hình, các quyết định, những gì đã xây dựng và bằng chứng xác nhận.",
+  },
+  readCase: { en: "Read the case study →", vi: "Đọc chi tiết →" },
+  inWorksHeading: { en: "In the works", vi: "Đang thiết kế" },
+  inWorksIntro: {
+    en: "Hardware and AI products still in design. Details on request.",
+    vi: "Các sản phẩm phần cứng và AI đang trong giai đoạn thiết kế. Thông tin chi tiết xin được trao đổi khi có nhu cầu.",
+  },
+  inDesign: { en: "In design · ask me", vi: "Đang thiết kế · xin liên hệ" },
+  methodLabel: { en: "How I work", vi: "Cách làm việc" },
+  methodHeading: {
+    en: "AI agents build. Gates decide what ships.",
+    vi: "AI agent xây dựng. Các bước kiểm soát quyết định điều gì được phát hành.",
+  },
+  methodIntro: {
+    en: "I direct AI coding agents through a process that does not rely on trusting them: a plan I approve, hooks that enforce it, specialist reviewers, evidence before every pull request, and a human merge.",
+    vi: "Tôi điều phối các AI agent lập trình theo một quy trình không dựa vào việc tin tưởng chúng: kế hoạch do tôi phê duyệt, các cơ chế tự động bảo đảm kế hoạch được tuân thủ, các bước rà soát chuyên trách, bằng chứng trước mỗi pull request, và việc hợp nhất mã do con người thực hiện.",
+  },
+  step: { en: "Step", vi: "Bước" },
+  verifyHeading: {
+    en: "How I know the agent did what it says",
+    vi: "Cách tôi kiểm chứng agent đã làm đúng như báo cáo",
+  },
+  shipHeading: { en: "How I ship", vi: "Cách tôi phát hành" },
+  everySystem: { en: "On every system:", vi: "Trên mọi hệ thống:" },
+  projectsLabel: { en: "Projects", vi: "Dự án" },
+  live: { en: "Live", vi: "Đang hoạt động" },
+  source: { en: "Source", vi: "Mã nguồn" },
+  seeInUse: {
+    en: "See it in use ({n} screens)",
+    vi: "Xem giao diện thực tế ({n} màn hình)",
+  },
+  deckLabel: { en: "{title} screens", vi: "Màn hình {title}" },
+  closeDeck: { en: "Close {title} screens", vi: "Đóng màn hình {title}" },
+  followGithub: { en: "Follow on GitHub", vi: "Theo dõi trên GitHub" },
+  aboutLabel: { en: "About", vi: "Giới thiệu" },
+  aboutHeading: {
+    en: "Building from Vietnam, shipping globally",
+    vi: "Xây dựng từ Việt Nam, phát hành ra toàn cầu",
+  },
+  aboutMore: {
+    en: "The work covers the whole stack — schema to UI to edge, every seam in between. Business platforms, AI apps, client sites, calculators and tools, each tailored to a job no template will fit. If the problem needs someone who can hold the business logic, the data model, and the deploy pipeline in one head at once, that's the seat I was built for.",
+    vi: "Công việc của tôi trải rộng toàn bộ hệ thống, từ cấu trúc dữ liệu, giao diện đến hạ tầng biên, cùng mọi điểm nối giữa chúng: nền tảng doanh nghiệp, ứng dụng AI, website cho khách hàng, công cụ tính toán và tiện ích, mỗi sản phẩm được thiết kế riêng cho một bài toán không có khuôn mẫu sẵn. Nếu bài toán cần một người nắm cùng lúc nghiệp vụ, mô hình dữ liệu và quy trình triển khai, đây là vị trí tôi có thể đóng góp tốt.",
+  },
+  location: { en: "Location", vi: "Địa điểm" },
+  locationValue: { en: "Hanoi, Vietnam", vi: "Hà Nội, Việt Nam" },
+  education: { en: "Education", vi: "Học vấn" },
+  educationValue: {
+    en: "Foreign Trade University (FTU)",
+    vi: "Trường Đại học Ngoại thương (FTU)",
+  },
+  focus: { en: "Focus", vi: "Lĩnh vực" },
+  focusValue: {
+    en: "Full-stack apps · Business platforms · AI · Computer vision · Web design",
+    vi: "Ứng dụng full-stack · Nền tảng doanh nghiệp · AI · Thị giác máy tính · Thiết kế web",
+  },
+  status: { en: "Status", vi: "Trạng thái" },
+  bring: { en: "What I bring", vi: "Điểm mạnh" },
+  fullCv: { en: "Full CV & résumé", vi: "Xem CV đầy đủ" },
+  stackLabel: { en: "Stack", vi: "Công nghệ" },
+  stackHeading: {
+    en: "Technologies I work with",
+    vi: "Các công nghệ tôi sử dụng",
+  },
+  contactLabel: { en: "Contact", vi: "Liên hệ" },
+  contactHeading: { en: "Get in touch", vi: "Liên hệ với tôi" },
+  contactLine: {
+    en: "Based in Hanoi. Call or email me directly.",
+    vi: "Hiện sống tại Hà Nội. Anh chị có thể gọi điện hoặc gửi email trực tiếp cho tôi.",
+  },
+  phone: { en: "Phone", vi: "Điện thoại" },
+  footer: {
+    en: "Full-stack developer, Hanoi",
+    vi: "Lập trình viên full-stack, Hà Nội",
+  },
+} satisfies Record<string, T>;

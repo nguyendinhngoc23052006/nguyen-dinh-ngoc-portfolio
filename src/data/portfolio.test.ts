@@ -14,13 +14,18 @@ import {
   education,
   experience,
   heroSubhead,
+  home,
   howIShip,
   howIVerify,
   howIWork,
   inTheWorks,
   languages,
   n,
+  navLinks,
   projects,
+  projectsHeading,
+  projectsSubhead,
+  projectsTail,
   shipRules,
   stats,
   type T,
@@ -58,6 +63,16 @@ const texts: T[] = [
   ...howIVerify,
   ...howIShip.flatMap((x) => x.lines),
   ...shipRules,
+  // The home page, in both languages from the same entries.
+  heroSubhead,
+  aboutIntro,
+  projectsHeading,
+  projectsSubhead,
+  projectsTail,
+  ...stats.flatMap((s) => [s.number, s.label]),
+  ...projects.map((p) => p.desc),
+  ...navLinks.map((l) => l.label),
+  ...Object.values(home),
 ];
 
 // Figures the texts may state without coming from metrics.json, each with its
@@ -133,12 +148,6 @@ describe("CV content", () => {
         [t.en, "en"],
         [t.vi, "vi"],
       ]),
-      ...stats.flatMap((s): [string, "en" | "vi"][] => [
-        [s.number, "en"],
-        [s.label, "en"],
-      ]),
-      [heroSubhead, "en"],
-      [aboutIntro, "en"],
     ];
     // A digit inside a word ("i18n") is part of a name, not a quantity.
     for (const [text, lang] of pairs)
@@ -204,13 +213,7 @@ describe("CV content", () => {
   // Recruiters read what was built and what it did, not how many commits it
   // took: process statistics never appear on the CV or the site.
   it("shows no process statistics", () => {
-    const all = [
-      heroSubhead,
-      aboutIntro,
-      ...stats.flatMap((s) => [s.number, s.label]),
-      ...projects.map((p) => p.desc),
-      ...texts.flatMap((t) => [t.en, t.vi]),
-    ];
+    const all = [...texts.flatMap((t) => [t.en, t.vi])];
     // A number, at most two words, then a process word ("212 database test
     // suites", "1.675 ca kiểm thử"); \b is ASCII-only, so end on a non-letter.
     const stat =
@@ -225,12 +228,7 @@ describe("CV content", () => {
   // Kwook's confidentiality agreement covers its internal figures, and the
   // user left Kwook in Nov 2026: neither may creep back into a public page.
   it("keeps Kwook's internal figures off and its work in the past", () => {
-    const all = [
-      heroSubhead,
-      aboutIntro,
-      ...stats.flatMap((s) => [s.number, s.label]),
-      ...texts.flatMap((t) => [t.en, t.vi]),
-    ].join("\n");
+    const all = [...texts.flatMap((t) => [t.en, t.vi])].join("\n");
     for (const figure of [
       "79 staff",
       "79 nhân",
