@@ -1,0 +1,455 @@
+---
+// biome-ignore-all lint/correctness/noUnusedVariables: constants used in the Astro template below the frontmatter fence, which biome cannot see
+// biome-ignore-all lint/correctness/noUnusedImports: symbols used in the Astro template below the frontmatter fence, which biome cannot see
+import {
+  aboutIntro,
+  availability,
+  caseStudies,
+  contactInfo,
+  cvSkills,
+  heroSubhead,
+  home,
+  howIShip,
+  howIVerify,
+  howIWork,
+  inTheWorks,
+  type Lang,
+  navLinks,
+  projects,
+  projectsHeading,
+  projectsSubhead,
+  projectsTail,
+  SITE_URL,
+  shipRules,
+  stats,
+  type T,
+  traits,
+} from "../data/portfolio";
+import { decks } from "../data/slides";
+import MobileNav from "./MobileNav";
+import SlideDeck from "./SlideDeck.astro";
+import ThemeToggle from "./ThemeToggle";
+import "../styles/globals.css";
+
+// The home page in one language: / renders it in English (the default) and /vi
+// in Vietnamese. Every word comes from portfolio.ts, so both stay in step.
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = (x: T) => x[lang];
+const fill = (x: T, vars: Record<string, string | number>) =>
+  t(x).replace(/\{(\w+)\}/g, (_, k: string) => String(vars[k]));
+const other: Lang = lang === "en" ? "vi" : "en";
+const homeOf = (l: Lang) => (l === "en" ? "/" : "/vi");
+const cvHref = lang === "en" ? "/cv" : "/cv/vi";
+const caseHref = (slug: string) => `/work/${slug}${lang === "vi" ? "/vi" : ""}`;
+const navHref = (href: string) => (href === "/cv" ? cvHref : href);
+const links = navLinks.map((l) => ({
+  href: navHref(l.href),
+  label: t(l.label),
+}));
+const url = (l: Lang) => `${SITE_URL}${l === "en" ? "" : "/vi"}`;
+const DESCRIPTION = t(home.description);
+
+const jsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": `${SITE_URL}/#person`,
+      name: "Nguyen Dinh Ngoc",
+      alternateName: "Jade",
+      jobTitle: t(home.role),
+      description: DESCRIPTION,
+      url: url(lang),
+      image: `${SITE_URL}/jade-avatar.jpg`,
+      sameAs: ["https://github.com/nguyendinhngoc23052006"],
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Hanoi",
+        addressCountry: "VN",
+      },
+    },
+  ],
+}).replace(/</g, "\\u003c");
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={DESCRIPTION} />
+    <meta name="keywords" content="full-stack developer, web app developer, React, TypeScript, Supabase, Cloudflare, AI apps, computer vision, face recognition, HR and payroll systems, Hanoi, remote" />
+    <meta name="author" content="Jade (Nguyen Dinh Ngoc)" />
+    <link rel="canonical" href={url(lang)} />
+    <link rel="alternate" hreflang="en" href={url("en")} />
+    <link rel="alternate" hreflang="vi" href={url("vi")} />
+    <link rel="alternate" hreflang="x-default" href={url("en")} />
+    <title>{t(home.title)}</title>
+    <script is:inline src="/theme-init.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:title" content={`Jade — ${t(home.role)}`} />
+    <meta property="og:description" content={DESCRIPTION} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={url(lang)} />
+    <meta property="og:image" content={`${SITE_URL}/jade-avatar.jpg`} />
+    <meta property="og:locale" content={lang === "en" ? "en_US" : "vi_VN"} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={`Jade — ${t(home.role)}`} />
+    <meta name="twitter:description" content={DESCRIPTION} />
+    <meta name="theme-color" content="#0a0a0a" />
+    <script type="application/ld+json" set:html={jsonLd} />
+  </head>
+  <body class="min-h-screen bg-background font-sans antialiased">
+    <>
+        <a href="#about" class="skip-link">{t(home.skip)}</a>
+
+        {/* ── NAV ── */}
+        <header class="fixed inset-x-0 top-0 z-50 border-b border-border/40 bg-background/80 backdrop-blur-lg">
+          <nav class="mx-auto flex h-14 max-w-5xl items-center justify-between px-6" aria-label={t(home.mainNav)}>
+            <a href={homeOf(lang)} class="text-sm font-bold tracking-tight">Jade</a>
+            <div class="hidden items-center gap-5 lg:flex">
+              {links.map(({ href, label }) => (
+                <a href={href} class="text-sm text-muted-foreground transition-colors hover:text-foreground">{label}</a>
+              ))}
+            </div>
+            <div class="flex items-center gap-3">
+              <a href={homeOf(other)} hreflang={other} lang={other} class="text-sm font-medium underline-offset-4 hover:underline" data-switch>{t(home.otherLanguage)}</a>
+              <ThemeToggle client:load />
+              <MobileNav client:load links={links} openLabel={t(home.menuOpen)} closeLabel={t(home.menuClose)} navLabel={t(home.mainNav)} />
+            </div>
+          </nav>
+        </header>
+
+        {/* ── HERO ── */}
+        <section class="relative flex min-h-screen items-center overflow-hidden pt-14">
+          <div class="relative mx-auto max-w-5xl px-6 flex flex-col-reverse items-start gap-10 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+            <p class="text-sm font-semibold uppercase tracking-widest text-muted-foreground">Jade</p>
+            <h1 class="mt-2 text-5xl font-extrabold tracking-tighter sm:text-7xl lg:text-8xl">
+              {t(home.name).split("\n")[0]}<br />
+              {t(home.name).split("\n")[1]}
+            </h1>
+
+            <p class="mt-4 max-w-lg text-lg text-muted-foreground sm:text-xl">
+              {t(heroSubhead)}
+            </p>
+
+            <div class="mt-8 flex flex-wrap gap-3">
+              <a href="#work" class="inline-flex h-10 items-center gap-2 rounded-sm border border-foreground bg-foreground text-background px-6 text-sm font-medium transition-colors hover:bg-transparent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                {t(home.seeBuilt)}
+              </a>
+              <a href={cvHref} class="inline-flex h-10 items-center gap-2 rounded-sm border border-accent px-6 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                {t(home.cvButton)}
+              </a>
+            </div>
+            </div>
+            <img
+              src="/jade-avatar.jpg"
+              alt={t(home.avatarAlt)}
+              width="280"
+              height="280"
+              loading="eager"
+              class="rounded-sm border border-border/60 object-cover"
+            />
+          </div>
+        </section>
+
+        {/* ── STATS STRIP ── */}
+        <section class="relative border-t border-border/40 bg-card/50 py-10" aria-label={t(home.keyFacts)}>
+          <div class="mx-auto max-w-5xl px-6">
+            <div class="grid gap-6 sm:grid-cols-3">
+              {stats.map(({ number, label }) => (
+                <div class="text-center sm:text-left">
+                  <p class="text-3xl font-extrabold tracking-tight sm:text-4xl">
+                    {t(number)}
+                  </p>
+                  <p class="mt-1 text-sm text-muted-foreground">{t(label)}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── WORK: the systems, from the same entries as the CV ── */}
+        <section id="work" class="border-t border-border/40 py-20 sm:py-28">
+          <div class="mx-auto max-w-5xl px-6">
+            <p class="section-label">{t(home.workLabel)}</p>
+            <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">{t(home.workHeading)}</h2>
+            <p class="mt-3 max-w-2xl text-muted-foreground">{t(home.workIntro)}</p>
+            <div class="mt-10 grid gap-4 lg:grid-cols-3">
+              {caseStudies.map((c) => (
+                <a href={caseHref(c.slug)} class="group flex flex-col rounded-sm border border-border/60 bg-card p-6 transition-colors hover:border-accent">
+                  <p class="text-xs font-medium uppercase tracking-widest text-accent">{t(c.status)}</p>
+                  <h3 class="mt-3 text-lg font-semibold tracking-tight">{c.name}</h3>
+                  <p class="mt-2 text-sm leading-relaxed">{t(c.tagline)}</p>
+                  <ul class="mt-4 space-y-1 text-sm text-muted-foreground">
+                    {c.decisions.map((d) => <li>— {t(d.label)}</li>)}
+                  </ul>
+                  <p class="mt-auto pt-5 text-sm font-medium text-accent group-hover:underline">{t(home.readCase)}</p>
+                </a>
+              ))}
+            </div>
+            <h3 class="mt-14 text-xl font-bold tracking-tight">{t(home.inWorksHeading)}</h3>
+            <p class="mt-2 max-w-2xl text-sm text-muted-foreground">{t(home.inWorksIntro)}</p>
+            <div class="mt-6 grid gap-4 sm:grid-cols-2">
+              {inTheWorks.map((x) => (
+                <article class="rounded-sm border border-dashed border-border bg-card/50 p-5">
+                  <p class="text-xs font-medium uppercase tracking-widest text-muted-foreground">{t(home.inDesign)}</p>
+                  <h4 class="mt-2 font-semibold tracking-tight">{t(x.title)}</h4>
+                  <p class="mt-2 text-sm text-muted-foreground leading-relaxed">{t(x.line)}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── HOW I WORK: method, verification, shipping ── */}
+        <section id="method" class="border-t border-border/40 bg-card/50 py-20 sm:py-28">
+          <div class="mx-auto max-w-5xl px-6">
+            <p class="section-label">{t(home.methodLabel)}</p>
+            <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">{t(home.methodHeading)}</h2>
+            <p class="mt-3 max-w-2xl text-muted-foreground">{t(home.methodIntro)}</p>
+            <ol class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {howIWork.map((h, i) => (
+                <li class="rounded-sm border border-border/60 bg-card p-5">
+                  <p class="text-xs font-medium uppercase tracking-widest text-accent">{t(home.step)} {i + 1}</p>
+                  <h3 class="mt-2 font-semibold tracking-tight">{t(h.label)}</h3>
+                  <p class="mt-2 text-sm text-muted-foreground leading-relaxed">{t(h.text)}</p>
+                </li>
+              ))}
+            </ol>
+
+            <h3 class="mt-14 text-xl font-bold tracking-tight">{t(home.verifyHeading)}</h3>
+            <ul class="mt-4 list-disc space-y-2 pl-5 text-sm leading-relaxed text-muted-foreground max-w-3xl">
+              {howIVerify.map((v) => <li>{t(v)}</li>)}
+            </ul>
+
+            <h3 class="mt-14 text-xl font-bold tracking-tight">{t(home.shipHeading)}</h3>
+            <div class="mt-6 grid gap-4 lg:grid-cols-3">
+              {howIShip.map((x) => (
+                <article class="rounded-sm border border-border/60 bg-card p-5">
+                  <h4 class="font-semibold tracking-tight">{x.system}</h4>
+                  <ul class="mt-2 list-disc space-y-1.5 pl-5 text-sm text-muted-foreground leading-relaxed">
+                    {x.lines.map((l) => <li>{t(l)}</li>)}
+                  </ul>
+                </article>
+              ))}
+            </div>
+            <p class="mt-4 text-sm text-muted-foreground">{t(home.everySystem)} {shipRules.map((r) => t(r)).join(" ")}</p>
+          </div>
+        </section>
+
+        {/* ── PROJECTS (proof-first — moved above About) ── */}
+        <section id="projects" class="border-t border-border/40 py-20 sm:py-28">
+          <div class="mx-auto max-w-5xl px-6">
+            <p class="section-label">{t(home.projectsLabel)}</p>
+            <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">{t(projectsHeading)}</h2>
+            <p class="mt-3 max-w-2xl text-muted-foreground">{t(projectsSubhead)}</p>
+
+            <div class="mt-10 grid gap-4 sm:grid-cols-3">
+              {projects.map(({ title, desc, tags, url, source, deck }, i) => {
+                const num = String(i + 1).padStart(2, "0");
+                const shipped = Boolean(url);
+                return (
+                  <div
+                    class:list={[
+                      "group relative block rounded-sm border bg-card p-6 transition-colors",
+                      "border-border/60",
+                    ]}
+                  >
+                    <span class="text-4xl font-black text-muted-foreground select-none" aria-hidden="true">{num}</span>
+                    <p
+                      class:list={[
+                        "mt-3 text-xs font-medium uppercase tracking-widest",
+                        shipped ? "text-accent" : "text-muted-foreground",
+                      ]}
+                    >
+                      {url ? t(home.live) : t(home.source)}
+                    </p>
+                    <h3 class="mt-3 font-semibold tracking-tight">
+                      {title}
+                    </h3>
+                    <p class="mt-2 text-sm text-muted-foreground leading-relaxed">{t(desc)}</p>
+                    <div class="mt-4 flex flex-wrap gap-1.5">
+                      {tags.map((t) => (
+                        <span class="rounded-sm border border-border/60 bg-muted px-2 py-0.5 text-[11px] font-medium text-muted-foreground">
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                    {(url || source) && (
+                      <p class="mt-4 flex gap-4 text-sm">
+                        {url && <a href={url} target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">Live ↗</a>}
+                        {source && <a href={source} target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">GitHub ↗</a>}
+                      </p>
+                    )}
+                    <button type="button" popovertarget={`deck-${deck}`} class="mt-4 rounded-sm border border-border px-3 py-1.5 text-sm hover:border-accent">
+                      {fill(home.seeInUse, { n: decks[deck].slides.length })}
+                    </button>
+                    <div id={`deck-${deck}`} popover class="deck-pop">
+                      <div class="flex items-start justify-between gap-4">
+                        <h3 class="font-semibold tracking-tight text-lg">{title}</h3>
+                        <button type="button" popovertarget={`deck-${deck}`} popovertargetaction="hide" class="deck-close" aria-label={fill(home.closeDeck, { title })}>✕</button>
+                      </div>
+                      <SlideDeck deck={deck} lang={lang} label={fill(home.deckLabel, { title })} />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div class="mt-8 flex items-center gap-4">
+              <a href="https://github.com/nguyendinhngoc23052006" target="_blank" rel="noopener noreferrer" class="inline-flex h-10 items-center gap-2 rounded-sm border border-input bg-background px-6 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                {t(home.followGithub)} <span aria-hidden="true">&rarr;</span>
+              </a>
+              <p class="text-sm text-muted-foreground">{t(projectsTail)}</p>
+            </div>
+          </div>
+        </section>
+
+        {/* ── ABOUT ── */}
+        <section id="about" class="border-t border-border/40 bg-card/50 py-20 sm:py-28">
+          <div class="mx-auto max-w-5xl px-6">
+            <p class="section-label">{t(home.aboutLabel)}</p>
+            <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">{t(home.aboutHeading)}</h2>
+
+            <div class="mt-10 grid gap-10 lg:grid-cols-[1fr_320px]">
+              <div class="space-y-4 text-muted-foreground">
+                <p>
+                  {t(aboutIntro)}
+                </p>
+                <p>
+                  {t(home.aboutMore)}
+                </p>
+              </div>
+
+              <aside class="border-l-4 border-accent bg-secondary/30 p-6 space-y-5">
+                <div>
+                  <p class="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">{t(home.location)}</p>
+                  <p class="mt-0.5 text-sm">{t(home.locationValue)}</p>
+                </div>
+                <div>
+                  <p class="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">{t(home.education)}</p>
+                  <p class="mt-0.5 text-sm">{t(home.educationValue)}</p>
+                </div>
+                <div>
+                  <p class="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">{t(home.focus)}</p>
+                  <p class="mt-0.5 text-sm">{t(home.focusValue)}</p>
+                </div>
+                <div>
+                  <p class="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">{t(home.status)}</p>
+                  <p class="mt-0.5 text-sm text-accent">{t(availability)}</p>
+                </div>
+                <div>
+                  <p class="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">{t(home.bring)}</p>
+                  <ul class="mt-1 space-y-1 text-sm">
+                    {traits.map((tr) => (
+                      <li>
+                        <span class="font-semibold">{t(tr.label)}</span>
+                        <span class="text-muted-foreground"> — {t(tr.note)}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <a href={cvHref} class="mt-4 inline-flex items-center gap-1 text-sm font-medium text-accent hover:underline">
+                  {t(home.fullCv)} <span aria-hidden="true">→</span>
+                </a>
+              </aside>
+            </div>
+          </div>
+        </section>
+
+        {/* ── SKILLS ── */}
+        <section id="skills" class="border-t border-border/40 bg-card/50 py-20 sm:py-28">
+          <div class="mx-auto max-w-5xl px-6">
+            <p class="section-label">{t(home.stackLabel)}</p>
+            <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">{t(home.stackHeading)}</h2>
+
+            <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {cvSkills.map(({ group, items }) => (
+                <div class="rounded-sm border border-border/60 bg-background/50 p-5">
+                  <p class="mb-3 text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">{t(group)}</p>
+                  <div class="flex flex-wrap gap-2">
+                    {items.map((s) => (
+                      <span class="rounded-sm border border-border/60 bg-secondary/30 px-2.5 py-0.5 text-xs font-medium">
+                        {s}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── CONTACT ── */}
+        <section id="contact" class="border-t border-border/40 py-20 sm:py-28">
+          <div class="mx-auto max-w-xl px-6">
+            <p class="section-label">{t(home.contactLabel)}</p>
+            <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">{t(home.contactHeading)}</h2>
+            <p class="mt-3 text-muted-foreground">
+              {t(availability)} {t(home.contactLine)}
+            </p>
+            <ul class="mt-8 space-y-3 text-sm">
+              {contactInfo.phone && (
+                <li>
+                  <span class="text-muted-foreground">{t(home.phone)} · </span>
+                  <a href={`tel:${contactInfo.phone.replace(/\s/g, "")}`} class="font-medium hover:underline">{contactInfo.phone}</a>
+                </li>
+              )}
+              <li>
+                <span class="text-muted-foreground">Email · </span>
+                <a href={`mailto:${contactInfo.email}`} class="font-medium hover:underline">{contactInfo.email}</a>
+              </li>
+              <li>
+                <span class="text-muted-foreground">GitHub · </span>
+                <a href={contactInfo.github} target="_blank" rel="noopener noreferrer" class="font-medium hover:underline">{contactInfo.github.replace("https://", "")}</a>
+              </li>
+              <li>
+                <span class="text-muted-foreground">CV · </span>
+                <a href="/cv" hreflang="en" lang="en" class="font-medium hover:underline">English</a>
+                <span class="text-muted-foreground"> / </span>
+                <a href="/cv/vi" hreflang="vi" lang="vi" class="font-medium hover:underline">Tiếng Việt</a>
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        {/* ── FOOTER ── */}
+        <footer class="border-t border-border/40 py-8">
+          <div class="mx-auto max-w-5xl px-6 text-center">
+            <div class="flex justify-center gap-6">
+              <a href="https://github.com/nguyendinhngoc23052006" target="_blank" rel="noopener noreferrer" class="text-sm text-muted-foreground transition-colors hover:text-foreground">GitHub</a>
+              <a href="mailto:nguyendinhngoc23052006@gmail.com" class="text-sm text-muted-foreground transition-colors hover:text-foreground">Email</a>
+            </div>
+            <p class="mt-4 text-xs text-muted-foreground">
+              &copy; {new Date().getFullYear()} Jade &middot; Nguyen Dinh Ngoc &middot; {t(home.footer)}
+            </p>
+          </div>
+        </footer>
+
+    </>
+  </body>
+</html>
+
+<style is:global>
+  .deck-pop {
+    width: min(960px, calc(100vw - 2rem));
+    max-height: calc(100dvh - 2rem);
+    overflow-y: auto;
+    margin: auto;
+    padding: 1.25rem;
+    border: 1px solid var(--border);
+    border-radius: 0.375rem;
+    background: var(--background);
+    color: var(--foreground);
+  }
+  .deck-pop::backdrop { background: oklch(0 0 0 / 0.55); }
+  .deck-close { min-width: 2.75rem; min-height: 2.75rem; border: 1px solid var(--border); border-radius: 0.25rem; }
+</style>
