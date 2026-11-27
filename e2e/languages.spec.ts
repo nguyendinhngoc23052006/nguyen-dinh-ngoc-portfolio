@@ -70,7 +70,9 @@ test("search engines see both languages, English by default", async ({
 
 test("a project's screens open in Vietnamese on /vi", async ({ page }) => {
   await page.goto("/vi");
-  const button = page.getByRole("button", { name: /Xem khi sử dụng/ }).first();
+  const button = page
+    .getByRole("button", { name: /Xem giao diện thực tế/ })
+    .first();
   await button.click();
   const pop = page.locator(`#${await button.getAttribute("popovertarget")}`);
   await expect(pop).toBeVisible();
