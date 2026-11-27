@@ -1,6 +1,7 @@
 ---
 // biome-ignore-all lint/correctness/noUnusedImports: symbols used in the Astro template below the frontmatter fence, which biome cannot see
 import MobileNav from "../components/MobileNav";
+import SlideDeck from "../components/SlideDeck.astro";
 import ThemeToggle from "../components/ThemeToggle";
 import {
   aboutIntro,
@@ -23,6 +24,7 @@ import {
   stats,
   traits,
 } from "../data/portfolio";
+import { decks } from "../data/slides";
 import "../styles/globals.css";
 
 // biome-ignore lint/correctness/noUnusedVariables: used in Astro template
@@ -228,7 +230,7 @@ const jsonLd = JSON.stringify({
             <p class="mt-3 max-w-2xl text-muted-foreground">{projectsSubhead}</p>
 
             <div class="mt-10 grid gap-4 sm:grid-cols-3">
-              {projects.map(({ title, desc, tags, url, source }, i) => {
+              {projects.map(({ title, desc, tags, url, source, deck }, i) => {
                 const num = String(i + 1).padStart(2, "0");
                 const shipped = Boolean(url);
                 return (
@@ -264,6 +266,16 @@ const jsonLd = JSON.stringify({
                         {source && <a href={source} target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">GitHub ↗</a>}
                       </p>
                     )}
+                    <button type="button" popovertarget={`deck-${deck}`} class="mt-4 rounded-sm border border-border px-3 py-1.5 text-sm hover:border-accent">
+                      See it in use ({decks[deck].slides.length} screens)
+                    </button>
+                    <div id={`deck-${deck}`} popover class="deck-pop">
+                      <div class="flex items-start justify-between gap-4">
+                        <h3 class="font-semibold tracking-tight text-lg">{title}</h3>
+                        <button type="button" popovertarget={`deck-${deck}`} popovertargetaction="hide" class="deck-close" aria-label={`Close ${title} screens`}>✕</button>
+                      </div>
+                      <SlideDeck deck={deck} lang="en" label={`${title} screens`} />
+                    </div>
                   </div>
                 );
               })}
@@ -406,3 +418,19 @@ const jsonLd = JSON.stringify({
     </>
   </body>
 </html>
+
+<style is:global>
+  .deck-pop {
+    width: min(960px, calc(100vw - 2rem));
+    max-height: calc(100dvh - 2rem);
+    overflow-y: auto;
+    margin: auto;
+    padding: 1.25rem;
+    border: 1px solid var(--border);
+    border-radius: 0.375rem;
+    background: var(--background);
+    color: var(--foreground);
+  }
+  .deck-pop::backdrop { background: oklch(0 0 0 / 0.55); }
+  .deck-close { min-width: 2.75rem; min-height: 2.75rem; border: 1px solid var(--border); border-radius: 0.25rem; }
+</style>

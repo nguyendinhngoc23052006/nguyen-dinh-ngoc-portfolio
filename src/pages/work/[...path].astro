@@ -6,6 +6,7 @@
 export const prerender = true;
 
 import CaseStudyBody from "../../components/CaseStudyBody.astro";
+import SlideDeck from "../../components/SlideDeck.astro";
 import {
   type CaseStudy,
   caseStudies,
@@ -29,6 +30,7 @@ const L = {
     cv: "CV",
     cvHref: "/cv",
     discuss: "I can walk you through",
+    inUse: "In use",
     private:
       "Private: it runs on company data, so there is no public link or code. I demonstrate it on sample data.",
   },
@@ -39,6 +41,7 @@ const L = {
     cv: "CV",
     cvHref: "/cv/vi",
     discuss: "Tôi có thể trình bày chi tiết",
+    inUse: "Khi sử dụng",
     private:
       "Hệ thống riêng: vận hành trên dữ liệu của doanh nghiệp nên không có đường dẫn hay mã nguồn công khai. Tôi có thể trình diễn trên dữ liệu mẫu.",
   },
@@ -75,6 +78,11 @@ const href = (slug: string) => `/work/${slug}${lang === "vi" ? "/vi" : ""}`;
       <h1 class="mt-1 font-serif text-4xl sm:text-5xl font-semibold tracking-tight">{c.name}</h1>
       <p class="mt-3 text-lg leading-snug">{c.tagline[lang]}</p>
       <p class="mt-2 text-xs text-muted-foreground">{c.tags.join(" · ")}</p>
+
+      <section class="mt-10" aria-labelledby="in-use">
+        <h2 id="in-use" class="font-serif text-2xl font-semibold tracking-tight">{L.inUse}</h2>
+        <SlideDeck deck={c.slug} lang={lang} label={`${c.name}: ${L.inUse}`} />
+      </section>
 
       <div class="mt-8 case-page">
         <CaseStudyBody c={c} lang={lang}>
