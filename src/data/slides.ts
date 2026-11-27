@@ -35,7 +35,7 @@ export const decks: Record<string, Deck> = {
         image: "mau-heritage-hub/04-owner-stores",
         title: {
           en: "The owner sets up the stores",
-          vi: "Chủ cửa hàng thiết lập các cửa hàng",
+          vi: "Chủ cửa hàng thiết lập từng cửa hàng",
         },
         text: {
           en: "Each store carries its own rules: how many people work at a time, the radius a check-in must come from, whether a check-in from elsewhere is refused or only flagged, and the cash the safe opened with. Everything later (rosters, check-ins, the daily cash check) reads these settings, so a new store is a form, not code.",
@@ -75,7 +75,7 @@ export const decks: Record<string, Deck> = {
         },
         text: {
           en: "A face that matches no enrolled person opens nothing; the screen asks to try again facing the camera, and a PIN remains the fallback.",
-          vi: "Khuôn mặt không khớp với bất kỳ người nào đã đăng ký sẽ không mở được hồ sơ; màn hình đề nghị thử lại và nhìn thẳng vào camera, đồng thời vẫn có lựa chọn đăng nhập bằng mã PIN.",
+          vi: "Khuôn mặt không khớp với bất kỳ người nào đã đăng ký sẽ không mở được hồ sơ; màn hình mời người dùng thử lại và nhìn thẳng vào camera, đồng thời vẫn có lựa chọn đăng nhập bằng mã PIN.",
         },
         src: `${MAU}: "a face nobody enrolled is refused"`,
       },
@@ -87,7 +87,7 @@ export const decks: Record<string, Deck> = {
         },
         text: {
           en: "Sign-up for next week opens on a schedule the owner sets. Each shift shows its places left, and a full shift takes nobody else, so the headcount each store asked for holds without a manager counting by hand. A colleague's shift can be taken with their code.",
-          vi: "Việc đăng ký ca tuần sau mở theo lịch do chủ cửa hàng đặt. Mỗi ca hiển thị số chỗ còn trống, và ca đã đủ người sẽ không nhận thêm, nhờ đó số lượng nhân sự mỗi cửa hàng yêu cầu luôn được đảm bảo mà quản lý không phải đếm thủ công. Nhân viên cũng có thể nhận ca của đồng nghiệp bằng mã của người đó.",
+          vi: "Việc đăng ký ca tuần sau mở theo lịch do chủ cửa hàng đặt. Mỗi ca hiển thị số suất còn lại, và ca đã đủ người sẽ không nhận thêm, nhờ đó số lượng nhân sự mỗi cửa hàng yêu cầu luôn được đảm bảo mà quản lý không phải đếm thủ công. Nhân viên cũng có thể nhận ca của đồng nghiệp bằng mã của người đó.",
         },
         src: `${MAU}: "people sign up for next week; a full shift takes no more"`,
       },
@@ -95,11 +95,11 @@ export const decks: Record<string, Deck> = {
         image: "mau-heritage-hub/17-staff-refused-wrong-place",
         title: {
           en: "Check-in checks the face and the place",
-          vi: "Chấm công kiểm tra cả khuôn mặt và vị trí",
+          vi: "Chấm công kiểm tra cả khuôn mặt và địa điểm",
         },
         text: {
           en: "Checking in needs both the person's face and the phone's location. Here the phone is far from the Hoi An store, whose rule is to refuse check-ins from elsewhere, so the check-in is turned down with the distance shown.",
-          vi: "Khi chấm công, hệ thống kiểm tra cả khuôn mặt của nhân viên và vị trí của điện thoại. Trong ví dụ này, điện thoại ở xa cửa hàng Hội An, nơi được thiết lập từ chối chấm công từ nơi khác, nên lượt chấm công bị từ chối và màn hình hiển thị khoảng cách.",
+          vi: "Khi chấm công, hệ thống kiểm tra cả khuôn mặt của nhân viên và định vị của điện thoại. Trong ví dụ này, điện thoại ở xa cửa hàng Hội An, nơi được thiết lập từ chối chấm công từ nơi khác, nên lượt chấm công bị từ chối và màn hình hiển thị khoảng cách.",
         },
         src: `${MAU}: "check-in: face + location, and the headcount holds"`,
       },
@@ -111,7 +111,7 @@ export const decks: Record<string, Deck> = {
         },
         text: {
           en: "At the end of a shift the staff member logs takings, card payments, cash paid out and what is left in the safe, without seeing what the safe should hold. A manager then confirms the handover, and only then does the app compare it with what the safe should hold and show the difference, here a shortfall.",
-          vi: "Cuối ca, nhân viên ghi lại doanh thu, khoản thanh toán thẻ, tiền chi ra và số tiền còn trong két, mà không được thấy số tiền két lẽ ra phải có. Sau đó quản lý xác nhận bản bàn giao, và chỉ khi đó ứng dụng mới đối chiếu với số tiền két phải có và hiển thị chênh lệch, trong ví dụ này là thiếu tiền.",
+          vi: "Cuối ca, nhân viên ghi lại doanh thu, các khoản thanh toán thẻ, tiền chi ra và số tiền còn trong két, khi chưa xem số tiền két cần có. Sau đó quản lý xác nhận bản bàn giao, và chỉ khi đó ứng dụng mới đối chiếu với số tiền két cần có và hiển thị chênh lệch, trong ví dụ này là khoản thiếu hụt.",
         },
         src: `${MAU}: "Lan logs the day blind; Minh confirms it and sees the safe is short"`,
       },
@@ -123,7 +123,7 @@ export const decks: Record<string, Deck> = {
         },
         text: {
           en: "The owner works out the month: hours come from check-ins, bonuses from the store's pay rules, and a cash shortfall becomes compensation under a written decision, capped by law. Every person's line opens into the day-by-day reasons, hours from forgotten check-outs wait until someone confirms them, and nothing is paid until the owner approves.",
-          vi: "Chủ cửa hàng tính lương tháng: số giờ lấy từ dữ liệu chấm công, tiền thưởng theo quy định lương của cửa hàng, và khoản thiếu hụt tiền mặt trở thành khoản bồi thường theo quyết định bằng văn bản, trong giới hạn pháp luật cho phép. Mỗi dòng lương đều có thể mở ra để xem chi tiết từng ngày; giờ làm từ những lần quên chấm công ra được giữ lại cho đến khi có người xác nhận, và không khoản nào được chi trả trước khi chủ cửa hàng phê duyệt.",
+          vi: "Chủ cửa hàng tính lương tháng: số giờ lấy từ dữ liệu chấm công, tiền thưởng theo quy chế thưởng của cửa hàng, và khoản thiếu hụt tiền mặt trở thành khoản bồi thường theo quyết định bằng văn bản, trong giới hạn pháp luật cho phép. Mỗi dòng lương đều có thể mở ra để xem chi tiết từng ngày; giờ làm từ những lần quên chấm công ra được giữ lại cho đến khi có người xác nhận, và không khoản nào được chi trả trước khi chủ cửa hàng phê duyệt.",
         },
         src: `${MAU}: "the owner works out last month's pay, enters insurance, approves"`,
       },
@@ -147,7 +147,7 @@ export const decks: Record<string, Deck> = {
         },
         text: {
           en: "The VI / EN switch turns the whole app into Vietnamese for the staff who prefer it; a test fails if any English line has no Vietnamese.",
-          vi: "Nút chuyển VI / EN chuyển toàn bộ ứng dụng sang tiếng Việt cho nhân viên cần; bộ kiểm thử sẽ báo lỗi nếu bất kỳ dòng tiếng Anh nào chưa có bản tiếng Việt.",
+          vi: "Nút VI / EN đưa toàn bộ ứng dụng sang tiếng Việt cho những nhân viên có nhu cầu; bộ kiểm thử sẽ báo lỗi nếu bất kỳ dòng tiếng Anh nào chưa có bản tiếng Việt.",
         },
         src: `${MAU}: "the same screen reads in Vietnamese at one tap"; src/i18n`,
       },
@@ -168,7 +168,7 @@ export const decks: Record<string, Deck> = {
         },
         text: {
           en: "Today gathers what needs the signed-in person, and for a new company it walks the owner through setup in order: unit types, units and seats, job titles, fields, people, working hours, privileges, a second administrator and door devices. Each step links to the page that does it.",
-          vi: "Trang Hôm nay tập hợp những việc cần người đang đăng nhập xử lý; với doanh nghiệp mới, trang này hướng dẫn chủ doanh nghiệp thiết lập theo thứ tự: loại đơn vị, đơn vị và vị trí, chức danh, trường dữ liệu, nhân sự, giờ làm việc, phân quyền, quản trị viên thứ hai và thiết bị chấm công. Mỗi bước đều dẫn đến trang thực hiện bước đó.",
+          vi: "Trang Hôm nay tập hợp những việc cần người đang đăng nhập xử lý; với doanh nghiệp mới, trang này hướng dẫn chủ doanh nghiệp thiết lập theo thứ tự: loại đơn vị, đơn vị và vị trí, chức danh, trường dữ liệu, nhân sự, giờ làm việc, quyền hạn, quản trị viên thứ hai và thiết bị chấm công. Mỗi bước đều dẫn đến trang thực hiện bước đó.",
         },
         src: `${OPS}: /org/today as the owner`,
       },
@@ -180,7 +180,7 @@ export const decks: Record<string, Deck> = {
         },
         text: {
           en: "The organisation chart is the company's structure: units hold seats, each seat has a job title and a person in it. Opening a box is where people are seated, working hours set and privileges given, so moving a person is changing a seat, not editing access by hand.",
-          vi: "Sơ đồ tổ chức thể hiện cấu trúc doanh nghiệp: mỗi đơn vị có các vị trí, mỗi vị trí gắn với một chức danh và một người đảm nhiệm. Từ mỗi ô trên sơ đồ, người quản trị xếp người vào vị trí, đặt giờ làm việc và phân quyền, nên khi điều chuyển nhân sự chỉ cần đổi vị trí, không phải chỉnh quyền truy cập thủ công.",
+          vi: "Sơ đồ tổ chức thể hiện cấu trúc doanh nghiệp: mỗi đơn vị có các vị trí, mỗi vị trí gắn với một chức danh và một người đảm nhiệm. Từ mỗi ô trên sơ đồ, người quản trị bố trí nhân sự vào vị trí, đặt giờ làm việc và phân quyền, nên khi điều chuyển nhân sự chỉ cần đổi vị trí, không cần chỉnh quyền truy cập thủ công.",
         },
         src: `${OPS}: /org/chart`,
       },
@@ -188,11 +188,11 @@ export const decks: Record<string, Deck> = {
         image: "ops-platform/05-person-fields",
         title: {
           en: "Fields the company chooses, protected by kind",
-          vi: "Trường dữ liệu do doanh nghiệp chọn, được bảo vệ theo mức độ",
+          vi: "Trường dữ liệu do doanh nghiệp chọn, được bảo vệ theo loại dữ liệu",
         },
         text: {
           en: "The company decides what every staff record holds and who fills each field. Each field is tagged by how its data is protected, personal or sensitive, and this page sets the fields without ever showing anyone's values.",
-          vi: "Doanh nghiệp tự quyết định mỗi hồ sơ nhân viên gồm những thông tin nào và ai điền từng trường. Mỗi trường được gắn nhãn theo mức độ bảo vệ dữ liệu, dữ liệu cá nhân hoặc dữ liệu nhạy cảm, và trang này chỉ dùng để thiết lập trường, không bao giờ hiển thị giá trị của bất kỳ ai.",
+          vi: "Doanh nghiệp tự quyết định mỗi hồ sơ nhân viên gồm những thông tin nào và ai điền từng trường. Mỗi trường được gắn nhãn theo mức độ bảo vệ dữ liệu, dữ liệu cá nhân hoặc dữ liệu nhạy cảm, và trang này chỉ dùng để thiết lập các trường, không hiển thị giá trị của bất kỳ ai.",
         },
         src: `${OPS}: /org/fields?type=person`,
       },
@@ -224,7 +224,7 @@ export const decks: Record<string, Deck> = {
         image: "ops-platform/06-privileges",
         title: {
           en: "Privileges, grouped and checked",
-          vi: "Phân quyền theo nhóm và có kiểm soát",
+          vi: "Quyền hạn, theo nhóm và có kiểm soát",
         },
         text: {
           en: 'Every privilege says what it allows and who holds it, by privilege or by job title and seat. Some are marked "Needs a second person": given through a seat, each step waits for someone else to confirm. Admin pages ask the administrator to confirm with an authenticator app.',
@@ -240,7 +240,7 @@ export const decks: Record<string, Deck> = {
         },
         text: {
           en: "Work is given to a seat, not a name: the production director sends a job to the workshop foreman, who can pass part of it on. Each item shows who sent it, to which seat, its due date and its discussion.",
-          vi: "Công việc được giao cho vị trí, không giao cho cá nhân cụ thể: giám đốc sản xuất giao việc cho quản đốc xưởng, và quản đốc có thể giao tiếp một phần cho cấp dưới. Mỗi công việc hiển thị người giao, vị trí nhận, hạn hoàn thành và phần trao đổi.",
+          vi: "Công việc được giao cho vị trí, không giao cho cá nhân cụ thể: giám đốc sản xuất giao việc cho quản đốc xưởng, và quản đốc có thể giao lại một phần cho người khác. Mỗi công việc hiển thị người giao, vị trí nhận, hạn hoàn thành và phần trao đổi.",
         },
         src: `${OPS}: /org/work as the workshop foreman (manager@vidu.test)`,
       },
@@ -252,7 +252,7 @@ export const decks: Record<string, Deck> = {
         },
         text: {
           en: "Door punches become a monthly timesheet per unit, in the day codes the company already uses. The foreman approves waiting overtime, can show only the people who need review, and downloads the pay sheet.",
-          vi: "Dữ liệu chấm công tại cửa được tổng hợp thành bảng công tháng cho từng đơn vị, theo đúng các ký hiệu ngày công doanh nghiệp đang dùng. Quản đốc phê duyệt giờ tăng ca đang chờ, có thể lọc riêng những người cần kiểm tra và tải bảng công để tính lương.",
+          vi: "Dữ liệu chấm công tại cửa được tổng hợp thành bảng công tháng cho từng đơn vị, theo đúng các ký hiệu ngày công doanh nghiệp đang dùng. Quản đốc phê duyệt giờ tăng ca đang chờ, có thể lọc riêng những người cần kiểm tra và tải bảng tổng hợp phục vụ tính lương.",
         },
         src: `${OPS}: /org/attendance/<Xưởng Sơ chế>, Monthly timesheet`,
       },
@@ -264,7 +264,7 @@ export const decks: Record<string, Deck> = {
         },
         text: {
           en: "On their phone, in Vietnamese, a worker sees their own pay period: days worked against the standard, lateness, missing punches and each day's times, so a mistake is caught before pay, not after.",
-          vi: "Trên điện thoại, bằng tiếng Việt, công nhân xem kỳ công của chính mình: số ngày công so với ngày công chuẩn, số lần đi muộn, số lượt chấm thiếu và giờ vào ra từng ngày, nhờ đó sai sót được phát hiện trước khi tính lương, không phải sau đó.",
+          vi: "Trên điện thoại, bằng tiếng Việt, công nhân xem kỳ công của chính mình: số ngày công so với ngày công chuẩn, số lần đi muộn, số lượt chấm công còn thiếu và giờ vào ra từng ngày, nhờ đó sai sót được phát hiện trước khi tính lương chứ không phải sau đó.",
         },
         src: `${OPS}: /org/me/attendance as a worker (worker@vidu.test), phone width`,
       },
@@ -298,18 +298,18 @@ export const decks: Record<string, Deck> = {
   "kwook-career": {
     note: {
       en: 'The real candidate pages, served offline with invented jobs and the company renamed "Example Co.": no real job, applicant or company data, and nothing sent to the live system. The owner\'s side runs in a Telegram chat and is described in the case study rather than shown.',
-      vi: 'Các trang dành cho ứng viên trong hệ thống thật, chạy ngoại tuyến với tin tuyển dụng giả định và tên công ty được đổi thành "Example Co.": không có dữ liệu thật về việc làm, ứng viên hay doanh nghiệp, và không có dữ liệu nào được gửi tới hệ thống đang vận hành. Phần dành cho chủ doanh nghiệp vận hành trong Telegram và được mô tả trong phần nghiên cứu điển hình thay vì hiển thị ở đây.',
+      vi: 'Các trang dành cho ứng viên trong hệ thống thật, chạy ngoại tuyến với tin tuyển dụng giả định và tên công ty được đổi thành "Example Co.": không có dữ liệu thật về tin tuyển dụng, ứng viên hay doanh nghiệp, và không có dữ liệu nào được gửi tới hệ thống đang vận hành. Phần dành cho chủ doanh nghiệp vận hành trong Telegram và được mô tả trong phần nghiên cứu điển hình thay vì hiển thị ở đây.',
     },
     slides: [
       {
         image: "kwook-career/01-jobs",
         title: {
           en: "One link lists every open job",
-          vi: "Một đường dẫn liệt kê mọi vị trí đang tuyển",
+          vi: "Một đường dẫn liệt kê mọi công việc đang tuyển",
         },
         text: {
           en: "Candidates usually arrive from a Facebook post on their phone. Without a job in the link, the page lists every open job, so one link in a page bio never goes stale.",
-          vi: "Ứng viên thường truy cập từ bài đăng Facebook trên điện thoại. Khi đường dẫn không kèm mã vị trí, trang sẽ liệt kê mọi vị trí đang tuyển, nhờ đó một đường dẫn đặt ở phần giới thiệu trang không bao giờ lỗi thời.",
+          vi: "Ứng viên thường truy cập từ bài đăng Facebook trên điện thoại. Khi đường dẫn không kèm mã công việc, trang sẽ liệt kê mọi công việc đang tuyển, nhờ đó một đường dẫn đặt ở phần giới thiệu trang luôn còn giá trị.",
         },
         src: `${CAREER}: loadJobs()`,
       },
@@ -321,7 +321,7 @@ export const decks: Record<string, Deck> = {
         },
         text: {
           en: "Each job page shows the description and a form short enough for a phone: name, phone, an optional email, the job's own yes / no questions and an optional CV photo or file, with consent that the CV is used only for this job and deleted six months after the hiring round ends.",
-          vi: "Mỗi trang vị trí hiển thị mô tả công việc và một mẫu ứng tuyển đủ ngắn để điền trên điện thoại: họ tên, số điện thoại, email (không bắt buộc), các câu hỏi có / không riêng của vị trí và CV dạng ảnh hoặc tệp (không bắt buộc), kèm cam kết CV chỉ được dùng cho vị trí này và được xoá sau sáu tháng kể từ khi đợt tuyển dụng kết thúc.",
+          vi: "Mỗi trang vị trí hiển thị mô tả công việc và một mẫu ứng tuyển đủ ngắn để điền trên điện thoại: họ tên, số điện thoại, email (không bắt buộc), các câu hỏi có / không riêng của vị trí và CV dạng ảnh hoặc tệp (không bắt buộc), kèm phần đồng ý để CV chỉ được dùng cho công việc này và được xoá sau sáu tháng kể từ khi đợt tuyển dụng kết thúc.",
         },
         src: `${CAREER}: loadJob(), renderQuestions(); index.html`,
       },
@@ -345,7 +345,7 @@ export const decks: Record<string, Deck> = {
         },
         text: {
           en: "After sending, the candidate is thanked and told they will be contacted. Behind this screen the CV is read, scored and shortlisted or rejected automatically, and the owner only approves what goes public and calls the shortlist.",
-          vi: "Sau khi gửi, ứng viên nhận lời cảm ơn và được thông báo sẽ được liên hệ. Phía sau màn hình này, CV được đọc, chấm điểm, đưa vào danh sách rút gọn hoặc từ chối một cách tự động; chủ doanh nghiệp chỉ phê duyệt nội dung đăng công khai và liên hệ danh sách rút gọn.",
+          vi: "Sau khi gửi, ứng viên nhận lời cảm ơn và được báo rằng sẽ có người liên hệ. Phía sau màn hình này, CV được đọc, chấm điểm, đưa vào danh sách rút gọn hoặc từ chối một cách tự động; chủ doanh nghiệp chỉ phê duyệt nội dung đăng công khai và liên hệ với các ứng viên trong danh sách rút gọn.",
         },
         src: `${CAREER}: show("done"); kwook-career goals.md (Hiring runs itself)`,
       },
@@ -372,10 +372,10 @@ export const decks: Record<string, Deck> = {
       },
       {
         image: "kwook-career/07-rsvp-move",
-        title: { en: "Or ask to move it", vi: "Hoặc đề nghị đổi lịch" },
+        title: { en: "Or ask to move it", vi: "Hoặc đề xuất đổi lịch" },
         text: {
           en: "A candidate who cannot come asks to move the interview from the same email, and the owner is told without a phone call.",
-          vi: "Ứng viên không thể tham dự có thể đề nghị đổi lịch ngay từ email đó, và chủ doanh nghiệp được thông báo mà không cần gọi điện.",
+          vi: "Ứng viên chưa thể sắp xếp tham dự có thể đề xuất đổi lịch ngay từ email đó, và chủ doanh nghiệp được thông báo mà không cần gọi điện.",
         },
         src: `${CAREER}: rsvp.js (a=move)`,
       },
@@ -416,7 +416,7 @@ export const decks: Record<string, Deck> = {
         image: "dinh-ngoc-edu/03-login-screen",
         title: {
           en: "Courses are private to their owner",
-          vi: "Khoá học chỉ thuộc về người tạo",
+          vi: "Khoá học được giữ riêng cho người tạo",
         },
         text: {
           en: "Courses and the dashboard sit behind an account; a course stays private unless its owner shares it.",
@@ -437,7 +437,7 @@ export const decks: Record<string, Deck> = {
         image: "face-demo/01-start-screen",
         title: {
           en: "Add a face, then point the camera",
-          vi: "Thêm khuôn mặt, rồi hướng camera",
+          vi: "Thêm khuôn mặt, rồi hướng camera vào người cần nhận diện",
         },
         text: {
           en: "Everything runs in this one browser tab: add a person with a name and a photo, then switch to the camera to recognise them.",
@@ -453,7 +453,7 @@ export const decks: Record<string, Deck> = {
         },
         text: {
           en: "A face can be enrolled from a photo or straight from the camera. Duplicate enrolments are refused, as is someone claiming a name already enrolled.",
-          vi: "Khuôn mặt có thể được đăng ký từ ảnh hoặc trực tiếp từ camera. Hệ thống từ chối đăng ký trùng lặp, cũng như việc một người khác nhận là người đã được đăng ký.",
+          vi: "Khuôn mặt có thể được đăng ký từ ảnh hoặc trực tiếp từ camera. Hệ thống từ chối đăng ký trùng lặp, cũng như việc đăng ký bằng một tên đã có người sử dụng.",
         },
         src: "demo-computer-vision-nhom-10.pages.dev; project README",
       },
@@ -465,7 +465,7 @@ export const decks: Record<string, Deck> = {
         },
         text: {
           en: "Recognition answers in three states rather than guessing. The match thresholds were tuned on 123 people across six ethnic groups and set by the group with the weakest results, not the average.",
-          vi: "Kết quả nhận diện có ba trạng thái thay vì phỏng đoán. Ngưỡng so khớp được hiệu chỉnh trên 123 người thuộc sáu dân tộc và được đặt theo nhóm có kết quả kém nhất, không theo mức trung bình.",
+          vi: "Kết quả nhận diện có ba trạng thái thay vì phỏng đoán. Ngưỡng so khớp được hiệu chỉnh trên 123 người thuộc sáu nhóm dân tộc và được đặt theo nhóm có kết quả thấp nhất chứ không theo mức trung bình.",
         },
         src: "demo-computer-vision-nhom-10.pages.dev; project README",
       },
@@ -473,7 +473,7 @@ export const decks: Record<string, Deck> = {
         image: "face-demo/03-camera-running",
         title: {
           en: "The camera stays in the tab",
-          vi: "Camera chỉ hoạt động trong thẻ trình duyệt",
+          vi: "Hình ảnh từ camera không rời khỏi thẻ trình duyệt",
         },
         text: {
           en: "With the camera on, detection and recognition run on the device with OpenCV's YuNet and SFace models compiled for the browser; no frame is sent to a server. This capture used a simulated camera.",
@@ -510,7 +510,7 @@ export const decks: Record<string, Deck> = {
         },
         text: {
           en: "Enter cash, burn and revenue to get net burn, months of runway and the date cash reaches zero. The values live in the URL, so a link reproduces the exact result.",
-          vi: "Nhập tiền mặt, chi phí và doanh thu để biết mức tiêu hao ròng, số tháng runway và ngày tiền mặt về không. Các giá trị được lưu trong đường dẫn, nên chia sẻ đường dẫn sẽ cho ra đúng kết quả đó.",
+          vi: "Nhập tiền mặt, chi phí và doanh thu để biết mức tiêu hao ròng, số tháng runway và ngày tiền mặt cạn. Các giá trị được lưu trong đường dẫn, nên chia sẻ đường dẫn sẽ cho ra đúng kết quả đó.",
         },
         src: "saasmath.pages.dev/runway",
       },
@@ -555,7 +555,7 @@ export const decks: Record<string, Deck> = {
         },
         text: {
           en: "No server, no account, no tracking: the page's security policy forbids it from connecting anywhere, so the files stay on the device.",
-          vi: "Không máy chủ, không tài khoản, không theo dõi: chính sách bảo mật của trang không cho phép kết nối tới bất kỳ đâu, nên tệp luôn nằm trên thiết bị.",
+          vi: "Không cần máy chủ hay tài khoản, không theo dõi người dùng: chính sách bảo mật nội dung (CSP) của trang không cho phép kết nối tới nơi nào khác, nên tệp luôn nằm trên thiết bị.",
         },
         src: "pdf-merger-c6h.pages.dev",
       },
@@ -588,7 +588,7 @@ export const decks: Record<string, Deck> = {
         title: { en: "Errors in plain words", vi: "Thông báo lỗi dễ hiểu" },
         text: {
           en: "A broken pattern says what is wrong instead of failing silently.",
-          vi: "Khi biểu thức bị lỗi, công cụ nêu rõ lỗi thay vì im lặng.",
+          vi: "Khi biểu thức bị lỗi, công cụ nêu rõ lỗi thay vì không báo gì.",
         },
         src: "regex-tester-6dz.pages.dev",
       },
@@ -598,7 +598,7 @@ export const decks: Record<string, Deck> = {
   "ngoc-anh": {
     note: {
       en: "The live site, as its owner publishes it.",
-      vi: "Trang web đang hoạt động, đúng như chủ sở hữu công bố.",
+      vi: "Trang web đang hoạt động, do chính chủ sở hữu công bố.",
     },
     slides: [
       {
@@ -609,7 +609,7 @@ export const decks: Record<string, Deck> = {
         },
         text: {
           en: "A bilingual scrollytelling portfolio where one silk thread is drawn live through every chapter, with synthesised sound the visitor can switch on.",
-          vi: "Portfolio song ngữ kể chuyện theo cuộn trang, trong đó một sợi tơ được vẽ liên tục qua từng chương, kèm âm thanh tổng hợp mà người xem có thể bật.",
+          vi: "Portfolio song ngữ kể chuyện theo cuộn trang, trong đó một sợi chỉ tơ được vẽ trực tiếp qua từng chương, kèm âm thanh tổng hợp mà người xem có thể bật.",
         },
         src: "portfolio-for-ngoc-anh.pages.dev; project README",
       },
@@ -621,7 +621,7 @@ export const decks: Record<string, Deck> = {
         },
         text: {
           en: "Each chapter is numbered and reveals as the reader reaches it; every animation is off for readers who ask for reduced motion.",
-          vi: "Mỗi chương được đánh số và hiện ra khi người đọc cuộn tới; mọi hiệu ứng chuyển động đều tắt với người đọc chọn giảm chuyển động.",
+          vi: "Mỗi chương được đánh số và hiện ra khi người đọc cuộn tới; mọi hiệu ứng chuyển động đều được tắt đối với người đọc đã chọn chế độ giảm chuyển động.",
         },
         src: "portfolio-for-ngoc-anh.pages.dev",
       },
@@ -673,7 +673,7 @@ export const decks: Record<string, Deck> = {
   "le-khanh": {
     note: {
       en: "The live site, as its owner publishes it.",
-      vi: "Trang web đang hoạt động, đúng như chủ sở hữu công bố.",
+      vi: "Trang web đang hoạt động, do chính chủ sở hữu công bố.",
     },
     slides: [
       {
@@ -716,11 +716,11 @@ export const decks: Record<string, Deck> = {
         image: "le-khanh/05-contact",
         title: {
           en: "Ending on a clear ask",
-          vi: "Kết thúc bằng lời mời rõ ràng",
+          vi: "Kết thúc bằng một đề nghị rõ ràng",
         },
         text: {
           en: "The last chapter says what she wants to do next and how to reach her. The copy lives outside the code, in Vietnamese and English.",
-          vi: "Chương cuối nêu rõ mong muốn tiếp theo và cách liên hệ. Nội dung được tách khỏi mã nguồn, có cả tiếng Việt và tiếng Anh.",
+          vi: "Chương cuối nêu rõ điều người viết mong muốn làm tiếp theo và cách liên hệ. Nội dung được tách khỏi mã nguồn, có cả tiếng Việt và tiếng Anh.",
         },
         src: "nguyen-le-khanh-portfolio.pages.dev; project README (react-i18next, copy kept out of JSX)",
       },
